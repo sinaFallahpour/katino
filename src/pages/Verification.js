@@ -4,7 +4,8 @@ import API_ADDRESS from "../API_ADDRESS";
 import axios from "axios";
 import Timer from "react-compound-timer";
 import validator from "validator";
-
+import auth from "../core/authService";
+import { Redirect } from "react-router-dom";
 export class Verification extends Component {
   state = {
     verification: {
@@ -51,7 +52,6 @@ export class Verification extends Component {
         .then((res) => {
           const url = window.location.href;
           const token = res.data.resul.token;
-
           localStorage.setItem("JWT", token);
 
           if (!(url.search("/Employee/") === -1)) {
@@ -109,6 +109,10 @@ export class Verification extends Component {
   };
 
   render() {
+    if (auth.getCurrentUser()) {
+      return <Redirect to="/" />;
+    }
+
     setTimeout(() => {
       this.setState({
         verification: {

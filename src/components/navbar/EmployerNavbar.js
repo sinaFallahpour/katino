@@ -32,7 +32,6 @@ export class EmployerNavbar extends Component {
         let ids = [];
 
         res.data.resul.advernotifs.map((item) => ids.push(item.id));
-
         this.setState({
           notifCount: res.data.resul.notificationCount,
           notifs: res.data.resul.advernotifs,

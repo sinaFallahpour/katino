@@ -56,8 +56,23 @@ export class CreateResume extends Component {
   }
 
   async radionHandler(event) {
-    await this.setState({ employmentStatus: parseInt(event.target.value) });
+    await this.setState({
+      info: {
+        ...this.state.info,
+        employmentStatus: parseInt(event.target.value),
+      },
+    });
+
+    console.log(this.state);
   }
+
+  returnEmploymentStatus = () => {
+    var employmentStatus = this.state.info?.employmentStatus;
+    if (!employmentStatus) return;
+    if (employmentStatus == 1) return "جویای شغل";
+    if (employmentStatus == 2) return "شاغل";
+    if (employmentStatus == 3) return "به دنبال شغل بهتر";
+  };
 
   async changeHandler(event) {
     const formData = { [event.target.name]: event.target.value };
@@ -70,11 +85,11 @@ export class CreateResume extends Component {
 
     axios
       .post(
-        API_ADDRESS + "/EditUserShortDescription",
+        API_ADDRESS + "/UserJobShortDescription/EditUserShortDescription ",
         {
           id: this.state.info.id,
-          jobTitle: this.state.jobTitle,
-          employmentStatus: this.state.employmentStatus,
+          jobTitle: this.state.info.jobTitle,
+          employmentStatus: this.state.info.employmentStatus,
         },
         {
           headers: {
@@ -158,16 +173,20 @@ export class CreateResume extends Component {
                       <ul className="list-group list-group-flush p-0">
                         <li className="list-group-item border-0 pr-0">
                           <span className="ir-b c-grey sml-1">
-                            عنوان شغلی:{" "}
+                            عنوان شغلی:
                             <span className="c-regular">
                               {this.state.info ? this.state.info.jobTitle : "-"}
+                              {console.log(this.state.info)}
                             </span>
                           </span>
                         </li>
 
                         <li className="list-group-item border-0 pr-0">
                           <span className="ir-b c-grey sml-1">
-                            وضعیت اشتغال: <span className="c-regular"></span>
+                            وضعیت اشتغال:{" "}
+                            <span className="c-regular">
+                              {this.returnEmploymentStatus()}
+                            </span>
                           </span>
                         </li>
 
@@ -232,9 +251,16 @@ export class CreateResume extends Component {
 
                               <div className="form-group d-flex justify-content-center align-items-center">
                                 <input
-                                  onChange={this.changeHandler.bind(this)}
+                                  onChange={(e) => {
+                                    this.setState({
+                                      info: {
+                                        ...this.state.info,
+                                        jobTitle: e.target.value,
+                                      },
+                                    });
+                                  }}
                                   name="jobTitle"
-                                  value={this.state.jobTitle || ""}
+                                  value={this.state.info.jobTitle || ""}
                                   id="jobTitle"
                                   className="form-control digit d-block fs-m text-right ir-r text-regular shadow-none"
                                   type="text"
@@ -256,7 +282,24 @@ export class CreateResume extends Component {
                               <div>
                                 <div className="custom-control custom-radio custom-control-inline">
                                   <input
+                                    // onChange={(e) => {
+                                    //   this.setState({
+                                    //     info: {
+                                    //       ...this.state.info,
+                                    //       employmentStatus: parseInt(
+                                    //         e.target.value
+                                    //       ),
+                                    //     },
+                                    //   });
+                                    // }}
                                     onChange={this.radionHandler.bind(this)}
+                                    checked={
+                                      this.state.info.employmentStatus == 1
+                                    }
+                                    // employmentStatus: parseInt(event.target.value)
+
+                                    // employmentStatus: parseInt(event.target.value)
+                                    // onChange={this.radionHandler.bind(this)}
                                     type="radio"
                                     value="1"
                                     id="status1"
@@ -274,6 +317,9 @@ export class CreateResume extends Component {
                                 <div className="custom-control custom-radio custom-control-inline">
                                   <input
                                     onChange={this.radionHandler.bind(this)}
+                                    checked={
+                                      this.state.info.employmentStatus == 2
+                                    }
                                     type="radio"
                                     value="2"
                                     id="status2"
@@ -291,6 +337,9 @@ export class CreateResume extends Component {
                                 <div className="custom-control custom-radio custom-control-inline">
                                   <input
                                     onChange={this.radionHandler.bind(this)}
+                                    checked={
+                                      this.state.info.employmentStatus == 3
+                                    }
                                     type="radio"
                                     value="3"
                                     id="status3"

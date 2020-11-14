@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import auth from "../../core/authService";
 
 export class EmployeeNavbar extends Component {
   state = {
+    islogedIn: false,
+
     profileDropdown: false,
     profileActivity: "",
 
@@ -10,6 +13,11 @@ export class EmployeeNavbar extends Component {
     notifActivity: "",
     notifCount: 10,
   };
+
+  componentDidMount() {
+    const user = auth.getCurrentUser();
+    this.setState({ user });
+  }
 
   profileDropdown = () => {
     if (this.state.profileDropdown === false) {
@@ -114,89 +122,119 @@ export class EmployeeNavbar extends Component {
           </div>
         </nav>
 
-        <div className="buttons d-flex justify-content-start align-items-center">
-          <div
-            className="user bg-primary srounded-md sp-1 position-relative"
-            onClick={this.profileDropdown}
-          >
-            <div className="head">
-              <span className="ir-r fs-s sml-1 text-white d-none d-lg-inline">
-                مجید ولی زاده
-              </span>
-              <i className="fas fa-chevron-down text-white srounded-md"></i>
-            </div>
-
-            <div
-              className={`profile-dropdown bg-white position-absolute shadow ${this.state.profileActivity}`}
+        {!auth.getCurrentUser() ? (
+          <div class="buttons d-flex justify-content-start">
+            {/* <a
+              class="btn btn-warning ir-r d-none d-lg-block sml-1"
+              href="/"
+              dideo-checked="true"
             >
-              <ul className="m-0">
-                <li className="smb-1">
-                  <Link
-                    className="ir-r c-grey text-decoration-none"
-                    to="/Employee/Dashboard/Requests"
-                  >
-                    درخواست های من
-                  </Link>
-                </li>
+              <i class="fas fa-briefcase sml-1"></i>ثبت آگهی استخدام
+            </a> */}
+            <Link
+              className="text-white btn btn-warning ir-r d-none d-lg-block sml-1"
+              to="/"
+            >
+              <i class="text-white fas fa-briefcase sml-1"></i>ثبت آگهی استخدام
+            </Link>
 
-                <li className="smb-1">
-                  <Link
-                    className="ir-r c-grey text-decoration-none"
-                    to="/Employee/Dashboard/Bookmarks"
-                  >
-                    آگهی های نشان شده
-                  </Link>
-                </li>
+            <Link className="btn btn-primary ir-r" to="/Employee/Login/">
+              <i class="fas fa-user sml-1"></i>ورود/ثبت نام
+            </Link>
 
-                <li className="smb-1">
-                  <Link
-                    className="ir-r c-grey text-decoration-none"
-                    to="/Employee/Home"
-                  >
-                    ایمیل های اطلاع رسانی
-                  </Link>
-                </li>
+            {/* <a
+              class="btn btn-primary ir-r"
+              href="/Employee/Login/"
+              dideo-checked="true"
+            >
+              <i class="fas fa-user sml-1"></i>ورود/ثبت نام
+            </a> */}
+          </div>
+        ) : (
+          <div className="buttons d-flex justify-content-start align-items-center">
+            <div
+              className="user bg-primary srounded-md sp-1 position-relative"
+              onClick={this.profileDropdown}
+            >
+              <div className="head">
+                <span className="ir-r fs-s sml-1 text-white d-none d-lg-inline">
+                  مجید ولی زاده
+                </span>
+                <i className="fas fa-chevron-down text-white srounded-md"></i>
+              </div>
 
-                <li className="smb-1">
-                  <Link
-                    className="ir-r c-grey text-decoration-none"
-                    to="/Employee/CreateResume"
-                  >
-                    رزومه ساز
-                  </Link>
-                </li>
+              <div
+                className={`profile-dropdown bg-white position-absolute shadow ${this.state.profileActivity}`}
+              >
+                <ul className="m-0">
+                  <li className="smb-1">
+                    <Link
+                      className="ir-r c-grey text-decoration-none"
+                      to="/Employee/Dashboard/Requests"
+                    >
+                      درخواست های من
+                    </Link>
+                  </li>
 
-                <li className="smb-1">
-                  <Link
-                    className="ir-r c-grey text-decoration-none"
-                    to="/Employee/Home"
-                  >
-                    مشاهده رزومه
-                  </Link>
-                </li>
+                  <li className="smb-1">
+                    <Link
+                      className="ir-r c-grey text-decoration-none"
+                      to="/Employee/Dashboard/Bookmarks"
+                    >
+                      آگهی های نشان شده
+                    </Link>
+                  </li>
 
-                <li className="smb-1">
-                  <Link
-                    className="ir-r c-grey text-decoration-none"
-                    to="/Employee/Home"
-                  >
-                    تنظیمات حساب کاربری
-                  </Link>
-                </li>
+                  <li className="smb-1">
+                    <Link
+                      className="ir-r c-grey text-decoration-none"
+                      to="/Employee/Home"
+                    >
+                      ایمیل های اطلاع رسانی
+                    </Link>
+                  </li>
 
-                <li className="mb-0">
-                  <button
-                    type="button"
-                    className="ir-r btn c-danger p-0 text-decoration-none shadow-none"
-                    onClick={this.logout}
-                  >
-                    خروج از حساب
-                  </button>
-                </li>
-              </ul>
+                  <li className="smb-1">
+                    <Link
+                      className="ir-r c-grey text-decoration-none"
+                      to="/Employee/CreateResume"
+                    >
+                      رزومه ساز
+                    </Link>
+                  </li>
+
+                  <li className="smb-1">
+                    <Link
+                      className="ir-r c-grey text-decoration-none"
+                      to="/Employee/Home"
+                    >
+                      مشاهده رزومه
+                    </Link>
+                  </li>
+
+                  <li className="smb-1">
+                    <Link
+                      className="ir-r c-grey text-decoration-none"
+                      to="/Employee/Home"
+                    >
+                      تنظیمات حساب کاربری
+                    </Link>
+                  </li>
+
+                  <li className="mb-0">
+                    <button
+                      type="button"
+                      className="ir-r btn c-danger p-0 text-decoration-none shadow-none"
+                      onClick={this.logout}
+                    >
+                      خروج از حساب
+                    </button>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </header>
     );
   }

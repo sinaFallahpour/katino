@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import {
   LandingNavbar,
   EmployerNavbar,
@@ -9,6 +9,7 @@ import {
   PageTitle,
 } from "./components";
 import {
+  NotFound,
   Home,
   Login,
   Verification,
@@ -132,9 +133,9 @@ class App extends Component {
                 path="/Employer/CompleteProfile"
                 render={(props) => (
                   <PageTitle title="تکمیل پروفایل">
-                    <LandingNavbar />
+                    {/* <LandingNavbar /> */}
                     <CompleteProfile props={props} {...props} />
-                    <LandingFooter />
+                    {/* <LandingFooter /> */}
                   </PageTitle>
                 )}
               ></Route>
@@ -296,6 +297,29 @@ class App extends Component {
                   <React.Fragment>
                     <EmployeeNavbar />
                     <EmployeeDashboard props={props} {...props} />
+                  </React.Fragment>
+                )}
+              ></Route>
+
+              <Route
+                exact
+                path="/Employee/Dashboard/:page"
+                render={(props) => (
+                  <React.Fragment>
+                    <EmployeeNavbar />
+                    <EmployeeDashboard props={props} {...props} />
+                  </React.Fragment>
+                )}
+              ></Route>
+
+              {/* <Route path="/notFound" /> */}
+              {/* <Redirect to="/not-found" /> */}
+
+              <Route
+                render={(props) => (
+                  <React.Fragment>
+                    <EmployeeNavbar />
+                    <NotFound {...props} />
                   </React.Fragment>
                 )}
               ></Route>
