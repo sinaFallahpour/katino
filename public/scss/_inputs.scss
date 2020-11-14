@@ -1,0 +1,52 @@
+.form-group {
+  &.phone-number {
+    label,
+    .digits {
+      width: 100%;
+    }
+
+    .digit {
+      width: 9.09%;
+      height: 30px;
+      line-height: 30px;
+      &:not(:last-child) {
+        margin-right: 5px;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    input.digit {
+      transition: 0.3s;
+      border: 0;
+      border-bottom: 1px solid $dark;
+
+      &:focus {
+        outline: 0;
+        border-bottom: 1px solid $system;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 991.99px) {
+  .form-group {
+    &.phone-number {
+      .digits,
+      label {
+        width: 100% !important;
+      }
+    }
+  }
+}
+@media only screen and (min-width: 992px) {
+  // .form-group {
+  //   &.phone-number {
+  //     display: flex;
+  //     justify-content: space-between;
+  //     align-items: center;
+  //   }
+  // }
+}

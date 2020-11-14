@@ -1,0 +1,80 @@
+.payment-factor {
+  & > .f-item:nth-child(2n) {
+    background: #fcfcfc !important;
+  }
+}
+
+.p-discount-modal {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1100;
+
+  .overlay {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background: #00000040;
+    top: 0;
+    right: 0;
+    z-index: 1100;
+    transition: 0.1s;
+  }
+
+  .content {
+    z-index: 1200;
+    transition: 0.6s;
+  }
+
+  &:not(.active) {
+    opacity: 0;
+    visibility: hidden;
+    .content {
+      opacity: 0;
+      transform: scale(0);
+    }
+  }
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    .content {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+@media only screen and (max-width: 991.99px) {
+  .payment-factor {
+    .f-item {
+      .f-field {
+        width: 100%;
+      }
+    }
+  }
+
+  .p-discount-modal {
+    .content {
+      width: 80%;
+    }
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .payment-factor {
+    .f-item {
+      .f-field {
+        width: 50%;
+      }
+    }
+  }
+
+  .p-discount-modal {
+    .content {
+      width: 500px;
+    }
+  }
+}

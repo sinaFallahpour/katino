@@ -1,0 +1,10 @@
+.home {
+  .h- {
+    &search-box {
+      margin-top: 80px;
+      min-height: 400px;
+      background: url(../img/searchbox-bg.jpg) no-repeat center;
+      background-size: cover;
+    }
+  }
+}

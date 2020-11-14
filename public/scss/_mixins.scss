@@ -1,0 +1,11 @@
+@mixin font($name) {
+  @font-face {
+    font-family: $name;
+    src: url(../fonts/#{$name}.woff);
+  }
+}
+
+@mixin line-height($size) {
+  font-size: $size;
+  line-height: $size * 1.5;
+}

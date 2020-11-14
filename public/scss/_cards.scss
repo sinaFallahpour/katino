@@ -1,0 +1,23 @@
+.card {
+  &.ad {
+    border: 1px solid #e0e0ec;
+  }
+}
+
+.features-card {
+  padding-top: 95px !important;
+  transition: 0.3s;
+  box-shadow: 5px 5px 15px rgba(153, 153, 153, 0.05);
+
+  .img {
+    width: 150px;
+    height: 150px;
+    top: -75px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &:hover {
+    box-shadow: 5px 5px 15px rgba(153, 153, 153, 0);
+  }
+}

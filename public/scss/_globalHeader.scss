@@ -1,0 +1,41 @@
+.g-header {
+  transition: 0.3s;
+  height: 80px;
+
+  &.scrolled {
+    height: 60px;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .g-header {
+    transition: 0.3s;
+    height: 80px;
+
+    .nav-link {
+      font-size: 0.9em;
+    }
+
+    &:not(.dash-nav) {
+      .nav-link {
+        &::after {
+          content: "";
+          transition: 0.3s;
+          position: absolute;
+          bottom: -10px;
+          right: 0;
+          width: 0;
+          height: 2px;
+          border-radius: 1px;
+          background: $system;
+        }
+        &:hover {
+          color: $system !important;
+          &::after {
+            width: 30%;
+          }
+        }
+      }
+    }
+  }
+}

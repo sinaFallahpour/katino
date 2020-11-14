@@ -1,0 +1,196 @@
+@import "variables";
+@import "mixins";
+@import "globalHeader";
+@import "globalFooter";
+@import "dashNav";
+@import "cards";
+@import "home";
+@import "inputs";
+@import "buttons";
+@import "employerDash";
+@import "paymentFactor";
+@import "companies";
+@import "employersLanding";
+
+// Public
+html,
+body {
+  overflow-x: hidden;
+  height: 100% !important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: $bg-body !important;
+}
+
+// Fonts Family
+@include font($ir-r);
+@include font($ir-b);
+@include font($ir-bl);
+
+.ir- {
+  &r {
+    font-family: $ir-r !important;
+  }
+
+  &b {
+    font-family: $ir-b !important;
+  }
+  &bl {
+    font-family: $ir-bl !important;
+  }
+}
+
+// Font Sizes
+.fs- {
+  &s {
+    font-size: $fs-s !important;
+  }
+
+  &m {
+    font-size: $fs-m !important;
+  }
+
+  &l {
+    font-size: $fs-l !important;
+  }
+}
+
+// Paragraphs Typography
+p {
+  &.fs- {
+    &s {
+      @include line-height($fs-s);
+    }
+
+    &m {
+      @include line-height($fs-m);
+    }
+
+    &l {
+      @include line-height($fs-l);
+    }
+  }
+}
+
+// Backgrounds
+.bg- {
+  &body {
+    background-color: $bg-body !important;
+  }
+
+  &logo {
+    background-color: $logo !important;
+  }
+  &danger {
+    background: $danger !important;
+  }
+
+  &success-light {
+    background: $success-light !important;
+  }
+}
+
+// Text Colors
+.c- {
+  &grey {
+    color: $grey !important;
+  }
+
+  &light {
+    color: $light !important;
+  }
+
+  &regular {
+    color: $regular !important;
+  }
+
+  &dark {
+    color: $dark !important;
+  }
+  &main {
+    color: $system !important;
+  }
+  &warning {
+    color: $warning !important;
+  }
+  &primary {
+    color: $primary !important;
+  }
+  &success {
+    color: $success !important;
+  }
+  &danger {
+    color: $danger !important;
+  }
+  &gold {
+    color: $gold !important;
+  }
+}
+
+// Shadows
+.navbar-shadow {
+  box-shadow: $navbar-shadow;
+}
+
+.srounded- {
+  &sm {
+    border-radius: 5px !important;
+  }
+
+  &md {
+    border-radius: 15px !important;
+  }
+}
+
+.sbs-content {
+  box-shadow: 5px 5px 15px #99999905;
+}
+
+.fa-chevron-left:before {
+  display: flex;
+  align-items: center;
+}
+
+.refresh-code {
+  span {
+    font-family: $ir-r;
+    font-size: 1rem;
+  }
+}
+
+.sp-05 {
+  padding: 5px !important;
+}
+
+.ck.ck-content {
+  height: 250px;
+}
+
+.Toastify__toast-body {
+  font-family: $ir-r;
+}
+
+.bookmarker-btn {
+  cursor: pointer;
+}
+
+.desc-separator {
+  width: 50px;
+  height: 4px;
+  background: $light;
+  border-radius: 2px;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+.badge-danger {
+  background: $danger-light !important;
+  color: $danger !important;
+}

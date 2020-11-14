@@ -1,0 +1,53 @@
+.dash-nav {
+  .user .head,
+  .notification .icon,
+  .notification .counter {
+    cursor: pointer;
+  }
+
+  .add-adver {
+    width: 40px;
+    height: 40px;
+    background: $warning;
+  }
+
+  .notification {
+    .icon {
+      font-size: 1.5em !important;
+    }
+    .counter {
+      height: 20px;
+      width: 20px;
+      line-height: 20px;
+      top: -10px;
+      right: -10px;
+      font-size: 0.8em !important;
+    }
+  }
+
+  .profile-dropdown,
+  .notifs-dropdown {
+    transform: translate(-20px);
+    transition: 0.3s ease;
+    visibility: hidden;
+    width: 250px;
+    padding: 20px;
+    left: 0;
+    top: 100%;
+    border: 2px solid #dde1e8;
+    box-sizing: border-box;
+    border-radius: 15px;
+
+    &:not(.active) {
+      opacity: 0;
+      transform: translateY(-20px);
+      visibility: hidden;
+    }
+
+    &.active {
+      opacity: 1;
+      transform: translateY(0);
+      visibility: visible;
+    }
+  }
+}

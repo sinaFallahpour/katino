@@ -1,0 +1,137 @@
+.btn-success {
+  color: #ffffff !important;
+  background-color: $success !important;
+  border-color: $success !important;
+}
+
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active,
+.btn-success.active,
+.open .dropdown-toggle.btn-success {
+  color: #ffffff !important;
+  background-color: $success !important;
+  border-color: $success !important;
+}
+
+.btn-success:active,
+.btn-success.active,
+.open .dropdown-toggle.btn-success {
+  background-image: none !important;
+}
+
+.btn-success.disabled,
+.btn-success[disabled],
+fieldset[disabled] .btn-success,
+.btn-success.disabled:hover,
+.btn-success[disabled]:hover,
+fieldset[disabled] .btn-success:hover,
+.btn-success.disabled:focus,
+.btn-success[disabled]:focus,
+fieldset[disabled] .btn-success:focus,
+.btn-success.disabled:active,
+.btn-success[disabled]:active,
+fieldset[disabled] .btn-success:active,
+.btn-success.disabled.active,
+.btn-success[disabled].active,
+fieldset[disabled] .btn-success.active {
+  background-color: $success !important;
+  border-color: $success !important;
+}
+
+.btn-success .badge {
+  color: $success !important;
+  background-color: #ffffff !important;
+}
+
+.btn-primary-light {
+  color: $primary !important;
+  background-color: #dee6ff !important;
+  border-color: #dee6ff !important;
+}
+
+.btn-primary-light:hover,
+.btn-primary-light:focus,
+.btn-primary-light:active,
+.btn-primary-light.active,
+.open .dropdown-toggle.btn-primary-light {
+  color: $primary !important;
+  background-color: #8aa4f2 !important;
+  border-color: #dee6ff !important;
+}
+
+.btn-primary-light:active,
+.btn-primary-light.active,
+.open .dropdown-toggle.btn-primary-light {
+  background-image: none !important;
+}
+
+.btn-primary-light.disabled,
+.btn-primary-light[disabled],
+fieldset[disabled] .btn-primary-light,
+.btn-primary-light.disabled:hover,
+.btn-primary-light[disabled]:hover,
+fieldset[disabled] .btn-primary-light:hover,
+.btn-primary-light.disabled:focus,
+.btn-primary-light[disabled]:focus,
+fieldset[disabled] .btn-primary-light:focus,
+.btn-primary-light.disabled:active,
+.btn-primary-light[disabled]:active,
+fieldset[disabled] .btn-primary-light:active,
+.btn-primary-light.disabled.active,
+.btn-primary-light[disabled].active,
+fieldset[disabled] .btn-primary-light.active {
+  background-color: #dee6ff !important;
+  border-color: #dee6ff !important;
+}
+
+.btn-primary-light .badge {
+  color: #dee6ff !important;
+  background-color: $primary !important;
+}
+
+.btn-success-light {
+  color: $success !important;
+  background-color: $success-light !important;
+  border-color: $success-light !important;
+}
+
+.btn-success-light:hover,
+.btn-success-light:focus,
+.btn-success-light:active,
+.btn-success-light.active,
+.open .dropdown-toggle.btn-success-light {
+  color: $success !important;
+  background-color: #bbfcc9;
+  border-color: $success-light !important;
+}
+
+.btn-success-light:active,
+.btn-success-light.active,
+.open .dropdown-toggle.btn-success-light {
+  background-image: none;
+}
+
+.btn-success-light.disabled,
+.btn-success-light[disabled],
+fieldset[disabled] .btn-success-light,
+.btn-success-light.disabled:hover,
+.btn-success-light[disabled]:hover,
+fieldset[disabled] .btn-success-light:hover,
+.btn-success-light.disabled:focus,
+.btn-success-light[disabled]:focus,
+fieldset[disabled] .btn-success-light:focus,
+.btn-success-light.disabled:active,
+.btn-success-light[disabled]:active,
+fieldset[disabled] .btn-success-light:active,
+.btn-success-light.disabled.active,
+.btn-success-light[disabled].active,
+fieldset[disabled] .btn-success-light.active {
+  background-color: $success-light !important;
+  border-color: $success-light !important;
+}
+
+.btn-success-light .badge {
+  color: $success-light !important;
+  background-color: $success !important;
+}

@@ -1,0 +1,102 @@
+.companies-header {
+  background: url(/img/companies-bg.png) no-repeat center;
+  background-size: cover;
+  height: 250px;
+
+  .title {
+    text-shadow: 2px 2px 15px #00000015;
+  }
+
+  .search-box {
+    input {
+      border-radius: 0 5px 5px 0 !important;
+    }
+
+    button {
+      border-radius: 5px 0 0 5px;
+    }
+  }
+}
+
+.companies {
+  top: -50px;
+
+  .logo {
+    width: 100px;
+    height: 100px;
+    box-shadow: 5px 5px 15px #00000015;
+  }
+
+  .c-item {
+    &:not(:last-child) {
+      margin-bottom: 70px;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.company-details-header {
+  height: 200px;
+  background: url(/img/company-details-header.png) no-repeat center;
+  background-size: cover;
+}
+
+.company-details {
+  position: relative;
+  top: -160px;
+}
+
+.company-ads {
+  .btn- {
+    &success-light {
+      border-radius: 0 15px 0 0 !important;
+    }
+    &primary-light {
+      border-radius: 15px 0 0 0 !important;
+    }
+  }
+
+  .ads-holder {
+    border-radius: 15px 0 15px 15px;
+  }
+}
+
+@media only screen and (max-width: 991.99px) {
+  .companies-header {
+    .search-box {
+      width: 80%;
+    }
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .companies-header {
+    .search-box {
+      width: 60%;
+    }
+  }
+
+  .companies {
+    .company-card {
+      position: relative;
+
+      .header {
+        position: absolute;
+      }
+    }
+
+    .header {
+      width: calc(100% - 40px);
+      right: 20px;
+      top: -50px;
+
+      .details {
+        width: calc(100% - 80px);
+        // d-flex align-items-end justify-content-between
+      }
+    }
+  }
+}

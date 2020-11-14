@@ -1,0 +1,22 @@
+.dash-employer {
+  .badge {
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
+    font-size: 1em !important;
+    &.badge-primary {
+      background: #dee6ff !important;
+      color: $primary !important;
+    }
+
+    &.badge-warning {
+      background: #fff6de !important;
+      color: #ffa10b !important;
+    }
+
+    &.badge-success {
+      background: #deffe5;
+      color: #50d86a;
+    }
+  }
+}
