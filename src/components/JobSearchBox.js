@@ -5,6 +5,8 @@ import Select from "react-select";
 export class JobSearchBox extends Component {
   state = {
     selectedOption: null,
+    city: "",
+    key: "",
   };
 
   changeHandler = (event) =>
@@ -33,7 +35,7 @@ export class JobSearchBox extends Component {
 
             <input
               onChange={this.changeHandler}
-              name="searchInput"
+              name="key"
               className="form-control ir-r"
               placeholder="عنوان شغلی، شرکت و..."
             />
@@ -55,7 +57,19 @@ export class JobSearchBox extends Component {
 
         {/* Search Button */}
         <div className="col-12 col-lg-2 mb-0 pl-lg-0 d-flex align-items-end">
-          <Link
+          <button
+            onClick={() => {
+              this.props.handleSearch(this.state);
+            }}
+            type="button"
+            class="btn btn-primary d-block w-100 ir-r fs-m srounded-sm"
+            // href="/Jobs?key=ghghgfgchhgfg&amp;city=آستارا"
+            dideo-checked="true"
+          >
+            جستجو
+          </button>
+
+          {/* <Link
             type="button"
             className="btn btn-primary d-block w-100 ir-r fs-m srounded-sm"
             to={
@@ -65,7 +79,7 @@ export class JobSearchBox extends Component {
             }
           >
             جستجو
-          </Link>
+          </Link> */}
         </div>
       </div>
     );
