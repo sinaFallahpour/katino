@@ -10,7 +10,7 @@ axios.defaults.baseURL = "https://katino.niknet.co/api";
 
 axios.interceptors.request.use(
   (config) => {
-    const token = window.localStorage.getItem("token");
+    const token = window.localStorage.getItem("JWT");
     if (token) config.headers.Authorization = `Bearer ${token}`;
     return config;
   }
@@ -24,7 +24,7 @@ axios.interceptors.response.use(undefined, (error) => {
     toast.error("Network error - make sure API is running!");
   }
 
-  if (error.error?.response == 404) {
+  if (error?.response.status == 404) {
     toast.error("خطایی رخ داده!");
   }
   // const { status, data, config } = error?.response;
@@ -49,6 +49,7 @@ axios.interceptors.response.use(undefined, (error) => {
 
 export const requests = {
   get: (url) => axios.get(url),
+  getWithdata: (url, body) => axios.get(url, body),
   post: (url, body) => axios.post(url, body),
   put: (url, body) => axios.put(url, body),
   del: (url) => axios.delete(url),
@@ -61,25 +62,15 @@ export const requests = {
   },
 };
 
-const User = {
+const Adver = {
   // current: () => requests.get("/user"),
-  list: () => requests.get("/Account/admin/GetAllAdminInAdmin"),
-  UsersList: (params) => requests.get(`/Account/GetAllUsersList?${params}`),
-  UsersListForVerification: (params) =>
-    requests.get(`/Account/GetAllUsersListForVerification?${params}`),
-  UsersDetails: (obj) => {
-    return requests.post("/Account/admin/GetUserByUsernameInAdmin", obj);
-  },
-  details: (id) => requests.get(`/Account/admin/GetAdminByIdInAdmin?id=${id}`),
-  login: (user) => requests.post("/user/login", user),
-  registerAdmin: (user) =>
-    requests.post("/Account/admin/RegisterAdminInAdmin", user),
-  update: (user) => requests.put("/Account/admin/UpdateAdmin", user),
-  changePassword: (obj) => requests.post("/Account/ChangePasswordInAdmin", obj),
-  forgetPassword: (obj) => requests.post("/Account/ForgetPasswod", obj),
-  lockedUser: (username) => requests.post("/Account/LockedUser", { username }),
+  filterAdver: (data, page, pageSize) =>
+    requests.getWithdata(
+      `/Adver/FilterAdver?page=${page}&pageSize=${pageSize}`
+    ),
+  searchAdver: (params) => requests.get(`/Adver/SearchAdver?${params}`),
 };
 
 export default {
-  User,
+  Adver,
 };

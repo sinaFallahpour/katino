@@ -59,7 +59,6 @@ export class Verification extends Component {
             this.props.props.history.push("/Employee/Jobs");
           } else if (!(url.search("/Employer/Login") === -1)) {
             localStorage.setItem("userInfo", "Employer");
-
             this.props.props.history.push("/Employer/Dashboard/");
           } else if (!(url.search("/Employer/Register") === -1)) {
             localStorage.setItem("userInfo", "Employer");
