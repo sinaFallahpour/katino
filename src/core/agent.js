@@ -73,6 +73,9 @@ const Adver = {
 
   asignResomeToAdver: (adverId) =>
     requests.post(`/Resome/AsignResomeToAdver?adverId=${adverId}`),
+
+  asignResomeToListOfAdvers: (adverIdlist) =>
+    requests.post(`/Resome/AsignResomeToListOfAdvers?adversId=${adverIdlist}`),
 };
 
 export default {

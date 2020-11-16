@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { SideBar, Header, NotRequested } from "../../components/employeePanel";
 import { PageTitle } from "../../components/PageTitle";
 import * as service from "../../components/employeePanel";
+import { toast } from "react-toastify";
 
+import agent from "../../core/agent";
 export class EmployeeDashboard extends Component {
   state = {
     currentPage: "Requests",
@@ -13,6 +15,7 @@ export class EmployeeDashboard extends Component {
       recommanded: false,
     },
 
+    selectdIds: [],
     pageTitle: "",
 
     markedAds: [],
@@ -38,18 +41,28 @@ export class EmployeeDashboard extends Component {
         });
         break;
 
-      case "Recommanded":
+      default:
         this.setState({
           currentPage: "Recommanded",
           visibility: { requests: false, bookmarks: false, recommanded: true },
           pageTitle: pageTitle(currentPage),
         });
         break;
+
+      // case "Recommanded":
+      //   this.setState({
+      //     currentPage: "Recommanded",
+      //     visibility: { requests: false, bookmarks: false, recommanded: true },
+      //     pageTitle: pageTitle(currentPage),
+      //   });
+      //   break;
     }
 
     service
       .getMarkedAds(1, 5)
       .then((res) => this.setState({ markedAds: res.data }));
+
+    console.log(this.state.markedAds);
   };
 
   tabsHandler = (event) => {
@@ -69,7 +82,7 @@ export class EmployeeDashboard extends Component {
           pageTitle: pageTitle("Bookmarks"),
         });
         break;
-
+      default:
       case "Recommanded":
         this.setState({
           currentPage: "Recommanded",
@@ -77,6 +90,74 @@ export class EmployeeDashboard extends Component {
           pageTitle: pageTitle("Recommanded"),
         });
         break;
+    }
+  };
+
+  handleMarkOtherAdv = async (adverId) => {
+    try {
+      let currentAdver = this.state.markedAds.find((c) => c.id == adverId);
+      console.log(currentAdver);
+      if (currentAdver.isMarked) {
+        // this.setState({ isMarked: false });
+
+        this.setState({
+          markedAds: this.state.markedAds.map((el) =>
+            el.id === adverId ? Object.assign({}, el, { isMarked: false }) : el
+          ),
+        });
+        const { data } = await agent.Adver.unmarkAdvder(adverId);
+
+        console.log(data);
+      } else {
+        this.setState({
+          markedAds: this.state.markedAds.map((el) =>
+            el.id === adverId ? Object.assign({}, el, { isMarked: true }) : el
+          ),
+        });
+
+        await agent.Adver.markAdvder(adverId);
+      }
+    } catch (ex) {
+      this.setState({ isMarked: !this.state.isMarked });
+      if (ex?.response?.data) {
+        toast.error(ex.response?.data?.message[0]);
+        this.setState({
+          data: this.state.markedAds.map((el) =>
+            el.id === adverId
+              ? Object.assign({}, el, { isMarked: !el.isMarked })
+              : el
+          ),
+        });
+      }
+    }
+  };
+
+  handleChangeSelecetdId = (adverId) => {
+    if (this.state.selectdIds.includes(adverId)) {
+      let selectdIds = this.state.selectdIds.filter((item) => item !== adverId);
+      this.setState({ selectdIds });
+    } else {
+      let selectdIds = [...this.state.selectdIds, adverId];
+      this.setState({ selectdIds });
+    }
+  };
+
+  handleAsignResomeToListOfAdvers = async () => {
+    try {
+      if (this.state?.selectdIds?.length == 0) return;
+      // return params;
+      let { data } = await agent.Adver.asignResomeToListOfAdvers(
+        this.state.selectdIds
+      );
+
+      if (data?.message) toast.success(data.message[0]);
+
+      // toast.success("رزومه با موفقیت ارسال شد");
+    } catch (err) {
+      if (err.response.status === 401) toast.error("لطفا وارد شوید.");
+      else if (err.response.status === 404) toast.error("خطای رخ داده  ");
+      else if (err.response.status === 500) toast.error("مشکلی رخ داده ");
+      else toast.error(err.response.data.message[0]);
     }
   };
 
@@ -92,6 +173,10 @@ export class EmployeeDashboard extends Component {
                 <Header
                   title={this.state.pageTitle}
                   type={this.state.currentPage}
+                  selectdIds={this.state.selectdIds}
+                  handleAsignResomeToListOfAdvers={
+                    this.handleAsignResomeToListOfAdvers
+                  }
                 />
               </div>
 
@@ -147,7 +232,12 @@ export class EmployeeDashboard extends Component {
                     : "d-none"
                 }
               >
-                <NotRequested items={this.state.markedAds} />
+                <NotRequested
+                  items={this.state.markedAds}
+                  handleMarkOtherAdv={this.handleMarkOtherAdv}
+                  selectdIds={this.state.selectdIds}
+                  handleChangeSelecetdId={this.handleChangeSelecetdId}
+                />
               </div>
 
               <div
@@ -177,7 +267,10 @@ function pageTitle(page) {
       return "درخواست‌های من";
     case "Bookmarks":
       return "آگهی های نشان شده";
-    case "Recommanded":
+    default:
       return "آگهی های پیشنهادی";
+
+    // case "Recommanded":
+    //   return "آگهی های پیشنهادی";
   }
 }
