@@ -1,6 +1,7 @@
 export * from "./navbar";
 export * from "./footer";
 export * from "./JobSearchBox";
+export * from "./JobSearchBox2";
 export * from "./Input";
 export * from "./PageTitle";
 export * from "./citiesService";

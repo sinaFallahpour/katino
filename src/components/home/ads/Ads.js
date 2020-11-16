@@ -1,7 +1,7 @@
 import React from "react";
 import { Immediately, Latest } from "./index";
 
-export function Ads({ immediately, latest }) {
+export function Ads({ immediately, latest, handleMarkOtherAdv }) {
   return (
     <section className="container-fluid spx-2 spx-lg-10 smy-10">
       <div className="row">
@@ -18,7 +18,11 @@ export function Ads({ immediately, latest }) {
             آخرین آگهی ها
           </h3>
           <div className="bg-white sp-1 sp-lg-2 srounded-md">
-            <Latest hasMoreButton={true} latest={latest.listOfData} />
+            <Latest
+              hasMoreButton={true}
+              latest={latest.listOfData}
+              handleMarkOtherAdv={handleMarkOtherAdv}
+            />
           </div>
         </div>
       </div>

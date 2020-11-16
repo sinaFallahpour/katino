@@ -49,7 +49,6 @@ axios.interceptors.response.use(undefined, (error) => {
 
 export const requests = {
   get: (url) => axios.get(url),
-  getWithdata: (url, body) => axios.get(url, body),
   post: (url, body) => axios.post(url, body),
   put: (url, body) => axios.put(url, body),
   del: (url) => axios.delete(url),
@@ -64,11 +63,16 @@ export const requests = {
 
 const Adver = {
   // current: () => requests.get("/user"),
-  filterAdver: (data, page, pageSize) =>
-    requests.getWithdata(
-      `/Adver/FilterAdver?page=${page}&pageSize=${pageSize}`
-    ),
+  filterAdver: (body, page, pageSize) =>
+    requests.post(`/Adver/FilterAdver?page=${page}&pageSize=${pageSize}`, body),
   searchAdver: (params) => requests.get(`/Adver/SearchAdver?${params}`),
+
+  markAdvder: (params) => requests.post(`/Adver/MarkAdvder?adverId=${params}`),
+  unmarkAdvder: (params) =>
+    requests.post(`/Adver/UnMarkAdvder?adverId=${params}`),
+
+  asignResomeToAdver: (adverId) =>
+    requests.post(`/Resome/AsignResomeToAdver?adverId=${adverId}`),
 };
 
 export default {

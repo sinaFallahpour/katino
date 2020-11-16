@@ -2,7 +2,7 @@ import React from "react";
 import { Ad } from "./Ad";
 import { Link } from "react-router-dom";
 
-export function Latest({ latest }) {
+export function Latest({ latest, handleMarkOtherAdv }) {
   if (!latest) return <> </>;
   return (
     <div className="row">
@@ -16,6 +16,10 @@ export function Latest({ latest }) {
             salary={item.salary}
             type={item.typeOfCooperation}
             typeOfCooperation={item.typeOfCooperation}
+            // immediately={this.state.immediatelyAds}
+            // latest={this.state.latestAds}
+            item={item}
+            handleMarkOtherAdv={handleMarkOtherAdv}
           />
         </div>
       ))}

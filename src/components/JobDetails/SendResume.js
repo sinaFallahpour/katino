@@ -2,34 +2,44 @@ import React, { Component } from "react";
 import axios from "axios";
 import API_ADDRESS from "../../API_ADDRESS";
 import { toast } from "react-toastify";
-
+import agent from "../../core/agent";
 export class SendResume extends Component {
   state = {};
 
   componentDidMount() {}
 
-  submitHandler(event) {
+  submitHandler = async (event) => {
     event.preventDefault();
 
-    axios
-      .post(
-        API_ADDRESS + `​/AsignResomeToAdver?adverId=${this.props.id}`,
-        {},
-        {
-          headers: {
-            Authorization: `bearer ${window.localStorage.getItem("JWT")}`,
-          },
-        }
-      )
-      .then(() => toast.success("رزومه با موفقیت ارسال شد"))
-      .catch((err) => {
-        if (err.response.status === 401) toast.error("لطفا وارد شوید.");
-        else if (err.response.status === 404)
-          toast.error("رزومه‌ی خود را وارد نکرده اید یا از.");
-        else if (err.response.status === 500) toast.error("مشکلی رخ داده است.");
-        else toast.error(err.response.message[0]);
-      });
-  }
+    try {
+      // return params;
+      await agent.Adver.asignResomeToAdver(this.props.id);
+      toast.success("رزومه با موفقیت ارسال شد");
+    } catch (err) {
+      if (err.response.status === 401) toast.error("لطفا وارد شوید.");
+      else if (err.response.status === 404) toast.error("خطای رخ داده  ");
+      else if (err.response.status === 500) toast.error("مشکلی رخ داده ");
+      else toast.error(err.response.message[0]);
+    }
+
+    // axios
+    //   .post(
+    //     API_ADDRESS + `​/Resome/AsignResomeToAdver?adverId=${this.props.id}`,
+    //     {},
+    //     {
+    //       headers: {
+    //         Authorization: `bearer ${window.localStorage.getItem("JWT")}`,
+    //       },
+    //     }
+    //   )
+    //   .then(() => toast.success("رزومه با موفقیت ارسال شد"))
+    //   .catch((err) => {
+    //     if (err.response.status === 401) toast.error("لطفا وارد شوید.");
+    //     else if (err.response.status === 404) toast.error("خطای رخ داده  ");
+    //     else if (err.response.status === 500) toast.error("مشکلی رخ داده ");
+    //     else toast.error(err.response.message[0]);
+    //   });
+  };
 
   render() {
     return (

@@ -13,9 +13,9 @@ export class Filters extends Component {
     data: {
       category: "",
       city: "",
-      typeOfCooperation: null,
-      workExperience: null,
-      salary: null,
+      typeOfCooperation: 1,
+      workExperience: 1,
+      salary: 1,
     },
     typeOfCooperation: [
       {
@@ -116,7 +116,6 @@ export class Filters extends Component {
   };
 
   render() {
-    console.log(this.state.categories);
     return (
       <div className="filters row smt-4">
         <div className="col-12 col-lg-3 ir-r smb-2">
@@ -130,6 +129,7 @@ export class Filters extends Component {
               // )}
 
               onChange={async (e) => {
+                console.log(e);
                 await this.setState({
                   data: { ...this.state.data, category: e.label },
                 });
@@ -151,10 +151,14 @@ export class Filters extends Component {
           <div className="srounded-md sbs-content bg-white sp-1">
             <Select
               // isMulti
-
+              isClearable
               onChange={async (e) => {
+                console.log(e);
                 await this.setState({
-                  data: { ...this.state.data, typeOfCooperation: e.value },
+                  data: {
+                    ...this.state.data,
+                    typeOfCooperation: e ? e.value : 1,
+                  },
                 });
                 this.props.handleFilter(this.state.data);
               }}
@@ -168,9 +172,11 @@ export class Filters extends Component {
         <div className="col-12 col-lg-3 ir-r smb-2">
           <div className="srounded-md sbs-content bg-white sp-1">
             <Select
+              isClearable
               onChange={async (e) => {
+                console.log(e);
                 await this.setState({
-                  data: { ...this.state.data, city: e.label },
+                  data: { ...this.state.data, city: e ? e.label : null },
                 });
                 this.props.handleFilter(this.state.data);
               }}
@@ -185,9 +191,11 @@ export class Filters extends Component {
           <div className="srounded-md sbs-content bg-white sp-1">
             <Select
               // isMulti
+              isClearable
               onChange={async (e) => {
+                console.log(e);
                 await this.setState({
-                  data: { ...this.state.data, salary: e.label },
+                  data: { ...this.state.data, salary: e ? e.value : 1 },
                 });
                 this.props.handleFilter(this.state.data);
               }}
@@ -201,9 +209,13 @@ export class Filters extends Component {
         <div className="col-12 col-lg-3 ir-r mb-0">
           <div className="srounded-md sbs-content bg-white sp-1">
             <Select
+              isClearable
               onChange={async (e) => {
                 await this.setState({
-                  data: { ...this.state.data, workExperience: e.value },
+                  data: {
+                    ...this.state.data,
+                    workExperience: e ? e.value : 1,
+                  },
                 });
                 this.props.handleFilter(this.state.data);
               }}

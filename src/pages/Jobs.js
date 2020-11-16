@@ -29,14 +29,15 @@ export class Jobs extends Component {
     let key = params.get("key");
     let city = params.get("city");
 
-    if (key || city)
+    if (key || city) {
+      console.log(searchAdver(key, city, 1, 10));
       searchAdver(key, city, 1, 10).then((res) => {
         this.setState({
           adsList: res.data.resul.listOfData,
           pageCount: res.data.resul.pageCount,
         });
       });
-    else
+    } else
       latestAdvers(1, 10).then((res) => {
         this.setState({
           adsList: res.data.resul.listOfData,
@@ -60,14 +61,16 @@ export class Jobs extends Component {
         10,
         this.state.curentPage
       );
-      if (data?.result) {
-        // await this.setState({
-        //   currenServiceServiceData: data.result.data,
-        // });
-        // this.toggleServiceModal();
 
-        return;
-      }
+      console.log(data);
+
+      this.setState({
+        adsList: data.resul.listOfData,
+        pageCount: data.resul.pageCount,
+      });
+
+      // data.resul.pageCount;
+      // data.resul.listOfData
     } catch (ex) {
       toast.error("خطایی رخ داده");
       // Swal.fire("خطایی رخ داده");
@@ -104,7 +107,6 @@ export class Jobs extends Component {
     } catch (ex) {
       console.log(ex.response);
 
-      console.log("1222");
       if (ex.response?.data) toast.error(ex.response?.data.message[0]);
     } finally {
       Swal.close();
@@ -119,6 +121,44 @@ export class Jobs extends Component {
       allowOutsideClick: false,
     });
     Swal.showLoading();
+  };
+
+  handleMarkOtherAdv = async (adverId) => {
+    try {
+      let currentAdver = this.state.adsList.find((c) => c.id == adverId);
+      console.log(currentAdver);
+      if (currentAdver.isMarked) {
+        // this.setState({ isMarked: false });
+
+        this.setState({
+          adsList: this.state.adsList.map((el) =>
+            el.id === adverId ? Object.assign({}, el, { isMarked: false }) : el
+          ),
+        });
+        await agent.Adver.unmarkAdvder(adverId);
+      } else {
+        this.setState({
+          adsList: this.state.adsList.map((el) =>
+            el.id === adverId ? Object.assign({}, el, { isMarked: true }) : el
+          ),
+        });
+
+        await agent.Adver.markAdvder(adverId);
+      }
+    } catch (ex) {
+      this.setState({ isMarked: !this.state.isMarked });
+
+      if (ex?.response?.data) {
+        toast.error(ex.response?.data?.message[0]);
+        this.setState({
+          data: this.state.adsList.map((el) =>
+            el.id === adverId
+              ? Object.assign({}, el, { isMarked: !el.isMarked })
+              : el
+          ),
+        });
+      }
+    }
   };
 
   paginate = () => {
@@ -171,6 +211,8 @@ export class Jobs extends Component {
                       salary={item.salary}
                       typeOfCooperation={item.typeOfCooperation}
                       descriptionOfJob={item.descriptionOfJob}
+                      item={item}
+                      handleMarkOtherAdv={this.handleMarkOtherAdv}
                     />
                   </div>
                 ))

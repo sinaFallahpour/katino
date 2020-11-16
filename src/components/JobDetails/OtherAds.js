@@ -24,6 +24,8 @@ export function OtherAds(props) {
                 salary={item.salary}
                 typeOfCooperation={item.typeOfCooperation}
                 descriptionOfJob={item.descriptionOfJob}
+                item={item}
+                handleMarkOtherAdv={props.handleMarkOtherAdv}
               />
             </div>
           ))

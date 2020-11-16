@@ -50,21 +50,34 @@ export class Ad extends Component {
         .catch();
     }
   };
+  // id={item.id}
+  // title={item.title}
+  // companyName={item.companyName}
+  // city={item.city}
+  // salary={item.salary}
+  // typeOfCooperation={item.typeOfCooperation}
+  // descriptionOfJob={item.descriptionOfJob}
+  // item={item}
 
   render() {
     return (
       <div className="card ad srounded-sm sp-2 text-decoration-none">
         <header className="d-flex justify-content-between align-items-center smb-1">
-          <Link
-            className="fs-m ir-b c-dark text-truncate"
-            to={`/JobDetails/${this.props.id}`}
+          <a
+            class="fs-m ir-b c-dark text-truncate"
+            href={`/JobDetails/${this.props.id}`}
+            dideo-checked="true"
           >
             {this.props.title}
-          </Link>
+          </a>
+
           <i
-            onClick={this.adMarker}
+            // onClick={this.adMarker}
+            onClick={() => {
+              this.props.handleMarkOtherAdv(this.props.id);
+            }}
             className={`bookmarker-btn c-dark fs-l ${
-              this.state.markAd === false ? "far" : "fas"
+              this.props.item?.isMarked === false ? "far" : "fas"
             } fa-bookmark`}
           ></i>
         </header>
