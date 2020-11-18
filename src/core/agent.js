@@ -3,7 +3,14 @@ import axios from "axios";
 import { toast } from "react-toastify";
 export const baseUrl = "https://katino.niknet.co/api/";
 //axios.defaults.baseURL = "https://localhost:44377/api";
+
 axios.defaults.baseURL = "https://katino.niknet.co/api";
+export const avatarUrl = "https://katino.niknet.co/img/employeeAvatar"
+
+
+
+
+
 
 // const token = window.localStorage.getItem("jwt");
 // axios.config.headers.Authorization = `Bearer ${token}`;
@@ -24,7 +31,7 @@ axios.interceptors.response.use(undefined, (error) => {
     toast.error("Network error - make sure API is running!");
   }
 
-  if (error?.response.status == 404) {
+  if (error?.response?.status == 404) {
     toast.error("خطایی رخ داده!");
   }
   // const { status, data, config } = error?.response;
@@ -59,6 +66,19 @@ export const requests = {
       headers: { "Content-type": "multipart/form-data" },
     });
   },
+
+  postForm2: (url, propertyName, file) => {
+    const formData = new FormData();
+    formData.append("File", file);
+    return axios.post(url, formData, {
+      headers: { "Content-type": "multipart/form-data" },
+    });
+  },
+
+
+
+
+
 };
 
 const Adver = {
@@ -85,10 +105,30 @@ const CreateResome = {
     requests.get("/Account/LoadEmployeePersonalInformation"),
 
   AddEmployeeAboutMen: (body) =>
-    requests.post("/Resome/AddEmployeeAboutMen", body),
+    requests.post("/Resome/AddEmployeeAboutMe", body),
+
+  LoadEmployeeAboutMe: () =>
+    requests.get("/Resome/LoadEmployeeAboutMe"),
+
+  AddUserJobSkill: (id) =>
+    requests.post("/UserJobSkill/AddUserJobSkill", id),
+
+  DeleteUserJobSkill: (id) =>
+    requests.del(`/UserJobSkill/DeleteUserJobSkill?id=${id}`),
+
 
   GetAlljobSkillsForSelect: () =>
     requests.get("/JobSkills/GetAlljobSkillsForSelect"),
+
+  getAllUserJobSkillsForCurrentUser: () =>
+    requests.get("/UserJobSkill/GetAllUserJobSkillsForCurrentUser"),
+
+  employeeChangeAvatar: () =>
+    requests.get("/Account/EmployeeChangeAvatar"),
+
+
+
+
 };
 
 const Cities = {

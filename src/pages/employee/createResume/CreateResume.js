@@ -5,8 +5,8 @@ import Select from "react-select";
 
 import { toast } from "react-toastify";
 import { SideBar } from "../../../components";
-import agent from "../../../core/agent";
-import { salaries } from "./salaries";
+import agent, { avatarUrl } from "../../../core/agent";
+import { salaries, typeOfCooperation, expriences } from "./salaries";
 
 export class CreateResume extends Component {
   state = {
@@ -31,16 +31,39 @@ export class CreateResume extends Component {
     console.log(res.data.resul);
     const { data } = await agent.CreateResome.loadEmployeePersonalInformation();
 
-    const resJobSkill = await agent.CreateResome.GetAlljobSkillsForSelect();
+    const resAboutMe = await agent.CreateResome.LoadEmployeeAboutMe();
 
-    this.setState({
+
+    const resJobSkill = await agent.CreateResome.GetAlljobSkillsForSelect();
+    const resuserJobSkill = await agent.CreateResome.getAllUserJobSkillsForCurrentUser();
+
+
+
+
+
+
+
+    await this.setState({
       info2: data.resul,
       cities: res.data.resul,
-      jobSkills: resJobSkill.resul,
+      jobSkills: resJobSkill.data.resul,
+      userJobSkills: resuserJobSkill.data.resul,
+      aboutMen: resAboutMe.data.resul
     });
+
+
+    console.log(this.state.info2?.employeeAvatar);
+
+
+
   }
 
   async avatarHandler(event) {
+
+    // await this.setState({
+    //   avatarFile: event.target.files[0],
+    // });
+
     await this.setState({
       avatarSRC: URL.createObjectURL(event.target.files[0]),
     });
@@ -55,7 +78,12 @@ export class CreateResume extends Component {
           Authorization: `bearer ${window.localStorage.getItem("JWT")}`,
         },
       })
-      .then(() => this.setState({ hasImage: true }))
+      .then((data) => {
+        // avatarUrl + "/" + this.state.info2?.employeeAvatar
+        this.setState({ info2: { ...this.state.info2, employeeAvatar: avatarUrl + "/" + data.resul } })
+        this.setState({ hasImage: true })
+      }
+      )
       .catch(
         this.setState({
           errors: {
@@ -165,7 +193,7 @@ export class CreateResume extends Component {
         data1
       );
       console.log(data);
-      toast.success("ثبت موقیت آمیز");
+      toast.success("ثبت موفقیت آمیز");
       this.setState({ editMode1: false });
     } catch (err) {
       if (err.response.status === 401) toast.error("لطفا وارد شوید.");
@@ -184,13 +212,12 @@ export class CreateResume extends Component {
 
     try {
       // return params;
-      let data2 = { ...this.state.info3 };
-
-      let { data } = await agent.CreateResome.AddEmployeeAboutMen(data2);
-      toast.success("ثبت موقیت آمیز");
+      let obj = { aboutMe: this.state.aboutMen }
+      let { data } = await agent.CreateResome.AddEmployeeAboutMen(obj);
+      toast.success("ثبت موفقیت آمیز");
       this.setState({ editMode2: false });
     } catch (err) {
-      if (err.response.status === 401) toast.error("لطفا وارد شوید.");
+      if (err.response?.status === 401) toast.error("لطفا وارد شوید.");
       else if (err.response.status === 404) toast.error("خطای رخ داده  ");
       else if (err.response.status === 500) toast.error("مشکلی رخ داده ");
       else {
@@ -200,6 +227,109 @@ export class CreateResume extends Component {
       }
     }
   };
+
+
+  SubmitJobSkill = async (event) => {
+    event.preventDefault();
+
+    try {
+      // return params;
+      let currentJobSkill = this.state.currentJobSkill
+      let obj = { jobSkillId: currentJobSkill?.id }
+      let { data } = await agent.CreateResome.AddUserJobSkill(obj);
+
+      // let userJobSkills = this.state.userJobSkills.concat({ id: currentJobSkill.id, jobSkillName: currentJobSkill.jobSkillName });
+      let userJobSkills = this.state.userJobSkills.concat({ id: data.resul.id, jobSkillName: currentJobSkill.jobSkillName });
+      this.setState({
+        userJobSkills,
+        editMode4: false
+      });
+      toast.success("ثبت موفقیت آمیز");
+    } catch (err) {
+      if (err.response?.status === 401) toast.error("لطفا وارد شوید.");
+      else if (err.response.status === 404) toast.error("خطای رخ داده ");
+      else if (err.response.status === 500) toast.error("مشکلی رخ داده ");
+      else {
+        for (let index = 0; index < err.response.data.message.length; index++) {
+          toast.error(err.response.data.message[index]);
+        }
+      }
+    }
+  };
+
+
+  deleJobSkills = async (id) => {
+    // event.preventDefault();
+
+    try {
+      // // return params;
+      // let currentJobSkill = this.state.currentJobSkill
+      // let obj = { jobSkillId: currentJobSkill?.id }
+      let { data } = await agent.CreateResome.DeleteUserJobSkill(id);
+
+      this.setState({
+        userJobSkills: this.state.userJobSkills.filter(
+          item => item.id !== id,
+        ),
+      });
+
+      // let userJobSkills = this.state.userJobSkills.concat({ id: currentJobSkill.id, jobSkillName: currentJobSkill.jobSkillName });
+      // this.setState({
+      //   userJobSkills,
+      //   editMode4: false
+      // });
+
+      toast.success("حذف موفقیت آمیز");
+      // this.setState({ editMode2: false });
+    } catch (err) {
+      if (err.response?.status === 401) toast.error("لطفا وارد شوید.");
+      else if (err.response.status === 404) toast.error("خطای رخ داده  ");
+      else if (err.response.status === 500) toast.error("مشکلی رخ داده ");
+      else {
+        for (let index = 0; index < err.response.data.message.length; index++) {
+          toast.error(err.response.data.message[index]);
+        }
+      }
+    }
+  };
+
+
+
+
+
+
+
+
+
+
+
+  // SubmitJobSkill = async (event) => {
+  //   event.preventDefault();
+
+  //   try {
+  //     // return params;
+  //     console.clear()
+  //     console.log('11111111');
+
+  //     console.log(this.state.currentJobSkill?.id);
+  //     alert(1)
+  //     let { data } = await agent.CreateResome.AddUserJobSkill(this.state.currentJobSkill.id);
+  //     toast.success("ثبت موقیت آمیز");
+  //     this.setState({ editMode2: false });
+  //   } catch (err) {
+  //     if (err.response?.status === 401) toast.error("لطفا وارد شوید.");
+  //     else if (err.response.status === 404) toast.error("خطای رخ داده  ");
+  //     else if (err.response.status === 500) toast.error("مشکلی رخ داده ");
+  //     else {
+  //       for (let index = 0; index < err.response.data.message.length; index++) {
+  //         toast.error(err.response.data.message[index]);
+  //       }
+  //     }
+  //   }
+  // };
+
+
+
 
   // get cities=()=>{}
   render() {
@@ -221,16 +351,13 @@ export class CreateResume extends Component {
             </h3>
             <div
               className="bg-white srounded-md sp-2"
-              style={{ boxShadow: "2px 2px 2px 2px black" }}
             >
               <div className="row">
                 <div className="col-12 col-lg-3 d-lg-flex flex-column justify-content-center">
                   <img
+                    style={{ width: "212px" }}
                     className="w-100 d-block srounded-sm"
-                    src={
-                      !this.state.hasImage
-                        ? "/img/user-profile.png"
-                        : this.state.avatarSRC
+                    src={avatarUrl + "/" + this.state.info2?.employeeAvatar || "/img/user-profile.png"
                     }
                     alt=""
                   />
@@ -247,6 +374,7 @@ export class CreateResume extends Component {
                   >
                     تغییر عکس
                   </label>
+
                 </div>
 
                 <div className="col-12 col-lg-9">
@@ -267,20 +395,20 @@ export class CreateResume extends Component {
                       </button>
                     </header>
                   ) : (
-                    <header className="d-flex justify-content-between align-items-center">
-                      <h3 className="ir-b c-primary text-right d-block fs-m smb-2">
-                        ویرایش اطلاعات
+                      <header className="d-flex justify-content-between align-items-center">
+                        <h3 className="ir-b c-primary text-right d-block fs-m smb-2">
+                          ویرایش اطلاعات
                       </h3>
 
-                      <button
-                        onClick={this.cancel.bind(this)}
-                        type="button"
-                        className="btn btn-light ir-r"
-                      >
-                        بازگشت
+                        <button
+                          onClick={this.cancel.bind(this)}
+                          type="button"
+                          className="btn btn-light ir-r"
+                        >
+                          بازگشت
                       </button>
-                    </header>
-                  )}
+                      </header>
+                    )}
 
                   {!this.state.editMode ? (
                     <div className="content d-lg-flex flex-column justify-content-center">
@@ -328,159 +456,159 @@ export class CreateResume extends Component {
                       </ul>
                     </div>
                   ) : (
-                    <div className="content d-lg-flex flex-column justify-content-center">
-                      <form onSubmit={this.SubmitHandler.bind(this)}>
-                        <ul className="list-group list-group-flush p-0">
-                          <li className="list-group-item border-0 p-0">
-                            <div className="text-input srounded-sm">
-                              <label
-                                className="ir-r text-regular text-right smb-1 label bg-white"
-                                htmlFor="fullName"
-                              >
-                                نام و نام خانوادگی
+                      <div className="content d-lg-flex flex-column justify-content-center">
+                        <form onSubmit={this.SubmitHandler.bind(this)}>
+                          <ul className="list-group list-group-flush p-0">
+                            <li className="list-group-item border-0 p-0">
+                              <div className="text-input srounded-sm">
+                                <label
+                                  className="ir-r text-regular text-right smb-1 label bg-white"
+                                  htmlFor="fullName"
+                                >
+                                  نام و نام خانوادگی
                               </label>
 
-                              <div className="form-group d-flex justify-content-center align-items-center">
-                                <input
-                                  disabled
-                                  name="fullName"
-                                  value={this.state.info.userFullName || ""}
-                                  id="fullName"
-                                  className="form-control digit d-block fs-m text-right ir-r text-regular shadow-none"
-                                  type="text"
-                                  placeholder="مثال: نام و نام خانوادگی"
-                                />
+                                <div className="form-group d-flex justify-content-center align-items-center">
+                                  <input
+                                    disabled
+                                    name="fullName"
+                                    value={this.state.info.userFullName || ""}
+                                    id="fullName"
+                                    className="form-control digit d-block fs-m text-right ir-r text-regular shadow-none"
+                                    type="text"
+                                    placeholder="مثال: نام و نام خانوادگی"
+                                  />
+                                </div>
                               </div>
-                            </div>
-                          </li>
+                            </li>
 
-                          <li className="list-group-item border-0 p-0">
-                            <div className="text-input srounded-sm">
-                              <label
-                                className="ir-r text-regular text-right smb-1 label bg-white"
-                                htmlFor="jobTitle"
-                              >
-                                عنوان شغلی
+                            <li className="list-group-item border-0 p-0">
+                              <div className="text-input srounded-sm">
+                                <label
+                                  className="ir-r text-regular text-right smb-1 label bg-white"
+                                  htmlFor="jobTitle"
+                                >
+                                  عنوان شغلی
                               </label>
 
-                              <div className="form-group d-flex justify-content-center align-items-center">
-                                <input
-                                  onChange={(e) => {
-                                    this.setState({
-                                      info: {
-                                        ...this.state.info,
-                                        jobTitle: e.target.value,
-                                      },
-                                    });
-                                  }}
-                                  name="jobTitle"
-                                  value={this.state.info.jobTitle || ""}
-                                  id="jobTitle"
-                                  className="form-control digit d-block fs-m text-right ir-r text-regular shadow-none"
-                                  type="text"
-                                  placeholder="مثال: برنامه نویس فرانت اند"
-                                />
+                                <div className="form-group d-flex justify-content-center align-items-center">
+                                  <input
+                                    onChange={(e) => {
+                                      this.setState({
+                                        info: {
+                                          ...this.state.info,
+                                          jobTitle: e.target.value,
+                                        },
+                                      });
+                                    }}
+                                    name="jobTitle"
+                                    value={this.state.info.jobTitle || ""}
+                                    id="jobTitle"
+                                    className="form-control digit d-block fs-m text-right ir-r text-regular shadow-none"
+                                    type="text"
+                                    placeholder="مثال: برنامه نویس فرانت اند"
+                                  />
+                                </div>
                               </div>
-                            </div>
-                          </li>
+                            </li>
 
-                          <li className="list-group-item border-0 p-0">
-                            <div className="text-input srounded-sm">
-                              <label
-                                className="ir-r text-regular text-right smb-1 label bg-white"
-                                htmlFor="employmentStatus"
-                              >
-                                وضعیت اشتغال
+                            <li className="list-group-item border-0 p-0">
+                              <div className="text-input srounded-sm">
+                                <label
+                                  className="ir-r text-regular text-right smb-1 label bg-white"
+                                  htmlFor="employmentStatus"
+                                >
+                                  وضعیت اشتغال
                               </label>
 
-                              <div>
-                                <div className="custom-control custom-radio custom-control-inline">
-                                  <input
-                                    // onChange={(e) => {
-                                    //   this.setState({
-                                    //     info: {
-                                    //       ...this.state.info,
-                                    //       employmentStatus: parseInt(
-                                    //         e.target.value
-                                    //       ),
-                                    //     },
-                                    //   });
-                                    // }}
-                                    onChange={this.radionHandler.bind(this)}
-                                    checked={
-                                      this.state.info.employmentStatus == 1
-                                    }
-                                    // employmentStatus: parseInt(event.target.value)
+                                <div>
+                                  <div className="custom-control custom-radio custom-control-inline">
+                                    <input
+                                      // onChange={(e) => {
+                                      //   this.setState({
+                                      //     info: {
+                                      //       ...this.state.info,
+                                      //       employmentStatus: parseInt(
+                                      //         e.target.value
+                                      //       ),
+                                      //     },
+                                      //   });
+                                      // }}
+                                      onChange={this.radionHandler.bind(this)}
+                                      checked={
+                                        this.state.info.employmentStatus == 1
+                                      }
+                                      // employmentStatus: parseInt(event.target.value)
 
-                                    // employmentStatus: parseInt(event.target.value)
-                                    // onChange={this.radionHandler.bind(this)}
-                                    type="radio"
-                                    value="1"
-                                    id="status1"
-                                    name="status"
-                                    className="custom-control-input"
-                                  />
-                                  <label
-                                    className="custom-control-label ir-r"
-                                    htmlFor="status1"
-                                  >
-                                    جویای شغل
+                                      // employmentStatus: parseInt(event.target.value)
+                                      // onChange={this.radionHandler.bind(this)}
+                                      type="radio"
+                                      value="1"
+                                      id="status1"
+                                      name="status"
+                                      className="custom-control-input"
+                                    />
+                                    <label
+                                      className="custom-control-label ir-r"
+                                      htmlFor="status1"
+                                    >
+                                      جویای شغل
                                   </label>
-                                </div>
+                                  </div>
 
-                                <div className="custom-control custom-radio custom-control-inline">
-                                  <input
-                                    onChange={this.radionHandler.bind(this)}
-                                    checked={
-                                      this.state.info.employmentStatus == 2
-                                    }
-                                    type="radio"
-                                    value="2"
-                                    id="status2"
-                                    name="status"
-                                    className="custom-control-input"
-                                  />
-                                  <label
-                                    className="custom-control-label ir-r"
-                                    htmlFor="status2"
-                                  >
-                                    شاغل
+                                  <div className="custom-control custom-radio custom-control-inline">
+                                    <input
+                                      onChange={this.radionHandler.bind(this)}
+                                      checked={
+                                        this.state.info.employmentStatus == 2
+                                      }
+                                      type="radio"
+                                      value="2"
+                                      id="status2"
+                                      name="status"
+                                      className="custom-control-input"
+                                    />
+                                    <label
+                                      className="custom-control-label ir-r"
+                                      htmlFor="status2"
+                                    >
+                                      شاغل
                                   </label>
-                                </div>
+                                  </div>
 
-                                <div className="custom-control custom-radio custom-control-inline">
-                                  <input
-                                    onChange={this.radionHandler.bind(this)}
-                                    checked={
-                                      this.state.info.employmentStatus == 3
-                                    }
-                                    type="radio"
-                                    value="3"
-                                    id="status3"
-                                    name="status"
-                                    className="custom-control-input"
-                                  />
-                                  <label
-                                    className="custom-control-label ir-r"
-                                    htmlFor="status3"
-                                  >
-                                    به دنبال شغل بهتر
+                                  <div className="custom-control custom-radio custom-control-inline">
+                                    <input
+                                      onChange={this.radionHandler.bind(this)}
+                                      checked={
+                                        this.state.info.employmentStatus == 3
+                                      }
+                                      type="radio"
+                                      value="3"
+                                      id="status3"
+                                      name="status"
+                                      className="custom-control-input"
+                                    />
+                                    <label
+                                      className="custom-control-label ir-r"
+                                      htmlFor="status3"
+                                    >
+                                      به دنبال شغل بهتر
                                   </label>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          </li>
-                        </ul>
+                            </li>
+                          </ul>
 
-                        <button
-                          type="submit"
-                          className="btn btn-success ir-r fs-m smt-2"
-                        >
-                          ذخیره
+                          <button
+                            type="submit"
+                            className="btn btn-success ir-r fs-m smt-2"
+                          >
+                            ذخیره
                         </button>
-                      </form>
-                    </div>
-                  )}
+                        </form>
+                      </div>
+                    )}
                 </div>
               </div>
             </div>
@@ -492,7 +620,6 @@ export class CreateResume extends Component {
             </h3>
             <div
               className="bg-white srounded-md sp-2"
-              style={{ boxShadow: "2px 2px 2px 2px black" }}
             >
               <div className="row">
                 <div className="col-12 col-lg-9">
@@ -516,23 +643,23 @@ export class CreateResume extends Component {
                       </button>
                     </header>
                   ) : (
-                    <header className="d-flex justify-content-between align-items-center">
-                      <h3 className="ir-b c-primary text-right d-block fs-m smb-2">
-                        ویرایش اطلاعات
+                      <header className="d-flex justify-content-between align-items-center">
+                        <h3 className="ir-b c-primary text-right d-block fs-m smb-2">
+                          ویرایش اطلاعات
                       </h3>
 
-                      <button
-                        // onClick={this.cancel.bind(this)}
-                        onClick={() => {
-                          this.setState({ editMode2: false });
-                        }}
-                        type="button"
-                        className="btn btn-light ir-r"
-                      >
-                        بازگشت
+                        <button
+                          // onClick={this.cancel.bind(this)}
+                          onClick={() => {
+                            this.setState({ editMode2: false });
+                          }}
+                          type="button"
+                          className="btn btn-light ir-r"
+                        >
+                          بازگشت
                       </button>
-                    </header>
-                  )}
+                      </header>
+                    )}
 
                   {!this.state.editMode2 ? (
                     <div className="content d-lg-flex flex-column justify-content-center">
@@ -623,7 +750,7 @@ export class CreateResume extends Component {
                             <span className="c-regular">
                               {this.state.info2
                                 ? this.state.info2
-                                    ?.exemptionExpirestionRecieveDate
+                                  ?.exemptionExpirestionRecieveDate
                                 : "-"}
                             </span>
                           </span>
@@ -631,210 +758,210 @@ export class CreateResume extends Component {
                       </ul>
                     </div>
                   ) : (
-                    <div className="content d-lg-flex flex-column justify-content-center">
-                      <form onSubmit={this.SubmitPersonalInfo.bind(this)}>
-                        <ul className="list-group list-group-flush p-0">
-                          <li className="list-group-item border-0 p-0">
-                            <InputText
-                              type="email"
-                              id="email"
-                              name="email"
-                              label={"ایمیل"}
-                              value={this.state.info2?.email || ""}
-                              onChange={(e) => {
-                                this.setState({
-                                  info2: {
-                                    ...this.state.info2,
-                                    email: e.target.value,
-                                  },
-                                });
-                              }}
-                              placeholder="مثال:sia@gmail.com"
-                            />
-                          </li>
+                      <div className="content d-lg-flex flex-column justify-content-center">
+                        <form onSubmit={this.SubmitPersonalInfo.bind(this)}>
+                          <ul className="list-group list-group-flush p-0">
+                            <li className="list-group-item border-0 p-0">
+                              <InputText
+                                type="email"
+                                id="email"
+                                name="email"
+                                label={"ایمیل"}
+                                value={this.state.info2?.email || ""}
+                                onChange={(e) => {
+                                  this.setState({
+                                    info2: {
+                                      ...this.state.info2,
+                                      email: e.target.value,
+                                    },
+                                  });
+                                }}
+                                placeholder="مثال:sia@gmail.com"
+                              />
+                            </li>
 
-                          <li>
-                            <div className="text-input srounded-sm">
-                              <label
-                                className="ir-r text-regular text-right smb-1 label bg-white"
-                                htmlFor="jobTitle"
-                              >
-                                شهر
+                            <li>
+                              <div className="text-input srounded-sm">
+                                <label
+                                  className="ir-r text-regular text-right smb-1 label bg-white"
+                                  htmlFor="jobTitle"
+                                >
+                                  شهر
                               </label>
 
-                              <div className="form-group ">
-                                <Select
-                                  value={this.state.cities.filter(
-                                    (option) =>
-                                      option.cityName !== this.state.info2?.city
-                                  )}
-                                  onChange={(e) => {
-                                    this.setState({
-                                      info2: {
-                                        ...this.state.info2,
-                                        city: e.value,
-                                      },
-                                    });
-                                  }}
-                                  placeholder="انتخاب شهر"
-                                  styles={{ fontFamily: "iransans-regular" }}
-                                  // options={this.state.cities}
+                                <div className="form-group ">
+                                  <Select
+                                    value={this.state.cities.filter(
+                                      (option) =>
+                                        option.cityName !== this.state.info2?.city
+                                    )}
+                                    onChange={(e) => {
+                                      this.setState({
+                                        info2: {
+                                          ...this.state.info2,
+                                          city: e.value,
+                                        },
+                                      });
+                                    }}
+                                    placeholder="انتخاب شهر"
+                                    styles={{ fontFamily: "iransans-regular" }}
+                                    // options={this.state.cities}
 
-                                  options={this.state.cities.map((item) => {
-                                    return {
-                                      value: item.cityName,
-                                      label: ` ${item.provinceName}، ${item.cityName} `,
-                                    };
-                                  })}
-                                />
+                                    options={this.state.cities.map((item) => {
+                                      return {
+                                        value: item.cityName,
+                                        label: ` ${item.provinceName}، ${item.cityName} `,
+                                      };
+                                    })}
+                                  />
+                                </div>
                               </div>
-                            </div>
-                          </li>
+                            </li>
 
-                          <li className="list-group-item border-0 p-0">
-                            <InputText
-                              type="address"
-                              id="text"
-                              name="address"
-                              label={"شماره موبایل"}
-                              value={this.state.info2?.phoneNumber || ""}
-                              onChange={(e) => {
-                                this.setState({
-                                  info2: {
-                                    ...this.state.info2,
-                                    phoneNumber: e.target.value,
-                                  },
-                                });
-                              }}
-                              placeholder="مثال:09115674333"
-                            />
-                          </li>
+                            <li className="list-group-item border-0 p-0">
+                              <InputText
+                                type="address"
+                                id="text"
+                                name="address"
+                                label={"شماره موبایل"}
+                                value={this.state.info2?.phoneNumber || ""}
+                                onChange={(e) => {
+                                  this.setState({
+                                    info2: {
+                                      ...this.state.info2,
+                                      phoneNumber: e.target.value,
+                                    },
+                                  });
+                                }}
+                                placeholder="مثال:09115674333"
+                              />
+                            </li>
 
-                          <li className="list-group-item border-0 p-0">
-                            <InputText
-                              type="string"
-                              id="address"
-                              name="address"
-                              label={"آدرس"}
-                              value={this.state.info2?.address || ""}
-                              onChange={(e) => {
-                                this.setState({
-                                  info2: {
-                                    ...this.state.info2,
-                                    address: e.target.value,
-                                  },
-                                });
-                              }}
-                              placeholder="مثال: ساری خیابان فرهنگ"
-                            />
-                          </li>
+                            <li className="list-group-item border-0 p-0">
+                              <InputText
+                                type="string"
+                                id="address"
+                                name="address"
+                                label={"آدرس"}
+                                value={this.state.info2?.address || ""}
+                                onChange={(e) => {
+                                  this.setState({
+                                    info2: {
+                                      ...this.state.info2,
+                                      address: e.target.value,
+                                    },
+                                  });
+                                }}
+                                placeholder="مثال: ساری خیابان فرهنگ"
+                              />
+                            </li>
 
-                          <li className="list-group-item border-0 p-0">
-                            <div className="text-input srounded-sm">
-                              <label
-                                className="ir-r text-regular text-right smb-1 label bg-white"
-                                htmlFor="employmentStatus"
-                              >
-                                وضعیت تاهل
+                            <li className="list-group-item border-0 p-0">
+                              <div className="text-input srounded-sm">
+                                <label
+                                  className="ir-r text-regular text-right smb-1 label bg-white"
+                                  htmlFor="employmentStatus"
+                                >
+                                  وضعیت تاهل
                               </label>
 
-                              <div>
-                                <InputRadio
-                                  checked={
-                                    this.state.info2?.isMarreid == "true" ||
-                                    this.state.info2?.isMarreid == true
-                                  }
-                                  label={"متاهل"}
-                                  type="radio"
-                                  value={true}
-                                  id="status1"
-                                  name="status"
-                                  onChange={(e) => {
-                                    this.setState({
-                                      info2: {
-                                        ...this.state.info2,
-                                        isMarreid: e.target.value,
-                                      },
-                                    });
-                                  }}
-                                />
-                                <InputRadio
-                                  checked={
-                                    this.state.info2?.isMarreid == "false" ||
-                                    this.state.info2?.isMarreid == false
-                                  }
-                                  label={"مجرد"}
-                                  type="radio"
-                                  value={false}
-                                  id="status2"
-                                  name="status"
-                                  onChange={(e) => {
-                                    this.setState({
-                                      info2: {
-                                        ...this.state.info2,
-                                        isMarreid: e.target.value,
-                                      },
-                                    });
-                                  }}
-                                />
+                                <div>
+                                  <InputRadio
+                                    checked={
+                                      this.state.info2?.isMarreid == "true" ||
+                                      this.state.info2?.isMarreid == true
+                                    }
+                                    label={"متاهل"}
+                                    type="radio"
+                                    value={true}
+                                    id="status1"
+                                    name="status"
+                                    onChange={(e) => {
+                                      this.setState({
+                                        info2: {
+                                          ...this.state.info2,
+                                          isMarreid: e.target.value,
+                                        },
+                                      });
+                                    }}
+                                  />
+                                  <InputRadio
+                                    checked={
+                                      this.state.info2?.isMarreid == "false" ||
+                                      this.state.info2?.isMarreid == false
+                                    }
+                                    label={"مجرد"}
+                                    type="radio"
+                                    value={false}
+                                    id="status2"
+                                    name="status"
+                                    onChange={(e) => {
+                                      this.setState({
+                                        info2: {
+                                          ...this.state.info2,
+                                          isMarreid: e.target.value,
+                                        },
+                                      });
+                                    }}
+                                  />
+                                </div>
                               </div>
-                            </div>
-                          </li>
+                            </li>
 
-                          <li className="list-group-item border-0 p-0">
-                            <InputText
-                              type="text"
-                              id="exemptionExpirestionDate"
-                              name="exemptionExpirestionDate"
-                              label={"تاریخ معافیت"}
-                              value={
-                                this.state.info2?.exemptionExpirestionDate || ""
-                              }
-                              onChange={(e) => {
-                                this.setState({
-                                  info2: {
-                                    ...this.state.info2,
-                                    exemptionExpirestionDate: e.target.value,
-                                  },
-                                });
-                              }}
-                              placeholder="مثال: 1374/11/01"
-                            />
-                          </li>
+                            <li className="list-group-item border-0 p-0">
+                              <InputText
+                                type="text"
+                                id="exemptionExpirestionDate"
+                                name="exemptionExpirestionDate"
+                                label={"تاریخ معافیت"}
+                                value={
+                                  this.state.info2?.exemptionExpirestionDate || ""
+                                }
+                                onChange={(e) => {
+                                  this.setState({
+                                    info2: {
+                                      ...this.state.info2,
+                                      exemptionExpirestionDate: e.target.value,
+                                    },
+                                  });
+                                }}
+                                placeholder="مثال: 1374/11/01"
+                              />
+                            </li>
 
-                          <li className="list-group-item border-0 p-0">
-                            <InputText
-                              type="text"
-                              id="exemptionExpirestionDate"
-                              name="exemptionExpirestionDate"
-                              label={"تاریخ دریافت کارت معافیت"}
-                              value={
-                                this.state.info2
-                                  ?.exemptionExpirestionRecieveDate || ""
-                              }
-                              onChange={(e) => {
-                                this.setState({
-                                  info2: {
-                                    ...this.state.info2,
-                                    exemptionExpirestionRecieveDate:
-                                      e.target.value,
-                                  },
-                                });
-                              }}
-                              placeholder="مثال: 1374/11/01"
-                            />
-                          </li>
-                        </ul>
+                            <li className="list-group-item border-0 p-0">
+                              <InputText
+                                type="text"
+                                id="exemptionExpirestionDate"
+                                name="exemptionExpirestionDate"
+                                label={"تاریخ دریافت کارت معافیت"}
+                                value={
+                                  this.state.info2
+                                    ?.exemptionExpirestionRecieveDate || ""
+                                }
+                                onChange={(e) => {
+                                  this.setState({
+                                    info2: {
+                                      ...this.state.info2,
+                                      exemptionExpirestionRecieveDate:
+                                        e.target.value,
+                                    },
+                                  });
+                                }}
+                                placeholder="مثال: 1374/11/01"
+                              />
+                            </li>
+                          </ul>
 
-                        <button
-                          type="submit"
-                          className="btn btn-success ir-r fs-m smt-2"
-                        >
-                          ذخیره
+                          <button
+                            type="submit"
+                            className="btn btn-success ir-r fs-m smt-2"
+                          >
+                            ذخیره
                         </button>
-                      </form>
-                    </div>
-                  )}
+                        </form>
+                      </div>
+                    )}
                 </div>
               </div>
             </div>
@@ -844,7 +971,6 @@ export class CreateResume extends Component {
             <h3 className="d-block text-right ir-b smb-3 c-dark">درباره من</h3>
             <div
               className="bg-white srounded-md sp-2"
-              style={{ boxShadow: "2px 2px 2px 2px black" }}
             >
               <div className="row">
                 <div className="col-12 col-lg-9">
@@ -868,23 +994,23 @@ export class CreateResume extends Component {
                       </button>
                     </header>
                   ) : (
-                    <header className="d-flex justify-content-between align-items-center">
-                      <h3 className="ir-b c-primary text-right d-block fs-m smb-2">
-                        ویرایش اطلاعات
+                      <header className="d-flex justify-content-between align-items-center">
+                        <h3 className="ir-b c-primary text-right d-block fs-m smb-2">
+                          ویرایش اطلاعات
                       </h3>
 
-                      <button
-                        // onClick={this.cancel.bind(this)}
-                        onClick={() => {
-                          this.setState({ editMode3: false });
-                        }}
-                        type="button"
-                        className="btn btn-light ir-r"
-                      >
-                        بازگشت
+                        <button
+                          // onClick={this.cancel.bind(this)}
+                          onClick={() => {
+                            this.setState({ editMode3: false });
+                          }}
+                          type="button"
+                          className="btn btn-light ir-r"
+                        >
+                          بازگشت
                       </button>
-                    </header>
-                  )}
+                      </header>
+                    )}
 
                   {!this.state.editMode3 ? (
                     <div className="content d-lg-flex flex-column justify-content-center">
@@ -893,8 +1019,8 @@ export class CreateResume extends Component {
                           <span className="ir-b c-grey sml-1">
                             درباره من:
                             <span className="c-regular">
-                              {this.state.info3
-                                ? this.state.info3?.aboutMen
+                              {this.state.aboutMen
+                                ? this.state?.aboutMen
                                 : "-"}
                             </span>
                           </span>
@@ -902,48 +1028,45 @@ export class CreateResume extends Component {
                       </ul>
                     </div>
                   ) : (
-                    <div className="content d-lg-flex flex-column justify-content-center">
-                      <form onSubmit={this.SubmitAboutMen.bind(this)}>
-                        <ul className="list-group list-group-flush p-0">
-                          <li className="list-group-item border-0 p-0">
-                            <div className="text-input srounded-sm">
-                              <label
-                                className="ir-r text-regular text-right smb-1 label bg-white"
-                                htmlFor="jobTitle"
-                              >
-                                درباره من
+                      <div className="content d-lg-flex flex-column justify-content-center">
+                        <form onSubmit={this.SubmitAboutMen.bind(this)}>
+                          <ul className="list-group list-group-flush p-0">
+                            <li className="list-group-item border-0 p-0">
+                              <div className="text-input srounded-sm">
+                                <label
+                                  className="ir-r text-regular text-right smb-1 label bg-white"
+                                  htmlFor="jobTitle"
+                                >
+                                  درباره من
                               </label>
 
-                              <div className="form-group d-flex justify-content-center align-items-center">
-                                <textarea
-                                  style={{ minHeight: "200px" }}
-                                  onChange={(e) => {
-                                    this.setState({
-                                      info3: {
-                                        ...this.state.info3,
+                                <div className="form-group d-flex justify-content-center align-items-center">
+                                  <textarea
+                                    style={{ minHeight: "200px" }}
+                                    onChange={(e) => {
+                                      this.setState({
                                         aboutMen: e.target.value,
-                                      },
-                                    });
-                                  }}
-                                  name="aboutMen"
-                                  value={this.state.info3?.aboutMen || ""}
-                                  className="form-control digit d-block fs-m text-right ir-r text-regular shadow-none"
-                                  type="textarea"
-                                  placeholder="از شخصیت و ویژگی‌های حرفه‌ای و شخصی خود بنویسید..."
-                                />
+                                      });
+                                    }}
+                                    name="aboutMen"
+                                    value={this.state?.aboutMen || ""}
+                                    className="form-control digit d-block fs-m text-right ir-r text-regular shadow-none"
+                                    type="textarea"
+                                    placeholder="از شخصیت و ویژگی‌های حرفه‌ای و شخصی خود بنویسید..."
+                                  />
+                                </div>
                               </div>
-                            </div>
-                          </li>
-                        </ul>
-                        <button
-                          type="submit"
-                          className="btn btn-success ir-r fs-m smt-2"
-                        >
-                          ذخیره
+                            </li>
+                          </ul>
+                          <button
+                            type="submit"
+                            className="btn btn-success ir-r fs-m smt-2"
+                          >
+                            ذخیره
                         </button>
-                      </form>
-                    </div>
-                  )}
+                        </form>
+                      </div>
+                    )}
                 </div>
               </div>
             </div>
@@ -955,10 +1078,9 @@ export class CreateResume extends Component {
             </h3>
             <div
               className="bg-white srounded-md sp-2"
-              style={{ boxShadow: "2px 2px 2px 2px black" }}
             >
               <div className="row">
-                <div className="col-12 col-lg-9">
+                <div className="col-12 col-lg-12">
                   {!this.state.editMode4 ? (
                     <header className="d-flex justify-content-between align-items-center">
                       {/* <h3 className="ir-b c-primary text-right d-block fs-m smb-2">
@@ -979,23 +1101,23 @@ export class CreateResume extends Component {
                       </button>
                     </header>
                   ) : (
-                    <header className="d-flex justify-content-between align-items-center">
-                      <h3 className="ir-b c-primary text-right d-block fs-m smb-2">
-                        ویرایش اطلاعات
+                      <header className="d-flex justify-content-between align-items-center">
+                        <h3 className="ir-b c-primary text-right d-block fs-m smb-2">
+                          ویرایش اطلاعات
                       </h3>
 
-                      <button
-                        // onClick={this.cancel.bind(this)}
-                        onClick={() => {
-                          this.setState({ editMode4: false });
-                        }}
-                        type="button"
-                        className="btn btn-light ir-r"
-                      >
-                        بازگشت
+                        <button
+                          // onClick={this.cancel.bind(this)}
+                          onClick={() => {
+                            this.setState({ editMode4: false });
+                          }}
+                          type="button"
+                          className="btn btn-light ir-r"
+                        >
+                          بازگشت
                       </button>
-                    </header>
-                  )}
+                      </header>
+                    )}
 
                   {!this.state.editMode4 ? (
                     <div className="content d-lg-flex flex-column justify-content-center">
@@ -1008,55 +1130,114 @@ export class CreateResume extends Component {
                                 ? this.state.info3?.aboutMen
                                 : "-"}
                             </span> */}
-                            <div className="p-1">
-                              {this.state.jobSkills?.map((item) => {
-                                return (
-                                  <button
-                                    key={item.id}
-                                    className="btn btn-success ml-1"
-                                  >
-                                    {item.name}
-                                    <i className="mr-1 fas fa-times"></i>
-                                  </button>
-                                );
-                              })}
-                            </div>
+
                           </span>
                         </li>
+
                       </ul>
+                      <div className="p-1">
+                        {this.state.userJobSkills?.map((item) => {
+                          return (
+                            <button
+                              key={item.id}
+                              className="btn btn-success ml-1 m-1"
+                            >
+                              {item.jobSkillName}
+                              <i className="mr-1 fas fa-times" onClick={() => { this.deleJobSkills(item.id) }}></i>
+                            </button>
+                          );
+                        })}
+                      </div>
                     </div>
                   ) : (
-                    <div className="content d-lg-flex flex-column justify-content-center">
-                      <form onSubmit={this.SubmitAboutMen.bind(this)}>
-                        <ul className="list-group list-group-flush p-0">
-                          <li className="list-group-item border-0 p-0">
-                            <InputText
-                              type="text"
-                              id="jobSkill"
-                              name="jobSkill"
-                              label={"مهارت"}
-                              value={this.state.info4?.jobSkill || ""}
-                              onChange={(e) => {
-                                this.setState({
-                                  info4: {
-                                    ...this.state.info4,
-                                    jobSkill: e.target.value,
-                                  },
-                                });
-                              }}
-                              placeholder="مثال:تدریس"
-                            />
-                          </li>
-                        </ul>
-                        <button
-                          type="submit"
-                          className="btn btn-success ir-r fs-m smt-2"
-                        >
-                          ذخیره
+                      <div className="content d-lg-flex flex-column justify-content-center">
+                        <form onSubmit={this.SubmitJobSkill.bind(this)}>
+                          <ul className="list-group list-group-flush p-0">
+
+                            <li>
+                              <div className="text-input srounded-sm">
+                                <label
+                                  className="ir-r text-regular text-right smb-1 label bg-white"
+                                  htmlFor="jobTitle"
+                                >
+                                  مهارت‌های حرفه‌ای
+
+                                </label>
+
+
+                                {/* {this.state.userJobSkills?.map((item) => {
+                                  return (
+                                    <button
+                                      key={item.id}
+                                      className="btn btn-success "
+                                    >
+                                      {item.jobSkillName}
+                                      <i className="mr-1 fas fa-times"
+                                        onClick={() => { this.deleteJobSkill(item.id) }}
+                                      ></i>
+                                    </button>
+                                  );
+                                })} */}
+
+
+                                <div className="form-group ">
+                                  <Select
+                                    // userJobSkills: resuserJobSkill.data.resul,
+
+                                    onChange={(e) => {
+                                      // console.clear();
+                                      // console.log(this.state.userJobSkills);
+                                      // let userJobSkills = this.state.userJobSkills.concat({ id: e.value, jobSkillName: e.label });
+                                      this.setState({
+                                        currentJobSkill: { id: e.value, jobSkillName: e.label }
+                                      });
+                                    }}
+                                    placeholder="مهارت شما..."
+                                    styles={{ fontFamily: "iransans-regular" }}
+                                    // options={this.state.cities}
+
+                                    options={this.state.jobSkills.map((item) => {
+                                      return {
+                                        value: item.id,
+                                        label: `${item.name}`,
+                                      };
+                                    })}
+                                  />
+                                </div>
+                              </div>
+                            </li>
+
+
+
+
+                            {/* <li className="list-group-item border-0 p-0">
+                              <InputText
+                                type="text"
+                                id="jobSkill"
+                                name="jobSkill"
+                                label={"مهارت"}
+                                value={this.state.info4?.jobSkill || ""}
+                                onChange={(e) => {
+                                  this.setState({
+                                    info4: {
+                                      ...this.state.info4,
+                                      jobSkill: e.target.value,
+                                    },
+                                  });
+                                }}
+                                placeholder="مثال:تدریس"
+                              />
+                            </li> */}
+                          </ul>
+                          <button
+                            type="submit"
+                            className="btn btn-success ir-r fs-m smt-2"
+                          >
+                            ذخیره
                         </button>
-                      </form>
-                    </div>
-                  )}
+                        </form>
+                      </div>
+                    )}
                 </div>
               </div>
             </div>
@@ -1064,15 +1245,14 @@ export class CreateResume extends Component {
 
           <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4">
             <h3 className="d-block text-right ir-b smb-3 c-dark">
-              اطلاعات فردی
+              ترجیحات شغلی
             </h3>
             <div
               className="bg-white srounded-md sp-2"
-              style={{ boxShadow: "2px 2px 2px 2px black" }}
             >
               <div className="row">
                 <div className="col-12 col-lg-9">
-                  {!this.state.editMode2 ? (
+                  {!this.state.editMode8 ? (
                     <header className="d-flex justify-content-between align-items-center">
                       {/* <h3 className="ir-b c-primary text-right d-block fs-m smb-2">
                         {this.state.info
@@ -1083,7 +1263,7 @@ export class CreateResume extends Component {
                       <button
                         // onClick={this.editDesc.bind(this)}
                         onClick={() => {
-                          this.setState({ editMode2: true });
+                          this.setState({ editMode8: true });
                         }}
                         type="button"
                         className="btn btn-light ir-r"
@@ -1092,32 +1272,32 @@ export class CreateResume extends Component {
                       </button>
                     </header>
                   ) : (
-                    <header className="d-flex justify-content-between align-items-center">
-                      <h3 className="ir-b c-primary text-right d-block fs-m smb-2">
-                        ویرایش اطلاعات
+                      <header className="d-flex justify-content-between align-items-center">
+                        <h3 className="ir-b c-primary text-right d-block fs-m smb-2">
+                          ویرایش اطلاعات
                       </h3>
 
-                      <button
-                        // onClick={this.cancel.bind(this)}
-                        onClick={() => {
-                          this.setState({ editMode2: false });
-                        }}
-                        type="button"
-                        className="btn btn-light ir-r"
-                      >
-                        بازگشت
+                        <button
+                          // onClick={this.cancel.bind(this)}
+                          onClick={() => {
+                            this.setState({ editMode8: false });
+                          }}
+                          type="button"
+                          className="btn btn-light ir-r"
+                        >
+                          بازگشت
                       </button>
-                    </header>
-                  )}
+                      </header>
+                    )}
 
-                  {!this.state.editMode2 ? (
+                  {!this.state.editMode8 ? (
                     <div className="content d-lg-flex flex-column justify-content-center">
                       <ul className="list-group list-group-flush p-0">
                         <li className="list-group-item border-0 pr-0">
                           <span className="ir-b c-grey sml-1">
                             ایمیل:
                             <span className="c-regular">
-                              {this.state.info2 ? this.state.info2?.email : "-"}
+                              {this.state.editMode8 ? this.state.editMode8?.email : "-"}
                             </span>
                           </span>
                         </li>
@@ -1126,8 +1306,8 @@ export class CreateResume extends Component {
                           <span className="ir-b c-grey sml-1">
                             شماره موبایل:
                             <span className="c-regular">
-                              {this.state.info2
-                                ? this.state.info2?.phoneNumber
+                              {this.state.editMode8
+                                ? this.state.editMode8?.phoneNumber
                                 : "-"}
                             </span>
                           </span>
@@ -1137,8 +1317,8 @@ export class CreateResume extends Component {
                           <span className="ir-b c-grey sml-1">
                             آدرس محل سکونت (اختیاری) :
                             <span className="c-regular">
-                              {this.state.info2
-                                ? this.state.info2?.address
+                              {this.state.editMode8
+                                ? this.state.editMode8?.address
                                 : "-"}
                             </span>
                           </span>
@@ -1148,7 +1328,7 @@ export class CreateResume extends Component {
                           <span className="ir-b c-grey sml-1">
                             شهر :
                             <span className="c-regular">
-                              {this.state.info2 ? this.state.info2?.city : "-"}
+                              {this.state.editMode8 ? this.state.editMode8?.city : "-"}
                             </span>
                           </span>
                         </li>
@@ -1157,8 +1337,8 @@ export class CreateResume extends Component {
                           <span className="ir-b c-grey sml-1">
                             وضعیت نظام :
                             <span className="c-regular">
-                              {this.state.info2
-                                ? this.state.info2?.military
+                              {this.state.editMode8
+                                ? this.state.editMode8?.military
                                 : "-"}
                             </span>
                           </span>
@@ -1186,8 +1366,8 @@ export class CreateResume extends Component {
                           <span className="ir-b c-grey sml-1">
                             تاریخ معافیت :
                             <span className="c-regular">
-                              {this.state.info2
-                                ? this.state.info2?.exemptionExpirestionDate
+                              {this.state.editMode8
+                                ? this.state.editMode8?.exemptionExpirestionDate
                                 : "-"}
                             </span>
                           </span>
@@ -1197,9 +1377,9 @@ export class CreateResume extends Component {
                           <span className="ir-b c-grey sml-1">
                             تاریخ دریافت کارت معافیت:
                             <span className="c-regular">
-                              {this.state.info2
-                                ? this.state.info2
-                                    ?.exemptionExpirestionRecieveDate
+                              {this.state.editMode8
+                                ? this.state.editMode8
+                                  ?.exemptionExpirestionRecieveDate
                                 : "-"}
                             </span>
                           </span>
@@ -1207,137 +1387,172 @@ export class CreateResume extends Component {
                       </ul>
                     </div>
                   ) : (
-                    <div className="content d-lg-flex flex-column justify-content-center">
-                      <form onSubmit={this.SubmitPersonalInfo.bind(this)}>
-                        <ul className="list-group list-group-flush p-0">
-                          <li className="list-group-item border-0 p-0">
-                            <InputText
-                              type="email"
-                              id="email"
-                              name="email"
-                              label={"ایمیل"}
-                              value={this.state.info2?.email || ""}
-                              onChange={(e) => {
-                                this.setState({
-                                  info8: {
-                                    ...this.state.info8,
-                                    email: e.target.value,
-                                  },
-                                });
-                              }}
-                              placeholder="مثال:sia@gmail.com"
-                            />
-                          </li>
+                      <div className="content d-lg-flex flex-column justify-content-center">
+                        <form onSubmit={this.SubmitPersonalInfo.bind(this)}>
+                          <ul className="list-group list-group-flush p-0">
+                            <li className="list-group-item border-0 p-0">
+                              <InputText
+                                type="email"
+                                id="email"
+                                name="email"
+                                label={"ایمیل"}
+                                value={this.state.editMode8?.email || ""}
+                                onChange={(e) => {
+                                  this.setState({
+                                    info8: {
+                                      ...this.state.info8,
+                                      email: e.target.value,
+                                    },
+                                  });
+                                }}
+                                placeholder="مثال:sia@gmail.com"
+                              />
+                            </li>
 
-                          <li>
-                            <div className="text-input srounded-sm">
-                              <label
-                                className="ir-r text-regular text-right smb-1 label bg-white"
-                                htmlFor="jobTitle"
-                              >
-                                شهر
+                            <li>
+                              <div className="text-input srounded-sm">
+                                <label
+                                  className="ir-r text-regular text-right smb-1 label bg-white"
+                                  htmlFor="jobTitle"
+                                >
+                                  شهر
                               </label>
 
-                              <div className="form-group ">
-                                <Select
-                                  // value={this.state.cities.filter(
-                                  //   (option) =>
-                                  //     option.label === this.state.info8.city
-                                  // )}
-                                  onChange={(e) => {
-                                    this.setState({
-                                      info8: {
-                                        ...this.state.info8,
-                                        city: e.value,
-                                      },
-                                    });
-                                  }}
-                                  placeholder="انتخاب شهر"
-                                  styles={{ fontFamily: "iransans-regular" }}
-                                  // options={this.state.cities}
+                                <div className="form-group ">
+                                  <Select
+                                    // value={this.state.cities.filter(
+                                    //   (option) =>
+                                    //     option.label === this.state.info8.city
+                                    // )}
+                                    onChange={(e) => {
+                                      this.setState({
+                                        info8: {
+                                          ...this.state.info8,
+                                          city: e.value,
+                                        },
+                                      });
+                                    }}
+                                    placeholder="انتخاب شهر"
+                                    styles={{ fontFamily: "iransans-regular" }}
+                                    // options={this.state.cities}
 
-                                  options={this.state.cities.map((item) => {
-                                    return {
-                                      value: item.cityName,
-                                      label: ` ${item.provinceName}، ${item.cityName} `,
-                                    };
-                                  })}
-                                />
+                                    options={this.state.cities.map((item) => {
+                                      return {
+                                        value: item.cityName,
+                                        label: ` ${item.provinceName}، ${item.cityName} `,
+                                      };
+                                    })}
+                                  />
+                                </div>
                               </div>
-                            </div>
-                          </li>
+                            </li>
 
-                          <li>
-                            <div className="text-input srounded-sm">
-                              <label
-                                className="ir-r text-regular text-right smb-1 label bg-white"
-                                htmlFor="jobTitle"
-                              >
-                                میزان حقوق
+                            <li>
+                              <div className="text-input srounded-sm">
+                                <label
+                                  className="ir-r text-regular text-right smb-1 label bg-white"
+                                  htmlFor="jobTitle"
+                                >
+                                  میزان حقوق
                               </label>
 
-                              <div className="form-group ">
-                                <Select
-                                  // isMulti
+                                <div className="form-group ">
+                                  <Select
+                                    // isMulti
 
-                                  isClearable
-                                  onChange={async (e) => {
-                                    this.setState({
-                                      info8: {
-                                        ...this.state.info8,
-                                        salary: e.value,
-                                      },
-                                    });
-                                  }}
-                                  isSearchable={false}
-                                  placeholder={"میزان حقوق"}
-                                  options={salaries}
-                                  styles={{ fontFamily: "iransans-regular" }}
-                                />
+                                    isClearable
+                                    onChange={async (e) => {
+                                      this.setState({
+                                        info8: {
+                                          ...this.state.info8,
+                                          salary: e.value,
+                                        },
+                                      });
+                                    }}
+                                    isSearchable={false}
+                                    placeholder={"میزان حقوق"}
+                                    options={salaries}
+                                    styles={{ fontFamily: "iransans-regular" }}
+                                  />
+                                </div>
                               </div>
-                            </div>
-                          </li>
+                            </li>
 
-                          <li>
-                            <div className="text-input srounded-sm">
-                              <label
-                                className="ir-r text-regular text-right smb-1 label bg-white"
-                                htmlFor="jobTitle"
-                              >
-                                میزان حقوق
+                            <li>
+                              <div className="text-input srounded-sm">
+                                <label
+                                  className="ir-r text-regular text-right smb-1 label bg-white"
+                                  htmlFor="jobTitle"
+                                >
+                                  نوع قرارداد
                               </label>
 
-                              <div className="form-group ">
-                                <Select
-                                  // isMulti
-                                  isClearable
-                                  onChange={async (e) => {
-                                    this.setState({
-                                      info8: {
-                                        ...this.state.info8,
-                                        salary: e.value,
-                                      },
-                                    });
-                                  }}
-                                  isSearchable={false}
-                                  placeholder={"میزان حقوق"}
-                                  options={salaries}
-                                  styles={{ fontFamily: "iransans-regular" }}
-                                />
+                                <div className="form-group ">
+                                  <Select
+                                    // isMulti
+                                    // isClearable
+                                    onChange={async (e) => {
+                                      this.setState({
+                                        info8: {
+                                          ...this.state.info8,
+                                          typeOfCooperation: e.value,
+                                        },
+                                      });
+                                    }}
+                                    isSearchable={false}
+                                    placeholder={"میزان حقوق"}
+                                    options={typeOfCooperation}
+                                    styles={{ fontFamily: "iransans-regular" }}
+                                  />
+                                </div>
                               </div>
-                            </div>
-                          </li>
-                        </ul>
+                            </li>
 
-                        <button
-                          type="submit"
-                          className="btn btn-success ir-r fs-m smt-2"
-                        >
-                          ذخیره
+
+
+
+                            <li>
+                              <div className="text-input srounded-sm">
+                                <label
+                                  className="ir-r text-regular text-right smb-1 label bg-white"
+                                  htmlFor="jobTitle"
+                                >
+                                  سطح ارشدیت در زمینه فعالیت
+                              </label>
+
+                                <div className="form-group ">
+                                  <Select
+                                    // isMulti
+                                    // isClearable
+                                    onChange={async (e) => {
+                                      this.setState({
+                                        info8: {
+                                          ...this.state.info8,
+                                          senioritylevel: e.value,
+                                        },
+                                      });
+                                    }}
+                                    isSearchable={false}
+                                    placeholder={"میزان حقوق"}
+                                    options={expriences}
+                                    styles={{ fontFamily: "iransans-regular" }}
+                                  />
+                                </div>
+                              </div>
+                            </li>
+
+
+                          </ul>
+
+                          <button
+                            type="submit"
+                            className="btn btn-success ir-r fs-m smt-2"
+                          >
+                            ذخیره
                         </button>
-                      </form>
-                    </div>
-                  )}
+                        </form>
+                      </div>
+                    )}
                 </div>
               </div>
             </div>

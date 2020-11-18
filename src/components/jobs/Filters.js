@@ -138,11 +138,11 @@ export class Filters extends Component {
               isSearchable={false}
               placeholder={"دسته بندی شغلی"}
               options={this.state.categories}
-              // options={this.state.categories?.map((item) => ({
-              //   value: item.id,
-              //   label: item.name,
-              // }))}
-              // options={this.state.categories}
+            // options={this.state.categories?.map((item) => ({
+            //   value: item.id,
+            //   label: item.name,
+            // }))}
+            // options={this.state.categories}
             />
           </div>
         </div>

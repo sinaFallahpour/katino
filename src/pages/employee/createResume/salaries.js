@@ -24,3 +24,48 @@ export const salaries = [
     label: "بیشتر از یک میلیون",
   },
 ];
+
+
+
+
+
+
+export const typeOfCooperation = [
+  {
+    value: 1,
+    label: "تمام وقت",
+  },
+  {
+    value: 2,
+    label: "پاره وقت",
+  },
+  {
+    value: 3,
+    label: "کارآموزی",
+  },
+  {
+    value: 4,
+    label: "دورکاری",
+  }
+]
+
+
+
+export const expriences = [
+  {
+    value: 1,
+    label: "مهم نیست",
+  },
+  {
+    value: 2,
+    label: "کمتر از سه سال",
+  },
+  {
+    value: 3,
+    label: "بیبین 3 تا 7 سال",
+  },
+  {
+    value: 4,
+    label: "بیشتر از 7 سال",
+  },
+]
