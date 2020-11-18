@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import API_ADDRESS from "../../API_ADDRESS";
 import { numberSeparator } from "../../common";
 
+
+import { toast } from "react-toastify"
 export class Factor extends Component {
   state = {
     errMessage: "",
@@ -51,15 +53,14 @@ export class Factor extends Component {
     axios
       .post(
         API_ADDRESS +
-          `payment/TestPaymentPlan?planId=${this.props.id}${
-            this.state.giftCode !== 0
-              ? `&giftCartId=${this.state.giftCode}`
-              : ""
-          }`,
+        `payment/TestPaymentPlan?planId=${this.props.id}${this.state.giftCode !== 0
+          ? `&giftCartId=${this.state.giftCode}`
+          : ""
+        }`,
         {},
         {
           headers: {
-            authorization: `bearer ${window.localStorage.getItem("JWT")}`,
+            Authorization: `bearer ${window.localStorage.getItem("JWT")}`,
           },
         }
       )
@@ -80,8 +81,18 @@ export class Factor extends Component {
         // document.documentElement.replaceWith(htmlElement);
         // document.getElementById("paymentForm").submit();
       })
-      .catch((err) =>
-        this.setState({ errMessage: err.response.data.message[0] })
+      .catch((err) => {
+        if (err.response?.status === 401) toast.error("لطفا وارد شوید.");
+        else if (err.response?.status === 404) toast.error("خطای رخ داده ");
+        else if (err.response?.status === 500) toast.error("مشکلی رخ داده ");
+        else {
+          for (let index = 0; index < err?.response?.data?.message?.length; index++) {
+            toast.error(err.response.data.message[index]);
+          }
+        }
+
+        // this.setState({ errMessage: err.response?.data?.message[0] })
+      }
       );
   };
 
@@ -107,8 +118,8 @@ export class Factor extends Component {
               <div className="f-field ir-r spy-1">
                 {this.props?.price !== undefined
                   ? `${numberSeparator(
-                      this.props?.price * (1 - this.state.giftDiscount)
-                    )} تومان`
+                    this.props?.price * (1 - this.state.giftDiscount)
+                  )} تومان`
                   : "در حال بار گذاری..."}
               </div>
             </div>
@@ -119,8 +130,8 @@ export class Factor extends Component {
                 <span className="c-danger">
                   {this.props?.price !== undefined
                     ? `${numberSeparator(
-                        this.props.price * this.state.giftDiscount
-                      )} تومان`
+                      this.props.price * this.state.giftDiscount
+                    )} تومان`
                     : "در حال بار گذاری..."}
                   <button
                     onClick={this.modalHandler.isOpen}
@@ -138,8 +149,8 @@ export class Factor extends Component {
               <div className="f-field ir-r spy-1">
                 {this.props?.price !== undefined
                   ? `${numberSeparator(
-                      this.props?.price * (1 - this.state.giftDiscount) * 0.09
-                    )} تومان `
+                    this.props?.price * (1 - this.state.giftDiscount) * 0.09
+                  )} تومان `
                   : "در حال بار گذاری..."}
               </div>
             </div>
@@ -149,10 +160,10 @@ export class Factor extends Component {
               <div className="f-field ir-r spy-1 c-success">
                 {this.props?.price !== undefined
                   ? `${numberSeparator(
-                      Math.floor(
-                        this.props?.price * (1 - this.state.giftDiscount) * 1.09
-                      )
-                    )} تومان `
+                    Math.floor(
+                      this.props?.price * (1 - this.state.giftDiscount) * 1.09
+                    )
+                  )} تومان `
                   : "در حال بار گذاری..."}
               </div>
             </div>
@@ -172,9 +183,8 @@ export class Factor extends Component {
         </div>
         {/* Discount Modal */}
         <div
-          className={`p-discount-modal d-flex justify-content-center align-items-center ${
-            this.state.modalStatus === true ? "active" : ""
-          }`}
+          className={`p-discount-modal d-flex justify-content-center align-items-center ${this.state.modalStatus === true ? "active" : ""
+            }`}
         >
           <div className="overlay" onClick={this.modalHandler.isClose}></div>
 

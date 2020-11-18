@@ -37,6 +37,8 @@ export class CreateResume extends Component {
 
     const resuJobPreference = await agent.CreateResome.GetUserJobPreferenceForCurrentUser();
 
+    await this.getResomePercent();
+
 
 
     await this.setState({
@@ -48,13 +50,33 @@ export class CreateResume extends Component {
       info8: resuJobPreference.data.resul
     });
 
-
-
-    console.log(this.state.info8);
-
-
-
   }
+
+
+
+
+  getResomePercent = async () => {
+    // event.preventDefault();
+
+    try {
+      // return params;
+      let { data } = await agent.CreateResome.GetResomePercent();
+      this.setState({ resomePercent: data.resul })
+      // toast.success("رزومه با موفقیت ارسال شد");
+    } catch (err) {
+      if (err.response.status === 401) toast.error("لطفا وارد شوید.");
+      else if (err.response.status === 404) toast.error("خطای رخ داده  ");
+      else if (err.response.status === 500) toast.error("مشکلی رخ داده ");
+      else toast.error(err.response.message[0]);
+    }
+  };
+
+
+
+
+
+
+
 
   async avatarHandler(event) {
 
@@ -76,10 +98,11 @@ export class CreateResume extends Component {
           Authorization: `bearer ${window.localStorage.getItem("JWT")}`,
         },
       })
-      .then((data) => {
+      .then(async (data) => {
         // avatarUrl + "/" + this.state.info2?.employeeAvatar
-        this.setState({ info2: { ...this.state.info2, employeeAvatar: avatarUrl + "/" + data.resul } })
-        this.setState({ hasImage: true })
+        await this.setState({ info2: { ...this.state.info2, employeeAvatar: data.data.resul } })
+
+        // this.setState({ hasImage: true })
       }
       )
       .catch(
@@ -121,6 +144,11 @@ export class CreateResume extends Component {
 
     await this.setState({ ...this.state, ...formData });
   }
+
+
+
+
+
 
   SubmitHandler(event) {
     event.preventDefault();
@@ -279,7 +307,6 @@ export class CreateResume extends Component {
     }
   };
 
-
   SubmitJobSkill = async (event) => {
     event.preventDefault();
 
@@ -290,7 +317,7 @@ export class CreateResume extends Component {
       let { data } = await agent.CreateResome.AddUserJobSkill(obj);
 
       // let userJobSkills = this.state.userJobSkills.concat({ id: currentJobSkill.id, jobSkillName: currentJobSkill.jobSkillName });
-      let userJobSkills = this.state.userJobSkills.concat({ id: data.resul.id, jobSkillName: currentJobSkill.jobSkillName });
+      let userJobSkills = this.state.userJobSkills.concat({ id: data.resul, jobSkillName: currentJobSkill.jobSkillName });
       this.setState({
         userJobSkills,
         editMode4: false
@@ -337,7 +364,6 @@ export class CreateResume extends Component {
 
   deleJobSkills = async (id) => {
     // event.preventDefault();
-
     try {
       // // return params;
       // let currentJobSkill = this.state.currentJobSkill
@@ -679,9 +705,9 @@ export class CreateResume extends Component {
                 </div>
               </div>
             </div>
-          {/* </aside> */}
+            {/* </aside> */}
 
-          {/* <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4"> */}
+            {/* <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4"> */}
             <h3 className="d-block text-right ir-b smb-3 c-dark">
               اطلاعات فردی
             </h3>
@@ -1032,9 +1058,9 @@ export class CreateResume extends Component {
                 </div>
               </div>
             </div>
-          {/* </aside> */}
+            {/* </aside> */}
 
-          {/* <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4"> */}
+            {/* <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4"> */}
             <h3 className="d-block text-right ir-b smb-3 c-dark">درباره من</h3>
             <div
               className="bg-white srounded-md sp-2 smb-3"
@@ -1137,9 +1163,9 @@ export class CreateResume extends Component {
                 </div>
               </div>
             </div>
-          {/* </aside> */}
+            {/* </aside> */}
 
-          {/* <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4"> */}
+            {/* <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4"> */}
             <h3 className="d-block text-right ir-b smb-3 c-dark">
               مهارت‌های حرفه‌ای
             </h3>
@@ -1247,7 +1273,7 @@ export class CreateResume extends Component {
                                     styles={{ fontFamily: "iransans-regular" }}
                                     // options={this.state.cities}
 
-                                    options={this.state.jobSkills.map((item) => {
+                                    options={this.state?.jobSkills?.map((item) => {
                                       return {
                                         value: item.id,
                                         label: `${item.name}`,
@@ -1271,9 +1297,9 @@ export class CreateResume extends Component {
                 </div>
               </div>
             </div>
-          {/* </aside> */}
+            {/* </aside> */}
 
-          {/* <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4"> */}
+            {/* <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4"> */}
             <h3 className="d-block text-right ir-b smb-3 c-dark">
               ترجیحات شغلی
             </h3>
@@ -1564,7 +1590,7 @@ export class CreateResume extends Component {
           </aside>
 
           <aside className="col-12 col-lg-4">
-            <SideBar />
+            <SideBar resomePercent={this.state.resomePercent} />
           </aside>
         </div>
       </section>

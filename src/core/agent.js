@@ -131,6 +131,14 @@ const CreateResome = {
 
   AddUserJobPreference: (body) =>
     requests.post("/UserJobPreference/AddUserJobPreference", body),
+
+  GetResomePercent: () =>
+    requests.get("/Resome/GetResomePercent"),
+
+
+
+
+
 };
 
 const Cities = {

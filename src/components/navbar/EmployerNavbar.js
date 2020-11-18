@@ -182,10 +182,10 @@ export class EmployerNavbar extends Component {
               {this.state.notifCount === 0 ? (
                 ""
               ) : (
-                <span className="counter rounded-circle text-center ir-r bg-danger text-white position-absolute">
-                  {this.state.notifCount}
-                </span>
-              )}
+                  <span className="counter rounded-circle text-center ir-r bg-danger text-white position-absolute">
+                    {this.state.notifCount}
+                  </span>
+                )}
             </div>
 
             <div
@@ -199,13 +199,13 @@ export class EmployerNavbar extends Component {
                       <span className="ir-r">{item.adminDescription}</span>
                     </li>
                   ) : (
-                    <li
-                      key={index}
-                      className="ir-r text-right c-grey spy-1 fs-s border-top"
-                    >
-                      {item.adminDescription}
-                    </li>
-                  )
+                      <li
+                        key={index}
+                        className="ir-r text-right c-grey spy-1 fs-s border-top"
+                      >
+                        {item.adminDescription}
+                      </li>
+                    )
                 )}
 
                 <li>
@@ -225,10 +225,13 @@ export class EmployerNavbar extends Component {
             onClick={this.profileDropdown}
           >
             <div className="head">
-              <img
-                className="sml-1 srounded-sm"
+              {/* <img
+                // height="30"
+                style={{ height: 30 }}
+                alt=""
+                className="sml-1 srounded-sm d-block"
                 src={`${ADDRESS}img/CompanyLogo/${this.state.userInfo.img}`}
-              />
+              /> */}
 
               <span className="ir-r fs-s sml-1 d-none d-lg-inline">
                 {this.state.userInfo.name}
@@ -309,6 +312,8 @@ export class EmployerNavbar extends Component {
             </div>
           </div>
         </div>
+
+
       </header>
     );
   }

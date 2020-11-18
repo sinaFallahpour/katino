@@ -315,14 +315,14 @@ class App extends Component {
               {/* <Route path="/notFound" /> */}
               {/* <Redirect to="/not-found" /> */}
 
-              <Route
+              {/* <Route
                 render={(props) => (
                   <React.Fragment>
-                    <EmployeeNavbar />
+                    <EmployerNavbar />
                     <NotFound {...props} />
                   </React.Fragment>
                 )}
-              ></Route>
+              ></Route> */}
             </ScrollToTop>
           </Switch>
 
