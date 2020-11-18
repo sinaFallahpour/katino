@@ -78,6 +78,25 @@ const Adver = {
     requests.post(`/Resome/AsignResomeToListOfAdvers?adversId=${adverIdlist}`),
 };
 
+const CreateResome = {
+  editEmployeePersonalInformation: (body) =>
+    requests.post("/Account/EditEmployeePersonalInformation", body),
+  loadEmployeePersonalInformation: () =>
+    requests.get("/Account/LoadEmployeePersonalInformation"),
+
+  AddEmployeeAboutMen: (body) =>
+    requests.post("/Resome/AddEmployeeAboutMen", body),
+
+  GetAlljobSkillsForSelect: () =>
+    requests.get("/JobSkills/GetAlljobSkillsForSelect"),
+};
+
+const Cities = {
+  Cities: () => requests.get("/Account/GetCities"),
+};
+
 export default {
   Adver,
+  CreateResome,
+  Cities,
 };
