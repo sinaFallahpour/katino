@@ -350,7 +350,7 @@ export class CreateResume extends Component {
               ویرایش پروفایل
             </h3>
             <div
-              className="bg-white srounded-md sp-2"
+              className="bg-white srounded-md sp-2 smb-3"
             >
               <div className="row">
                 <div className="col-12 col-lg-3 d-lg-flex flex-column justify-content-center">
@@ -612,14 +612,14 @@ export class CreateResume extends Component {
                 </div>
               </div>
             </div>
-          </aside>
+          {/* </aside> */}
 
-          <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4">
+          {/* <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4"> */}
             <h3 className="d-block text-right ir-b smb-3 c-dark">
               اطلاعات فردی
             </h3>
             <div
-              className="bg-white srounded-md sp-2"
+              className="bg-white srounded-md sp-2 smb-3"
             >
               <div className="row">
                 <div className="col-12 col-lg-9">
@@ -965,12 +965,12 @@ export class CreateResume extends Component {
                 </div>
               </div>
             </div>
-          </aside>
+          {/* </aside> */}
 
-          <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4">
+          {/* <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4"> */}
             <h3 className="d-block text-right ir-b smb-3 c-dark">درباره من</h3>
             <div
-              className="bg-white srounded-md sp-2"
+              className="bg-white srounded-md sp-2 smb-3"
             >
               <div className="row">
                 <div className="col-12 col-lg-9">
@@ -1070,14 +1070,14 @@ export class CreateResume extends Component {
                 </div>
               </div>
             </div>
-          </aside>
+          {/* </aside> */}
 
-          <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4">
+          {/* <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4"> */}
             <h3 className="d-block text-right ir-b smb-3 c-dark">
               مهارت‌های حرفه‌ای
             </h3>
             <div
-              className="bg-white srounded-md sp-2"
+              className="bg-white srounded-md sp-2 smb-3"
             >
               <div className="row">
                 <div className="col-12 col-lg-12">
@@ -1241,14 +1241,14 @@ export class CreateResume extends Component {
                 </div>
               </div>
             </div>
-          </aside>
+          {/* </aside> */}
 
-          <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4">
+          {/* <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4"> */}
             <h3 className="d-block text-right ir-b smb-3 c-dark">
               ترجیحات شغلی
             </h3>
             <div
-              className="bg-white srounded-md sp-2"
+              className="bg-white srounded-md sp-2 smb-3"
             >
               <div className="row">
                 <div className="col-12 col-lg-9">

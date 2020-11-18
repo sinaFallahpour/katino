@@ -1,13 +1,23 @@
 import React from "react";
 
-export function ResumeQuality() {
+export function ResumeQuality(props) {
   return (
-    <div className="bg-white srounded-md sbs-content sp-2">
+    <div className="resume-quality bg-white srounded-md sbs-content sp-2">
       <span className="d-block text-right c-dark smb-2 ir-b">
         کیفیت رزومه‌ی شما
       </span>
 
       <hr />
+
+      <div className="holder mx-auto position-relative">
+        <div className="quality position-absolute" style={{height:`${props.percent}%`}}></div>
+      </div>
+  <span class="percent-text smt-2 c-regular d-block text-center ir-r fs-l">{`${props.percent}% از پروفایل شما تکمیل شده است.`}</span>
+
+  <div className="field d-flex align-items-center justify-content-start smt-2">
+  <span className="border ir-r p-1 sml-1 fs-m rounded">{`${props.percent}%`}</span>
+  <span className="d-block text-right ir-r fs-m">لطفا زبان های خود را وارد کنید</span>
+  </div>
     </div>
   );
 }

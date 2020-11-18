@@ -625,4 +625,18 @@ p.fs-l {
   color: #e24444 !important;
 }
 
+.resume-quality .holder {
+  width: 150px;
+  height: 150px;
+  border-radius: 100%;
+  overflow: hidden;
+  border: 3px solid #eee;
+}
+.resume-quality .holder .quality {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #50d86a;
+}
+
 /*# sourceMappingURL=main.css.map */

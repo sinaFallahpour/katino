@@ -6,7 +6,7 @@ export function SideBar() {
   return (
     <React.Fragment>
       <div className="smb-2">
-        <ResumeQuality />
+        <ResumeQuality percent="70" />
       </div>
 
       <div className="mb-0">
