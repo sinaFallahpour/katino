@@ -28,18 +28,14 @@ export class CreateResume extends Component {
 
     const res = await agent.Cities.Cities();
 
-    console.log(res.data.resul);
     const { data } = await agent.CreateResome.loadEmployeePersonalInformation();
 
     const resAboutMe = await agent.CreateResome.LoadEmployeeAboutMe();
 
-
     const resJobSkill = await agent.CreateResome.GetAlljobSkillsForSelect();
     const resuserJobSkill = await agent.CreateResome.getAllUserJobSkillsForCurrentUser();
 
-
-
-
+    const resuJobPreference = await agent.CreateResome.GetUserJobPreferenceForCurrentUser();
 
 
 
@@ -48,11 +44,13 @@ export class CreateResume extends Component {
       cities: res.data.resul,
       jobSkills: resJobSkill.data.resul,
       userJobSkills: resuserJobSkill.data.resul,
-      aboutMen: resAboutMe.data.resul
+      aboutMen: resAboutMe.data.resul,
+      info8: resuJobPreference.data.resul
     });
 
 
-    console.log(this.state.info2?.employeeAvatar);
+
+    console.log(this.state.info8);
 
 
 
@@ -164,6 +162,59 @@ export class CreateResume extends Component {
     if (!marridStatus) return "متاهل";
   };
 
+
+
+
+  returnSalary = () => {
+
+    var status = this.state.info8?.salary;
+    // alert(status)
+    // alert(this.state.info2?.gender);
+    // if (!genderStatus) return;
+    if (status == 0) return "کمتر از 1 میلیون";
+    if (status == 1) return "بین 2.5 تا 3.5 میلیون";
+    if (status == 2) return "بین 3.5 تا 5 میلیون";
+    if (status == 3) return "بین 5 تا 8 میلیون";
+    if (status == 4) return "بین 1 تا 2.5 میلیون";
+    if (status == 5) return "بیشتر از یک میلیون";
+  };
+
+
+
+
+  returnTypeOfCooperation = () => {
+    var status = this.state.info8?.typeOfCooperation
+    // alert(status)
+    if (status == 0) return "تمام وقت";
+    if (status == 1) return "پاره وقت";
+    if (status == 2) return "کارآموزی";
+    if (status == 3) return "دورکاری";
+  };
+
+
+
+  returnSenioritylevel = () => {
+    var status = this.state.info8?.senioritylevel
+    // alert(status)
+    if (status == 0) return "مهم نیست";
+    if (status == 1) return "کمتر از سه سال";
+    if (status == 2) return "بیبین 3 تا 7 سال";
+    if (status == 3) return "بیشتر از 7 سال";
+
+  };
+
+
+
+  returnMarridStatus = () => {
+    var marridStatus = this.state.info2?.isMarreid;
+    // alert(this.state.info2?.gender);
+    // if (!genderStatus) return;
+    if (marridStatus) return "مجرد";
+    if (!marridStatus) return "متاهل";
+  };
+
+
+
   submitHandler = async (event) => {
     event.preventDefault();
 
@@ -258,6 +309,32 @@ export class CreateResume extends Component {
   };
 
 
+
+
+
+  SubmitJobPreference = async (event) => {
+    event.preventDefault();
+
+    try {
+      let obj = this.state.info8
+      let { data } = await agent.CreateResome.AddUserJobPreference(obj);
+      this.setState({
+        editMode8: false
+      });
+      toast.success("ثبت موفقیت آمیز");
+    } catch (err) {
+      if (err.response?.status === 401) toast.error("لطفا وارد شوید.");
+      else if (err.response?.status === 404) toast.error("خطای رخ داده ");
+      else if (err.response?.status === 500) toast.error("مشکلی رخ داده ");
+      else {
+        for (let index = 0; index < err?.response?.data?.message?.length; index++) {
+          toast.error(err.response.data.message[index]);
+        }
+      }
+    }
+  };
+
+
   deleJobSkills = async (id) => {
     // event.preventDefault();
 
@@ -292,6 +369,9 @@ export class CreateResume extends Component {
       }
     }
   };
+
+
+
 
 
 
@@ -524,24 +604,11 @@ export class CreateResume extends Component {
                                 <div>
                                   <div className="custom-control custom-radio custom-control-inline">
                                     <input
-                                      // onChange={(e) => {
-                                      //   this.setState({
-                                      //     info: {
-                                      //       ...this.state.info,
-                                      //       employmentStatus: parseInt(
-                                      //         e.target.value
-                                      //       ),
-                                      //     },
-                                      //   });
-                                      // }}
+
                                       onChange={this.radionHandler.bind(this)}
                                       checked={
                                         this.state.info.employmentStatus == 1
                                       }
-                                      // employmentStatus: parseInt(event.target.value)
-
-                                      // employmentStatus: parseInt(event.target.value)
-                                      // onChange={this.radionHandler.bind(this)}
                                       type="radio"
                                       value="1"
                                       id="status1"
@@ -791,10 +858,10 @@ export class CreateResume extends Component {
 
                                 <div className="form-group ">
                                   <Select
-                                    value={this.state.cities.filter(
-                                      (option) =>
-                                        option.cityName !== this.state.info2?.city
-                                    )}
+                                    // value={this.state.cities.filter(
+                                    //   (option) =>
+                                    //     option.cityName !== this.state.info2?.city
+                                    // )}
                                     onChange={(e) => {
                                       this.setState({
                                         info2: {
@@ -1164,22 +1231,6 @@ export class CreateResume extends Component {
 
                                 </label>
 
-
-                                {/* {this.state.userJobSkills?.map((item) => {
-                                  return (
-                                    <button
-                                      key={item.id}
-                                      className="btn btn-success "
-                                    >
-                                      {item.jobSkillName}
-                                      <i className="mr-1 fas fa-times"
-                                        onClick={() => { this.deleteJobSkill(item.id) }}
-                                      ></i>
-                                    </button>
-                                  );
-                                })} */}
-
-
                                 <div className="form-group ">
                                   <Select
                                     // userJobSkills: resuserJobSkill.data.resul,
@@ -1207,27 +1258,6 @@ export class CreateResume extends Component {
                               </div>
                             </li>
 
-
-
-
-                            {/* <li className="list-group-item border-0 p-0">
-                              <InputText
-                                type="text"
-                                id="jobSkill"
-                                name="jobSkill"
-                                label={"مهارت"}
-                                value={this.state.info4?.jobSkill || ""}
-                                onChange={(e) => {
-                                  this.setState({
-                                    info4: {
-                                      ...this.state.info4,
-                                      jobSkill: e.target.value,
-                                    },
-                                  });
-                                }}
-                                placeholder="مثال:تدریس"
-                              />
-                            </li> */}
                           </ul>
                           <button
                             type="submit"
@@ -1293,52 +1323,22 @@ export class CreateResume extends Component {
                   {!this.state.editMode8 ? (
                     <div className="content d-lg-flex flex-column justify-content-center">
                       <ul className="list-group list-group-flush p-0">
-                        <li className="list-group-item border-0 pr-0">
-                          <span className="ir-b c-grey sml-1">
-                            ایمیل:
-                            <span className="c-regular">
-                              {this.state.editMode8 ? this.state.editMode8?.email : "-"}
-                            </span>
-                          </span>
-                        </li>
-
-                        <li className="list-group-item border-0 pr-0">
-                          <span className="ir-b c-grey sml-1">
-                            شماره موبایل:
-                            <span className="c-regular">
-                              {this.state.editMode8
-                                ? this.state.editMode8?.phoneNumber
-                                : "-"}
-                            </span>
-                          </span>
-                        </li>
-
-                        <li className="list-group-item border-0 pr-0">
-                          <span className="ir-b c-grey sml-1">
-                            آدرس محل سکونت (اختیاری) :
-                            <span className="c-regular">
-                              {this.state.editMode8
-                                ? this.state.editMode8?.address
-                                : "-"}
-                            </span>
-                          </span>
-                        </li>
 
                         <li className="list-group-item border-0 pr-0">
                           <span className="ir-b c-grey sml-1">
                             شهر :
                             <span className="c-regular">
-                              {this.state.editMode8 ? this.state.editMode8?.city : "-"}
+                              {this.state.info8 ? this.state.info8.city : "-"}
                             </span>
                           </span>
                         </li>
 
                         <li className="list-group-item border-0 pr-0">
                           <span className="ir-b c-grey sml-1">
-                            وضعیت نظام :
+                            میزان حقوق :
                             <span className="c-regular">
-                              {this.state.editMode8
-                                ? this.state.editMode8?.military
+                              {this.state.info8
+                                ? this.returnSalary(this.state.editMode8?.salary)
                                 : "-"}
                             </span>
                           </span>
@@ -1346,68 +1346,33 @@ export class CreateResume extends Component {
 
                         <li className="list-group-item border-0 pr-0">
                           <span className="ir-b c-grey sml-1">
-                            جنسیت :{" "}
+                            دسته شغلی :
                             <span className="c-regular">
-                              {this.returnGenderStatus()}
-                            </span>
-                          </span>
-                        </li>
-
-                        <li className="list-group-item border-0 pr-0">
-                          <span className="ir-b c-grey sml-1">
-                            وضعیت تاهل :{" "}
-                            <span className="c-regular">
-                              {this.returnMarridStatus()}
-                            </span>
-                          </span>
-                        </li>
-
-                        <li className="list-group-item border-0 pr-0">
-                          <span className="ir-b c-grey sml-1">
-                            تاریخ معافیت :
-                            <span className="c-regular">
-                              {this.state.editMode8
-                                ? this.state.editMode8?.exemptionExpirestionDate
+                              {this.state.info8 ? this.returnTypeOfCooperation(this.state.editMode8?.typeOfCooperation)
                                 : "-"}
                             </span>
                           </span>
                         </li>
 
+
+
                         <li className="list-group-item border-0 pr-0">
                           <span className="ir-b c-grey sml-1">
-                            تاریخ دریافت کارت معافیت:
+                            سابقه کار :
                             <span className="c-regular">
-                              {this.state.editMode8
-                                ? this.state.editMode8
-                                  ?.exemptionExpirestionRecieveDate
+                              {this.state.info8 ? this.returnSenioritylevel(this.state.editMode8?.returnSeniorityleve)
                                 : "-"}
                             </span>
                           </span>
                         </li>
+
                       </ul>
                     </div>
                   ) : (
                       <div className="content d-lg-flex flex-column justify-content-center">
-                        <form onSubmit={this.SubmitPersonalInfo.bind(this)}>
+                        <form onSubmit={this.SubmitJobPreference.bind(this)}>
                           <ul className="list-group list-group-flush p-0">
-                            <li className="list-group-item border-0 p-0">
-                              <InputText
-                                type="email"
-                                id="email"
-                                name="email"
-                                label={"ایمیل"}
-                                value={this.state.editMode8?.email || ""}
-                                onChange={(e) => {
-                                  this.setState({
-                                    info8: {
-                                      ...this.state.info8,
-                                      email: e.target.value,
-                                    },
-                                  });
-                                }}
-                                placeholder="مثال:sia@gmail.com"
-                              />
-                            </li>
+
 
                             <li>
                               <div className="text-input srounded-sm">
@@ -1484,7 +1449,7 @@ export class CreateResume extends Component {
                                   className="ir-r text-regular text-right smb-1 label bg-white"
                                   htmlFor="jobTitle"
                                 >
-                                  نوع قرارداد
+                                  دسته شغلی
                               </label>
 
                                 <div className="form-group ">
@@ -1500,7 +1465,7 @@ export class CreateResume extends Component {
                                       });
                                     }}
                                     isSearchable={false}
-                                    placeholder={"میزان حقوق"}
+                                    placeholder={" دسته شغلی"}
                                     options={typeOfCooperation}
                                     styles={{ fontFamily: "iransans-regular" }}
                                   />
@@ -1517,7 +1482,7 @@ export class CreateResume extends Component {
                                   className="ir-r text-regular text-right smb-1 label bg-white"
                                   htmlFor="jobTitle"
                                 >
-                                  سطح ارشدیت در زمینه فعالیت
+                                  سابقه کار
                               </label>
 
                                 <div className="form-group ">
@@ -1533,13 +1498,53 @@ export class CreateResume extends Component {
                                       });
                                     }}
                                     isSearchable={false}
-                                    placeholder={"میزان حقوق"}
+                                    placeholder={"سابقه کار"}
                                     options={expriences}
                                     styles={{ fontFamily: "iransans-regular" }}
                                   />
                                 </div>
                               </div>
                             </li>
+
+                            <li>
+
+                              <div className="custom-control custom-radio custom-control-inline">
+                                <input
+                                  checked={
+                                    this.state.info8?.insurance == "true" ||
+                                    this.state.info8?.insurance == true
+                                  }
+                                  onChange={async (e) => {
+                                    alert(e.target.value)
+                                    await this.setState({
+                                      info8: {
+                                        ...this.state.info8,
+                                        insurance: e.target.value,
+                                      },
+                                    });
+                                    console.log(this.state.info8?.insurance);
+                                  }}
+
+                                  type="checkbox"
+                                  value={false}
+                                  // value={this.state.info8?.insurance}
+                                  id="status1"
+                                  name="status1"
+                                  className="custom-control-input"
+                                />
+                                <label
+                                  className="custom-control-label ir-r"
+                                  htmlFor="status1"
+                                >
+                                  بیمه
+                                  </label>
+                              </div>
+
+
+
+                            </li>
+
+
 
 
                           </ul>

@@ -126,9 +126,11 @@ const CreateResome = {
   employeeChangeAvatar: () =>
     requests.get("/Account/EmployeeChangeAvatar"),
 
+  GetUserJobPreferenceForCurrentUser: () =>
+    requests.get("/UserJobPreference/GetUserJobPreferenceForCurrentUser"),
 
-
-
+  AddUserJobPreference: (body) =>
+    requests.post("/UserJobPreference/AddUserJobPreference", body),
 };
 
 const Cities = {
