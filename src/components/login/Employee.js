@@ -31,7 +31,7 @@ export class Employee extends Component {
           );
         })
         .catch((err) => {
-          this.setState({ ...this.state, error: err.response.data.message[0] });
+          this.setState({ ...this.state, error: err?.response?.data?.message[0] });
         });
     }
   }

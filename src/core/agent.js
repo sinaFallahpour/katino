@@ -24,7 +24,7 @@ axios.interceptors.response.use(undefined, (error) => {
     toast.error("Network error - make sure API is running!");
   }
 
-  if (error?.response.status == 404) {
+  if (error?.response?.status == 404) {
     toast.error("خطایی رخ داده!");
   }
   // const { status, data, config } = error?.response;
@@ -75,7 +75,7 @@ const Adver = {
     requests.post(`/Resome/AsignResomeToAdver?adverId=${adverId}`),
 
   asignResomeToListOfAdvers: (adverIdlist) =>
-    requests.post(`/Resome/AsignResomeToListOfAdvers?adversId=${adverIdlist}`),
+    requests.post(`/Resome/AsignResomeToListOfAdvers`, adverIdlist),
 };
 
 export default {

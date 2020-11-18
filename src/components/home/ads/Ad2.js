@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { cooperationType, salary } from "../../../enums";
 import "react-toastify/dist/ReactToastify.css";
+import './ad2.css';
 
 export class Ad2 extends Component {
   state = {
@@ -34,20 +35,24 @@ export class Ad2 extends Component {
             onClick={() => {
               this.props.handleMarkOtherAdv(this.props.id);
             }}
-            className={`bookmarker-btn c-dark fs-l ${
-              this.props.item?.isMarked === false ? "far" : "fas"
-            } fa-bookmark`}
+            className={`bookmarker-btn c-dark fs-l ${this.props.item?.isMarked === false ? "far" : "fas"
+              } fa-bookmark`}
           ></i>
         </header>
 
         <div className="card-body p-0">
           <input
+            id={this.props.id}
             type="checkbox"
             onChange={() => {
               this.props.handleChangeSelecetdId(this.props.id);
             }}
             checked={this.props?.selectdIds?.includes(this.props.id)}
           />
+          <label for={this.props.id}>
+            <span></span>
+            <ins><i ></i></ins>
+          </label>
           <div className="detail smb-1">
             <Link className="ir-r c-grey fs-m sml-1" to="/">
               <i className="fas fa-building ml-2"></i>
