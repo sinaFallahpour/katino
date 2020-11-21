@@ -565,7 +565,7 @@ p.fs-l {
   color: #e24444 !important;
 }
 .c-gold {
-  color: #ffb700 !important;
+  color: #463e2b !important;
 }
 
 .navbar-shadow {
@@ -637,6 +637,38 @@ p.fs-l {
   left: 0;
   width: 100%;
   background: #50d86a;
+}
+
+.ad-info-header .tabs .tab-item:first-child {
+  border-radius: 0 5px 5px 0;
+}
+.ad-info-header .tabs .tab-item:last-child {
+  border-radius: 5px 0 0 5px;
+}
+.ad-info-header .tabs .tab-item:not(.active) {
+  background: #FFF6DE;
+  border-bottom: 2px solid transparent;
+}
+.ad-info-header .tabs .tab-item:not(.active) .tab-link {
+  color: #666 !important;
+}
+.ad-info-header .tabs .tab-item.active {
+  background: #FFE9AD;
+  border-bottom: 2px solid #ffa10b;
+}
+.ad-info-header .tabs .tab-item.active .tab-link {
+  color: #ffa10b !important;
+}
+
+@media only screen and (max-width: 991.99px) {
+  .ad-info-header .options .options-item {
+    display: block;
+    float: right;
+    width: 50%;
+  }
+  .ad-info-header .options .options-item:nth-child(1), .ad-info-header .options .options-item:nth-child(2) {
+    margin-bottom: 10px;
+  }
 }
 
 /*# sourceMappingURL=main.css.map */

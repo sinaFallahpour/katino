@@ -1,5 +1,6 @@
 import React from "react";
 import { adverStatus } from "../../enums";
+import {Link} from "react-router-dom";
 
 export function AdStatus(props) {
   let asignments = {
@@ -35,7 +36,7 @@ export function AdStatus(props) {
         <header className="col-12 smb-2">
           <div className="d-lg-flex justify-content-lg-between align-items-lg-center">
             <div className="smb-2 mb-lg-0">
-              <span className="ir-b c-dark">{props.title}</span>
+              <Link to={`/Employer/AdInfo/${props.id}`}><span className="ir-b c-dark">{props.title}</span></Link>
               <span className="c-grey ir-r smr-1 bg-body srounded-sm sp-05">
                 {adverStatus(props.adverStatus)}
               </span>

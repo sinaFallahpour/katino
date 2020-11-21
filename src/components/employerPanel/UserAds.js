@@ -7,6 +7,7 @@ export function UserAds(props) {
       return (
         <div key={index} className="col-12 smb-2">
           <AdStatus
+            id={item.id}
             title={item.title}
             adverStatus={item.adverStatus}
             asignStatusWithCounts={item.asignStatusWithCounts}

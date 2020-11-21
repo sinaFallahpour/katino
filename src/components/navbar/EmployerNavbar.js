@@ -225,13 +225,12 @@ export class EmployerNavbar extends Component {
             onClick={this.profileDropdown}
           >
             <div className="head">
-              {/* <img
-                // height="30"
-                style={{ height: 30 }}
+              <img
+                height="36"
                 alt=""
-                className="sml-1 srounded-sm d-block"
+                className="sml-1 srounded-sm"
                 src={`${ADDRESS}img/CompanyLogo/${this.state.userInfo.img}`}
-              /> */}
+              />
 
               <span className="ir-r fs-s sml-1 d-none d-lg-inline">
                 {this.state.userInfo.name}
