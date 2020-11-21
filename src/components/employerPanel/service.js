@@ -8,3 +8,17 @@ export function getUserAds() {
     },
   });
 }
+
+export function sidebar(id) {
+  return axios.post(
+    `${API_ADDRESS}Resome/GetAllResomesInfoWithCount?adverId=${id}`,
+    { headers: { Authorization: `Bearer ${localStorage.getItem("JWT")}` } }
+  );
+}
+
+export function getAdverResumes(id) {
+  return axios.post(
+    `${API_ADDRESS}Resome/GetAllResomesInfoForAdver?adverId=${id}`,
+    { headers: { Authorization: `Bearer ${localStorage.getItem("JWT")}` } }
+  );
+}

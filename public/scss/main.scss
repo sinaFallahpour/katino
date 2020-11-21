@@ -242,6 +242,16 @@ p {
   }
 }
 
+.ad-info-sidebar{
+  .checkboxes{
+    .number{
+      width:20px;
+      height:20px;
+      line-height:20px;
+    }
+  }
+}
+
 @media only screen and (max-width:991.99px){
 .ad-info-header{
   .options{

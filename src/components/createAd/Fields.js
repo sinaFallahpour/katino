@@ -92,10 +92,6 @@ export class Fields extends Component {
         value: 2,
         label: "زن",
       },
-      {
-        value: 3,
-        label: "سایر",
-      },
     ],
 
     exprience: [
