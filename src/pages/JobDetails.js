@@ -33,7 +33,6 @@ export class JobDetails extends Component {
 
     this.setState({ loading: false });
 
-    console.log(this.state);
     // Swal.close();
   }
 
@@ -44,13 +43,11 @@ export class JobDetails extends Component {
         const { data } = await agent.Adver.unmarkAdvder(
           this.props.match.params.id
         );
-        console.log(data);
       } else {
         this.setState({ isMarked: true });
         const { data } = await agent.Adver.markAdvder(
           this.props.match.params.id
         );
-        console.log(data);
       }
     } catch (ex) {
       this.setState({ isMarked: !this.state.isMarked });
@@ -63,7 +60,6 @@ export class JobDetails extends Component {
   handleMarkOtherAdv = async (adverId) => {
     try {
       let currentAdver = this.state.latestAds.find((c) => c.id == adverId);
-      console.log(currentAdver);
       if (currentAdver.isMarked) {
         // this.setState({ isMarked: false });
 
@@ -75,7 +71,6 @@ export class JobDetails extends Component {
         const { data } = await agent.Adver.unmarkAdvder(
           this.props.match.params.id
         );
-        console.log(data);
       } else {
         this.setState({
           latestAds: this.state.latestAds.map((el) =>
@@ -86,7 +81,6 @@ export class JobDetails extends Component {
         const { data } = await agent.Adver.markAdvder(
           this.props.match.params.id
         );
-        console.log(data);
       }
     } catch (ex) {
       this.setState({ isMarked: !this.state.isMarked });
@@ -114,8 +108,6 @@ export class JobDetails extends Component {
   };
 
   render() {
-    console.log(this.state);
-
     if (this.state.loading)
       return (
         <div className="ad-details container-fluid spx-2 spx-lg-10 smt-10 spt-5 smb-10">

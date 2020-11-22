@@ -175,7 +175,6 @@ export class Fields extends Component {
         }
       )
       .then((res) => {
-        console.log();
         res.data.resul.hasPlan === false
           ? this.setState({
               hasPlan: false,
@@ -202,7 +201,6 @@ export class Fields extends Component {
         });
         // list = list.slice(0, -1);
 
-        console.log(this.state.militaryList);
       }
     } else if (checked === false) {
       let list = await this.state.militaryList;
@@ -219,7 +217,6 @@ export class Fields extends Component {
       // list = list.replace(", ,", " , ");
       // list=list.substring(2)
       this.setState({ ...this.state, militaryList: list });
-      console.log(this.state.militaryList);
     }
   };
 
@@ -314,15 +311,12 @@ export class Fields extends Component {
         }
       )
       .then(() => {
-        // console.log(this.props.prop.history);
         // if (this.state.hasPlan === true)
         this.props.prop.history.push({ pathname: "/Employer/Dashboard" });
         // else
       })
       .catch((err) => {
-        console.log();
         // if (err.response.status === 400) {
-        // console.log(this.props.prop.history);
         // this.props.prop.history.push(``);
         // }
       });

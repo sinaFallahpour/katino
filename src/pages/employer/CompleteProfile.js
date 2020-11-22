@@ -42,7 +42,6 @@ export class CompleteProfile extends Component {
         fieldOptions: fieldOptions,
       });
 
-      // console.log(res);
       // categories = res.data.resul;
       // this.setState({
       //   completeProfile: {
@@ -50,7 +49,6 @@ export class CompleteProfile extends Component {
       //     categories: res.data.resul,
       //   },
       // });
-      // console.log(this.state.categories);
     });
   }
 
@@ -71,7 +69,6 @@ export class CompleteProfile extends Component {
     event.preventDefault();
 
     // if (this.formIsValid()) {
-    // console.log("ok");
     let formData = new FormData();
     formData.append("Image", document.getElementById("image").files[0]);
     formData.append("userId", "cba461e7-20b4-4aaa-80ad-7b40f0491096");

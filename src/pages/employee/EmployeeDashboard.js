@@ -61,8 +61,6 @@ export class EmployeeDashboard extends Component {
     service
       .getMarkedAds(1, 5)
       .then((res) => this.setState({ markedAds: res.data }));
-
-    console.log(this.state.markedAds);
   };
 
   tabsHandler = (event) => {
@@ -96,7 +94,6 @@ export class EmployeeDashboard extends Component {
   handleMarkOtherAdv = async (adverId) => {
     try {
       let currentAdver = this.state.markedAds.find((c) => c.id == adverId);
-      console.log(currentAdver);
       if (currentAdver.isMarked) {
         // this.setState({ isMarked: false });
 
@@ -106,8 +103,6 @@ export class EmployeeDashboard extends Component {
           ),
         });
         const { data } = await agent.Adver.unmarkAdvder(adverId);
-
-        console.log(data);
       } else {
         this.setState({
           markedAds: this.state.markedAds.map((el) =>

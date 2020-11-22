@@ -17,9 +17,6 @@ export class AllCompanies extends Component {
       .then((res) => this.setState({ companies: res.data.resul }));
 
     // await service.getCities().then((res) => (cities = res.data.resul));
-
-    // console.log(companies);
-    // console.log(cities);
   }
 
   changeHandler(event) {

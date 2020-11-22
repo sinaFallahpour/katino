@@ -51,7 +51,6 @@ export class Home extends Component {
       let currentAdver = this.state.latestAds.listOfData.find(
         (c) => c.id == adverId
       );
-      console.log(currentAdver);
       if (currentAdver.isMarked) {
         // this.setState({ isMarked: false });
         this.setState({
@@ -84,7 +83,6 @@ export class Home extends Component {
         await agent.Adver.markAdvder(adverId);
       }
     } catch (ex) {
-      console.log(ex);
       this.setState({ isMarked: !this.state.isMarked });
 
       if (ex?.response?.data) {

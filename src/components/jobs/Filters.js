@@ -129,7 +129,6 @@ export class Filters extends Component {
               // )}
 
               onChange={async (e) => {
-                console.log(e);
                 await this.setState({
                   data: { ...this.state.data, category: e.label },
                 });
@@ -153,7 +152,6 @@ export class Filters extends Component {
               // isMulti
               isClearable
               onChange={async (e) => {
-                console.log(e);
                 await this.setState({
                   data: {
                     ...this.state.data,
@@ -174,7 +172,6 @@ export class Filters extends Component {
             <Select
               isClearable
               onChange={async (e) => {
-                console.log(e);
                 await this.setState({
                   data: { ...this.state.data, city: e ? e.label : null },
                 });
@@ -193,7 +190,6 @@ export class Filters extends Component {
               // isMulti
               isClearable
               onChange={async (e) => {
-                console.log(e);
                 await this.setState({
                   data: { ...this.state.data, salary: e ? e.value : 1 },
                 });

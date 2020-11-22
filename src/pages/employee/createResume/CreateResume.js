@@ -176,7 +176,6 @@ export class CreateResume extends Component {
 
   returnGenderStatus = () => {
     var genderStatus = this.state.info2?.gender;
-    // alert(this.state.info2?.gender);
     // if (!genderStatus) return;
     if (genderStatus == 0) return "مرد";
     if (genderStatus == 1) return "زن";
@@ -184,7 +183,6 @@ export class CreateResume extends Component {
 
   returnMarridStatus = () => {
     var marridStatus = this.state.info2?.isMarreid;
-    // alert(this.state.info2?.gender);
     // if (!genderStatus) return;
     if (marridStatus) return "مجرد";
     if (!marridStatus) return "متاهل";
@@ -196,8 +194,6 @@ export class CreateResume extends Component {
   returnSalary = () => {
 
     var status = this.state.info8?.salary;
-    // alert(status)
-    // alert(this.state.info2?.gender);
     // if (!genderStatus) return;
     if (status == 0) return "کمتر از 1 میلیون";
     if (status == 1) return "بین 2.5 تا 3.5 میلیون";
@@ -212,7 +208,6 @@ export class CreateResume extends Component {
 
   returnTypeOfCooperation = () => {
     var status = this.state.info8?.typeOfCooperation
-    // alert(status)
     if (status == 0) return "تمام وقت";
     if (status == 1) return "پاره وقت";
     if (status == 2) return "کارآموزی";
@@ -223,7 +218,6 @@ export class CreateResume extends Component {
 
   returnSenioritylevel = () => {
     var status = this.state.info8?.senioritylevel
-    // alert(status)
     if (status == 0) return "مهم نیست";
     if (status == 1) return "کمتر از سه سال";
     if (status == 2) return "بیبین 3 تا 7 سال";
@@ -235,7 +229,6 @@ export class CreateResume extends Component {
 
   returnMarridStatus = () => {
     var marridStatus = this.state.info2?.isMarreid;
-    // alert(this.state.info2?.gender);
     // if (!genderStatus) return;
     if (marridStatus) return "مجرد";
     if (!marridStatus) return "متاهل";
@@ -271,7 +264,6 @@ export class CreateResume extends Component {
       let { data } = await agent.CreateResome.editEmployeePersonalInformation(
         data1
       );
-      console.log(data);
       toast.success("ثبت موفقیت آمیز");
       this.setState({ editMode1: false });
     } catch (err) {
@@ -415,10 +407,6 @@ export class CreateResume extends Component {
   //   try {
   //     // return params;
   //     console.clear()
-  //     console.log('11111111');
-
-  //     console.log(this.state.currentJobSkill?.id);
-  //     alert(1)
   //     let { data } = await agent.CreateResome.AddUserJobSkill(this.state.currentJobSkill.id);
   //     toast.success("ثبت موقیت آمیز");
   //     this.setState({ editMode2: false });
@@ -524,7 +512,6 @@ export class CreateResume extends Component {
                             عنوان شغلی:
                             <span className="c-regular">
                               {this.state.info ? this.state.info.jobTitle : "-"}
-                              {console.log(this.state.info)}
                             </span>
                           </span>
                         </li>
@@ -1263,7 +1250,6 @@ export class CreateResume extends Component {
 
                                     onChange={(e) => {
                                       // console.clear();
-                                      // console.log(this.state.userJobSkills);
                                       // let userJobSkills = this.state.userJobSkills.concat({ id: e.value, jobSkillName: e.label });
                                       this.setState({
                                         currentJobSkill: { id: e.value, jobSkillName: e.label }
@@ -1541,14 +1527,12 @@ export class CreateResume extends Component {
                                     this.state.info8?.insurance == true
                                   }
                                   onChange={async (e) => {
-                                    alert(e.target.value)
                                     await this.setState({
                                       info8: {
                                         ...this.state.info8,
                                         insurance: e.target.value,
                                       },
                                     });
-                                    console.log(this.state.info8?.insurance);
                                   }}
 
                                   type="checkbox"

@@ -9,7 +9,6 @@ const tokenKey = "JWT";
 //     password,
 //   });
 
-//   console.log(data);
 //   const jwt = data.result.data.token;
 //   localStorage.setItem(tokenKey, jwt);
 // }

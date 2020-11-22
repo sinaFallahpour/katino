@@ -675,6 +675,35 @@ p.fs-l {
   .ad-info-header .options .options-item:nth-child(1), .ad-info-header .options .options-item:nth-child(2) {
     margin-bottom: 10px;
   }
+
+  .ad-info-sidebar {
+    position: relative;
+    width: 100vw !important;
+    background: #fff;
+    transition: 0.3s;
+    position: fixed;
+    top: 0;
+    right: -100vh;
+    z-index: 1100;
+    height: 100vh;
+    overflow-y: auto;
+    padding-bottom: 50px;
+  }
+  .ad-info-sidebar.active {
+    right: 0;
+  }
+  .ad-info-sidebar .submit-filter {
+    transition: all 0.3s ease;
+    position: fixed;
+    bottom: 0;
+    right: -110vw;
+    width: 100%;
+    display: none;
+  }
+  .ad-info-sidebar.active .submit-filter {
+    display: block;
+    right: 0;
+  }
 }
 
 /*# sourceMappingURL=main.css.map */

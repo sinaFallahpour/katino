@@ -30,7 +30,6 @@ export class Jobs extends Component {
     let city = params.get("city");
 
     if (key || city) {
-      console.log(searchAdver(key, city, 1, 10));
       searchAdver(key, city, 1, 10).then((res) => {
         this.setState({
           adsList: res.data.resul.listOfData,
@@ -54,15 +53,12 @@ export class Jobs extends Component {
 
   handleFilter = async (inp) => {
     this.returnLoading("صبر کنید...");
-    console.log(inp);
     try {
       const { data } = await agent.Adver.filterAdver(
         inp,
         10,
         this.state.curentPage
       );
-
-      console.log(data);
 
       this.setState({
         adsList: data.resul.listOfData,
@@ -84,10 +80,7 @@ export class Jobs extends Component {
   };
 
   handleSearch = async (inp) => {
-    console.log(inp);
     this.returnLoading("صبر کنید...");
-    console.log(inp);
-    console.log(9090909);
     try {
       let { city, key } = inp;
       var params = new URLSearchParams();
@@ -105,8 +98,6 @@ export class Jobs extends Component {
         pageCount: data.resul.pageCount,
       });
     } catch (ex) {
-      console.log(ex.response);
-
       if (ex.response?.data) toast.error(ex.response?.data.message[0]);
     } finally {
       Swal.close();
@@ -126,7 +117,6 @@ export class Jobs extends Component {
   handleMarkOtherAdv = async (adverId) => {
     try {
       let currentAdver = this.state.adsList.find((c) => c.id == adverId);
-      console.log(currentAdver);
       if (currentAdver.isMarked) {
         // this.setState({ isMarked: false });
 

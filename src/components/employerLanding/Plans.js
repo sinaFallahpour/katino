@@ -2,14 +2,11 @@ import React from "react";
 import { Plan } from "./Plan";
 
 export function Plans(props) {
-  console.log(props);
   return (
     <React.Fragment>
       <h2 className="d-block text-center c-dark ir-b fs-l smb-5">تعرفه ها</h2>
 
       <div className="row spx-lg-5">
-        {props.items.map((item) => console.log(item.price))}
-
         {props.items.map((item, index) => (
           <div
             key={index}

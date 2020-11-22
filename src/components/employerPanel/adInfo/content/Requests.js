@@ -9,25 +9,21 @@ export function Requests(props) {
           <tr>
             <th
               className="ir-b c-regular text-right fs-s border-top-0"
-              scope="col"
             >
               نام متقاضی
             </th>
             <th
               className="ir-b c-regular text-right fs-s border-top-0"
-              scope="col"
             >
               وضعیت
             </th>
             <th
               className="ir-b c-regular text-right fs-s border-top-0"
-              scope="col"
             >
               تاریخ
             </th>
             <th
               className="ir-b c-regular text-right fs-s border-top-0"
-              scope="col"
             >
               جزئیات
             </th>

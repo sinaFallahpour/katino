@@ -38,7 +38,7 @@ export class Header extends Component {
             </li>
           </ul>
 
-          <ul className="options p-0 d-lg-flex align-items-lg-center justify-content-lg-start">
+          <ul className="options clearfix p-0 d-lg-flex align-items-lg-center justify-content-lg-start">
             <li className="options-item bg-white sml-lg-2">
               <Link
                 className="d-flex align-items-center justify-content-start ir-r fs-m c-regular text-decoration-none"
