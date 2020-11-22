@@ -34,12 +34,12 @@ export function Requests(props) {
           </tr>
         </thead>
         <tbody>
-          {props.resumes.map((item) => (
-            <tr>
+          {props.resumes.map((item,index) => (
+            <tr key={index}>
               <td className="d-flex align-items-center justify-content-start border-0">
                 <img
                   className="sml-1 srounded-sm"
-                  src={`${ADDRESS}/img/employeeAvatar/${item.userAvatar}`}
+                  src={`${ADDRESS}img/employeeAvatar/${item.userAvatar}`}
                   height="40"
                   alt="employee avatar"
                 />

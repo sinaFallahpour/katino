@@ -30,8 +30,9 @@ export class AdInfo extends Component {
     });
 
     await service
-      .getAdverResumes(id)
-      .then((res) => this.setState({ resumes: res.data.resul }));
+    .getAdverResumes(id)
+    .then((res) => this.setState({ resumes: res.data.resul }));
+    
   }
 
   render() {
