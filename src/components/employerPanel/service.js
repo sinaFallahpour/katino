@@ -22,3 +22,10 @@ export function getAdverResumes(id) {
     { headers: { Authorization: `Bearer ${localStorage.getItem("JWT")}` } }
   );
 }
+
+export function userAllInfoForResome(resumeId) {
+  return axios.get(
+    `${API_ADDRESS}Resome/UserAllInfoForResome?resomeId=${resumeId}`,
+    { headers: { Authorization: `Bearer ${localStorage.getItem("JWT")}` } }
+  );
+}

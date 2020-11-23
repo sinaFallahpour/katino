@@ -666,6 +666,20 @@ p.fs-l {
   line-height: 20px;
 }
 
+.request-details-intro .tabs .tabs-item:not(.active) {
+  color: #666;
+  border-bottom: 3px solid transparent;
+}
+.request-details-intro .tabs .tabs-item.active {
+  color: #1750ff;
+  border-bottom: 3px solid #1750ff;
+}
+
+.sended-resume {
+  border-radius: 5px;
+  border-top-right-radius: 0;
+}
+
 @media only screen and (max-width: 991.99px) {
   .ad-info-header .options .options-item {
     display: block;

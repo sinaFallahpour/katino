@@ -3,3 +3,4 @@ export * from "./Dashboard";
 export * from "./CreateAd";
 export * from "./Landing";
 export * from "./AdInfo";
+export * from "./RequestDetails";

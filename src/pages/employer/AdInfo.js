@@ -30,9 +30,8 @@ export class AdInfo extends Component {
     });
 
     await service
-    .getAdverResumes(id)
-    .then((res) => this.setState({ resumes: res.data.resul }));
-    
+      .getAdverResumes(id)
+      .then((res) => this.setState({ resumes: res.data.resul }));
   }
 
   render() {
@@ -57,7 +56,10 @@ export class AdInfo extends Component {
             </div>
 
             <div className="col-12 col-lg-9 mb-0">
-              <Content resumes={this.state.resumes} />
+              <Content
+                id={this.state.currentItem.id}
+                resumes={this.state.resumes}
+              />
             </div>
           </div>
         </section>

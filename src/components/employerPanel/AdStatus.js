@@ -32,6 +32,7 @@ export function AdStatus(props) {
 
   return (
     <div className="card  srounded-sm sp-2">
+      
       <div className="row">
         <header className="col-12 smb-2">
           <div className="d-lg-flex justify-content-lg-between align-items-lg-center">
@@ -45,9 +46,6 @@ export function AdStatus(props) {
             <div>
               <button className="btn btn-light sml-1 ir-r">بیشتر</button>
               <button className="btn btn-light sml-1 ir-r">ویرایش</button>
-              {/* <button className="btn btn-light ml-0 ir-r">
-                <i className="far fa-bookmark"></i>
-              </button> */}
             </div>
           </div>
 

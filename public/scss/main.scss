@@ -252,6 +252,28 @@ p {
   }
 }
 
+.request-details-intro{
+  .tabs{
+    .tabs-item{
+      &:not(.active){
+      color:#666;
+      border-bottom:3px solid transparent;
+
+      }
+      
+      &.active{
+        color:$primary;
+        border-bottom:3px solid $primary;
+      }
+    }
+  }
+}
+
+.sended-resume{
+  border-radius:5px;
+  border-top-right-radius: 0;
+}
+
 @media only screen and (max-width:991.99px){
 .ad-info-header{
   .options{

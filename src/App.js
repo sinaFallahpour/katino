@@ -23,7 +23,7 @@ import {
   EmployerLanding,
   CompanyDetails
 } from "./pages";
-import { CompleteProfile, CreateAd, Dashboard,AdInfo } from "./pages/employer";
+import { CompleteProfile, CreateAd, Dashboard,AdInfo,RequestDetails } from "./pages/employer";
 import { ScrollToTop, Navbar } from "./components";
 import { Plans } from "./pages/employer/Plans";
 import { ToastContainer } from "react-toastify";
@@ -313,11 +313,24 @@ class App extends Component {
               ></Route>
 
               <Route
+                exact
                 path="/Employer/AdInfo/:id"
                 render={(props)=>(
                   <React.Fragment>
                     <EmployerNavbar />
                     <AdInfo props={props} {...props} />
+                    <EmployerFooter className="d-none d-lg-block" />
+                  </React.Fragment>
+                )}
+              >
+              </Route>
+
+              <Route
+                path="/Employer/AdInfo/:id/RequestDetails/:resumeId"
+                render={(props)=>(
+                  <React.Fragment>
+                    <EmployerNavbar />
+                    <RequestDetails props={props} {...props} />
                     <EmployerFooter className="d-none d-lg-block" />
                   </React.Fragment>
                 )}

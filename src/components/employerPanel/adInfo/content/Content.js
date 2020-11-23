@@ -9,7 +9,7 @@ export function Content(props) {
 
       <hr className="smy-2" />
 
-      <Requests resumes={props.resumes}/>
+      <Requests adId={props.id} resumes={props.resumes} />
     </React.Fragment>
   );
 }
