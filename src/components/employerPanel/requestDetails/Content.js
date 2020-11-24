@@ -15,7 +15,7 @@ export class Content extends Component {
 
   render() {
     return (
-      <div className="bg-white sbs-shadow srounded-md sp-2">
+      <div id="contentHolder" className="bg-white sbs-shadow srounded-md sp-2">
         <div className="request-details-intro">
           <div className="detail d-flex justify-content-start align-items-center smb-3">
             <img

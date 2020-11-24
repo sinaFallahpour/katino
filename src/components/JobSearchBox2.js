@@ -62,7 +62,7 @@ export class JobSearchBox2 extends Component {
             //   this.props.handleSearch(this.state);
             // }}
             type="button"
-            class="btn btn-primary d-block w-100 ir-r fs-m srounded-sm"
+            className="btn btn-primary d-block w-100 ir-r fs-m srounded-sm"
             href="/Jobs?key=ghghgfgchhgfg&amp;city=آستارا"
             dideo-checked="true"
           >

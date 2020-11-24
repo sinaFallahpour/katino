@@ -123,31 +123,31 @@ export class EmployeeNavbar extends Component {
         </nav>
 
         {!auth.getCurrentUser() ? (
-          <div class="buttons d-flex justify-content-start">
+          <div className="buttons d-flex justify-content-start">
             {/* <a
-              class="btn btn-warning ir-r d-none d-lg-block sml-1"
+              className="btn btn-warning ir-r d-none d-lg-block sml-1"
               href="/"
               dideo-checked="true"
             >
-              <i class="fas fa-briefcase sml-1"></i>ثبت آگهی استخدام
+              <i className="fas fa-briefcase sml-1"></i>ثبت آگهی استخدام
             </a> */}
             <Link
               className="text-white btn btn-warning ir-r d-none d-lg-block sml-1"
               to="/"
             >
-              <i class="text-white fas fa-briefcase sml-1"></i>ثبت آگهی استخدام
+              <i className="text-white fas fa-briefcase sml-1"></i>ثبت آگهی استخدام
             </Link>
 
             <Link className="btn btn-primary ir-r" to="/Employee/Login/">
-              <i class="fas fa-user sml-1"></i>ورود/ثبت نام
+              <i className="fas fa-user sml-1"></i>ورود/ثبت نام
             </Link>
 
             {/* <a
-              class="btn btn-primary ir-r"
+              className="btn btn-primary ir-r"
               href="/Employee/Login/"
               dideo-checked="true"
             >
-              <i class="fas fa-user sml-1"></i>ورود/ثبت نام
+              <i className="fas fa-user sml-1"></i>ورود/ثبت نام
             </a> */}
           </div>
         ) : (

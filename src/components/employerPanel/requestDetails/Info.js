@@ -27,7 +27,7 @@ export function Info(props) {
           {props.list.map((item, index) => (
             <li
               key={index}
-              className={`ir-r spx-2 spy-1 fs-s text-right ${
+              className={`ir-r sp-2 fs-s text-right ${
                 index !== props.list.length ? "border-top" : ""
               }`}
             >
@@ -36,10 +36,44 @@ export function Info(props) {
           ))}
         </ul>
       ) : props.type === "paragraph" ? (
-        <p className="ir-r text-justify spx-2 spy-1 mb-0 fs-s">{props.text}</p>
-      ) : (
-        ""
-      )}
+        <p className="ir-r text-justify sp-2 spy-1 mb-0 fs-s">{props.text}</p>
+      ) : props.type === "eduBackground" ? (
+        <ul className="m-0 p-0">
+          {props.list.map((item, index) => (
+            <li
+              key={index}
+              className={`ir-r sp-2 fs-s text-right ${
+                index !== props.list.length ? "border-top" : ""
+              }`}
+            >
+              <span className="ir-b fs-s c-regular text-right d-block smb-1">
+                {item.fieldOfStudy}
+              </span>
+              <p className="ir-r fs-s c-regular text-right d-block mb-0">
+                {`${item.universityName}، از ${item.startDate} تا ${item.endDate}`}
+              </p>
+            </li>
+          ))}
+        </ul>
+      ) : props.type === "jobBackground"?(
+        <ul className="m-0 p-0">
+          {props.list.map((item, index) => (
+            <li
+              key={index}
+              className={`ir-r sp-2 fs-s text-right ${
+                index !== props.list.length ? "border-top" : ""
+              }`}
+            >
+              <span className="ir-b fs-s c-regular text-right d-block smb-1">
+                {item.workTitle}
+              </span>
+              <p className="ir-r fs-s c-regular text-right d-block mb-0">
+                {`${item.companyName}، از ${item.startDate} تا ${item.endDate}`}
+              </p>
+            </li>
+          ))}
+        </ul>
+      ):""}
     </div>
   );
 }

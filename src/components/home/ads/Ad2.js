@@ -22,7 +22,7 @@ export class Ad2 extends Component {
       <div className="card ad srounded-sm sp-2 text-decoration-none">
         <header className="d-flex justify-content-between align-items-center smb-1">
           <a
-            class="fs-m ir-b c-dark text-truncate"
+            className="fs-m ir-b c-dark text-truncate"
             href={`/JobDetails/${this.props.id}`}
             dideo-checked="true"
           >

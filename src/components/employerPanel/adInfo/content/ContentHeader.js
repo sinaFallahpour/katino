@@ -24,7 +24,6 @@ export class ContentHeader extends Component {
         <input
           className="form-control ir-r fs-s shadow-none srounded-sm smb-2"
           placeholder="جستجو در رزومه ها..."
-          onClick={this.operationHandler}
         />
 
         <div className="d-flex align-items-center justify-content-between">

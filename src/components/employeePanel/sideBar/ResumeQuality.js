@@ -12,7 +12,7 @@ export function ResumeQuality(props) {
       <div className="holder mx-auto position-relative">
         <div className="quality position-absolute" style={{ height: `${props.percent}%` }}></div>
       </div>
-      <span class="percent-text smt-2 c-regular d-block text-center ir-r fs-l">{`${props.percent}% از پروفایل شما تکمیل شده است.`}</span>
+      <span className="percent-text smt-2 c-regular d-block text-center ir-r fs-l">{`${props.percent}% از پروفایل شما تکمیل شده است.`}</span>
 
       {/* <div className="field d-flex align-items-center justify-content-start smt-2">
         <span className="border ir-r p-1 sml-1 fs-m rounded">{`${props.percent}%`}</span>
