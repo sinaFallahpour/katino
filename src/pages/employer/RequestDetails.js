@@ -37,23 +37,23 @@ export class RequestDetails extends Component {
 
   render() {
     return (
-      //   <PageTitle title="">
-      <section className="container-fluid spx-2 spx-lg-10 smt-10 spt-3">
-        <div className="row">
-          <div className="col-12 smb-5">
-            <Header adId={this.state.adId} />
-          </div>
+      <PageTitle title="مشاهده رزومه">
+        <section className="container-fluid spx-2 spx-lg-10 smt-10 spt-3">
+          <div className="row">
+            <div className="col-12 smb-5">
+              <Header adId={this.state.adId} />
+            </div>
 
-          <div className="col-12 col-lg-8 smb-2 mb-lg-0">
-            <Content allInfo={this.state.userAllInfo} />
-          </div>
+            <div className="col-12 col-lg-8 smb-2 mb-lg-0">
+              <Content allInfo={this.state.userAllInfo} />
+            </div>
 
-          <div className="col-12 col-lg-4">
-            <SideBar />
+            <div className="col-12 col-lg-4">
+              <SideBar />
+            </div>
           </div>
-        </div>
-      </section>
-      //   </PageTitle>
+        </section>
+      </PageTitle>
     );
   }
 }
