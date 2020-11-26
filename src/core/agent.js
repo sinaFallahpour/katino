@@ -95,7 +95,7 @@ const Adver = {
     requests.post(`/Resome/AsignResomeToAdver?adverId=${adverId}`),
 
   asignResomeToListOfAdvers: (adverIdlist) =>
-    requests.post(`/Resome/AsignResomeToListOfAdvers`,adverIdlist),
+    requests.post(`/Resome/AsignResomeToListOfAdvers`, adverIdlist),
 };
 
 const CreateResome = {
@@ -135,12 +135,16 @@ const CreateResome = {
   GetResomePercent: () =>
     requests.get("/Resome/GetResomePercent"),
 
-
-
-
-
 };
 
+
+const RequestDetails = {
+  LoadCommentForAsignResome: (asignId) =>
+    requests.get(`/Resome/LoadCommentForAsignResome?asignId=${asignId} `),
+
+  AddCommentForAsignResome: (body) =>
+    requests.post("/Resome/AddCommentForAsignResome", body),
+}
 const Cities = {
   Cities: () => requests.get("/Account/GetCities"),
 };
@@ -149,4 +153,5 @@ export default {
   Adver,
   CreateResome,
   Cities,
+  RequestDetails
 };

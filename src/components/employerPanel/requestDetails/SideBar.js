@@ -1,7 +1,15 @@
-import React from "react";
+import { logRoles } from "@testing-library/react";
+import React, { useState } from "react";
 import StickyBox from "react-sticky-box";
 
-export function SideBar() {
+export function SideBar(props) {
+
+
+
+  const [comment, setComment] = useState("");
+
+
+  // SubmitYadDasht
   return (
     <StickyBox offsetTop={100} offsetBottom={50}>
       <div className="bg-white sbs-shadow srounded-md sp-2">
@@ -36,10 +44,11 @@ export function SideBar() {
           ثبت یادداشت
         </span>
 
-        <form className="d-block w-100 smb-2">
+        <form className="d-block w-100 smb-2" onSubmit={(e) => { props.SubmitYadDasht(e, comment) }}>
           <textarea
             className="form-control shadow-none smb-1 ir-r fs-s sp-1"
             style={{ resize: "none", height: 100 }}
+            onChange={(e) => { setComment(e.target.value) }}
           ></textarea>
 
           <button type="submit" className="ir-r btn btn-primary spx-2 fs-s">
@@ -53,12 +62,17 @@ export function SideBar() {
 
         <ul className="m-0 p-0" style={{ maxHeight: 200, overflowY: "auto" }}>
           <li className="border srounded-sm sp-1">
+
+            {/* assignId={this.state.currentResume.asignResomeId} assignId={this.state.currentResume.asignResomeId} YadDashts={this.state.YadDashts}={this.state.YadDashts} */}
+            {/* assignId={this.state.currentResume.asignResomeId} YadDashts={this.state.YadDashts} */}
+            {console.log(props.YadDashts)}
             <p
               className="ir-r fs-s text-right mb-0"
               style={{ lineHeight: "1.44em" }}
             >
-              رزومه‌ی خوبی است.
+              {props.YadDashts}
             </p>
+
           </li>
         </ul>
       </div>
