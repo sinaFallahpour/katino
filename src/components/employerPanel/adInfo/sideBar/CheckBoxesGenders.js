@@ -1,6 +1,6 @@
 import React from "react";
 
-export function CheckBoxes(props) {
+export default function CheckBoxesGenders(props) {
   return (
     <div className="bg-white srounded-md sbs-shadow sp-2">
       <span className="d-block text-right c-dark fs-s ir-b mb-0">
@@ -22,8 +22,8 @@ export function CheckBoxes(props) {
             <input
               className="form-check-input"
               type="checkbox"
-              onChange={(e) => props.handleFilter(e)}
-              value={item.key}
+              onChange={(e) => props.handleGender(e)}
+              value={item.enum}
               id={props.name + index}
             />
             <label

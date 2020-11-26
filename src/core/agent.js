@@ -144,7 +144,17 @@ const RequestDetails = {
 
   AddCommentForAsignResome: (body) =>
     requests.post("/Resome/AddCommentForAsignResome", body),
+
+
+  FilterAllResomesInfoForAdver: (body) =>
+    requests.post("/Resome/FilterAllResomesInfoForAdver", body),
+
+
+
+
 }
+
+
 const Cities = {
   Cities: () => requests.get("/Account/GetCities"),
 };
