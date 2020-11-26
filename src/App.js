@@ -23,7 +23,7 @@ import {
   EmployerLanding,
   CompanyDetails
 } from "./pages";
-import { CompleteProfile, CreateAd, Dashboard,AdInfo,RequestDetails } from "./pages/employer";
+import { CompleteProfile, CreateAd, Dashboard, AdInfo, RequestDetails } from "./pages/employer";
 import { ScrollToTop, Navbar } from "./components";
 import { Plans } from "./pages/employer/Plans";
 import { ToastContainer } from "react-toastify";
@@ -315,7 +315,7 @@ class App extends Component {
               <Route
                 exact
                 path="/Employer/AdInfo/:id"
-                render={(props)=>(
+                render={(props) => (
                   <React.Fragment>
                     <EmployerNavbar />
                     <AdInfo props={props} {...props} />
@@ -327,7 +327,7 @@ class App extends Component {
 
               <Route
                 path="/Employer/AdInfo/:id/RequestDetails/:resumeId"
-                render={(props)=>(
+                render={(props) => (
                   <React.Fragment>
                     <EmployerNavbar />
                     <RequestDetails props={props} {...props} />
