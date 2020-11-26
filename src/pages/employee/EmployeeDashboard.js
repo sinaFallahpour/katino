@@ -184,7 +184,7 @@ export class EmployeeDashboard extends Component {
                     <div className="col-12 col-lg-4 smb-2 mb-lg-0">
                       <span
                         onClick={this.tabsHandler}
-                        className="btn ir-r d-block w-100"
+                        className={`btn ir-r d-block w-100 ${this.state.currentPage==="Requests"?"c-primary":""}`}
                         name="Requests"
                       >
                         درخواست های من
@@ -194,7 +194,7 @@ export class EmployeeDashboard extends Component {
                     <div className="col-12 col-lg-4 smb-2 mb-lg-0">
                       <span
                         onClick={this.tabsHandler}
-                        className="btn ir-r d-block w-100"
+                        className={`btn ir-r d-block w-100 ${this.state.currentPage==="Bookmarks"?"c-primary":""}`}
                         name="Bookmarks"
                       >
                         آگهی های نشان شده
@@ -204,7 +204,7 @@ export class EmployeeDashboard extends Component {
                     <div className="col-12 col-lg-4 mb-0">
                       <span
                         onClick={this.tabsHandler}
-                        className="btn ir-r d-block w-100"
+                        className={`btn ir-r d-block w-100 ${this.state.currentPage==="Recommanded"?"c-primary":""}`}
                         name="Recommanded"
                       >
                         آگهی های پیشنهادی
