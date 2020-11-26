@@ -141,6 +141,7 @@ export class EmployeeDashboard extends Component {
     try {
       if (this.state?.selectdIds?.length == 0) return;
       // return params;
+      console.log(this.state.selectdIds);
       let { data } = await agent.Adver.asignResomeToListOfAdvers(
         this.state.selectdIds
       );
@@ -149,6 +150,8 @@ export class EmployeeDashboard extends Component {
 
       // toast.success("رزومه با موفقیت ارسال شد");
     } catch (err) {
+      console.log(err);
+
       if (err.response.status === 401) toast.error("لطفا وارد شوید.");
       else if (err.response.status === 404) toast.error("خطای رخ داده  ");
       else if (err.response.status === 500) toast.error("مشکلی رخ داده ");

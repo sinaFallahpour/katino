@@ -95,7 +95,7 @@ const Adver = {
     requests.post(`/Resome/AsignResomeToAdver?adverId=${adverId}`),
 
   asignResomeToListOfAdvers: (adverIdlist) =>
-    requests.post(`/Resome/AsignResomeToListOfAdvers?adversId=${adverIdlist}`),
+    requests.post(`/Resome/AsignResomeToListOfAdvers`,adverIdlist),
 };
 
 const CreateResome = {

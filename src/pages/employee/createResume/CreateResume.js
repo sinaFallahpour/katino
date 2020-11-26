@@ -702,7 +702,7 @@ export class CreateResume extends Component {
               className="bg-white srounded-md sp-2 smb-3"
             >
               <div className="row">
-                <div className="col-12 col-lg-9">
+                <div className="col-12">
                   {!this.state.editMode2 ? (
                     <header className="d-flex justify-content-between align-items-center">
                       {/* <h3 className="ir-b c-primary text-right d-block fs-m smb-2">
@@ -1053,7 +1053,7 @@ export class CreateResume extends Component {
               className="bg-white srounded-md sp-2 smb-3"
             >
               <div className="row">
-                <div className="col-12 col-lg-9">
+                <div className="col-12">
                   {!this.state.editMode3 ? (
                     <header className="d-flex justify-content-between align-items-center">
                       {/* <h3 className="ir-b c-primary text-right d-block fs-m smb-2">
@@ -1293,7 +1293,7 @@ export class CreateResume extends Component {
               className="bg-white srounded-md sp-2 smb-3"
             >
               <div className="row">
-                <div className="col-12 col-lg-9">
+                <div className="col-12">
                   {!this.state.editMode8 ? (
                     <header className="d-flex justify-content-between align-items-center">
                       {/* <h3 className="ir-b c-primary text-right d-block fs-m smb-2">
