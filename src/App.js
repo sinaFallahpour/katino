@@ -297,17 +297,7 @@ class App extends Component {
                   <React.Fragment>
                     <EmployeeNavbar />
                     <EmployeeDashboard props={props} {...props} />
-                  </React.Fragment>
-                )}
-              ></Route>
-
-              <Route
-                exact
-                path="/Employee/Dashboard/:page"
-                render={(props) => (
-                  <React.Fragment>
-                    <EmployeeNavbar />
-                    <EmployeeDashboard props={props} {...props} />
+                    <LandingFooter/>
                   </React.Fragment>
                 )}
               ></Route>

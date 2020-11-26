@@ -5,12 +5,7 @@ export const baseUrl = "https://katino.niknet.co/api/";
 //axios.defaults.baseURL = "https://localhost:44377/api";
 
 axios.defaults.baseURL = "https://katino.niknet.co/api";
-export const avatarUrl = "https://katino.niknet.co/img/employeeAvatar"
-
-
-
-
-
+export const avatarUrl = "https://katino.niknet.co/img/employeeAvatar";
 
 // const token = window.localStorage.getItem("jwt");
 // axios.config.headers.Authorization = `Bearer ${token}`;
@@ -74,11 +69,6 @@ export const requests = {
       headers: { "Content-type": "multipart/form-data" },
     });
   },
-
-
-
-
-
 };
 
 const Adver = {
@@ -95,7 +85,7 @@ const Adver = {
     requests.post(`/Resome/AsignResomeToAdver?adverId=${adverId}`),
 
   asignResomeToListOfAdvers: (adverIdlist) =>
-    requests.post(`/Resome/AsignResomeToListOfAdvers`,adverIdlist),
+    requests.post(`/Resome/AsignResomeToListOfAdvers`, adverIdlist),
 };
 
 const CreateResome = {
@@ -107,15 +97,12 @@ const CreateResome = {
   AddEmployeeAboutMen: (body) =>
     requests.post("/Resome/AddEmployeeAboutMe", body),
 
-  LoadEmployeeAboutMe: () =>
-    requests.get("/Resome/LoadEmployeeAboutMe"),
+  LoadEmployeeAboutMe: () => requests.get("/Resome/LoadEmployeeAboutMe"),
 
-  AddUserJobSkill: (id) =>
-    requests.post("/UserJobSkill/AddUserJobSkill", id),
+  AddUserJobSkill: (id) => requests.post("/UserJobSkill/AddUserJobSkill", id),
 
   DeleteUserJobSkill: (id) =>
     requests.del(`/UserJobSkill/DeleteUserJobSkill?id=${id}`),
-
 
   GetAlljobSkillsForSelect: () =>
     requests.get("/JobSkills/GetAlljobSkillsForSelect"),
@@ -123,8 +110,7 @@ const CreateResome = {
   getAllUserJobSkillsForCurrentUser: () =>
     requests.get("/UserJobSkill/GetAllUserJobSkillsForCurrentUser"),
 
-  employeeChangeAvatar: () =>
-    requests.get("/Account/EmployeeChangeAvatar"),
+  employeeChangeAvatar: () => requests.get("/Account/EmployeeChangeAvatar"),
 
   GetUserJobPreferenceForCurrentUser: () =>
     requests.get("/UserJobPreference/GetUserJobPreferenceForCurrentUser"),
@@ -132,13 +118,7 @@ const CreateResome = {
   AddUserJobPreference: (body) =>
     requests.post("/UserJobPreference/AddUserJobPreference", body),
 
-  GetResomePercent: () =>
-    requests.get("/Resome/GetResomePercent"),
-
-
-
-
-
+  GetResomePercent: () => requests.get("/Resome/GetResomePercent"),
 };
 
 const Cities = {

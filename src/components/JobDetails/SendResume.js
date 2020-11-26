@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import axios from "axios";
-import API_ADDRESS from "../../API_ADDRESS";
 import { toast } from "react-toastify";
 import agent from "../../core/agent";
+import StickyBox from "react-sticky-box";
+
 export class SendResume extends Component {
   state = {};
 
@@ -43,20 +43,22 @@ export class SendResume extends Component {
 
   render() {
     return (
-      <div className="send-resume bg-white srounded-md sp-2">
-        <form onSubmit={this.submitHandler.bind(this)}>
-          <h3 className="ir-b c-dark fs-m smb-2">ارسال رزومه به این آگهی</h3>
+      <StickyBox offsetTop={100} offsetBottom={50}>
+        <div className="send-resume bg-white srounded-md sp-2">
+          <form onSubmit={this.submitHandler.bind(this)}>
+            <h3 className="ir-b c-dark fs-m smb-2">ارسال رزومه به این آگهی</h3>
 
-          <p className="d-block c-regular text-justify fs-m ir-r smb-2">
-            برای ارسال رزومه ی خود به این آگهی تنها کافیست بر روی دکمه ی زیر
-            کلیک کنید.
-          </p>
+            <p className="d-block c-regular text-justify fs-m ir-r smb-2">
+              برای ارسال رزومه ی خود به این آگهی تنها کافیست بر روی دکمه ی زیر
+              کلیک کنید.
+            </p>
 
-          <button type="submit" className="btn btn-success ir-r w-100">
-            ارسال رزومه
-          </button>
-        </form>
-      </div>
+            <button type="submit" className="btn btn-success ir-r w-100">
+              ارسال رزومه
+            </button>
+          </form>
+        </div>
+      </StickyBox>
     );
   }
 }

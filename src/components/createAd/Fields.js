@@ -5,10 +5,63 @@ import Select from "react-select";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { Link } from "react-router-dom";
+import validator from "validator";
 
 export class Fields extends Component {
   state = {
     hasPlan: false,
+
+    validation: {
+      title: {
+        validaty: false,
+        message: "",
+      },
+
+      fieldOfActivity: {
+        validaty: false,
+        message: "",
+      },
+
+      city: {
+        validaty: false,
+        message: "",
+      },
+
+      typeOfCooperation: {
+        validaty: false,
+        message: "",
+      },
+
+      salary: {
+        validaty: false,
+        message: "",
+      },
+
+      descriptionOfJob: {
+        validaty: false,
+        message: "",
+      },
+
+      gender: {
+        validaty: false,
+        message: "",
+      },
+
+      workExperience: {
+        validaty: false,
+        message: "",
+      },
+
+      degreeOfEducation: {
+        validaty: false,
+        message: "",
+      },
+
+      military:{
+        validaty: false,
+        message: "",
+      }
+    },
 
     allPlanFor: {},
 
@@ -200,7 +253,6 @@ export class Fields extends Component {
               : `${this.state.militaryList}${value}`,
         });
         // list = list.slice(0, -1);
-
       }
     } else if (checked === false) {
       let list = await this.state.militaryList;
@@ -276,20 +328,10 @@ export class Fields extends Component {
 
   submitHandler = (event) => {
     event.preventDefault();
+    
+    if(this.validation()){
 
-    // if (
-    //   this.state.fields.fieldOfActivity !== "" &&
-    //   this.state.fields.title !== "" &&
-    //   this.state.fields.city !== "" &&
-    //   this.state.fields.typeOfCooperation !== 0 &&
-    //   this.state.fields.salary !== 0 &&
-    //   this.state.fields.workExperience !== 0 &&
-    //   this.state.fields.degreeOfEducation !== 0 &&
-    //   this.state.fields.gender !== 0 &&
-    //   this.state.fields.military !== "" &&
-    //   this.state.fields.descriptionOfJob !== ""
-    // ) {
-    axios
+        axios
       .post(
         API_ADDRESS + "Adver/CreateAdver",
         {
@@ -321,6 +363,253 @@ export class Fields extends Component {
         // }
       });
     // }
+      }
+  };
+
+  validation = () => {
+    // Title
+    let titleEmpty = validator.isEmpty(this.state.fields.title);
+
+    if (titleEmpty === true) {
+      this.setState({
+        validation: {
+          title: { validaty: true, message: "لطفا عنوان آگهی را انتخاب کنید." },
+        },
+      });
+    } else {
+      this.setState({ validation: { title: false } });
+    }
+
+    
+    // Fields Activity
+    let fAEmpty = validator.isEmpty(this.state.fields.fieldOfActivity);
+    
+    if (fAEmpty === true) {
+      this.setState({
+        validation: {
+          fieldOfActivity: {
+            validaty: true,
+            message: "لطفا دسته بندی آگهی را انتخاب کنید.",
+          },
+        },
+      });
+    } else {
+      this.setState({
+        validation: {
+          fieldOfActivity: {
+            validaty: false,
+            message: "",
+          },
+        },
+      });
+    }
+
+    // City
+    let cityEmpty = validator.isEmpty(this.state.fields.city);
+
+    if (cityEmpty === true) {
+      this.setState({
+        validation: {
+          city: {
+            validaty: true,
+            message: "لطفا شهر مربوط به آگهی را انتخاب کنید.",
+          },
+        },
+      });
+    } else {
+      this.setState({
+        validation: {
+          city: {
+            validaty: false,
+            message: "",
+          },
+        },
+      });
+    }
+
+
+    // Cooperation of Type
+    let cOTEmpty = validator.isEmpty(this.state.fields.typeOfCooperation);
+
+    if (this.state.fields.typeOfCooperation === 0 || cOTEmpty === true) {
+      this.setState({
+        validation: {
+          typeOfCooperation: {
+            validaty: true,
+            message: "لطفا نوع همکاری مربوط به آگهی را انتخاب کنید.",
+          },
+        },
+      });
+    } else {
+      this.setState({
+        validation: {
+          typeOfCooperation: {
+            validaty: false,
+            message: "",
+          },
+        },
+      });
+    }
+
+    // Salary
+    let salaryEmpty = validator.isEmpty(this.state.fields.salary);
+
+    if (this.state.fields.salary === 0 || salaryEmpty === true) {
+      this.setState({
+        validation: {
+          salary: {
+            validaty: true,
+            message: "لطفا میزان حقوق مربوط به آگهی را انتخاب کنید.",
+          },
+        },
+      });
+    } else {
+      this.setState({
+        validation: {
+          salary: {
+            validaty: false,
+            message: "",
+          },
+        },
+      });
+    }
+
+    // Description
+    let descriptionEmpty = validator.isEmpty(
+      this.state.fields.descriptionOfJob
+    );
+
+    if (descriptionEmpty === true) {
+      this.setState({
+        validation: {
+          descriptionOfJob: {
+            validaty: true,
+            message: "لطفا توضیحات مربوط به آگهی را انتخاب کنید.",
+          },
+        },
+      });
+    } else {
+      this.setState({
+        validation: {
+          descriptionOfJob: {
+            validaty: false,
+            message: "",
+          },
+        },
+      });
+    }
+
+    // Gender
+    let genderEmpty = validator.isEmpty(this.state.fields.gender);
+
+    if (this.state.fields.gender === 0 || genderEmpty === true) {
+      this.setState({
+        validation: {
+          gender: {
+            validaty: true,
+            message: "لطفا جنسیت مربوط به آگهی را انتخاب کنید.",
+          },
+        },
+      });
+    } else {
+      this.setState({
+        validation: {
+          gender: {
+            validaty: false,
+            message: "",
+          },
+        },
+      });
+    }
+
+    // degreeOfEducation
+    let eduEmpty = validator.isEmpty(this.state.fields.degreeOfEducation);
+
+    if (this.state.fields.degreeOfEducation === 0 || eduEmpty === true) {
+      this.setState({
+        validation: {
+          degreeOfEducation: {
+            validaty: true,
+            message: "لطفا حداقل مدرک تحصیلی مربوط به آگهی را انتخاب کنید.",
+          },
+        },
+      });
+    } else {
+      this.setState({
+        validation: {
+          degreeOfEducation: {
+            validaty: false,
+            message: "",
+          },
+        },
+      });
+    }
+
+    // workExperience
+    let workExperienceEmpty = validator.isEmpty(
+      this.state.fields.workExperience
+    );
+
+    if (
+      this.state.fields.workExperience === 0 ||
+      workExperienceEmpty === true
+    ) {
+      this.setState({
+        validation: {
+          workExperience: {
+            validaty: true,
+            message: "لطفا سابقه کار مرتبط با آگهی را انتخاب کنید.",
+          },
+        },
+      });
+    } else {
+      this.setState({
+        validation: {
+          workExperience: {
+            validaty: false,
+            message: "",
+          },
+        },
+      });
+    }
+
+    // military
+    let militaryEmpty = validator.isEmpty(
+      this.state.fields.workExperience
+    );
+
+    if (militaryEmpty === true) {
+      this.setState({
+        validation: {
+          military: {
+            validaty: true,
+            message: "لطفا سابقه کار مرتبط با آگهی را انتخاب کنید.",
+          },
+        },
+      });
+    } else {
+      this.setState({
+        validation: {
+          military: {
+            validaty: false,
+            message: "",
+          },
+        },
+      });
+    }
+
+    return (
+      this.state.validation.title.validaty!==true&&
+    this.state.validation.fieldOfActivity.validaty!==true&&
+    this.state.validation.city.validaty!==true&&
+    this.state.validation.typeOfCooperation.validaty!==true&&
+    this.state.validation.salary.validaty!==true&&
+    this.state.validation.descriptionOfJob.validaty!==true&&
+    this.state.validation.gender.validaty!==true&&
+    this.state.validation.workExperience.validaty!==true&&
+    this.state.validation.degreeOfEducation.validaty!==true&&
+    this.state.validation.military.validaty!==true
+    )
   };
 
   render() {
@@ -337,6 +626,14 @@ export class Fields extends Component {
                 id="title"
                 name="title"
               />
+
+              {this.state.validation.title.validaty === true ? (
+                <small className="ir-r d-block text-right c-danger fs-s smt-1">
+                  {this.state.validation.title.message}
+                </small>
+              ) : (
+                ""
+              )}
             </div>
           </div>
 
@@ -347,12 +644,21 @@ export class Fields extends Component {
             >
               دسته بندی شغلی
             </label>
+
             <Select
               onChange={this.fieldOfActivityHandler}
               id="fieldOfActivity"
               options={this.state.categories}
               placeholder="دسته بندی مربوطه را جستجو کنید..."
             />
+
+            {this.state.validation.fieldOfActivity.validaty === true ? (
+              <small className="ir-r d-block text-right c-danger fs-s smt-1">
+                {this.state.validation.fieldOfActivity.message}
+              </small>
+            ) : (
+              ""
+            )}
           </div>
 
           <div className="col-12 col-lg-6 smb-2 ir-r">
@@ -365,6 +671,14 @@ export class Fields extends Component {
               options={this.state.cities}
               placeholder="شهر مربوطه را جستجو کنید..."
             />
+
+            {this.state.validation.city.validaty === true ? (
+              <small className="ir-r d-block text-right c-danger fs-s smt-1">
+                {this.state.validation.city.message}
+              </small>
+            ) : (
+              ""
+            )}
           </div>
 
           <div className="col-12 col-lg-6 smb-2 ir-r">
@@ -374,6 +688,7 @@ export class Fields extends Component {
             >
               نوع همکاری
             </label>
+
             <Select
               onChange={this.typeOfCooperationHandler}
               isSearchable={false}
@@ -381,6 +696,14 @@ export class Fields extends Component {
               options={this.state.cooperationType}
               placeholder="نوع همکاری را انتخاب کنید..."
             />
+
+            {this.state.validation.typeOfCooperation.validaty === true ? (
+              <small className="ir-r d-block text-right c-danger fs-s smt-1">
+                {this.state.validation.typeOfCooperation.message}
+              </small>
+            ) : (
+              ""
+            )}
           </div>
 
           <div className="col-12 col-lg-6 smb-2 ir-r">
@@ -394,6 +717,14 @@ export class Fields extends Component {
               options={this.state.salaries}
               placeholder="میزان حقوق را انتخاب کنید..."
             />
+
+            {this.state.validation.salary.validaty === true ? (
+              <small className="ir-r d-block text-right c-danger fs-s smt-1">
+                {this.state.validation.salary.message}
+              </small>
+            ) : (
+              ""
+            )}
           </div>
 
           <div className="col-12 smb-2 ir-r">
@@ -416,6 +747,14 @@ export class Fields extends Component {
                 language: "fa",
               }}
             />
+
+            {this.state.validation.descriptionOfJob.validaty === true ? (
+              <small className="ir-r d-block text-right c-danger fs-s smt-1">
+                {this.state.validation.descriptionOfJob.message}
+              </small>
+            ) : (
+              ""
+            )}
           </div>
 
           <div className="col-12 col-lg-6 smb-2 ir-r">
@@ -429,6 +768,14 @@ export class Fields extends Component {
               options={this.state.sex}
               placeholder="جنسیت را انتخاب کنید..."
             />
+
+            {this.state.validation.gender.validaty === true ? (
+              <small className="ir-r d-block text-right c-danger fs-s smt-1">
+                {this.state.validation.gender.message}
+              </small>
+            ) : (
+              ""
+            )}
           </div>
 
           <div className="col-12 col-lg-6 smb-2 ir-r">
@@ -445,6 +792,14 @@ export class Fields extends Component {
               options={this.state.exprience}
               placeholder="سابقه کار مورد نیاز را انتخاب کنید..."
             />
+
+            {this.state.validation.workExperience.validaty === true ? (
+              <small className="ir-r d-block text-right c-danger fs-s smt-1">
+                {this.state.validation.workExperience.message}
+              </small>
+            ) : (
+              ""
+            )}
           </div>
 
           <div className="col-12 col-lg-6 smb-2 ir-r">
@@ -461,6 +816,14 @@ export class Fields extends Component {
               options={this.state.education}
               placeholder="حداقل مدرک تحصیلی مورد نیاز را انتخاب کنید..."
             />
+
+            {this.state.validation.degreeOfEducation.validaty === true ? (
+              <small className="ir-r d-block text-right c-danger fs-s smt-1">
+                {this.state.validation.degreeOfEducation.message}
+              </small>
+            ) : (
+              ""
+            )}
           </div>
 
           <div className="col-12 col-lg-6 smb-2 ir-r">
@@ -517,6 +880,14 @@ export class Fields extends Component {
                 دارای کارت پایان خدمت
               </label>
             </div>
+          
+            {this.state.validation.military.validaty === true ? (
+              <small className="ir-r d-block text-right c-danger fs-s smt-1">
+                {this.state.validation.military.message}
+              </small>
+            ) : (
+              ""
+            )}
           </div>
 
           <div className="smt-3 col-12">
