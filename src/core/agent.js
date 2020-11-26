@@ -118,9 +118,19 @@ const CreateResome = {
   AddUserJobPreference: (body) =>
     requests.post("/UserJobPreference/AddUserJobPreference", body),
 
-  GetResomePercent: () => requests.get("/Resome/GetResomePercent"),
+  GetResomePercent: () =>
+    requests.get("/Resome/GetResomePercent"),
+
 };
 
+
+const RequestDetails = {
+  LoadCommentForAsignResome: (asignId) =>
+    requests.get(`/Resome/LoadCommentForAsignResome?asignId=${asignId} `),
+
+  AddCommentForAsignResome: (body) =>
+    requests.post("/Resome/AddCommentForAsignResome", body),
+}
 const Cities = {
   Cities: () => requests.get("/Account/GetCities"),
 };
@@ -129,4 +139,5 @@ export default {
   Adver,
   CreateResome,
   Cities,
+  RequestDetails
 };
