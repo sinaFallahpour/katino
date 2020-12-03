@@ -277,7 +277,7 @@ export class EmployerNavbar extends Component {
                 <li className="smb-1">
                   <Link
                     className="ir-r c-grey text-decoration-none"
-                    to="/Employer/Dashboard"
+                    to="/Tickets"
                   >
                     تیکت های پشتیبانی
                   </Link>

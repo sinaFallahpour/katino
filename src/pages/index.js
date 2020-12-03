@@ -9,3 +9,6 @@ export * from "./JobDetails";
 export * from "./employee";
 export * from "./employer";
 export * from "./companies";
+export * from "./Blog";
+export * from "./Post";
+export * from "./ticketing";

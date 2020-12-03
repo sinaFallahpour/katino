@@ -215,6 +215,15 @@ export class EmployeeNavbar extends Component {
                     <li className="smb-1">
                       <Link
                         className="ir-r c-grey text-decoration-none"
+                        to="/Tickets"
+                      >
+                        تیکت های پشتیبانی
+                    </Link>
+                    </li>
+
+                    <li className="smb-1">
+                      <Link
+                        className="ir-r c-grey text-decoration-none"
                         to="/Employee/Home"
                       >
                         تنظیمات حساب کاربری

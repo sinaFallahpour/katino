@@ -533,6 +533,15 @@ p.fs-l {
 .bg-danger {
   background: #e24444 !important;
 }
+.bg-danger-light {
+  background: #ffcece !important;
+}
+.bg-primary {
+  background: #1750ff !important;
+}
+.bg-primary-light {
+  background: #DEE6FF !important;
+}
 .bg-success-light {
   background: #deffe5 !important;
 }

@@ -10,6 +10,7 @@ import {
 } from "../components/home";
 
 import { citiesService } from "../components";
+import * as service from "../components/blog";
 
 import agent from "../core/agent";
 import { toast } from "react-toastify";
@@ -20,6 +21,7 @@ export class Home extends Component {
     immediatelyAds: [],
     latestAds: [],
     cities: [],
+    blog: [],
   };
 
   componentDidMount() {
@@ -42,9 +44,9 @@ export class Home extends Component {
     adsServices
       .getImmediately()
       .then((res) => this.setState({ immediatelyAds: res.data.resul }));
-  }
 
-  // handleMarkOtherAdv;
+      service.getBlogs().then(res=>this.setState({blog:res.data.resul}))
+  }
 
   handleMarkOtherAdv = async (adverId) => {
     try {
@@ -52,7 +54,6 @@ export class Home extends Component {
         (c) => c.id == adverId
       );
       if (currentAdver.isMarked) {
-        // this.setState({ isMarked: false });
         this.setState({
           latestAds: {
             ...this.state.latestAds,
@@ -74,12 +75,6 @@ export class Home extends Component {
           },
         });
 
-        // this.setState({
-        //   latestAds: this.state.latestAds.map((el) =>
-        //     el.id === adverId ? Object.assign({}, el, { isMarked: true }) : el
-        //   ),
-        // });
-
         await agent.Adver.markAdvder(adverId);
       }
     } catch (ex) {
@@ -97,14 +92,6 @@ export class Home extends Component {
             ),
           },
         });
-
-        // this.setState({
-        //   data: this.state.adsList.map((el) =>
-        //     el.id === adverId
-        //       ? Object.assign({}, el, { isMarked: !el.isMarked })
-        //       : el
-        //   ),
-        // });
       }
     }
   };
@@ -123,7 +110,7 @@ export class Home extends Component {
 
         <ResumeBuilder />
 
-        <Blog />
+        <Blog posts={this.state.blog} />
       </div>
     );
   }

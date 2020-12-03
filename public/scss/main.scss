@@ -90,6 +90,18 @@ p {
     background: $danger !important;
   }
 
+  &danger-light {
+    background: $danger-light !important;
+  }
+
+  &primary {
+    background: $primary !important;
+  }
+
+  &primary-light {
+    background: $primary-light !important;
+  }
+
   &success-light {
     background: $success-light !important;
   }

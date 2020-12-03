@@ -15,3 +15,4 @@ export * from "./JobDetails";
 export * from "./employeePanel";
 export * from "./companies";
 export * from "./employerLanding";
+export * from "./tickets";
