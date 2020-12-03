@@ -65,7 +65,6 @@ export function SideBar(props) {
 
             {/* assignId={this.state.currentResume.asignResomeId} assignId={this.state.currentResume.asignResomeId} YadDashts={this.state.YadDashts}={this.state.YadDashts} */}
             {/* assignId={this.state.currentResume.asignResomeId} YadDashts={this.state.YadDashts} */}
-            {console.log(props.YadDashts)}
             <p
               className="ir-r fs-s text-right mb-0"
               style={{ lineHeight: "1.44em" }}

@@ -347,7 +347,7 @@ export class LandingNavbar extends React.Component {
               >
                 <div className="head">
                   <span className="ir-r fs-s sml-1 text-white d-none d-lg-inline">
-                    مجید ولی زاده
+                    پروفایل
               </span>
                   <i className="fas fa-chevron-down text-white srounded-md"></i>
                 </div>

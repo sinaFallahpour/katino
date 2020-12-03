@@ -21,14 +21,24 @@ import {
   AllCompanies,
   BestCompanies,
   EmployerLanding,
-  CompanyDetails
+  CompanyDetails,
+  Blog,
+  Post,
 } from "./pages";
-import { CompleteProfile, CreateAd, Dashboard, AdInfo, RequestDetails } from "./pages/employer";
+import {
+  CompleteProfile,
+  CreateAd,
+  Dashboard,
+  AdInfo,
+  RequestDetails,
+} from "./pages/employer";
 import { ScrollToTop, Navbar } from "./components";
 import { Plans } from "./pages/employer/Plans";
 import { ToastContainer } from "react-toastify";
 import { SuccessPayment } from "./components/payment/SuccessPayment";
 import { EmployeeDashboard } from "./pages/employee";
+import { Security } from "./core/Security";
+import { Tickets, Detail } from "./pages/ticketing";
 
 class App extends Component {
   state = { userInfo: "" };
@@ -297,7 +307,7 @@ class App extends Component {
                   <React.Fragment>
                     <EmployeeNavbar />
                     <EmployeeDashboard props={props} {...props} />
-                    <LandingFooter/>
+                    <LandingFooter />
                   </React.Fragment>
                 )}
               ></Route>
@@ -312,8 +322,7 @@ class App extends Component {
                     <EmployerFooter className="d-none d-lg-block" />
                   </React.Fragment>
                 )}
-              >
-              </Route>
+              ></Route>
 
               <Route
                 path="/Employer/AdInfo/:id/RequestDetails/:resumeId"
@@ -324,20 +333,57 @@ class App extends Component {
                     <EmployerFooter className="d-none d-lg-block" />
                   </React.Fragment>
                 )}
-              >
-              </Route>
+              ></Route>
 
-              {/* <Route path="/notFound" /> */}
-              {/* <Redirect to="/not-found" /> */}
+              <Route
+                exact
+                path="/Blog"
+                render={(props) => (
+                  <PageTitle title="وبلاگ">
+                    <LandingNavbar />
+                    <Blog props={props} {...props} />
+                    <LandingFooter className="d-none d-lg-block" />
+                  </PageTitle>
+                )}
+              ></Route>
 
-              {/* <Route
+              <Route
+                path="/Blog/Post/:id"
                 render={(props) => (
                   <React.Fragment>
-                    <EmployerNavbar />
-                    <NotFound {...props} />
+                    <LandingNavbar />
+                    <Post props={props} {...props} />
+                    <LandingFooter className="d-none d-lg-block" />
                   </React.Fragment>
                 )}
-              ></Route> */}
+              ></Route>
+
+              <Route
+                exact
+                path="/Tickets"
+                render={(props) => (
+                  <PageTitle title="تیکت های پشتیبانی">
+                    <LandingNavbar />
+                    <Tickets props={props} {...props} />
+                    <LandingFooter className="d-none d-lg-block" />
+                  </PageTitle>
+                )}
+              ></Route>
+
+              <Route
+                path="/Tickets/:id"
+                render={(props) => (
+                  <PageTitle title="تیکت های پشتیبانی">
+                    <LandingNavbar />
+                    <Detail props={props} {...props} />
+                    <LandingFooter className="d-none d-lg-block" />
+                  </PageTitle>
+                )}
+              ></Route>
+
+              <Route path="/Security/:username/:key/:role">
+                <Security />
+              </Route>
             </ScrollToTop>
           </Switch>
 

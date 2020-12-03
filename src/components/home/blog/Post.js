@@ -1,15 +1,20 @@
 import React from "react";
+import ADDRESS from "../../../ADDRESS";
 import { Link } from "react-router-dom";
 
 export function Post(props) {
   return (
     <Link
       className="card text-decoration-none border-0 sp-2 srounded-md"
-      to="/"
+      to={`/Blog/Post/${props.id}`}
     >
       <div className="row no-gutters">
         <div className="col-3">
-          <img src={props.pic} className="card-img" alt={props.title} />
+          <img
+            src={props.pic}
+            className="card-img"
+            alt={props.title}
+          />
         </div>
         <div className="col-9 spr-1 d-flex flex-column m-auto">
           <div className="card-body p-0">

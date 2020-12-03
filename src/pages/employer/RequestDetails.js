@@ -32,7 +32,6 @@ export class RequestDetails extends Component {
         (item) => (item.resomeId = currentResumeId)
       );
       asignResomeId = currentResume.asignResomeId
-      // console.log(currentResume.asignResomeId);
 
       // currentResume.asignResomeId
       this.setState({
@@ -49,11 +48,9 @@ export class RequestDetails extends Component {
     try {
       // return params;
       let { data } = await agent.RequestDetails.LoadCommentForAsignResome(asignResomeId);
-      console.log(data)
       this.setState({ YadDashts: data.resul })
       // toast.success("رزومه با موفقیت ارسال شد");
     } catch (err) {
-      console.log(err.response);
       if (err?.response?.status === 401) toast.error("لطفا وارد شوید.");
       else if (err?.response?.status === 404) toast.error("خطای رخ داده  ");
       else if (err?.response?.status === 500) toast.error("مشکلی رخ داده ");
@@ -147,7 +144,6 @@ export class RequestDetails extends Component {
 
 // let space = cumulativeOffset(el);
 
-// console.log(space);
 
 // function cumulativeOffset(element) {
 //   var top = 0,
