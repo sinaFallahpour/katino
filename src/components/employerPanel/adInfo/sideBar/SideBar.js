@@ -5,7 +5,7 @@ export class SideBar extends Component {
   state = {
     cities: [],
 
-    model:{},
+    model: {},
 
     filterVisibility: false,
   };
@@ -42,9 +42,8 @@ export class SideBar extends Component {
           </span>
 
           <div
-            className={`ad-info-sidebar ${
-              this.state.filterVisibility ? "active" : ""
-            }`}
+            className={`ad-info-sidebar ${this.state.filterVisibility ? "active" : ""
+              }`}
           >
             <div className="d-flex d-lg-none spx-2 mt-2 mb-4 justify-content-between align-items-center ir-b c-regular">
               فیلتر ها
@@ -91,9 +90,9 @@ export class SideBar extends Component {
 
             <div className="smb-2">
               <CheckBoxes title="شهر" name="city"
-              
-              
-              list={this.props.info.city.map((item)=>{return {key:item.cityName,num:item.count}})} />
+
+
+                list={this.props.info.city.map((item) => { return { key: item.cityName, num: item.count } })} />
             </div>
 
             <div className="smb-0">

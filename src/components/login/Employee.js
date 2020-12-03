@@ -24,6 +24,7 @@ export class Employee extends Component {
       axios
         .post(API_ADDRESS + "Account/Login", {
           phoneNumber: this.state.phoneNumber,
+          role: 'Employee',
         })
         .then(() => {
           this.props.prop.history.push(

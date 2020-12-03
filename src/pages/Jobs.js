@@ -56,8 +56,9 @@ export class Jobs extends Component {
     try {
       const { data } = await agent.Adver.filterAdver(
         inp,
-        10,
-        this.state.curentPage
+        // 10,
+        this.state.curentPage,
+        10
       );
 
       this.setState({
@@ -185,27 +186,27 @@ export class Jobs extends Component {
           <div className="row bg-white srounded-md sp-2">
             {this.state.adsList
               ? this.state.adsList.map((item, index) => (
-                  <div
-                    key={item.id}
-                    className={
-                      index + 1 !== this.state.adsList.length
-                        ? "col-12 smb-2"
-                        : "col-12 mb-0"
-                    }
-                  >
-                    <Ad
-                      id={item.id}
-                      title={item.title}
-                      companyName={item.companyName}
-                      city={item.city}
-                      salary={item.salary}
-                      typeOfCooperation={item.typeOfCooperation}
-                      descriptionOfJob={item.descriptionOfJob}
-                      item={item}
-                      handleMarkOtherAdv={this.handleMarkOtherAdv}
-                    />
-                  </div>
-                ))
+                <div
+                  key={item.id}
+                  className={
+                    index + 1 !== this.state.adsList.length
+                      ? "col-12 smb-2"
+                      : "col-12 mb-0"
+                  }
+                >
+                  <Ad
+                    id={item.id}
+                    title={item.title}
+                    companyName={item.companyName}
+                    city={item.city}
+                    salary={item.salary}
+                    typeOfCooperation={item.typeOfCooperation}
+                    descriptionOfJob={item.descriptionOfJob}
+                    item={item}
+                    handleMarkOtherAdv={this.handleMarkOtherAdv}
+                  />
+                </div>
+              ))
               : ""}
           </div>
 

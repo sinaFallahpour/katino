@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export function Post(props) {
   let desc =
-    props.desc.length <= 200 ? props.desc : props.desc.substring(0, 200);
+    props.desc?.length <= 200 ? props.desc : props.desc?.substring(0, 200);
 
   return (
     <Link className="text-decoration-none" to={`/Blog/Post/${props.id}`}>

@@ -2,12 +2,17 @@ import React, { Component } from "react";
 import * as service from "../../components/tickets";
 import { Link } from "react-router-dom";
 import validator from "validator";
+import { toast } from 'react-toastify';
+
+import agent, { mainUrl } from "../../core/agent";
 
 export class Detail extends Component {
   state = {
     details: {},
-
+    id: null,
     fileName: "انتخاب و آپلود فایل ضمیمه",
+    answer: '',
+    answerFile: null
   };
 
   async componentDidMount() {
@@ -15,11 +20,48 @@ export class Detail extends Component {
 
     await service
       .getTicketInfo(id)
-      .then((res) => this.setState({ details: res.data.resul }));
+      .then((res) => this.setState({ details: res.data.resul, id }));
   }
 
+
+
+  submitTicketAnswer = async (event) => {
+    event.preventDefault();
+
+    try {
+      // return params;
+      let datas = new FormData();
+      datas.append('Id', this.state.id);
+      datas.append('Answer', this.state.answer);
+      datas.append('AnswerFile', this.state.answerFile);
+
+      let { data } = await agent.Ticket.answerTicker(datas);
+      // console.log(data)
+      // let data1 = { ...this.state.info2 };
+      // if (data1.isMarreid == "false") data1.isMarreid = false;
+      // else data1.isMarreid = true;
+      // let { data } = await agent.CreateResome.editEmployeePersonalInformation(
+      //   data1
+      // );
+      this.props.history.push("/Tickets");
+      toast.success("ثبت موفقیت آمیز");
+      // this.setState({ editMode1: false });
+    } catch (err) {
+      if (err.response.status === 401) toast.error("لطفا وارد شوید.");
+      else if (err.response.status === 404) toast.error("خطای رخ داده  ");
+      else if (err.response.status === 500) toast.error("مشکلی رخ داده ");
+      else {
+        for (let index = 0; index < err.response.data.message.length; index++) {
+          toast.error(err.response.data.message[index]);
+        }
+      }
+    }
+  };
+
+
+
   fileHandler = (event) => {
-    this.setState({ fileName: event.target.value });
+    this.setState({ answerFile: event.target.files[0] });
   };
 
   render() {
@@ -30,13 +72,18 @@ export class Detail extends Component {
             <div className="sbs-shadow srounded-md bg-white sp-2">
               <header className="header d-flex flex-column flex-lg-row justify-content-between align-items-center">
                 <h2 className="fs-m c-dark ir-b text-center text-lg-right w-50 text-truncate smb-2 mb-lg-0">{`#${this.state.details.id} ${this.state.details.subject}`}</h2>
+                <div>
+                  {this.state.details.receiverFile && (<a href={`${mainUrl}img/ticket/${this.state.details.receiverFile}`} target="_blank" className="btn btn-success ml-2">دانلود فابل</a>)}
 
-                <Link
-                  className="ir-r fs-s btn bg-white shadow-none border"
-                  to="/Tickets"
-                >
-                  بازگشت
-                </Link>
+
+                  <Link
+                    className="ir-r fs-s btn bg-white shadow-none border"
+                    to="/Tickets"
+                  >
+                    بازگشت
+</Link>
+                </div>
+
               </header>
 
               <hr className="smy-2" />
@@ -70,8 +117,8 @@ export class Detail extends Component {
                   </div>
                 </React.Fragment>
               ) : (
-                ""
-              )}
+                  ""
+                )}
 
               {this.state.details.hasAnswer === true ? (
                 <React.Fragment>
@@ -81,13 +128,14 @@ export class Detail extends Component {
                     {this.state.details.receiverFullName}
                   </span>
 
-                  <form noValidate>
+                  <form onSubmit={this.submitTicketAnswer}>
                     <textarea
                       className="form-control ir-r fs-s mt-0 smb-2 srounded-sm shadow-none sp-1"
                       style={{ resize: "none" }}
                       id="message"
                       placeholder="پیام شما..."
                       rows="4"
+                      onChange={(e) => this.setState({ answer: e.target.value })}
                     ></textarea>
 
                     <input
@@ -111,8 +159,8 @@ export class Detail extends Component {
                   </form>
                 </React.Fragment>
               ) : (
-                ""
-              )}
+                  ""
+                )}
             </div>
           </aside>
         </div>
