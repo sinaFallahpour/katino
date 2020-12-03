@@ -13,9 +13,9 @@ export class Filters extends Component {
     data: {
       category: "",
       city: "",
-      typeOfCooperation: 1,
-      workExperience: 1,
-      salary: 1,
+      typeOfCooperation: null,
+      workExperience: null,
+      salary: null,
     },
     typeOfCooperation: [
       {
@@ -130,7 +130,7 @@ export class Filters extends Component {
 
               onChange={async (e) => {
                 await this.setState({
-                  data: { ...this.state.data, category: e.label },
+                  data: { ...this.state.data, category: e ? e?.label : "" },
                 });
                 this.props.handleFilter(this.state.data);
               }}
@@ -155,7 +155,7 @@ export class Filters extends Component {
                 await this.setState({
                   data: {
                     ...this.state.data,
-                    typeOfCooperation: e ? e.value : 1,
+                    typeOfCooperation: e ? e.value : null,
                   },
                 });
                 this.props.handleFilter(this.state.data);
@@ -173,7 +173,7 @@ export class Filters extends Component {
               isClearable
               onChange={async (e) => {
                 await this.setState({
-                  data: { ...this.state.data, city: e ? e.label : null },
+                  data: { ...this.state.data, city: e ? e.value : "" },
                 });
                 this.props.handleFilter(this.state.data);
               }}
@@ -191,7 +191,7 @@ export class Filters extends Component {
               isClearable
               onChange={async (e) => {
                 await this.setState({
-                  data: { ...this.state.data, salary: e ? e.value : 1 },
+                  data: { ...this.state.data, salary: e ? e.value : null },
                 });
                 this.props.handleFilter(this.state.data);
               }}
@@ -210,7 +210,7 @@ export class Filters extends Component {
                 await this.setState({
                   data: {
                     ...this.state.data,
-                    workExperience: e ? e.value : 1,
+                    workExperience: e ? e.value : null,
                   },
                 });
                 this.props.handleFilter(this.state.data);

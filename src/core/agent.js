@@ -2,6 +2,7 @@ import axios from "axios";
 // import { history } from "../..";
 import { toast } from "react-toastify";
 export const baseUrl = "https://katino.niknet.co/api/";
+export const mainUrl = "https://katino.niknet.co/";
 //axios.defaults.baseURL = "https://localhost:44377/api";
 
 axios.defaults.baseURL = "https://katino.niknet.co/api";
@@ -145,9 +146,19 @@ const Cities = {
   Cities: () => requests.get("/Account/GetCities"),
 };
 
+
+
+const Ticket = {
+  answerTicker: (data) => requests.post("/Tickets/AnswerTicket",data),
+  createTicket: (data) => requests.post("/Tickets/CreateTicket",data),
+};
+
+
+
 export default {
   Adver,
   CreateResome,
   Cities,
-  RequestDetails
+  RequestDetails,
+  Ticket
 };

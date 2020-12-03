@@ -38,7 +38,7 @@ import { ToastContainer } from "react-toastify";
 import { SuccessPayment } from "./components/payment/SuccessPayment";
 import { EmployeeDashboard } from "./pages/employee";
 import { Security } from "./core/Security";
-import { Tickets, Detail } from "./pages/ticketing";
+import { Tickets, Detail, CreateTicket } from "./pages/ticketing";
 
 class App extends Component {
   state = { userInfo: "" };
@@ -380,6 +380,21 @@ class App extends Component {
                   </PageTitle>
                 )}
               ></Route>
+
+
+
+              <Route
+                path="/createTicket"
+                render={(props) => (
+                  <PageTitle title="تیکت های پشتیبانی">
+                    <LandingNavbar />
+                    <CreateTicket props={props} {...props} />
+                    <LandingFooter className="d-none d-lg-block" />
+                  </PageTitle>
+                )}
+              ></Route>
+
+
 
               <Route path="/Security/:username/:key/:role">
                 <Security />

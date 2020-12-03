@@ -208,7 +208,11 @@ export class SideBar extends Component {
 
             <div className="smb-2">
               <CheckBoxes title="شهر" name="city"
+<<<<<<< HEAD
                 handleFilter={this.handleFilter}
+=======
+
+>>>>>>> 6ed143d... some changes
 
                 list={this.props.info.city.map((item) => { return { key: item.cityName, num: item.count } })} />
             </div>
