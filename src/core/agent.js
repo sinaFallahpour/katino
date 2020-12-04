@@ -1,6 +1,9 @@
 import axios from "axios";
 // import { history } from "../..";
 import { toast } from "react-toastify";
+import { createBrowserHistory } from "history";
+
+export let history = createBrowserHistory({ basename: "" });
 export const baseUrl = "https://katino.niknet.co/api/";
 export const mainUrl = "https://katino.niknet.co/";
 //axios.defaults.baseURL = "https://localhost:44377/api";
@@ -30,6 +33,11 @@ axios.interceptors.response.use(undefined, (error) => {
   if (error?.response?.status == 404) {
     toast.error("خطایی رخ داده!");
   }
+
+  if (error?.response?.status == 401 || error?.response?.status == 403) {
+    history.push("/Employee/Login/");
+  }
+
   // const { status, data, config } = error?.response;
   //   if (status === 404) {
   //     history.push("/notfound");
@@ -119,11 +127,8 @@ const CreateResome = {
   AddUserJobPreference: (body) =>
     requests.post("/UserJobPreference/AddUserJobPreference", body),
 
-  GetResomePercent: () =>
-    requests.get("/Resome/GetResomePercent"),
-
+  GetResomePercent: () => requests.get("/Resome/GetResomePercent"),
 };
-
 
 const RequestDetails = {
   LoadCommentForAsignResome: (asignId) =>
@@ -132,33 +137,23 @@ const RequestDetails = {
   AddCommentForAsignResome: (body) =>
     requests.post("/Resome/AddCommentForAsignResome", body),
 
-
   FilterAllResomesInfoForAdver: (body) =>
     requests.post("/Resome/FilterAllResomesInfoForAdver", body),
-
-
-
-
-}
-
+};
 
 const Cities = {
   Cities: () => requests.get("/Account/GetCities"),
 };
 
-
-
 const Ticket = {
-  answerTicker: (data) => requests.post("/Tickets/AnswerTicket",data),
-  createTicket: (data) => requests.post("/Tickets/CreateTicket",data),
+  answerTicker: (data) => requests.post("/Tickets/AnswerTicket", data),
+  createTicket: (data) => requests.post("/Tickets/CreateTicket", data),
 };
-
-
 
 export default {
   Adver,
   CreateResome,
   Cities,
   RequestDetails,
-  Ticket
+  Ticket,
 };

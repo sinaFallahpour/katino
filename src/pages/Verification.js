@@ -54,18 +54,24 @@ export class Verification extends Component {
           const token = res.data.resul.token;
           localStorage.setItem("JWT", token);
 
+          localStorage.setItem("userInfo", res?.data?.resul?.role);
+
           if (!(url.search("/Employee/") === -1)) {
-            localStorage.setItem("userInfo", "Employee");
-            this.props.props.history.push("/Employee/Jobs");
+            // localStorage.setItem("userInfo", "Employee");
+            window.location.href = "/Employee/Jobs";
+            // this.props.props.history.push("/Employee/Jobs");
           } else if (!(url.search("/Employer/Login") === -1)) {
-            localStorage.setItem("userInfo", "Employer");
+            // localStorage.setItem("userInfo", "Employer");
+            window.location.href = "/Employer/Dashboard/";
             this.props.props.history.push("/Employer/Dashboard/");
           } else if (!(url.search("/Employer/Register") === -1)) {
-            localStorage.setItem("userInfo", "Employer");
+            // localStorage.setItem("userInfo", "Employer");
 
-            this.props.props.history.push(
-              `/Employer/CompleteProfile?phoneNumber=${this.state.verification.phoneNumber}`
-            );
+            window.location.href = `/Employer/CompleteProfile?phoneNumber=${this.state.verification.phoneNumber}`;
+
+            // this.props.props.history.push(
+            //   `/Employer/CompleteProfile?phoneNumber=${this.state.verification.phoneNumber}`
+            // );
           }
         })
         .catch((err) => {
