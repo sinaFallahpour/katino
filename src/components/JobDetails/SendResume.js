@@ -16,10 +16,10 @@ export class SendResume extends Component {
       await agent.Adver.asignResomeToAdver(this.props.id);
       toast.success("رزومه با موفقیت ارسال شد");
     } catch (err) {
-      if (err.response.status === 401) toast.error("لطفا وارد شوید.");
-      else if (err.response.status === 404) toast.error("خطای رخ داده  ");
-      else if (err.response.status === 500) toast.error("مشکلی رخ داده ");
-      else toast.error(err.response.message[0]);
+      if (err.response?.status === 401) toast.error("لطفا وارد شوید.");
+      else if (err.response?.status === 404) toast.error("خطای رخ داده  ");
+      else if (err.response?.status === 500) toast.error("مشکلی رخ داده ");
+      else toast.error(err.response?.data?.Message[0]);
     }
 
     // axios

@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { createBrowserHistory } from "history";
 
-export let history = createBrowserHistory({ basename: "" });
+export let history = createBrowserHistory();
 export const baseUrl = "https://katino.niknet.co/api/";
 export const mainUrl = "https://katino.niknet.co/";
 //axios.defaults.baseURL = "https://localhost:44377/api";
@@ -35,7 +35,8 @@ axios.interceptors.response.use(undefined, (error) => {
   }
 
   if (error?.response?.status == 401 || error?.response?.status == 403) {
-    history.push("/Employee/Login/");
+    window.location.href = "/Employee/Login/";
+    // history.push("/Employee/Login/");
   }
 
   // const { status, data, config } = error?.response;

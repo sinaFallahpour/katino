@@ -211,13 +211,14 @@ class App extends Component {
                 render={(props) => {
                   if (!this.isEmployer())
                     return <Redirect exact to="/Employer/Login" />;
-                  return (
-                    <PageTitle title="پرداخت">
-                      <EmployerNavbar />
-                      <Payment props={props} {...props} />
-                      <EmployerFooter className="d-none d-lg-block" />
-                    </PageTitle>
-                  );
+                  else
+                    return (
+                      <PageTitle title="پرداخت">
+                        <EmployerNavbar />
+                        <Payment props={props} {...props} />
+                        <EmployerFooter className="d-none d-lg-block" />
+                      </PageTitle>
+                    );
                 }}
               ></Route>
 
@@ -225,8 +226,9 @@ class App extends Component {
                 path="/Employer/Dashboard"
                 exact
                 render={(props) => {
-                  if (!this.isEmployer())
+                  if (!this.isEmployer()) {
                     return <Redirect exact to="/Employer/Login" />;
+                  }
                   return (
                     <PageTitle title="داشبورد">
                       <EmployerNavbar />
@@ -248,21 +250,6 @@ class App extends Component {
                       <EmployerNavbar />
                       <Plans {...props} />
                       <EmployerFooter className="d-none d-lg-block" />
-                    </PageTitle>
-                  );
-                }}
-              ></Route>
-
-              <Route
-                path="/Employee/Jobs"
-                render={(props) => {
-                  if (!this.isEmployee())
-                    return <Redirect exact to="/Employee/Login" />;
-                  return (
-                    <PageTitle title="جستجوی مشاغل">
-                      <EmployeeNavbar />
-                      <Jobs {...props} />
-                      <LandingFooter />
                     </PageTitle>
                   );
                 }}
@@ -301,11 +288,44 @@ class App extends Component {
               <Route
                 path="/JobDetails/:id"
                 render={(props) => {
-                  <PageTitle title="مشاهده آگهی">
-                    <LandingNavbar />
-                    <JobDetails {...props} />
-                    <LandingFooter />
-                  </PageTitle>;
+                  return (
+                    <PageTitle title="مشاهده آگهی">
+                      <LandingNavbar />
+                      <JobDetails {...props} />
+                      <LandingFooter />
+                    </PageTitle>
+                  );
+                }}
+              ></Route>
+
+              <Route
+                path="/Employee/Plans"
+                exact
+                render={(props) => {
+                  if (!this.isEmployee())
+                    return <Redirect exact to="/Employee/Login" />;
+                  return (
+                    <PageTitle title="تعرفه ها">
+                      <EmployeeNavbar />
+                      <Plans {...props} />
+                      <LandingFooter />
+                    </PageTitle>
+                  );
+                }}
+              ></Route>
+
+              <Route
+                path="/Employee/Jobs"
+                render={(props) => {
+                  if (!this.isEmployee())
+                    return <Redirect exact to="/Employee/Login" />;
+                  return (
+                    <PageTitle title="جستجوی مشاغل">
+                      <EmployeeNavbar />
+                      <Jobs {...props} />
+                      <LandingFooter />
+                    </PageTitle>
+                  );
                 }}
               ></Route>
 
