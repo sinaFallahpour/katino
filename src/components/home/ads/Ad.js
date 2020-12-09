@@ -74,11 +74,10 @@ export class Ad extends Component {
           <i
             // onClick={this.adMarker}
             onClick={() => {
-              this.props.handleMarkOtherAdv(this.props.id);
+              this.props?.handleMarkOtherAdv(this.props.id);
             }}
-            className={`bookmarker-btn c-dark fs-l ${
-              this.props.item?.isMarked === false ? "far" : "fas"
-            } fa-bookmark`}
+            className={`bookmarker-btn c-dark fs-l ${this.props.item?.isMarked === false ? "far" : "fas"
+              } fa-bookmark`}
           ></i>
         </header>
 

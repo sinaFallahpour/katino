@@ -1,7 +1,9 @@
 import axios from "axios";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import API_ADDRESS from "../../API_ADDRESS";
+import API_ADDRESS, { API_URL } from "../../API_ADDRESS";
+
+
 import { numberSeparator } from "../../common";
 
 
@@ -52,8 +54,8 @@ export class Factor extends Component {
 
     axios
       .post(
-        API_ADDRESS +
-        `payment/TestPaymentPlan?planId=${this.props.id}${this.state.giftCode !== 0
+        API_URL +
+        `paymentPlan?planId=${this.props.id}${this.state.giftCode !== 0
           ? `&giftCartId=${this.state.giftCode}`
           : ""
         }`,
@@ -65,11 +67,14 @@ export class Factor extends Component {
         }
       )
       .then((res) => {
-        this.props.prop.history.push({
-          pathname: "/Employer/SuccessPayment",
-          search: "",
-          state: { message: res.data.message[1] },
-        });
+
+        window.location.href = res?.data?.resul?.gatewayTransporter?.descriptor?.url
+        // "/Employer/SuccessPayment"
+        // this.props.prop.history.push({
+        //   pathname: res?.data?.resul?.gatewayTransporter?.descriptor?.url,
+        //   search: "",
+        //   state: { message: res.data.message[1] },
+        // });
 
         // let htmlPage = res.data;
         // let htmlElement = document.createElement("html");
@@ -82,6 +87,7 @@ export class Factor extends Component {
         // document.getElementById("paymentForm").submit();
       })
       .catch((err) => {
+        console.log(err);
         if (err.response?.status === 401) toast.error("لطفا وارد شوید.");
         else if (err.response?.status === 404) toast.error("خطای رخ داده ");
         else if (err.response?.status === 500) toast.error("مشکلی رخ داده ");

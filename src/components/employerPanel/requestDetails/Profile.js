@@ -2,20 +2,21 @@ import React from "react";
 import { Info } from "./Info";
 
 export function Profile(props) {
+
   let preferencesList = [
-    props.allInfo.userJobPreference.educationCourses ? "دوره های آموزشی" : "",
-    props.allInfo.userJobPreference.flexibleWorkingTime
+    props.allInfo?.userJobPreference?.educationCourses ? "دوره های آموزشی" : "",
+    props.allInfo?.userJobPreference?.flexibleWorkingTime
       ? "ساعت کاری منعطف"
       : "",
-    props.allInfo.userJobPreference.hasMeel ? "غذا به عهده‌ی شرکت" : "",
-    props.allInfo.userJobPreference.insurance ? "بیمه" : "",
-    props.allInfo.userJobPreference.promotion ? "امکان ترفیع سمت" : "",
-    props.allInfo.userJobPreference.transportationService
+    props.allInfo?.userJobPreference?.hasMeel ? "غذا به عهده‌ی شرکت" : "",
+    props.allInfo?.userJobPreference?.insurance ? "بیمه" : "",
+    props.allInfo?.userJobPreference?.promotion ? "امکان ترفیع سمت" : "",
+    props.allInfo?.userJobPreference?.transportationService
       ? "سرویس رفت و آمد"
       : "",
-    props.allInfo.userJobPreference.educationCourses ? "" : "",
-    props.allInfo.userJobPreference.educationCourses ? "" : "",
-    props.allInfo.userJobPreference.educationCourses ? "" : "",
+    props.allInfo?.userJobPreference?.educationCourses ? "" : "",
+    props.allInfo?.userJobPreference?.educationCourses ? "" : "",
+    props.allInfo?.userJobPreference?.educationCourses ? "" : "",
   ];
 
   let preferences = "";
@@ -30,7 +31,7 @@ export function Profile(props) {
 
   let skills = "";
 
-  skillsArray.map((item, index) => {
+  skillsArray?.map((item, index) => {
     if (index === skillsArray.length - 1) skills += item.jobSkillName;
     else skills += `${item.jobSkillName} - `;
   });
@@ -39,7 +40,7 @@ export function Profile(props) {
 
   let languageList = [];
 
-  language.map((item) =>
+  language?.map((item) =>
     languageList.push({
       key: item.languageName,
       value: languageLevel(item.languageLevel),
@@ -217,8 +218,8 @@ export function Profile(props) {
               key: "نوع قراردادهای قابل قبول",
               value: props.allInfo.userJobPreference.typeOfCooperation
                 ? typeOfCooperation(
-                    props.allInfo.userJobPreference.typeOfCooperation
-                  )
+                  props.allInfo.userJobPreference.typeOfCooperation
+                )
                 : "-",
             },
             {

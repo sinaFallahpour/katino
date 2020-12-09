@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 export class SuccessPayment extends Component {
-  componentDidMount = () => {};
+  componentDidMount = () => { };
 
   render() {
     return (
@@ -19,7 +19,7 @@ export class SuccessPayment extends Component {
 
               <div className="f-item sp-2 smt-2 sbs-content srounded-md">
                 <div className="d-block text-center ir-r spy-1">
-                  {this.props.location.state.message}
+                  {this.props?.location?.state?.message}
                 </div>
 
                 <Link
