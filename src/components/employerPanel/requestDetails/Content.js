@@ -37,25 +37,23 @@ export class Content extends Component {
           <ul className="tabs m-0 p-0 d-flex align-items-center justify-content-start">
             <li
               onClick={this.tabsHandler}
-              className={`tabs-item cursor-pointer spy-1 spx-2 ir-r ${
-                this.state.sendedResume ? "active" : ""
-              }`}
+              className={`tabs-item cursor-pointer spy-1 spx-2 ir-r ${this.state.sendedResume ? "active" : ""
+                }`}
             >
               رزومه ارسال شده
             </li>
 
             <li
               onClick={this.tabsHandler}
-              className={`tabs-item cursor-pointer spy-1 spx-2 ir-r ${
-                !this.state.sendedResume ? "active" : ""
-              }`}
+              className={`tabs-item cursor-pointer spy-1 spx-2 ir-r ${!this.state.sendedResume ? "active" : ""
+                }`}
             >
               پروفایل کاتینو
             </li>
           </ul>
         </div>
 
-        {this.state.sendedResume ? <SendedResume /> : <Profile allInfo={this.props.allInfo} />}
+        {this.state.sendedResume ? <SendedResume userShortInfoForResome={this.props.userShortInfoForResome} /> : <Profile allInfo={this.props.allInfo} />}
       </div>
     );
   }

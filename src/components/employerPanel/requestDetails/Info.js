@@ -1,4 +1,5 @@
 import React from "react";
+import { mainUrl } from "../../../core/agent";
 
 export function Info(props) {
   return (
@@ -12,14 +13,14 @@ export function Info(props) {
         {props.type === "file" ? (
           <a
             className="btn bg-white border srounded-sm ir-r fs-s p-2"
-            href="#"
+            href={mainUrl + `PDF/resomePDF/${props.pdfUrl}`}
             target="_blank"
           >
             دانلود
           </a>
         ) : (
-          ""
-        )}
+            ""
+          )}
       </div>
 
       {props.type === "list" ? (
@@ -27,9 +28,8 @@ export function Info(props) {
           {props.list.map((item, index) => (
             <li
               key={index}
-              className={`ir-r sp-2 fs-s text-right ${
-                index !== props.list.length ? "border-top" : ""
-              }`}
+              className={`ir-r sp-2 fs-s text-right ${index !== props.list.length ? "border-top" : ""
+                }`}
             >
               {`${item.key}: ${item.value}`}
             </li>
@@ -42,9 +42,8 @@ export function Info(props) {
           {props.list.map((item, index) => (
             <li
               key={index}
-              className={`ir-r sp-2 fs-s text-right ${
-                index !== props.list.length ? "border-top" : ""
-              }`}
+              className={`ir-r sp-2 fs-s text-right ${index !== props.list.length ? "border-top" : ""
+                }`}
             >
               <span className="ir-b fs-s c-regular text-right d-block smb-1">
                 {item.fieldOfStudy}
@@ -55,14 +54,13 @@ export function Info(props) {
             </li>
           ))}
         </ul>
-      ) : props.type === "jobBackground"?(
+      ) : props.type === "jobBackground" ? (
         <ul className="m-0 p-0">
           {props.list.map((item, index) => (
             <li
               key={index}
-              className={`ir-r sp-2 fs-s text-right ${
-                index !== props.list.length ? "border-top" : ""
-              }`}
+              className={`ir-r sp-2 fs-s text-right ${index !== props.list.length ? "border-top" : ""
+                }`}
             >
               <span className="ir-b fs-s c-regular text-right d-block smb-1">
                 {item.workTitle}
@@ -73,7 +71,7 @@ export function Info(props) {
             </li>
           ))}
         </ul>
-      ):""}
+      ) : ""}
     </div>
   );
 }

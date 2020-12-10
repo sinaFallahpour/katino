@@ -68,24 +68,24 @@ export class Plans extends Component {
                       style={{ fontSize: "24px" }}
                     >{`${numberSeparator(item.price)} تومان`}</span>
                   ) : (
-                    <React.Fragment>
-                      <span
-                        className="d-block ir-b c-dark text-center smt-5 smb-1 c-success"
-                        style={{ fontSize: "24px" }}
-                      >
-                        {`${numberSeparator(
-                          item.price * (1 - item.discount / 100)
-                        )} تومان`}
-                      </span>
-                      <span
-                        className="d-block ir-b c-dark text-center smb-2 spb-3 c-danger"
-                        style={{
-                          fontSize: "20px",
-                          textDecoration: "line-through",
-                        }}
-                      >{`${numberSeparator(item.price)} تومان`}</span>
-                    </React.Fragment>
-                  )}
+                      <React.Fragment>
+                        <span
+                          className="d-block ir-b c-dark text-center smt-5 smb-1 c-success"
+                          style={{ fontSize: "24px" }}
+                        >
+                          {`${numberSeparator(
+                            item.price * (1 - item.discount / 100)
+                          )} تومان`}
+                        </span>
+                        <span
+                          className="d-block ir-b c-dark text-center smb-2 spb-3 c-danger"
+                          style={{
+                            fontSize: "20px",
+                            textDecoration: "line-through",
+                          }}
+                        >{`${numberSeparator(item.price)} تومان`}</span>
+                      </React.Fragment>
+                    )}
 
                   <ul className="list-group">
                     <li className="list-group-item ir-r text-center border-top-0 border-left-0 border-right-0">
@@ -102,16 +102,16 @@ export class Plans extends Component {
                         {`نمایش لوگوی شرکت در صفحه ی اصلی به مدت ${item.logo} روز`}
                       </li>
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
 
                     {item.isUseResomeManegement === true ? (
                       <li className="list-group-item ir-r text-center border-left-0 border-right-0">
                         استفاده از مدیریت رزومه های ارسالی
                       </li>
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
 
                     <li className="list-group-item ir-r text-center border-left-0 border-right-0">
                       {`مدت زمان استفاده: ${item.duration} روز`}

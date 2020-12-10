@@ -136,9 +136,8 @@ export class JobDetails extends Component {
 
                     <i
                       onClick={this.handleMark}
-                      className={`bookmarker-btn c-dark fs-l ${
-                        this.state.isMarked === false ? "far" : "fas"
-                      } fa-bookmark`}
+                      className={`bookmarker-btn c-dark fs-l ${this.state.isMarked === false ? "far" : "fas"
+                        } fa-bookmark`}
                     ></i>
                   </header>
 

@@ -51,8 +51,8 @@ export function Profile(props) {
 
   let educationList = [];
 
-  educationBackground.map((item) =>
-    educationList.push({
+  educationBackground?.map((item) =>
+    educationList?.push({
       fieldOfStudy: item.fieldOfStudy,
       universityName: item.universityName,
       startDate: item.startDate.substring(0, 4),

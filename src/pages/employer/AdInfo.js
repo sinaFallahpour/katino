@@ -6,13 +6,10 @@ import {
   SideBar,
 } from "../../components/employerPanel/adInfo";
 import * as service from "../../components/employerPanel";
-
-
 import Swal from "sweetalert2"
-
 import { toast } from "react-toastify"
-
 import agent from "../../core/agent"
+
 export class AdInfo extends Component {
   state = {
     currentItem: {},
@@ -42,6 +39,10 @@ export class AdInfo extends Component {
     await service
       .getAdverResumes(id)
       .then((res) => this.setState({ resumes: res.data.resul }));
+
+
+
+
   }
 
 

@@ -66,18 +66,12 @@ export class Jobs extends Component {
         pageCount: data.resul.pageCount,
       });
 
-      // data.resul.pageCount;
-      // data.resul.listOfData
     } catch (ex) {
       toast.error("خطایی رخ داده");
-      // Swal.fire("خطایی رخ داده");
+
     } finally {
       Swal.close();
     }
-
-    // toast.error(data.message, {
-    //   autoClose: 10000,
-    // });
   };
 
   handleSearch = async (inp) => {
@@ -85,8 +79,7 @@ export class Jobs extends Component {
     try {
       let { city, key } = inp;
       var params = new URLSearchParams();
-      // if (!rowsPerPage) rowsPerPage = 10;
-      // if (!currentPage) currentPage = 0;
+
       params.append("page", this.state.curentPage);
       params.append("pageSize", 10);
       params.append("key", key);
