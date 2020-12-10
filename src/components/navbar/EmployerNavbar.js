@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import API_ADDRESS from "../../API_ADDRESS";
-import ADDRESS from "../../ADDRESS";
-import axios from "axios";
+import React, { Component } from "react"
+import { Link } from "react-router-dom"
+import API_ADDRESS from "../../API_ADDRESS"
+import ADDRESS from "../../ADDRESS"
+import axios from "axios"
 
 export class EmployerNavbar extends Component {
   state = {
@@ -19,7 +19,7 @@ export class EmployerNavbar extends Component {
     notifCount: 0,
     notifs: [],
     notifIds: [],
-  };
+  }
 
   async componentDidMount() {
     await axios
@@ -29,15 +29,15 @@ export class EmployerNavbar extends Component {
         },
       })
       .then((res) => {
-        let ids = [];
+        let ids = []
 
-        res.data.resul.advernotifs.map((item) => ids.push(item.id));
+        res.data.resul.advernotifs.map((item) => ids.push(item.id))
         this.setState({
           notifCount: res.data.resul.notificationCount,
           notifs: res.data.resul.advernotifs,
           notifIds: ids,
-        });
-      });
+        })
+      })
 
     axios
       .get(API_ADDRESS + "Account/GetEmployerInfo", {
@@ -50,7 +50,7 @@ export class EmployerNavbar extends Component {
             img: res.data.resul.image,
           },
         })
-      );
+      )
   }
 
   profileDropdown = () => {
@@ -61,15 +61,15 @@ export class EmployerNavbar extends Component {
         notifDropdown: false,
         profileActivity: "active",
         notifActivity: "",
-      });
+      })
     } else {
       this.setState({
         ...this.state,
         profileDropdown: false,
         profileActivity: "",
-      });
+      })
     }
-  };
+  }
 
   notifDropdown = () => {
     if (this.state.notifDropdown === false) {
@@ -80,26 +80,26 @@ export class EmployerNavbar extends Component {
         notifActivity: "active",
         profileActivity: "",
         notifCount: 0,
-      });
+      })
 
       axios.post(
         API_ADDRESS + "Adver/SeenAdverNotification",
         this.state.notifIds,
         { headers: { Authorization: `bearer ${localStorage.getItem("JWT")}` } }
-      );
+      )
     } else {
       this.setState({
         ...this.state,
         notifDropdown: false,
         notifActivity: "",
-      });
+      })
     }
-  };
+  }
 
   logout = async () => {
-    await window.localStorage.clear();
-    window.location.href = "/";
-  };
+    await window.localStorage.clear()
+    window.location.href = "/"
+  }
 
   render() {
     return (
@@ -182,10 +182,10 @@ export class EmployerNavbar extends Component {
               {this.state.notifCount === 0 ? (
                 ""
               ) : (
-                  <span className="counter rounded-circle text-center ir-r bg-danger text-white position-absolute">
-                    {this.state.notifCount}
-                  </span>
-                )}
+                <span className="counter rounded-circle text-center ir-r bg-danger text-white position-absolute">
+                  {this.state.notifCount}
+                </span>
+              )}
             </div>
 
             <div
@@ -199,13 +199,13 @@ export class EmployerNavbar extends Component {
                       <span className="ir-r">{item.adminDescription}</span>
                     </li>
                   ) : (
-                      <li
-                        key={index}
-                        className="ir-r text-right c-grey spy-1 fs-s border-top"
-                      >
-                        {item.adminDescription}
-                      </li>
-                    )
+                    <li
+                      key={index}
+                      className="ir-r text-right c-grey spy-1 fs-s border-top"
+                    >
+                      {item.adminDescription}
+                    </li>
+                  )
                 )}
 
                 <li>
@@ -290,6 +290,7 @@ export class EmployerNavbar extends Component {
                     تنظیمات حساب کاربری
                   </Link>
                 </li>
+
                 <li className="smb-1">
                   <Link
                     className="ir-r c-grey text-decoration-none"
@@ -311,9 +312,7 @@ export class EmployerNavbar extends Component {
             </div>
           </div>
         </div>
-
-
       </header>
-    );
+    )
   }
 }

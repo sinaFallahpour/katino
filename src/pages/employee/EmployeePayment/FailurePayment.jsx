@@ -13,7 +13,7 @@ import {
   DirectorDanger,
 } from "./Payment.styles"
 
-const FailurePage = () => {
+const EmployeeFailurePage = () => {
   const [trackingnumber, setTrackingNumber] = useState()
   const params = new URLSearchParams(window.location.search)
 
@@ -27,10 +27,10 @@ const FailurePage = () => {
         <Img src="/img/paymentres.svg" alt="faile-payment"></Img>
       </ImgContainer>
       <ContextContainers>
-        <TitleDanger> پرداخت با موفقیت انجام شد </TitleDanger>
+        <TitleDanger> پرداخت ناموفق </TitleDanger>
         <CodeTitle> : کد رهگیری </CodeTitle>
         <CodeNumber> {trackingnumber} </CodeNumber>
-        <DirectorDanger>
+        <DirectorDanger to="/">
           <i class="fa fa-caret-left"></i>
           <span> بازگشت به خانه </span>
         </DirectorDanger>
@@ -39,4 +39,4 @@ const FailurePage = () => {
   )
 }
 
-export { FailurePage }
+export { EmployeeFailurePage }

@@ -1,41 +1,41 @@
-import axios from "axios";
+import axios from "axios"
 // import { history } from "../..";
-import { toast } from "react-toastify";
-import { createBrowserHistory } from "history";
+import { toast } from "react-toastify"
+import { createBrowserHistory } from "history"
 
-export let history = createBrowserHistory();
-export const baseUrl = "https://katino.niknet.co/api/";
-export const mainUrl = "https://katino.niknet.co/";
+export let history = createBrowserHistory()
+export const baseUrl = "https://katino.niknet.co/api/"
+export const mainUrl = "https://katino.niknet.co/"
 //axios.defaults.baseURL = "https://localhost:44377/api";
 
-axios.defaults.baseURL = "https://katino.niknet.co/api";
-export const avatarUrl = "https://katino.niknet.co/img/employeeAvatar";
+axios.defaults.baseURL = "https://katino.niknet.co/api"
+export const avatarUrl = "https://katino.niknet.co/img/employeeAvatar"
 
 // const token = window.localStorage.getItem("jwt");
 // axios.config.headers.Authorization = `Bearer ${token}`;
 
 axios.interceptors.request.use(
   (config) => {
-    const token = window.localStorage.getItem("JWT");
-    if (token) config.headers.Authorization = `Bearer ${token}`;
-    return config;
+    const token = window.localStorage.getItem("JWT")
+    if (token) config.headers.Authorization = `Bearer ${token}`
+    return config
   }
   // (error) => {
   //   return Promise.reject(error);
   // }
-);
+)
 
 axios.interceptors.response.use(undefined, (error) => {
   if (error.message === "Network Error" && !error.response) {
-    toast.error("Network error - make sure API is running!");
+    toast.error("Network error - make sure API is running!")
   }
 
   if (error?.response?.status == 404) {
-    toast.error("خطایی رخ داده!");
+    toast.error("خطایی رخ داده!")
   }
 
   if (error?.response?.status == 401 || error?.response?.status == 403) {
-    window.location.href = "/Employee/Login/";
+    window.location.href = "/Employee/Login/"
     // history.push("/Employee/Login/");
   }
 
@@ -51,11 +51,11 @@ axios.interceptors.response.use(undefined, (error) => {
   //   history.push("/notfound");
   // }
   if (error?.response?.status === 500) {
-    toast.error("خطایی رخ داده!");
+    toast.error("خطایی رخ داده!")
   }
   //   throw error.response;
-  return Promise.reject(error);
-});
+  return Promise.reject(error)
+})
 
 // const responseBody = (response) => response.data;
 
@@ -65,21 +65,21 @@ export const requests = {
   put: (url, body) => axios.put(url, body),
   del: (url) => axios.delete(url),
   postForm: (url, file) => {
-    const formData = new FormData();
-    formData.append("File", file);
+    const formData = new FormData()
+    formData.append("File", file)
     return axios.post(url, formData, {
       headers: { "Content-type": "multipart/form-data" },
-    });
+    })
   },
 
   postForm2: (url, propertyName, file) => {
-    const formData = new FormData();
-    formData.append("File", file);
+    const formData = new FormData()
+    formData.append("File", file)
     return axios.post(url, formData, {
       headers: { "Content-type": "multipart/form-data" },
-    });
+    })
   },
-};
+}
 
 const Adver = {
   // current: () => requests.get("/user"),
@@ -96,7 +96,7 @@ const Adver = {
 
   asignResomeToListOfAdvers: (adverIdlist) =>
     requests.post(`/Resome/AsignResomeToListOfAdvers`, adverIdlist),
-};
+}
 
 const CreateResome = {
   editEmployeePersonalInformation: (body) =>
@@ -129,7 +129,7 @@ const CreateResome = {
     requests.post("/UserJobPreference/AddUserJobPreference", body),
 
   GetResomePercent: () => requests.get("/Resome/GetResomePercent"),
-};
+}
 
 const RequestDetails = {
   LoadCommentForAsignResome: (asignId) =>
@@ -140,16 +140,22 @@ const RequestDetails = {
 
   FilterAllResomesInfoForAdver: (body) =>
     requests.post("/Resome/FilterAllResomesInfoForAdver", body),
-};
+}
 
 const Cities = {
   Cities: () => requests.get("/Account/GetCities"),
-};
+}
 
 const Ticket = {
   answerTicker: (data) => requests.post("/Tickets/AnswerTicket", data),
   createTicket: (data) => requests.post("/Tickets/CreateTicket", data),
-};
+}
+
+const Plans = {
+  plan: () => requests.get("/plan/getallplanforemployee"),
+  gotoDargah: (planId) =>
+    requests.post(`/employeePayment/employeepaymentPlan?planId=${planId} `),
+}
 
 export default {
   Adver,
@@ -157,4 +163,5 @@ export default {
   Cities,
   RequestDetails,
   Ticket,
-};
+  Plans,
+}

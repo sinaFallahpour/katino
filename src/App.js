@@ -40,8 +40,10 @@ import { SuccessPayment } from "./components/payment/SuccessPayment"
 import { EmployeeDashboard } from "./pages/employee"
 import { Security } from "./core/Security"
 import { Tickets, Detail, CreateTicket } from "./pages/ticketing"
-import { SuccessPage } from "./pages/payment/SuccessPayment"
-import { FailurePage } from "./pages/payment/FailurePayment"
+import { EmployeeSuccessPage } from "./pages/employee/EmployeePayment/SuccessPayment"
+import { EmployeeFailurePage } from "./pages/employee/EmployeePayment/FailurePayment"
+import { EmployerSuccessPage } from "./pages/employer/EmployerPayment/SuccessPayment"
+import { EmployerFailurePage } from "./pages/employer/EmployerPayment/FailurePayment"
 import { history } from "../src/core/agent"
 class App extends Component {
   state = {
@@ -100,26 +102,51 @@ class App extends Component {
           )} */}
           <Switch>
             <ScrollToTop>
-              {/* success payment  */}
+              {/*employer success payment  */}
               <Route
-                path="/payment/success"
+                path="/employer/payment/success"
                 exact
                 render={(props) => {
                   return (
                     <PageTitle title="وضعیت پرداخت">
-                      <SuccessPage />
+                      <EmployerSuccessPage />
                     </PageTitle>
                   )
                 }}
               ></Route>
-              {/* failure payment  */}
+              {/*employer failure payment  */}
               <Route
-                path="/payment/failure"
+                path="/employer/payment/failure"
                 exact
                 render={(props) => {
                   return (
                     <PageTitle title="وضعیت پرداخت">
-                      <FailurePage />
+                      <EmployerFailurePage />
+                    </PageTitle>
+                  )
+                }}
+              ></Route>
+
+              {/*employee success payment  */}
+              <Route
+                path="/employee/payment/success"
+                exact
+                render={(props) => {
+                  return (
+                    <PageTitle title="وضعیت پرداخت">
+                      <EmployeeSuccessPage />
+                    </PageTitle>
+                  )
+                }}
+              ></Route>
+              {/*employee failure payment  */}
+              <Route
+                path="/employee/payment/failure"
+                exact
+                render={(props) => {
+                  return (
+                    <PageTitle title="وضعیت پرداخت">
+                      <EmployeeFailurePage />
                     </PageTitle>
                   )
                 }}

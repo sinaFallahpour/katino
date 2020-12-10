@@ -1,21 +1,21 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
-import API_ADDRESS from "../../API_ADDRESS";
-import { numberSeparator } from "../../common";
+import React, { Component } from "react"
+import { Link } from "react-router-dom"
+import axios from "axios"
+import API_ADDRESS from "../../API_ADDRESS"
+import { numberSeparator } from "../../common"
 
 export class Plans extends Component {
   state = {
     plans: [],
-  };
+  }
 
   async componentDidMount() {
     await axios
       .get(API_ADDRESS + "plan/GetAllPlansForCompanies")
       .then((res) => {
-        this.setState({ plans: res.data.resul });
+        this.setState({ plans: res.data.resul })
       })
-      .catch();
+      .catch()
   }
 
   render() {
@@ -136,10 +136,10 @@ export class Plans extends Component {
                   </Link>
                 </div>
               </div>
-            );
+            )
           })}
         </div>
       </section>
-    );
+    )
   }
 }

@@ -11,7 +11,7 @@ import {
   DirectorSuccess,
 } from "./Payment.styles"
 
-const SuccessPage = () => {
+const EmployerSuccessPage = () => {
   const [trackingnumber, setTrackingNumber] = useState()
   const params = new URLSearchParams(window.location.search)
 
@@ -28,7 +28,7 @@ const SuccessPage = () => {
         <TitleSuccess> پرداخت با موفقیت انجام شد </TitleSuccess>
         <CodeTitle> : کد رهگیری </CodeTitle>
         <CodeNumber> {trackingnumber} </CodeNumber>
-        <DirectorSuccess>
+        <DirectorSuccess to="/">
           <i class="fa fa-caret-left"></i>
           <span> بازگشت به خانه </span>
         </DirectorSuccess>
@@ -37,4 +37,4 @@ const SuccessPage = () => {
   )
 }
 
-export { SuccessPage }
+export { EmployerSuccessPage }

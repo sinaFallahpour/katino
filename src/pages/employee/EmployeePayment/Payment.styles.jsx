@@ -137,6 +137,13 @@ export const DirectorSuccess = styled(Link)`
     text-decoration: none;
   }
 
+  & > span {
+    margin: 0 8px;
+
+    display: inline-block;
+    border: 1px solid transparent;
+  }
+
   @media only screen and (max-width: 480px) {
     padding: 7px 10px;
     font-size: 1rem;
