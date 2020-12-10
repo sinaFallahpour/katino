@@ -152,108 +152,109 @@ export class EmployeeNavbar extends Component {
             </a> */}
           </div>
         ) : (
-          <div className="buttons d-flex justify-content-start align-items-center">
-            <div
-              className="user bg-primary srounded-md sp-1 position-relative"
-              onClick={this.profileDropdown}
-            >
-              <div className="head">
-                <span className="ir-r fs-s sml-1 text-white d-none d-lg-inline">
-                  پروفایل
-                </span>
-                <i className="fas fa-chevron-down text-white srounded-md"></i>
-              </div>
-
+            <div className="buttons d-flex justify-content-start align-items-center">
               <div
-                className={`profile-dropdown bg-white position-absolute shadow ${this.state.profileActivity}`}
+                className="user bg-primary srounded-md sp-1 position-relative"
+                onClick={this.profileDropdown}
               >
-                <ul className="m-0">
-                  <li className="smb-1">
-                    <Link
-                      className="ir-r c-grey text-decoration-none"
-                      to="/Employee/Dashboard/Requests"
-                    >
-                      درخواست های من
-                    </Link>
-                  </li>
+                <div className="head">
+                  <span className="ir-r fs-s sml-1 text-white d-none d-lg-inline">
+                    پروفایل
+                </span>
+                  <i className="fas fa-chevron-down text-white srounded-md"></i>
+                </div>
 
-                  <li className="smb-1">
-                    <Link
-                      className="ir-r c-grey text-decoration-none"
-                      to="/Employee/Dashboard/Bookmarks"
-                    >
-                      آگهی های نشان شده
+                <div
+                  className={`profile-dropdown bg-white position-absolute shadow ${this.state.profileActivity}`}
+                >
+                  <ul className="m-0">
+                    <li className="smb-1">
+                      <Link
+                        className="ir-r c-grey text-decoration-none"
+                        to="/Employee/Dashboard/Requests"
+                      >
+                        درخواست های من
                     </Link>
-                  </li>
+                    </li>
 
-                  <li className="smb-1">
-                    <Link
-                      className="ir-r c-grey text-decoration-none"
-                      to="/Employee/Home"
-                    >
-                      ایمیل های اطلاع رسانی
+                    <li className="smb-1">
+                      <Link
+                        className="ir-r c-grey text-decoration-none"
+                        to="/Employee/plans"
+                      >
+                        خرید پلن
                     </Link>
-                  </li>
-
-                  <li className="smb-1">
-                    <Link
-                      className="ir-r c-grey text-decoration-none"
-                      to="/Employee/CreateResume"
-                    >
-                      رزومه ساز
+                    </li>
+                    <li className="smb-1">
+                      <Link
+                        className="ir-r c-grey text-decoration-none"
+                        to="/Employee/Dashboard/Bookmarks"
+                      >
+                        آگهی های نشان شده
                     </Link>
-                  </li>
+                    </li>
 
-                  <li className="smb-1">
-                    <Link
-                      className="ir-r c-grey text-decoration-none"
-                      to="/Employee/Home"
-                    >
-                      مشاهده رزومه
+                    <li className="smb-1">
+                      <Link
+                        className="ir-r c-grey text-decoration-none"
+                        to="/Employee/Home"
+                      >
+                        ایمیل های اطلاع رسانی
                     </Link>
-                  </li>
+                    </li>
 
-                  <li className="smb-1">
-                    <Link
-                      className="ir-r c-grey text-decoration-none"
-                      to="/Tickets"
-                    >
-                      تیکت های پشتیبانی
+                    <li className="smb-1">
+                      <Link
+                        className="ir-r c-grey text-decoration-none"
+                        to="/Employee/CreateResume"
+                      >
+                        رزومه ساز
                     </Link>
-                  </li>
+                    </li>
 
-                  <li className="smb-1">
-                    <Link
-                      className="ir-r c-grey text-decoration-none"
-                      to="/Employee/Home"
-                    >
-                      تنظیمات حساب کاربری
+                    <li className="smb-1">
+                      <Link
+                        className="ir-r c-grey text-decoration-none"
+                        to="/Employee/Home"
+                      >
+                        مشاهده رزومه
                     </Link>
-                  </li>
+                    </li>
 
-                  <li className="smb-1">
-                    <Link
-                      className="ir-r c-grey text-decoration-none"
-                      to="/Employee/plans"
-                    >
-                      خرید پلن
+                    <li className="smb-1">
+                      <Link
+                        className="ir-r c-grey text-decoration-none"
+                        to="/Tickets"
+                      >
+                        تیکت های پشتیبانی
                     </Link>
-                  </li>
+                    </li>
 
-                  <li className="mb-0">
-                    <button
-                      type="button"
-                      className="ir-r btn c-danger p-0 text-decoration-none shadow-none"
-                      onClick={this.logout}
-                    >
-                      خروج از حساب
+                    <li className="smb-1">
+                      <Link
+                        className="ir-r c-grey text-decoration-none"
+                        to="/Employee/Home"
+                      >
+                        تنظیمات حساب کاربری
+                    </Link>
+                    </li>
+
+
+
+                    <li className="mb-0">
+                      <button
+                        type="button"
+                        className="ir-r btn c-danger p-0 text-decoration-none shadow-none"
+                        onClick={this.logout}
+                      >
+                        خروج از حساب
                     </button>
-                  </li>
-                </ul>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
       </header>
     )
   }

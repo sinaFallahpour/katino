@@ -327,7 +327,7 @@ export class LandingNavbar extends React.Component {
                     <li className="smb-1">
                       <Link
                         className="ir-r c-grey text-decoration-none"
-                        to="/Employee/Home"
+                        to="/Employee/plans"
                       >
                         خرید پلن
                      </Link>
