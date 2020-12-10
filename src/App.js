@@ -553,11 +553,11 @@ class App extends Component {
                 render={(props) => {
                   if (!this.isLogedIn())
                     return <Redirect exact to="/Employee/Login" />
-                  ;<PageTitle title="تیکت های پشتیبانی">
-                    <LandingNavbar />
-                    <Detail props={props} {...props} />
-                    <LandingFooter className="d-none d-lg-block" />
-                  </PageTitle>
+                      ; <PageTitle title="تیکت های پشتیبانی">
+                        <LandingNavbar />
+                        <Detail props={props} {...props} />
+                        <LandingFooter className="d-none d-lg-block" />
+                      </PageTitle>
                 }}
               ></Route>
 
