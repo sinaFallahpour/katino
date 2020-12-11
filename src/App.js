@@ -1,13 +1,6 @@
 import React, { Component } from "react"
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom"
-import {
-  LandingNavbar,
-  EmployerNavbar,
-  EmployeeNavbar,
-  LandingFooter,
-  EmployerFooter,
-  PageTitle,
-} from "./components"
+import { LandingFooter, EmployerFooter, PageTitle } from "./components"
 import {
   NotFound,
   Home,
@@ -94,11 +87,11 @@ class App extends Component {
           {/* <Navbar/> */}
           {/* 
           {this.state.userInfo === "Employer" ? (
-            <EmployerNavbar />
+            <Navbar />
           ) : this.state.userInfo === "Employee" ? (
-            <EmployeeNavbar />
+            <Navbar />
           ) : (
-            <LandingNavbar />
+            <Navbar />
           )} */}
           <Switch>
             <ScrollToTop>
@@ -159,7 +152,7 @@ class App extends Component {
                 render={(props) => {
                   return (
                     <PageTitle title="خانه">
-                      <LandingNavbar />
+                      <Navbar />
                       <Home {...props} />
                       <LandingFooter />
                     </PageTitle>
@@ -175,7 +168,7 @@ class App extends Component {
                     return <Redirect exact to="/Employee/Login" />
                   return (
                     <PageTitle title="خانه">
-                      <EmployeeNavbar />
+                      <Navbar />
                       <Home {...props} />
                       <LandingFooter />
                     </PageTitle>
@@ -188,7 +181,7 @@ class App extends Component {
                 render={(props) => {
                   return (
                     <PageTitle title="جستجوی مشاغل">
-                      <LandingNavbar />
+                      <Navbar />
                       <Jobs {...props} />
                       <LandingFooter />
                     </PageTitle>
@@ -201,7 +194,7 @@ class App extends Component {
                 path="/:role/Login"
                 render={(props) => (
                   <PageTitle title="ورود">
-                    <LandingNavbar />
+                    <Navbar />
                     <Login {...props} />
                     <LandingFooter />
                   </PageTitle>
@@ -213,7 +206,7 @@ class App extends Component {
                 path="/:role/Register"
                 render={(props) => (
                   <PageTitle title="ثبت نام">
-                    <LandingNavbar />
+                    <Navbar />
                     <Register {...props} />
                     <LandingFooter />
                   </PageTitle>
@@ -224,7 +217,7 @@ class App extends Component {
                 path="/:role/:type/Verification"
                 render={(props) => (
                   <PageTitle title="کد اعتبارسنجی">
-                    <LandingNavbar />
+                    <Navbar />
                     <Verification props={props} {...props} />
                     <LandingFooter />
                   </PageTitle>
@@ -253,7 +246,7 @@ class App extends Component {
                     return <Redirect exact to="/Employer/Login" />
                   return (
                     <PageTitle title="تکمیل پروفایل">
-                      {/* <LandingNavbar /> */}
+                      {/* <Navbar /> */}
                       <CompleteProfile props={props} {...props} />
                       {/* <LandingFooter /> */}
                     </PageTitle>
@@ -269,7 +262,7 @@ class App extends Component {
                   else
                     return (
                       <PageTitle title="پرداخت">
-                        <EmployerNavbar />
+                        <Navbar />
                         <Payment props={props} {...props} />
                         <EmployerFooter className="d-none d-lg-block" />
                       </PageTitle>
@@ -286,7 +279,7 @@ class App extends Component {
                   }
                   return (
                     <PageTitle title="داشبورد">
-                      <EmployerNavbar />
+                      <Navbar />
                       <Dashboard {...props} />
                       <EmployerFooter className="d-none d-lg-block" />
                     </PageTitle>
@@ -302,7 +295,7 @@ class App extends Component {
                     return <Redirect exact to="/Employer/Login" />
                   return (
                     <PageTitle title="تعرفه ها">
-                      <EmployerNavbar />
+                      <Navbar />
                       <Plans {...props} />
                       <EmployerFooter className="d-none d-lg-block" />
                     </PageTitle>
@@ -317,7 +310,7 @@ class App extends Component {
                     return <Redirect exact to="/Employer/Login" />
                   return (
                     <PageTitle title="درج آگهی">
-                      <EmployerNavbar />
+                      <Navbar />
                       <CreateAd props={props} {...props} />
                       <EmployerFooter />
                     </PageTitle>
@@ -332,7 +325,7 @@ class App extends Component {
                     return <Redirect exact to="/Employer/Login" />
                   return (
                     <PageTitle title="پرداخت با موفقیت انجام شد">
-                      <EmployerNavbar />
+                      <Navbar />
                       <SuccessPayment {...props} />
                       <EmployerFooter />
                     </PageTitle>
@@ -345,7 +338,7 @@ class App extends Component {
                 render={(props) => {
                   return (
                     <PageTitle title="مشاهده آگهی">
-                      <LandingNavbar />
+                      <Navbar />
                       <JobDetails {...props} />
                       <LandingFooter />
                     </PageTitle>
@@ -361,7 +354,7 @@ class App extends Component {
                     return <Redirect exact to="/Employee/Login" />
                   return (
                     <PageTitle title="تعرفه ها">
-                      <EmployeeNavbar />
+                      <Navbar />
                       <EmployeePlans {...props} />
                       <LandingFooter />
                     </PageTitle>
@@ -376,7 +369,7 @@ class App extends Component {
                     return <Redirect exact to="/Employee/Login" />
                   return (
                     <PageTitle title="جستجوی مشاغل">
-                      <EmployeeNavbar />
+                      <Navbar />
                       <Jobs {...props} />
                       <LandingFooter />
                     </PageTitle>
@@ -391,7 +384,7 @@ class App extends Component {
                     return <Redirect exact to="/Employee/Login" />
                   return (
                     <PageTitle title="ساخت رزومه">
-                      <EmployeeNavbar />
+                      <Navbar />
                       <CreateResume {...props} />
                       <LandingFooter />
                     </PageTitle>
@@ -403,7 +396,7 @@ class App extends Component {
                 path="/BestCompanies"
                 render={(props) => (
                   <PageTitle title="50 شرکت برتر">
-                    <LandingNavbar />
+                    <Navbar />
                     <BestCompanies />
                     <LandingFooter />
                   </PageTitle>
@@ -418,7 +411,7 @@ class App extends Component {
                     return <Redirect exact to="/Employee/Login" />
                   return (
                     <PageTitle title="50 شرکت برتر">
-                      <EmployeeNavbar />
+                      <Navbar />
                       <BestCompanies />
                       <LandingFooter />
                     </PageTitle>
@@ -431,7 +424,7 @@ class App extends Component {
                 path="/AllCompanies"
                 render={(props) => (
                   <PageTitle title="همه ی شرکت ها">
-                    <LandingNavbar />
+                    <Navbar />
                     <AllCompanies />
                     <LandingFooter />
                   </PageTitle>
@@ -446,7 +439,7 @@ class App extends Component {
                     return <Redirect exact to="/Employer/Login" />
                   return (
                     <PageTitle title="بخش کارفرمایان">
-                      <LandingNavbar />
+                      <Navbar />
                       <EmployerLanding />
                       <LandingFooter />
                     </PageTitle>
@@ -459,7 +452,7 @@ class App extends Component {
                 path="/Company/:enName"
                 render={(props) => (
                   <React.Fragment>
-                    <LandingNavbar />
+                    <Navbar />
                     <CompanyDetails props={props} {...props} />
                     <LandingFooter />
                   </React.Fragment>
@@ -474,7 +467,7 @@ class App extends Component {
                     return <Redirect exact to="/Employee/Login" />
                   return (
                     <React.Fragment>
-                      <EmployeeNavbar />
+                      <Navbar />
                       <EmployeeDashboard props={props} {...props} />
                       <LandingFooter />
                     </React.Fragment>
@@ -490,7 +483,7 @@ class App extends Component {
                     return <Redirect exact to="/Employer/Login" />
                   return (
                     <React.Fragment>
-                      <EmployerNavbar />
+                      <Navbar />
                       <AdInfo props={props} {...props} />
                       <EmployerFooter className="d-none d-lg-block" />
                     </React.Fragment>
@@ -505,7 +498,7 @@ class App extends Component {
                     return <Redirect exact to="/Employer/Login" />
                   return (
                     <React.Fragment>
-                      <EmployerNavbar />
+                      <Navbar />
                       <RequestDetails props={props} {...props} />
                       <EmployerFooter className="d-none d-lg-block" />
                     </React.Fragment>
@@ -518,7 +511,7 @@ class App extends Component {
                 path="/Blog"
                 render={(props) => (
                   <PageTitle title="وبلاگ">
-                    <LandingNavbar />
+                    <Navbar />
                     <Blog props={props} {...props} />
                     <LandingFooter className="d-none d-lg-block" />
                   </PageTitle>
@@ -529,7 +522,7 @@ class App extends Component {
                 path="/Blog/Post/:id"
                 render={(props) => (
                   <React.Fragment>
-                    <LandingNavbar />
+                    <Navbar />
                     <Post props={props} {...props} />
                     <LandingFooter className="d-none d-lg-block" />
                   </React.Fragment>
@@ -541,7 +534,7 @@ class App extends Component {
                 path="/Tickets"
                 render={(props) => (
                   <PageTitle title="تیکت های پشتیبانی">
-                    <LandingNavbar />
+                    <Navbar />
                     <Tickets props={props} {...props} />
                     <LandingFooter className="d-none d-lg-block" />
                   </PageTitle>
@@ -553,11 +546,19 @@ class App extends Component {
                 render={(props) => {
                   if (!this.isLogedIn())
                     return <Redirect exact to="/Employee/Login" />
+<<<<<<< HEAD
                       ; <PageTitle title="تیکت های پشتیبانی">
                         <LandingNavbar />
                         <Detail props={props} {...props} />
                         <LandingFooter className="d-none d-lg-block" />
                       </PageTitle>
+=======
+                  ;<PageTitle title="تیکت های پشتیبانی">
+                    <Navbar />
+                    <Detail props={props} {...props} />
+                    <LandingFooter className="d-none d-lg-block" />
+                  </PageTitle>
+>>>>>>> header-features
                 }}
               ></Route>
 
@@ -568,7 +569,7 @@ class App extends Component {
                     return <Redirect exact to="/Employee/Login" />
                   return (
                     <PageTitle title="تیکت های پشتیبانی">
-                      <LandingNavbar />
+                      <Navbar />
                       <CreateTicket props={props} {...props} />
                       <LandingFooter className="d-none d-lg-block" />
                     </PageTitle>

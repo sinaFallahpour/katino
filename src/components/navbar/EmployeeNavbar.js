@@ -157,6 +157,7 @@ export class EmployeeNavbar extends Component {
                 className="user bg-primary srounded-md sp-1 position-relative"
                 onClick={this.profileDropdown}
               >
+<<<<<<< HEAD
                 <div className="head">
                   <span className="ir-r fs-s sml-1 text-white d-none d-lg-inline">
                     پروفایل
@@ -174,6 +175,31 @@ export class EmployeeNavbar extends Component {
                         to="/Employee/Dashboard/Requests"
                       >
                         درخواست های من
+=======
+                <ul className="m-0">
+                  <li className="smb-1">
+                    <Link
+                      className="ir-r c-grey text-decoration-none"
+                      to="/Employee/Dashboard/Requests"
+                    >
+                      درخواست های من
+                    </Link>
+                  </li>
+                  <li className="smb-1">
+                    <Link
+                      className="ir-r c-grey text-decoration-none"
+                      to="/Employee/plans"
+                    >
+                      خرید پلن
+                    </Link>
+                  </li>
+                  <li className="smb-1">
+                    <Link
+                      className="ir-r c-grey text-decoration-none"
+                      to="/Employee/Dashboard/Bookmarks"
+                    >
+                      آگهی های نشان شده
+>>>>>>> header-features
                     </Link>
                     </li>
 
@@ -228,6 +254,7 @@ export class EmployeeNavbar extends Component {
                       >
                         تیکت های پشتیبانی
                     </Link>
+<<<<<<< HEAD
                     </li>
 
                     <li className="smb-1">
@@ -248,6 +275,16 @@ export class EmployeeNavbar extends Component {
                         onClick={this.logout}
                       >
                         خروج از حساب
+=======
+                  </li>
+                  <li className="mb-0">
+                    <button
+                      type="button"
+                      className="ir-r btn c-danger p-0 text-decoration-none shadow-none"
+                      onClick={this.logout}
+                    >
+                      خروج از حساب
+>>>>>>> header-features
                     </button>
                     </li>
                   </ul>

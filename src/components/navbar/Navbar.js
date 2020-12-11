@@ -1,20 +1,23 @@
-import React, { Component } from "react";
-import { EmployerNavbar } from "./EmployerNavbar";
-import { EmployeeNavbar } from "./EmployeeNavbar";
-import { LandingNavbar } from "./LandingNavbar";
+import React, { Component } from "react"
+import { EmployerNavbar } from "./EmployerNavbar"
+import { EmployeeNavbar } from "./EmployeeNavbar"
+import { LandingNavbar } from "./LandingNavbar"
 
 export class Navbar extends Component {
-  state = { userInfo: "" };
+  state = { userInfo: "" }
+
   async componentDidMount() {
-    await this.setState({ userInfo: this.props.userInfo });
+    const role = localStorage.getItem("userInfo")
+    await this.setState({ userInfo: role })
   }
+
   render() {
-    if (this.props.userInfo == "Employer") {
-      return <EmployerNavbar />;
-    } else if (this.props.userInfo == "Employee") {
-      return <EmployeeNavbar />;
+    if (this.state.userInfo == "Employer") {
+      return <EmployerNavbar />
+    } else if (this.state.userInfo == "Employee") {
+      return <EmployeeNavbar />
     } else {
-      return <LandingNavbar />;
+      return <LandingNavbar />
     }
   }
 }
