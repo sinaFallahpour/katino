@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { Header, Fields } from "../../components/createAd";
+import React, { Component } from "react"
+import { Header, Fields } from "../../components/createAd"
 
 export class CreateAd extends Component {
-  state = {};
+  state = {}
 
   render() {
     return (
@@ -16,6 +16,6 @@ export class CreateAd extends Component {
           </aside>
         </div>
       </section>
-    );
+    )
   }
 }

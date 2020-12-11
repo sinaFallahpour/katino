@@ -176,7 +176,14 @@ export class EmployeeNavbar extends Component {
                       درخواست های من
                     </Link>
                   </li>
-
+                  <li className="smb-1">
+                    <Link
+                      className="ir-r c-grey text-decoration-none"
+                      to="/Employee/plans"
+                    >
+                      خرید پلن
+                    </Link>
+                  </li>
                   <li className="smb-1">
                     <Link
                       className="ir-r c-grey text-decoration-none"
@@ -230,16 +237,6 @@ export class EmployeeNavbar extends Component {
                       تنظیمات حساب کاربری
                     </Link>
                   </li>
-
-                  <li className="smb-1">
-                    <Link
-                      className="ir-r c-grey text-decoration-none"
-                      to="/Employee/plans"
-                    >
-                      خرید پلن
-                    </Link>
-                  </li>
-
                   <li className="mb-0">
                     <button
                       type="button"

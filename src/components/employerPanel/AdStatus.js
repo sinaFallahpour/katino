@@ -1,6 +1,6 @@
-import React from "react";
-import { adverStatus } from "../../enums";
-import {Link} from "react-router-dom";
+import React from "react"
+import { adverStatus } from "../../enums"
+import { Link } from "react-router-dom"
 
 export function AdStatus(props) {
   let asignments = {
@@ -8,36 +8,37 @@ export function AdStatus(props) {
     status_2: 0,
     status_3: 0,
     status_4: 0,
-  };
+  }
 
   props.asignStatusWithCounts.map((item) => {
     switch (item.asingResomeStatus) {
       case 1:
-        asignments.status_1 = item.count;
-        break;
+        asignments.status_1 = item.count
+        break
 
       case 2:
-        asignments.status_2 = item.count;
-        break;
+        asignments.status_2 = item.count
+        break
 
       case 3:
-        asignments.status_3 = item.count;
-        break;
+        asignments.status_3 = item.count
+        break
 
       case 4:
-        asignments.status_4 = item.count;
-        break;
+        asignments.status_4 = item.count
+        break
     }
-  });
+  })
 
   return (
     <div className="card  srounded-sm sp-2">
-      
       <div className="row">
         <header className="col-12 smb-2">
           <div className="d-lg-flex justify-content-lg-between align-items-lg-center">
             <div className="smb-2 mb-lg-0">
-              <Link to={`/Employer/AdInfo/${props.id}`}><span className="ir-b c-dark">{props.title}</span></Link>
+              <Link to={`/Employer/AdInfo/${props.id}`}>
+                <span className="ir-b c-dark"> {props.title} </span>
+              </Link>
               <span className="c-grey ir-r smr-1 bg-body srounded-sm sp-05">
                 {adverStatus(props.adverStatus)}
               </span>
@@ -92,5 +93,5 @@ export function AdStatus(props) {
         </div>
       </div>
     </div>
-  );
+  )
 }
