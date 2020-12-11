@@ -152,30 +152,21 @@ export class EmployeeNavbar extends Component {
             </a> */}
           </div>
         ) : (
-            <div className="buttons d-flex justify-content-start align-items-center">
-              <div
-                className="user bg-primary srounded-md sp-1 position-relative"
-                onClick={this.profileDropdown}
-              >
-<<<<<<< HEAD
-                <div className="head">
-                  <span className="ir-r fs-s sml-1 text-white d-none d-lg-inline">
-                    پروفایل
+          <div className="buttons d-flex justify-content-start align-items-center">
+            <div
+              className="user bg-primary srounded-md sp-1 position-relative"
+              onClick={this.profileDropdown}
+            >
+              <div className="head">
+                <span className="ir-r fs-s sml-1 text-white d-none d-lg-inline">
+                  پروفایل
                 </span>
-                  <i className="fas fa-chevron-down text-white srounded-md"></i>
-                </div>
+                <i className="fas fa-chevron-down text-white srounded-md"></i>
+              </div>
 
-                <div
-                  className={`profile-dropdown bg-white position-absolute shadow ${this.state.profileActivity}`}
-                >
-                  <ul className="m-0">
-                    <li className="smb-1">
-                      <Link
-                        className="ir-r c-grey text-decoration-none"
-                        to="/Employee/Dashboard/Requests"
-                      >
-                        درخواست های من
-=======
+              <div
+                className={`profile-dropdown bg-white position-absolute shadow ${this.state.profileActivity}`}
+              >
                 <ul className="m-0">
                   <li className="smb-1">
                     <Link
@@ -185,6 +176,7 @@ export class EmployeeNavbar extends Component {
                       درخواست های من
                     </Link>
                   </li>
+
                   <li className="smb-1">
                     <Link
                       className="ir-r c-grey text-decoration-none"
@@ -199,84 +191,54 @@ export class EmployeeNavbar extends Component {
                       to="/Employee/Dashboard/Bookmarks"
                     >
                       آگهی های نشان شده
->>>>>>> header-features
                     </Link>
-                    </li>
-
-                    <li className="smb-1">
-                      <Link
-                        className="ir-r c-grey text-decoration-none"
-                        to="/Employee/plans"
-                      >
-                        خرید پلن
-                    </Link>
-                    </li>
-                    <li className="smb-1">
-                      <Link
-                        className="ir-r c-grey text-decoration-none"
-                        to="/Employee/Dashboard/Bookmarks"
-                      >
-                        آگهی های نشان شده
-                    </Link>
-                    </li>
-
-                    <li className="smb-1">
-                      <Link
-                        className="ir-r c-grey text-decoration-none"
-                        to="/Employee/Home"
-                      >
-                        ایمیل های اطلاع رسانی
-                    </Link>
-                    </li>
-
-                    <li className="smb-1">
-                      <Link
-                        className="ir-r c-grey text-decoration-none"
-                        to="/Employee/CreateResume"
-                      >
-                        رزومه ساز
-                    </Link>
-                    </li>
-
-                    <li className="smb-1">
-                      <Link
-                        className="ir-r c-grey text-decoration-none"
-                        to="/Employee/Home"
-                      >
-                        مشاهده رزومه
-                    </Link>
-                    </li>
-
-                    <li className="smb-1">
-                      <Link
-                        className="ir-r c-grey text-decoration-none"
-                        to="/Tickets"
-                      >
-                        تیکت های پشتیبانی
-                    </Link>
-<<<<<<< HEAD
-                    </li>
-
-                    <li className="smb-1">
-                      <Link
-                        className="ir-r c-grey text-decoration-none"
-                        to="/Employee/Home"
-                      >
-                        تنظیمات حساب کاربری
-                    </Link>
-                    </li>
-
-
-
-                    <li className="mb-0">
-                      <button
-                        type="button"
-                        className="ir-r btn c-danger p-0 text-decoration-none shadow-none"
-                        onClick={this.logout}
-                      >
-                        خروج از حساب
-=======
                   </li>
+
+                  <li className="smb-1">
+                    <Link
+                      className="ir-r c-grey text-decoration-none"
+                      to="/Employee/Home"
+                    >
+                      ایمیل های اطلاع رسانی
+                    </Link>
+                  </li>
+
+                  <li className="smb-1">
+                    <Link
+                      className="ir-r c-grey text-decoration-none"
+                      to="/Employee/CreateResume"
+                    >
+                      رزومه ساز
+                    </Link>
+                  </li>
+
+                  <li className="smb-1">
+                    <Link
+                      className="ir-r c-grey text-decoration-none"
+                      to="/Employee/Home"
+                    >
+                      مشاهده رزومه
+                    </Link>
+                  </li>
+
+                  <li className="smb-1">
+                    <Link
+                      className="ir-r c-grey text-decoration-none"
+                      to="/Tickets"
+                    >
+                      تیکت های پشتیبانی
+                    </Link>
+                  </li>
+
+                  <li className="smb-1">
+                    <Link
+                      className="ir-r c-grey text-decoration-none"
+                      to="/Employee/Home"
+                    >
+                      تنظیمات حساب کاربری
+                    </Link>
+                  </li>
+
                   <li className="mb-0">
                     <button
                       type="button"
@@ -284,14 +246,13 @@ export class EmployeeNavbar extends Component {
                       onClick={this.logout}
                     >
                       خروج از حساب
->>>>>>> header-features
                     </button>
-                    </li>
-                  </ul>
-                </div>
+                  </li>
+                </ul>
               </div>
             </div>
-          )}
+          </div>
+        )}
       </header>
     )
   }
