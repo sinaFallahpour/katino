@@ -37,6 +37,7 @@ import { EmployeeSuccessPage } from "./pages/employee/EmployeePayment/SuccessPay
 import { EmployeeFailurePage } from "./pages/employee/EmployeePayment/FailurePayment"
 import { EmployerSuccessPage } from "./pages/employer/EmployerPayment/SuccessPayment"
 import { EmployerFailurePage } from "./pages/employer/EmployerPayment/FailurePayment"
+import { NotFoundPage } from "./components/notFoundPage/notFoundPage"
 import { history } from "../src/core/agent"
 class App extends Component {
   state = {
@@ -572,6 +573,9 @@ class App extends Component {
               <Route path="/Security/:username/:key/:role">
                 <Security />
               </Route>
+
+              <Route exact path="/not-found-page" component={NotFoundPage} />
+              <Redirect to="/not-found-page" />
             </ScrollToTop>
           </Switch>
 

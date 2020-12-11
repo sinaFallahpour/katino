@@ -90,7 +90,7 @@ export const Fields = () => {
             icon: "success",
             title: "ثبت آگهی با موفقیت ثبت شد",
             showConfirmButton: false,
-            timer: 1500,
+            timer: 1750,
           })
         })
         .catch((err) => {
