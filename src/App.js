@@ -191,6 +191,21 @@ class App extends Component {
               ></Route>
 
               <Route
+                path="/Employee/Jobs"
+                render={(props) => {
+                  if (!this.isEmployee())
+                    return <Redirect exact to="/Employee/Login" />
+                  return (
+                    <PageTitle title="جستجوی مشاغل">
+                      <Navbar />
+                      <Jobs {...props} />
+                      <LandingFooter />
+                    </PageTitle>
+                  )
+                }}
+              ></Route>
+
+              <Route
                 exact
                 path="/:role/Login"
                 render={(props) => (
@@ -357,21 +372,6 @@ class App extends Component {
                     <PageTitle title="تعرفه ها">
                       <Navbar />
                       <EmployeePlans {...props} />
-                      <LandingFooter />
-                    </PageTitle>
-                  )
-                }}
-              ></Route>
-
-              <Route
-                path="/Employee/Jobs"
-                render={(props) => {
-                  if (!this.isEmployee())
-                    return <Redirect exact to="/Employee/Login" />
-                  return (
-                    <PageTitle title="جستجوی مشاغل">
-                      <Navbar />
-                      <Jobs {...props} />
                       <LandingFooter />
                     </PageTitle>
                   )
@@ -574,7 +574,8 @@ class App extends Component {
                 <Security />
               </Route>
 
-              <Route component={NotFoundPage} />
+              {/* <Route  path="/not-found-page" component={NotFoundPage} />
+              <Redirect to="/not-found-page" /> */}
             </ScrollToTop>
           </Switch>
 
