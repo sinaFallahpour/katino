@@ -574,8 +574,7 @@ class App extends Component {
                 <Security />
               </Route>
 
-              <Route exact path="/not-found-page" component={NotFoundPage} />
-              <Redirect to="/not-found-page" />
+              <Route component={NotFoundPage} />
             </ScrollToTop>
           </Switch>
 
