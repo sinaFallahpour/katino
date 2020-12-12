@@ -1,28 +1,28 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import Select from "react-select";
+import React, { Component } from "react"
+import { Link } from "react-router-dom"
+import Select from "react-select"
 
 export class JobSearchBox2 extends Component {
   state = {
     selectedOption: null,
     city: "",
     key: "",
-  };
+  }
 
   changeHandler = (event) =>
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({ [event.target.name]: event.target.value })
 
-  cityHandler = (event) => this.setState({ city: event.value });
+  cityHandler = (event) => this.setState({ city: event.value })
 
   render() {
-    let cities = [];
+    let cities = []
 
     this.props.cities.map((id) => {
       cities.push({
         value: id.cityName,
         label: ` ${id.provinceName}، ${id.cityName} `,
-      });
-    });
+      })
+    })
 
     return (
       <div className="row w-100 sp-2 spy-2 bg-white rounded-content srounded-md">
@@ -73,15 +73,19 @@ export class JobSearchBox2 extends Component {
             type="button"
             className="btn btn-primary d-block w-100 ir-r fs-m srounded-sm"
             to={
-              this.state.city
-                ? `/Jobs?key=${this.state.key}&city=${this.state.city}`
-                : `/Jobs?key=${this.state.key}`
+              this.state.city && this.state.key
+                ? `Employee/Jobs?key=${this.state.key}&city=${this.state.city}`
+                : this.state.key
+                ? `Employee/Jobs?key=${this.state.key}`
+                : this.state.city
+                ? `Employee/Jobs?city=${this.state.city}`
+                : `Employee/Jobs`
             }
           >
             جستجو
           </Link>
         </div>
       </div>
-    );
+    )
   }
 }
