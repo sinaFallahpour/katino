@@ -15,7 +15,6 @@ import {
 } from "../components"
 
 export const Jobs = () => {
-  const TableContainer = useRef()
   const [loading, setLoading] = useState(false)
   const [currentPage, setCurentPage] = useState(1)
   const pageSize = 14

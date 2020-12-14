@@ -1,0 +1,25 @@
+.errorMessage {
+  color: #d8000c;
+  background-color: #ffbaba;
+  border: 1px solid #d8000c;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.complete-register-form {
+  padding-top: 0 !important;
+}
+
+.uploadPic {
+  background-color: #aaa;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block;
+  margin: 5px;
+}
+
+.uploadPic + input {
+  display: none;
+}

@@ -74,12 +74,12 @@ export class JobSearchBox2 extends Component {
             className="btn btn-primary d-block w-100 ir-r fs-m srounded-sm"
             to={
               this.state.city && this.state.key
-                ? `Employee/Jobs?key=${this.state.key}&city=${this.state.city}`
+                ? `Jobs?key=${this.state.key}&city=${this.state.city}`
                 : this.state.key
-                ? `Employee/Jobs?key=${this.state.key}`
+                ? `Jobs?key=${this.state.key}`
                 : this.state.city
-                ? `Employee/Jobs?city=${this.state.city}`
-                : `Employee/Jobs`
+                ? `Jobs?city=${this.state.city}`
+                : `Jobs`
             }
           >
             جستجو
