@@ -25,6 +25,7 @@ import {
   AdInfo,
   RequestDetails,
 } from "./pages/employer"
+import { EditProfileEmployer } from "./pages/employer/EditProfileEmployer"
 import { ScrollToTop, Navbar } from "./components"
 import { Plans } from "./pages/employer/Plans"
 import { EmployeePlans } from "./pages/employee/Plans"
@@ -265,6 +266,21 @@ class App extends Component {
                       {/* <Navbar /> */}
                       <CompleteProfile props={props} {...props} />
                       {/* <LandingFooter /> */}
+                    </PageTitle>
+                  )
+                }}
+              ></Route>
+
+              <Route
+                path="/Employer/EditProfile"
+                render={(props) => {
+                  if (!this.isEmployer())
+                    return <Redirect exact to="/Employer/Login" />
+                  return (
+                    <PageTitle title="ویرایش اطلاعات">
+                      <Navbar />
+                      <EditProfileEmployer props={props} {...props} />
+                      <LandingFooter />
                     </PageTitle>
                   )
                 }}
