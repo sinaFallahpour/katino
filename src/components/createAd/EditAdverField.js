@@ -4,7 +4,7 @@ import API_ADDRESS from "../../API_ADDRESS"
 import Select from "react-select"
 import CKEditor from "@ckeditor/ckeditor5-react"
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
-import { Link, useHistory } from "react-router-dom"
+import { Link, useHistory, useLocation, useParams } from "react-router-dom"
 import { Formik, Field, Form, ErrorMessage, useField } from "formik"
 import { CreateAdValidate } from "../../core/validation/createAd"
 import {
@@ -15,39 +15,49 @@ import {
   education,
   initialData,
 } from "./createAdData"
+import { MiniSpinner } from "../spinner/MiniSpinner"
 import "./Field.style.css"
 import Swal from "sweetalert2"
 import { toast } from "react-toastify"
 
 export const EditAdverField = () => {
-  const [hasPlan, setHasPlan] = useState(false)
-  const [planId, setPlanId] = useState()
-  const [planDetails, setPlanDetails] = useState()
+  const [initialState, setInitialState] = useState(initialData)
   const [categories, setCategories] = useState([])
   const [cities, setCities] = useState([])
+  const [loading, setLoading] = useState(false)
 
   const history = useHistory()
 
   useEffect(() => {
-    axios
-      .post(
-        API_ADDRESS + "Adver/GetUserPlanWhenCreateAdver",
-        {},
-        {
-          headers: {
-            Authorization: `bearer ${window.localStorage.getItem("JWT")}`,
-          },
-        }
-      )
-      .then((res) => {
-        if (res.data.resul.hasPlan === false) {
-          setHasPlan(false)
-          setPlanId(res.data.resul.allPlanFor.id)
-          setPlanDetails(res.data.resul.allPlanFor)
-        } else {
-          setHasPlan(true)
-        }
-      })
+    const params = new URLSearchParams(window.location.search)
+    const adverId = params.get("AdverId")
+
+    adverId &&
+      axios
+        .get(
+          API_ADDRESS + `Adver/LoadAdver`,
+          { params: { id: adverId } },
+          {
+            headers: {
+              Authorization: `bearer ${window.localStorage.getItem("JWT")}`,
+            },
+          }
+        )
+        .then(({ data }) => {
+          setInitialState({
+            id: parseInt(adverId),
+            fieldOfActivity: data.resul.fieldOfActivity || "",
+            title: data.resul.title || "",
+            city: parseInt(data.resul.city) || "",
+            typeOfCooperation: data.resul.typeOfCooperation || 0,
+            salary: data.resul.salary || 0,
+            workExperience: data.resul.workExperience || 0,
+            degreeOfEducation: data.resul.degreeOfEducation || 0,
+            gender: data.resul.gender || 0,
+            military: data.resul.military || "",
+            descriptionOfJob: data.resul.descriptionOfJob || "",
+          })
+        })
 
     const fetchData = async () => {
       const categoriesies = []
@@ -56,7 +66,7 @@ export const EditAdverField = () => {
         .get(API_ADDRESS + "Categories/GetAllCategories")
         .then((res) => {
           res.data.resul.map((item) => {
-            categoriesies.push({ value: item.id, label: item.name })
+            categoriesies.push({ value: item.name, label: item.name })
           })
         })
       setCategories(categoriesies)
@@ -76,28 +86,27 @@ export const EditAdverField = () => {
   }, [])
 
   const submitHandler = (values) => {
-    hasPlan === true &&
-      axios
-        .post(API_ADDRESS + "Adver/CreateAdver", values, {
-          headers: {
-            Authorization: `bearer ${window.localStorage.getItem("JWT")}`,
-          },
+    setLoading(true)
+
+    axios
+      .post(API_ADDRESS + "Adver/EditAdver", values, {
+        headers: {
+          Authorization: `bearer ${window.localStorage.getItem("JWT")}`,
+        },
+      })
+      .then(() => {
+        setLoading(false)
+        Swal.fire({
+          icon: "success",
+          title: "ویرایش آگهی با موفقیت ثبت شد",
+          showConfirmButton: false,
+          timer: 1750,
         })
-        .then((res) => {
-          console.log(res)
-          history.push("/Employer/Dashboard")
-          Swal.fire({
-            icon: "success",
-            title: "ثبت آگهی با موفقیت ثبت شد",
-            showConfirmButton: false,
-            timer: 1750,
-          })
-        })
-        .catch((err) => {
-          if (err.response.status === 400 && err.response) {
-            toast.error("لطفا تمام فیلد ها را پر کنید")
-          }
-        })
+      })
+      .catch((err) => {
+        err.response.data.message.map((er) => toast.error(er))
+        setLoading(false)
+      })
   }
 
   const MySelect = ({ label, options, ...props }) => {
@@ -151,6 +160,7 @@ export const EditAdverField = () => {
         <CKEditor
           className="cke_rtl"
           editor={ClassicEditor}
+          data={initialState.descriptionOfJob}
           config={{
             toolbar: [
               "|",
@@ -181,12 +191,14 @@ export const EditAdverField = () => {
 
   return (
     <>
+      {loading && <MiniSpinner />}
       <Formik
-        initialValues={initialData}
+        initialValues={initialState}
         validationSchema={CreateAdValidate}
         onSubmit={(values) => {
           submitHandler(values)
         }}
+        enableReinitialize={true}
       >
         <Form className="w-100">
           <div className="row">
@@ -317,7 +329,8 @@ export const EditAdverField = () => {
             <div className="smt-3 col-12">
               <button
                 type="submit"
-                className="btn btn-success ir-r d-block w-100"
+                className="btn btn-success ir-r d-block w-50"
+                style={{ margin: "0 auto" }}
               >
                 بروزرسانی آگهی
               </button>

@@ -352,7 +352,7 @@ class App extends Component {
               ></Route>
 
               <Route
-                path="/Employer/editAdver/:AdverId"
+                path="/Employer/editAdver"
                 render={(props) => {
                   if (!this.isEmployer())
                     return <Redirect exact to="/Employer/Login" />

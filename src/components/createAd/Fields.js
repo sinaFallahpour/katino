@@ -84,7 +84,6 @@ export const Fields = () => {
           },
         })
         .then((res) => {
-          console.log(res)
           history.push("/Employer/Dashboard")
           Swal.fire({
             icon: "success",
@@ -94,9 +93,7 @@ export const Fields = () => {
           })
         })
         .catch((err) => {
-          if (err.response.status === 400 && err.response) {
-            toast.error("لطفا تمام فیلد ها را پر کنید")
-          }
+          err.response.data.message.map((er) => toast.error(er))
         })
   }
 

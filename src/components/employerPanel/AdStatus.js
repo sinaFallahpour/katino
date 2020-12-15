@@ -63,7 +63,7 @@ export function AdStatus(props) {
               <button className="btn btn-light sml-1 ir-r">بیشتر</button>
               {props.adverCreatationStatus === 1 && (
                 <Link
-                  to={`/Employer/editAdver/${props.id}`}
+                  to={`/Employer/editAdver?AdverId=${props.id}`}
                   className="btn btn-light sml-1 ir-r"
                 >
                   ویرایش
@@ -71,7 +71,7 @@ export function AdStatus(props) {
               )}
               {props.adverCreatationStatus === 4 && (
                 <Link
-                  to={`/Employer/editAdver/${props.id}`}
+                  to={`/Employer/editAdver?AdverId=${props.id}`}
                   className="btn btn-light sml-1 ir-r"
                 >
                   ویرایش
