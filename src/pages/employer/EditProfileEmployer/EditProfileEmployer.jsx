@@ -9,6 +9,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
 import Select from "react-select"
 
 import { EditProfileEmployerVal } from "../../../core/validation/editProfileEmployer"
+import ADDRESS from "../../../ADDRESS"
 import API_ADDRESS from "../../../API_ADDRESS"
 import { MiniSpinner } from "../../../components/spinner/MiniSpinner"
 import "./../Field.style.css"
@@ -25,7 +26,7 @@ const EditProfileEmployer = () => {
     NumberOfStaff: 0,
     Email: "",
     City: "",
-    ShortDescription: "asdsd",
+    ShortDescription: "",
   }
 
   const [initialData, setInitialData] = useState(initialD)
@@ -66,19 +67,26 @@ const EditProfileEmployer = () => {
 
   useEffect(() => {
     axios.get(API_ADDRESS + "Account/LoadEmployerProfile").then((res) => {
-      console.log(res.data.resul)
+      setSelectedValue(res.data.resul.fieldOfActivity?.map((item) => item.id))
+
       setInitialData({
-        ManagmentFullName: "asdasd",
-        PersianFullName: "",
-        EngFullName: "",
-        EmergencPhone: "",
-        Image: "",
-        url: "asdasd",
-        FieldOfActivity: "",
-        NumberOfStaff: 0,
-        Email: "",
-        City: "",
-        ShortDescription: "asdasd",
+        ManagmentFullName: res.data.resul.managmentFullName || "",
+        PersianFullName: res.data.resul.persianFullName || "",
+        EngFullName: res.data.resul.engFullName || "",
+        EmergencPhone: res.data.resul.emergencPhone || "",
+        Image: res.data.resul.image || "",
+        url: res.data.resul.url || "",
+        FieldOfActivity:
+          res.data.resul.fieldOfActivity?.map((item) => {
+            return {
+              value: item.id,
+              label: item.name,
+            }
+          }) || "",
+        NumberOfStaff: res.data.resul.numberOfStaff || 0,
+        Email: res.data.resul.email || "",
+        City: parseInt(res.data.resul.cities) || "",
+        ShortDescription: res.data.resul.shortDescription || "",
       })
     })
   }, [])
@@ -121,6 +129,7 @@ const EditProfileEmployer = () => {
 
   const submitHandler = (values) => {
     setLoading(true)
+
     let tempo = { ...values, Image: PicUrl, FieldOfActivity: selectedValue }
     const correctFormat = convertObjToFormData(tempo)
 
@@ -217,6 +226,7 @@ const EditProfileEmployer = () => {
         <CKEditor
           className="cke_rtl"
           editor={ClassicEditor}
+          data={initialData.ShortDescription}
           config={{
             toolbar: [
               "|",
@@ -254,6 +264,7 @@ const EditProfileEmployer = () => {
         onSubmit={(values) => {
           submitHandler(values)
         }}
+        enableReinitialize={true}
       >
         <section className="complete-register-form container-fluid spx-2 spx-lg-10 smy-10 spt-10">
           <div className="row">
@@ -341,7 +352,8 @@ const EditProfileEmployer = () => {
                         }}
                         className="form-control"
                       />
-                      {profilePicUrl && (
+
+                      {profilePicUrl ? (
                         <img
                           src={profilePicUrl}
                           style={{
@@ -350,7 +362,19 @@ const EditProfileEmployer = () => {
                             objectFit: "cover",
                           }}
                         />
+                      ) : (
+                        initialData.Image && (
+                          <img
+                            src={`${ADDRESS}img/CompanyLogo/${initialData.Image}`}
+                            style={{
+                              width: "80px",
+                              height: "80px",
+                              objectFit: "cover",
+                            }}
+                          />
+                        )
                       )}
+
                       {imageError && (
                         <div className="errorMessage">{imageError}</div>
                       )}

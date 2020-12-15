@@ -1,5 +1,5 @@
 import React from "react"
-import { adverStatus } from "../../enums"
+import { adverStatus, adverCreatationStatus } from "../../enums"
 import { Link } from "react-router-dom"
 
 export function AdStatus(props) {
@@ -42,16 +42,49 @@ export function AdStatus(props) {
               <span className="c-grey ir-r smr-1 bg-body srounded-sm sp-05">
                 {adverStatus(props.adverStatus)}
               </span>
+
+              <span
+                className={`text-white  ir-r smr-1 srounded-sm sp-05 
+                ${props.adverCreatationStatus === 1 && "bg-success"}
+                ${props.adverCreatationStatus === 3 && "bg-success"}
+                ${props.adverCreatationStatus === 2 && "bg-danger"}
+                ${props.adverCreatationStatus === 4 && "bg-danger"}
+                `}
+                style={{ display: "inline-block" }}
+              >
+                {props.adverCreatationStatus === 1 && "درحال بررسی"}
+                {props.adverCreatationStatus === 2 && "رد شده"}
+                {props.adverCreatationStatus === 3 && "پذیرفته شده"}
+                {props.adverCreatationStatus === 4 && "برگشت خورده"}
+              </span>
             </div>
 
             <div>
               <button className="btn btn-light sml-1 ir-r">بیشتر</button>
-              <button className="btn btn-light sml-1 ir-r">ویرایش</button>
+              {props.adverCreatationStatus === 1 && (
+                <Link
+                  to={`/Employer/editAdver/${props.id}`}
+                  className="btn btn-light sml-1 ir-r"
+                >
+                  ویرایش
+                </Link>
+              )}
+              {props.adverCreatationStatus === 4 && (
+                <Link
+                  to={`/Employer/editAdver/${props.id}`}
+                  className="btn btn-light sml-1 ir-r"
+                >
+                  ویرایش
+                </Link>
+              )}
             </div>
           </div>
 
           <span className="ir-r c-regular smt-2">
-            {props.adminDescription
+            {props.adverCreatationStatus === 2 && props.adminDescription
+              ? `پیام سیستم: ${props.adminDescription}`
+              : ""}
+            {props.adverCreatationStatus === 4 && props.adminDescription
               ? `پیام سیستم: ${props.adminDescription}`
               : ""}
           </span>

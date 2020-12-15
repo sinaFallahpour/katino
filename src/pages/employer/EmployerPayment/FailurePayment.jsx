@@ -30,7 +30,7 @@ const EmployerFailurePage = () => {
         <TitleDanger> پرداخت ناموفق </TitleDanger>
         <CodeTitle> : کد رهگیری </CodeTitle>
         <CodeNumber> {trackingnumber} </CodeNumber>
-        <DirectorDanger to="/">
+        <DirectorDanger to="/Employer/CreateAd">
           <i class="fa fa-caret-left"></i>
           <span> بازگشت به خانه </span>
         </DirectorDanger>

@@ -25,7 +25,7 @@ const EditProfileEmployerVal = Yup.object({
   City: Yup.number()
     .min(0, "لطفا شهر خود را وارد کنید")
     .required("لطفا شهر خود را وارد کنید"),
-  FieldOfActivity: Yup.string().required("لطفا حوزه فعالیت خود را وارد کنید"),
+  FieldOfActivity: Yup.array().required("لطفا حوزه فعالیت خود را وارد کنید"),
 })
 
 export { EditProfileEmployerVal }

@@ -24,6 +24,7 @@ import {
   Dashboard,
   AdInfo,
   RequestDetails,
+  EditAdver,
 } from "./pages/employer"
 import { EditProfileEmployer } from "./pages/employer/EditProfileEmployer"
 import { ScrollToTop, Navbar } from "./components"
@@ -344,6 +345,21 @@ class App extends Component {
                     <PageTitle title="درج آگهی">
                       <Navbar />
                       <CreateAd props={props} {...props} />
+                      <EmployerFooter />
+                    </PageTitle>
+                  )
+                }}
+              ></Route>
+
+              <Route
+                path="/Employer/editAdver/:AdverId"
+                render={(props) => {
+                  if (!this.isEmployer())
+                    return <Redirect exact to="/Employer/Login" />
+                  return (
+                    <PageTitle title="ویرایش آگهی">
+                      <Navbar />
+                      <EditAdver props={props} {...props} />
                       <EmployerFooter />
                     </PageTitle>
                   )
