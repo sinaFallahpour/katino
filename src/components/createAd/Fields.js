@@ -22,6 +22,7 @@ import { toast } from "react-toastify"
 export const Fields = () => {
   const [hasPlan, setHasPlan] = useState(false)
   const [planId, setPlanId] = useState()
+  const [secondButton, setSecondButton] = useState(false)
   const [planDetails, setPlanDetails] = useState()
   const [categories, setCategories] = useState([])
   const [cities, setCities] = useState([])
@@ -74,28 +75,6 @@ export const Fields = () => {
 
     fetchData()
   }, [])
-
-  const submitHandler = (values) => {
-    hasPlan === true &&
-      axios
-        .post(API_ADDRESS + "Adver/CreateAdver", values, {
-          headers: {
-            Authorization: `bearer ${window.localStorage.getItem("JWT")}`,
-          },
-        })
-        .then((res) => {
-          history.push("/Employer/Dashboard")
-          Swal.fire({
-            icon: "success",
-            title: "ثبت آگهی با موفقیت ثبت شد",
-            showConfirmButton: false,
-            timer: 1750,
-          })
-        })
-        .catch((err) => {
-          err.response.data.message.map((er) => toast.error(er))
-        })
-  }
 
   const MySelect = ({ label, options, ...props }) => {
     const [field, meta, helpers] = useField(props)
@@ -176,13 +155,61 @@ export const Fields = () => {
     )
   }
 
+  const submitHandler = (values) => {
+    hasPlan === true &&
+      axios
+        .post(API_ADDRESS + "Adver/CreateAdver", values, {
+          headers: {
+            Authorization: `bearer ${window.localStorage.getItem("JWT")}`,
+          },
+        })
+        .then((res) => {
+          history.push("/Employer/Dashboard")
+          Swal.fire({
+            icon: "success",
+            title: "ثبت آگهی با موفقیت ثبت شد",
+            showConfirmButton: false,
+            timer: 1750,
+          })
+        })
+        .catch((err) => {
+          err.response.data.message.map((er) => toast.error(er))
+        })
+  }
+
+  const submitAddToDraft = (values) => {
+    hasPlan === true &&
+      axios
+        .post(API_ADDRESS + "Adver/SaveAdverToDraft", values, {
+          headers: {
+            Authorization: `bearer ${window.localStorage.getItem("JWT")}`,
+          },
+        })
+        .then((res) => {
+          history.push("/Employer/Dashboard")
+          Swal.fire({
+            icon: "success",
+            title: "آگهی در پیش نویس با موفقیت ذخیره شد",
+            showConfirmButton: false,
+            timer: 1750,
+          })
+        })
+        .catch((err) => {
+          err.response.data.message.map((er) => toast.error(er))
+        })
+  }
+
   return (
     <>
       <Formik
         initialValues={initialData}
         validationSchema={CreateAdValidate}
         onSubmit={(values) => {
-          submitHandler(values)
+          secondButton === true
+            ? submitAddToDraft(values)
+            : submitHandler(values)
+
+          setSecondButton(false)
         }}
       >
         <Form className="w-100">
@@ -323,8 +350,9 @@ export const Fields = () => {
 
                 <div className="col-12 col-lg-3 mt-0 smt-lg-3 smb-2 mb-lg-0 ir-r mr-auto">
                   <button
-                    type="button"
+                    type="submit"
                     className="btn btn-light ir-r d-block w-100"
+                    onClick={() => setSecondButton(true)}
                   >
                     ذخیره در پیش نویس
                   </button>

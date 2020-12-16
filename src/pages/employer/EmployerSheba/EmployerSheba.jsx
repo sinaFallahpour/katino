@@ -26,6 +26,7 @@ const EmployerSheba = () => {
 
   useEffect(() => {
     inputRef.current.focus()
+    setLoading(true)
     axios
       .get(
         API_ADDRESS + `Account/LoadShebaCode`,
@@ -37,21 +38,16 @@ const EmployerSheba = () => {
         }
       )
       .then((res) => {
-        console.log(res)
-        Swal.fire({
-          icon: "success",
-          title: "شماره شبا با موفقیت انجام شد",
-          showConfirmButton: false,
-          timer: 1750,
+        const loadedSheba = res.data.resul.substring(2)
+        setShebaNumber({
+          shebaNumber: loadedSheba,
         })
         setLoading(false)
       })
       .catch((err) => {
-        if (err.response.status === 400 && err.response) {
-          err.response.data.message.map((e) => {
-            toast.error(e)
-          })
-        }
+        err?.response?.data?.message.map((e) => {
+          toast.error(e)
+        })
 
         setLoading(false)
       })
@@ -62,7 +58,8 @@ const EmployerSheba = () => {
 
     axios
       .post(
-        API_ADDRESS + `Account/UpdateShebaCode?shebeCode=${values.shebaNumber}`,
+        API_ADDRESS +
+          `Account/UpdateShebaCode?shebeCode=${"IR" + values.shebaNumber}`,
         {},
         {
           headers: {
