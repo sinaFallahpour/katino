@@ -1,216 +1,173 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { UserAds } from "../../components/employerPanel";
-import * as service from "../../components/employerPanel";
+import React, { Component, useEffect, useState } from "react"
+import { Link } from "react-router-dom"
+import { UserAds } from "../../components/employerPanel"
+import * as service from "../../components/employerPanel"
 
 import agent from "../../core/agent"
 import { toast } from "react-toastify"
-
 import Swal from "sweetalert2"
 
+export const Dashboard = () => {
+  const [userAds, setUserAds] = useState()
+  const [key, setKey] = useState()
+  const [adverStatus, setAdverStatus] = useState()
+  const [adverCreatationStatus, setAdverCreatationStatus] = useState()
 
-
-
-
-export class Dashboard extends Component {
-  state = {
-    userAds: [],
-    key: "",
-  };
-
-  componentDidMount = async () => {
-
+  useEffect(() => {
     let params = new URLSearchParams(window.location.search)
-    const adverStatus = params.get("adverStatus");
+    const adverStatus = params.get("adverStatus")
 
-    if (adverStatus) {
-      const { data } = await agent.Adver.GetAllAdverByStatusForCurrectUser(adverStatus)
-      this.setState({ userAds: data.resul })
+    const fetcData = async () => {
+      if (adverStatus) {
+        const { data } = await agent.Adver.GetAllAdverByStatusForCurrectUser(
+          adverStatus
+        )
+        setUserAds(data.resul)
+        return
+      }
+      const { data } = await agent.Adver.getAllAdverForCurrectUser()
+
+      setUserAds(data.resul)
+      setAdverStatus(adverStatus)
       return
     }
-    const { data } = await agent.Adver.getAllAdverForCurrectUser()
-    this.setState({ userAds: data.resul, adverStatus })
-    return;
 
-  };
+    fetcData()
+  }, [])
 
-
-  handleFilter = async () => {
-    const key = this.state.key;
-
+  const handleFilter = async () => {
+    const filterKey = key
     try {
-      const { data } = await agent.Adver.SearchAdverForCurrectUser(key)
-      this.setState({ userAds: data.resul })
+      const { data } = await agent.Adver.SearchAdverForCurrectUser(filterKey)
+      setUserAds(data.resul)
     } catch (ex) {
-      toast.error("خطایی رخ داده");
-    } finally {
-      Swal.close();
+      toast.error("خطایی رخ داده")
     }
-  };
-
-
-
-  handleChangeKey = (e) => {
-    this.setState({ key: e.target.value })
   }
 
-
-
-  returnLoading = (title) => {
-    Swal.fire({
-      title: title,
-      allowEnterKey: false,
-      allowEscapeKey: false,
-      allowOutsideClick: false,
-    });
-    Swal.showLoading();
-  };
-
-
-
-
-
-
-  returnParam = () => {
-    let params = new URLSearchParams(window.location.search)
-    return params.get("adverStatus");
+  const handleChangeKey = (e) => {
+    setKey(e.target.value)
   }
 
+  return (
+    <section className="dash-employer container-fluid spx-2 smt-10 spx-lg-10">
+      <div className="row">
+        <div className="bg-white srounded-md sshadow w-100 sp-2">
+          <nav className="navbar navbar-expand-lg pr-0 py-0">
+            <div>
+              <ul className="navbar-nav ml-auto">
+                <li className="nav-item smr-lg-4">
+                  <a
+                    href="/Employer/Dashboard"
+                    className="nav-link position-relative c-grey ir-r fs-m p-0 smb-1 mb-lg-0"
+                  >
+                    همه آگهی ها
+                  </a>
 
-
-
-
-
-
-
-
-
-
-  render() {
-    return (
-      <section className="dash-employer container-fluid spx-2 smt-10 spx-lg-10">
-        <div className="row">
-          <div className="bg-white srounded-md sshadow w-100 sp-2">
-            <nav className="navbar navbar-expand-lg pr-0 py-0">
-              <div>
-                <ul className="navbar-nav ml-auto">
-                  <li className="nav-item smr-lg-4">
-
-
-                    <a
-                      href="/Employer/Dashboard"
-                      className="nav-link position-relative c-grey ir-r fs-m p-0 smb-1 mb-lg-0">
-                      همه آگهی ها
-                    </a>
-
-                    {/* <Link
+                  {/* <Link
                       className="nav-link position-relative c-main ir-r fs-m p-0 smb-1 mb-lg-0 active"
                       to="/Employer/Dashboard"
                     >
                       همه آگهی ها
                     </Link> */}
-                  </li>
+                </li>
 
+                <li className="nav-item smr-lg-4">
+                  <a
+                    href="/Employer/Dashboard?adverStatus=1"
+                    className="nav-link position-relative c-grey ir-r fs-m p-0 smb-1 mb-lg-0"
+                  >
+                    فعال
+                  </a>
 
-                  <li className="nav-item smr-lg-4">
-                    <a
-                      href="/Employer/Dashboard?adverStatus=1"
-                      className="nav-link position-relative c-grey ir-r fs-m p-0 smb-1 mb-lg-0">
-                      فعال
-                    </a>
-
-                    {/* <Link
+                  {/* <Link
                       className="nav-link position-relative c-grey ir-r fs-m p-0 smb-1 mb-lg-0 active"
                       to={`/Employer/Dashboard?adverStatus=1`}
 
                     >
                       فعال
                     </Link> */}
-                  </li>
+                </li>
 
-                  <li className="nav-item smr-lg-4">
-                    <a
-                      href="/Employer/Dashboard?adverStatus=2"
-                      className="nav-link position-relative c-grey ir-r fs-m p-0 smb-1 mb-lg-0">
-                      پیش نویس
-                    </a>
+                <li className="nav-item smr-lg-4">
+                  <a
+                    href="/Employer/Dashboard?adverStatus=2"
+                    className="nav-link position-relative c-grey ir-r fs-m p-0 smb-1 mb-lg-0"
+                  >
+                    پیش نویس
+                  </a>
+                </li>
 
+                <li className="nav-item smr-lg-4">
+                  <a
+                    href="/Employer/Dashboard?adverStatus=3"
+                    className="nav-link position-relative c-grey ir-r fs-m p-0 smb-1 mb-lg-0"
+                  >
+                    آرشیو
+                  </a>
+                </li>
 
-                  </li>
+                <li className="nav-item smr-lg-4">
+                  <a
+                    href="/Employer/Dashboard?adverStatus=4"
+                    className="nav-link position-relative c-grey ir-r fs-m p-0 smb-1 mb-lg-0"
+                  >
+                    پایان یافته
+                  </a>
+                </li>
 
-                  <li className="nav-item smr-lg-4">
+                <li className="nav-item smr-lg-4">
+                  <a
+                    href="/Employer/Dashboard?adverStatus=5"
+                    className="nav-link position-relative c-grey ir-r fs-m p-0 smb-1 mb-lg-0"
+                  >
+                    غیر فعال
+                  </a>
+                </li>
 
-                    <a
-                      href="/Employer/Dashboard?adverStatus=3"
-                      className="nav-link position-relative c-grey ir-r fs-m p-0 smb-1 mb-lg-0">
-                      آرشیو
-                    </a>
-                  </li>
+                <li className="nav-item smr-lg-4">
+                  <a
+                    href="/Employer/Dashboard?adverStatus=6"
+                    className="nav-link position-relative c-grey ir-r fs-m p-0 smb-1 mb-lg-0"
+                  >
+                    منقضی شده
+                  </a>
 
-                  <li className="nav-item smr-lg-4">
-                    <a
-                      href="/Employer/Dashboard?adverStatus=4"
-                      className="nav-link position-relative c-grey ir-r fs-m p-0 smb-1 mb-lg-0">
-                      پایان یافته
-                    </a>
-
-                  </li>
-
-
-                  <li className="nav-item smr-lg-4">
-                    <a
-                      href="/Employer/Dashboard?adverStatus=5"
-                      className="nav-link position-relative c-grey ir-r fs-m p-0 smb-1 mb-lg-0">
-                      غیر فعال
-                    </a>
-                  </li>
-
-
-                  <li className="nav-item smr-lg-4">
-
-                    <a
-                      href="/Employer/Dashboard?adverStatus=6"
-                      className="nav-link position-relative c-grey ir-r fs-m p-0 smb-1 mb-lg-0">
-                      منقضی شده
-                    </a>
-
-                    {/* <Link
+                  {/* <Link
                       className="nav-link position-relative c-grey ir-r fs-m p-0 smb-1 mb-lg-0"
                       to={`/Employer/Dashboard?adverStatus=6`}
                     >
                       منقضی شده
                     </Link> */}
-                  </li>
-
-                </ul>
-              </div>
-            </nav>
-          </div>
-        </div>
-
-        <div className="row smt-3">
-          <div className="bg-white srounded-md sshadow sp-2 w-100">
-            <div className="col-12">
-              <div className="form-group">
-                <input
-                  onChange={this.handleChangeKey}
-
-                  onKeyUp={this.handleFilter}
-                  className="ir-r form-control srounded-sm shadow-none"
-                  placeholder="جستجو در آگهی ها"
-                />
-              </div>
+                </li>
+              </ul>
             </div>
-
-            <hr className="smy-2" />
-
-            <UserAds
-              handleChangeKey={this.handleChangeKey}
-              handleFilter={this.handleFilter}
-              ads={this.state.userAds} />
-          </div>
+          </nav>
         </div>
-      </section>
-    );
-  }
+      </div>
+
+      <div className="row smt-3">
+        <div className="bg-white srounded-md sshadow sp-2 w-100">
+          <div className="col-12">
+            <div className="form-group">
+              <input
+                onChange={handleChangeKey}
+                onKeyUp={handleFilter}
+                className="ir-r form-control srounded-sm shadow-none"
+                placeholder="جستجو در آگهی ها"
+              />
+            </div>
+          </div>
+
+          <hr className="smy-2" />
+
+          <UserAds
+            handleChangeKey={handleChangeKey}
+            handleFilter={handleFilter}
+            ads={userAds}
+          />
+        </div>
+      </div>
+    </section>
+  )
 }

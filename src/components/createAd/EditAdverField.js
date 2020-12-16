@@ -4,7 +4,7 @@ import API_ADDRESS from "../../API_ADDRESS"
 import Select from "react-select"
 import CKEditor from "@ckeditor/ckeditor5-react"
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
-import { Link, useHistory } from "react-router-dom"
+import { Link, useHistory, useLocation, useParams } from "react-router-dom"
 import { Formik, Field, Form, ErrorMessage, useField } from "formik"
 import { CreateAdValidate } from "../../core/validation/createAd"
 import {
@@ -15,40 +15,49 @@ import {
   education,
   initialData,
 } from "./createAdData"
+import { MiniSpinner } from "../spinner/MiniSpinner"
 import "./Field.style.css"
 import Swal from "sweetalert2"
 import { toast } from "react-toastify"
 
-export const Fields = () => {
-  const [hasPlan, setHasPlan] = useState(false)
-  const [planId, setPlanId] = useState()
-  const [secondButton, setSecondButton] = useState(false)
-  const [planDetails, setPlanDetails] = useState()
+export const EditAdverField = () => {
+  const [initialState, setInitialState] = useState(initialData)
   const [categories, setCategories] = useState([])
   const [cities, setCities] = useState([])
+  const [loading, setLoading] = useState(false)
 
   const history = useHistory()
 
   useEffect(() => {
-    axios
-      .post(
-        API_ADDRESS + "Adver/GetUserPlanWhenCreateAdver",
-        {},
-        {
-          headers: {
-            Authorization: `bearer ${window.localStorage.getItem("JWT")}`,
-          },
-        }
-      )
-      .then((res) => {
-        if (res.data.resul.hasPlan === false) {
-          setHasPlan(false)
-          setPlanId(res.data.resul.allPlanFor.id)
-          setPlanDetails(res.data.resul.allPlanFor)
-        } else {
-          setHasPlan(true)
-        }
-      })
+    const params = new URLSearchParams(window.location.search)
+    const adverId = params.get("AdverId")
+
+    adverId &&
+      axios
+        .get(
+          API_ADDRESS + `Adver/LoadAdver`,
+          { params: { id: adverId } },
+          {
+            headers: {
+              Authorization: `bearer ${window.localStorage.getItem("JWT")}`,
+            },
+          }
+        )
+        .then(({ data }) => {
+          setInitialState({
+            id: parseInt(adverId),
+            fieldOfActivity: data.resul.fieldOfActivity || "",
+            title: data.resul.title || "",
+            city: parseInt(data.resul.city) || "",
+            typeOfCooperation: data.resul.typeOfCooperation || 0,
+            salary: data.resul.salary || 0,
+            workExperience: data.resul.workExperience || 0,
+            degreeOfEducation: data.resul.degreeOfEducation || 0,
+            gender: data.resul.gender || 0,
+            military: data.resul.military || "",
+            descriptionOfJob: data.resul.descriptionOfJob || "",
+          })
+        })
 
     const fetchData = async () => {
       const categoriesies = []
@@ -57,7 +66,7 @@ export const Fields = () => {
         .get(API_ADDRESS + "Categories/GetAllCategories")
         .then((res) => {
           res.data.resul.map((item) => {
-            categoriesies.push({ value: item.id, label: item.name })
+            categoriesies.push({ value: item.name, label: item.name })
           })
         })
       setCategories(categoriesies)
@@ -75,6 +84,30 @@ export const Fields = () => {
 
     fetchData()
   }, [])
+
+  const submitHandler = (values) => {
+    setLoading(true)
+
+    axios
+      .post(API_ADDRESS + "Adver/EditAdver", values, {
+        headers: {
+          Authorization: `bearer ${window.localStorage.getItem("JWT")}`,
+        },
+      })
+      .then(() => {
+        setLoading(false)
+        Swal.fire({
+          icon: "success",
+          title: "ویرایش آگهی با موفقیت ثبت شد",
+          showConfirmButton: false,
+          timer: 1750,
+        })
+      })
+      .catch((err) => {
+        err.response.data.message.map((er) => toast.error(er))
+        setLoading(false)
+      })
+  }
 
   const MySelect = ({ label, options, ...props }) => {
     const [field, meta, helpers] = useField(props)
@@ -127,6 +160,7 @@ export const Fields = () => {
         <CKEditor
           className="cke_rtl"
           editor={ClassicEditor}
+          data={initialState.descriptionOfJob}
           config={{
             toolbar: [
               "|",
@@ -155,62 +189,16 @@ export const Fields = () => {
     )
   }
 
-  const submitHandler = (values) => {
-    hasPlan === true &&
-      axios
-        .post(API_ADDRESS + "Adver/CreateAdver", values, {
-          headers: {
-            Authorization: `bearer ${window.localStorage.getItem("JWT")}`,
-          },
-        })
-        .then((res) => {
-          history.push("/Employer/Dashboard")
-          Swal.fire({
-            icon: "success",
-            title: "ثبت آگهی با موفقیت ثبت شد",
-            showConfirmButton: false,
-            timer: 1750,
-          })
-        })
-        .catch((err) => {
-          err.response.data.message.map((er) => toast.error(er))
-        })
-  }
-
-  const submitAddToDraft = (values) => {
-    hasPlan === true &&
-      axios
-        .post(API_ADDRESS + "Adver/SaveAdverToDraft", values, {
-          headers: {
-            Authorization: `bearer ${window.localStorage.getItem("JWT")}`,
-          },
-        })
-        .then((res) => {
-          history.push("/Employer/Dashboard")
-          Swal.fire({
-            icon: "success",
-            title: "آگهی در پیش نویس با موفقیت ذخیره شد",
-            showConfirmButton: false,
-            timer: 1750,
-          })
-        })
-        .catch((err) => {
-          err.response.data.message.map((er) => toast.error(er))
-        })
-  }
-
   return (
     <>
+      {loading && <MiniSpinner />}
       <Formik
-        initialValues={initialData}
+        initialValues={initialState}
         validationSchema={CreateAdValidate}
         onSubmit={(values) => {
-          secondButton === true
-            ? submitAddToDraft(values)
-            : submitHandler(values)
-
-          setSecondButton(false)
+          submitHandler(values)
         }}
+        enableReinitialize={true}
       >
         <Form className="w-100">
           <div className="row">
@@ -339,43 +327,13 @@ export const Fields = () => {
 
             {/* submit button  */}
             <div className="smt-3 col-12">
-              <div className="row d-lg-flex align-items-lg-center">
-                {hasPlan === false ? (
-                  <div className="col-12 col-lg-6 smb-2 mb-lg-0 ir-r">
-                    هزینه انتشار آگهی برای 30 روز، 90,000 تومان می‌باشد.
-                  </div>
-                ) : (
-                  ""
-                )}
-
-                <div className="col-12 col-lg-3 mt-0 smt-lg-3 smb-2 mb-lg-0 ir-r mr-auto">
-                  <button
-                    type="submit"
-                    className="btn btn-light ir-r d-block w-100"
-                    onClick={() => setSecondButton(true)}
-                  >
-                    ذخیره در پیش نویس
-                  </button>
-                </div>
-
-                <div className="col-12 col-lg-3 mt-0 smt-lg-3 smb-2 mb-lg-0 ir-r ml-auto">
-                  {hasPlan === false ? (
-                    <Link
-                      className="btn btn-warning ir-r d-block w-100"
-                      to={`/Employer/Dashboard/Plans/${planId}/Payment`}
-                    >
-                      پرداخت هزینه
-                    </Link>
-                  ) : (
-                    <button
-                      type="submit"
-                      className="btn btn-success ir-r d-block w-100"
-                    >
-                      فعالسازی و انتشار
-                    </button>
-                  )}
-                </div>
-              </div>
+              <button
+                type="submit"
+                className="btn btn-success ir-r d-block w-50"
+                style={{ margin: "0 auto" }}
+              >
+                بروزرسانی آگهی
+              </button>
             </div>
           </div>
         </Form>

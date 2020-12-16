@@ -1,28 +1,28 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import Select from "react-select";
+import React, { Component } from "react"
+import { Link } from "react-router-dom"
+import Select from "react-select"
 
 export class JobSearchBox extends Component {
   state = {
     selectedOption: null,
     city: "",
     key: "",
-  };
+  }
 
   changeHandler = (event) =>
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({ [event.target.name]: event.target.value })
 
-  cityHandler = (event) => this.setState({ city: event.value });
+  cityHandler = (event) => this.setState({ city: event.value })
 
   render() {
-    let cities = [];
+    let cities = []
 
     this.props.cities.map((id) => {
       cities.push({
         value: id.cityName,
         label: ` ${id.provinceName}، ${id.cityName} `,
-      });
-    });
+      })
+    })
 
     return (
       <div className="row w-100 sp-2 spy-2 bg-white rounded-content srounded-md">
@@ -59,7 +59,7 @@ export class JobSearchBox extends Component {
         <div className="col-12 col-lg-2 mb-0 pl-lg-0 d-flex align-items-end">
           <button
             onClick={() => {
-              this.props.handleSearch(this.state);
+              this.props.handleSearch(this.state)
             }}
             type="button"
             className="btn btn-primary d-block w-100 ir-r fs-m srounded-sm"
@@ -82,6 +82,6 @@ export class JobSearchBox extends Component {
           </Link> */}
         </div>
       </div>
-    );
+    )
   }
 }

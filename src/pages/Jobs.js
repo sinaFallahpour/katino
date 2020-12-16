@@ -1,245 +1,195 @@
-import React, { Component } from "react";
-import agent from "../core/agent";
-import Swal from "sweetalert2";
+import React, { Component, useEffect, useRef, useState } from "react"
+import agent from "../core/agent"
+import Swal from "sweetalert2"
+import Pagination from "react-responsive-pagination"
+import { toast } from "react-toastify"
+import { useHistory, useLocation } from "react-router-dom"
 
+import { MiniSpinner } from "../components/spinner/MiniSpinner"
 import {
   JobSearchBox,
   citiesService,
-  // LatestAds,
   Ad,
-  Pagination,
   Filters,
-  latestAdvers,
-  searchAdver,
-} from "../components";
-import { toast } from "react-toastify";
+  searchAdverFilter,
+} from "../components"
 
-export class Jobs extends Component {
-  state = {
-    cities: [],
-    adsList: [],
-    pageCount: 1,
+export const Jobs = () => {
+  const [loading, setLoading] = useState(false)
+  const [currentPage, setCurentPage] = useState(1)
+  const pageSize = 14
+  const [cities, setCities] = useState([])
+  const [adsList, setAdsList] = useState([])
+  const [pageCount, setPageCount] = useState(20)
+  const pathName = useLocation().pathname
+  const url = useLocation().search
+  const history = useHistory()
+  const params = new URLSearchParams(window.location.search)
 
-    curentPage: 1,
-  };
+  useEffect(() => {
+    let cp = params.get("currentPage")
+    let pz = params.get("pageSize")
 
-  componentDidMount() {
-    const params = new URLSearchParams(window.location.search);
+    !cp && params.set("currentPage", 1)
+    !pz && params.set("pageSize", pageSize)
 
-    let key = params.get("key");
-    let city = params.get("city");
+    !cp && !pz && history.replace(`${pathName}?${params.toString()}`)
 
-    if (key || city) {
-      searchAdver(key, city, 1, 10).then((res) => {
-        this.setState({
-          adsList: res.data.resul.listOfData,
-          pageCount: res.data.resul.pageCount,
-        });
-      });
-    } else
-      latestAdvers(1, 10).then((res) => {
-        this.setState({
-          adsList: res.data.resul.listOfData,
-          pageCount: res.data.resul.pageCount,
-        });
-      });
+    citiesService.getCities().then((res) => setCities(res.data.resul))
+  }, [])
 
-    citiesService
-      .getCities()
-      .then((res) => this.setState({ cities: res.data.resul }));
+  useEffect(() => {
+    let key = params.get("key")
+    let city = params.get("city")
+    let curentPage = params.get("currentPage")
+    let pageSizee = params.get("pageSize")
+    let category = params.get("category")
+    let salary = params.get("salary")
+    let typeOfCooperation = params.get("typeOfCooperation")
+    let workExperience = params.get("workExperience")
+
+    setCurentPage(parseInt(curentPage))
+
+    const SearchParams = {
+      key: key,
+      category: category,
+      city: city,
+      typeOfCooperation: parseInt(typeOfCooperation),
+      workExperience: parseInt(workExperience),
+      salary: parseInt(salary),
+    }
+
+    const fetchData = async () => {
+      setLoading(true)
+      try {
+        const { data } = await searchAdverFilter(
+          parseInt(curentPage),
+          parseInt(pageSizee),
+          SearchParams
+        )
+        setAdsList([])
+        setAdsList(data.resul.listOfData)
+        setPageCount(data.resul.pageCount)
+        setLoading(false)
+      } catch (ex) {
+        toast.error(ex.message)
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [url])
+
+  const handleFilter = async (inp) => {
+    inp.category && params.set("category", inp.category)
+    inp.city && params.set("city", inp.city)
+    inp.salary && params.set("salary", inp.salary)
+    inp.typeOfCooperation &&
+      params.set("typeOfCooperation", inp.typeOfCooperation)
+    inp.workExperience && params.set("workExperience", inp.workExperience)
+
+    history.replace(`${pathName}?${params.toString()}`)
   }
 
-  // handleFilter = (label) => {};
+  const handleSearch = async (inp) => {
+    inp.key && params.set("key", inp.key)
+    inp.city && params.set("city", inp.city)
 
-  handleFilter = async (inp) => {
-    this.returnLoading("صبر کنید...");
+    history.replace(`${pathName}?${params.toString()}`)
+  }
+
+  const handleMarkOtherAdv = async (adverId) => {
     try {
-      const { data } = await agent.Adver.filterAdver(
-        inp,
-        // 10,
-        this.state.curentPage,
-        10
-      );
-
-      this.setState({
-        adsList: data.resul.listOfData,
-        pageCount: data.resul.pageCount,
-      });
-
-    } catch (ex) {
-      toast.error("خطایی رخ داده");
-
-    } finally {
-      Swal.close();
-    }
-  };
-
-  handleSearch = async (inp) => {
-    this.returnLoading("صبر کنید...");
-    try {
-      let { city, key } = inp;
-      var params = new URLSearchParams();
-
-      params.append("page", this.state.curentPage);
-      params.append("pageSize", 10);
-      params.append("key", key);
-      params.append("city", city);
-
-      // return params;
-      const { data } = await agent.Adver.searchAdver(params);
-      this.setState({
-        adsList: data.resul.listOfData,
-        pageCount: data.resul.pageCount,
-      });
-    } catch (ex) {
-      if (ex.response?.data) toast.error(ex.response?.data.message[0]);
-    } finally {
-      Swal.close();
-    }
-  };
-
-  returnLoading = (title) => {
-    Swal.fire({
-      title: title,
-      allowEnterKey: false,
-      allowEscapeKey: false,
-      allowOutsideClick: false,
-    });
-    Swal.showLoading();
-  };
-
-  handleMarkOtherAdv = async (adverId) => {
-    try {
-      let currentAdver = this.state.adsList.find((c) => c.id == adverId);
+      let currentAdver = adsList.find((c) => c.id == adverId)
       if (currentAdver.isMarked) {
         // this.setState({ isMarked: false });
 
         this.setState({
-          adsList: this.state.adsList.map((el) =>
+          adsList: adsList.map((el) =>
             el.id === adverId ? Object.assign({}, el, { isMarked: false }) : el
           ),
-        });
-        await agent.Adver.unmarkAdvder(adverId);
+        })
+        await agent.Adver.unmarkAdvder(adverId)
       } else {
         this.setState({
           adsList: this.state.adsList.map((el) =>
             el.id === adverId ? Object.assign({}, el, { isMarked: true }) : el
           ),
-        });
+        })
 
-        await agent.Adver.markAdvder(adverId);
+        await agent.Adver.markAdvder(adverId)
       }
     } catch (ex) {
-      this.setState({ isMarked: !this.state.isMarked });
+      this.setState({ isMarked: !this.state.isMarked })
 
       if (ex?.response?.data) {
-        toast.error(ex.response?.data?.message[0]);
+        toast.error(ex.response?.data?.message[0])
         this.setState({
           data: this.state.adsList.map((el) =>
             el.id === adverId
               ? Object.assign({}, el, { isMarked: !el.isMarked })
               : el
           ),
-        });
+        })
       }
     }
-  };
+  }
 
-  paginate = () => {
-    for (let index = 1; index <= this.state.pageCount; index++) {
-      return (
-        <li
-          // onClick={this.}
-          className="page-item"
-        >
-          <a
-            className="page-link shadow-none sp-1 border-0 ir-r c-grey"
-            href="#"
-          >
-            {index}
-          </a>
-        </li>
-      );
-    }
-  };
+  const handlePaginate = (number) => {
+    setCurentPage(number)
+    const params = new URLSearchParams(window.location.search)
+    params.set("currentPage", number)
+    history.replace(`${pathName}?${params.toString()}`)
+  }
 
-  render() {
-    return (
+  return (
+    <>
+      {loading && <MiniSpinner />}
       <div className="search-jobs spt-10">
         <div className="container-fluid spx-2 spx-lg-10 smt-10">
-          <JobSearchBox
-            handleSearch={this.handleSearch}
-            cities={this.state.cities}
-          />
+          <JobSearchBox handleSearch={handleSearch} cities={cities} />
 
-          <Filters handleFilter={this.handleFilter} />
+          <Filters handleFilter={handleFilter} />
 
           <hr className="smy-5" />
 
           <div className="row bg-white srounded-md sp-2">
-            {this.state.adsList
-              ? this.state.adsList.map((item, index) => (
-                <div
-                  key={item.id}
-                  className={
-                    index + 1 !== this.state.adsList.length
-                      ? "col-12 smb-2"
-                      : "col-12 mb-0"
-                  }
-                >
-                  <Ad
-                    id={item.id}
-                    title={item.title}
-                    companyName={item.companyName}
-                    city={item.city}
-                    salary={item.salary}
-                    typeOfCooperation={item.typeOfCooperation}
-                    descriptionOfJob={item.descriptionOfJob}
-                    item={item}
-                    handleMarkOtherAdv={this.handleMarkOtherAdv}
-                  />
-                </div>
-              ))
-              : ""}
+            {adsList
+              ? adsList.map((item, index) => (
+                  <div
+                    key={index}
+                    className={
+                      index + 1 !== adsList.length
+                        ? "col-12 smb-2"
+                        : "col-12 mb-0"
+                    }
+                  >
+                    <Ad
+                      id={item.id}
+                      title={item.title}
+                      companyName={item.companyName}
+                      city={item.city}
+                      salary={item.salary}
+                      typeOfCooperation={item.typeOfCooperation}
+                      descriptionOfJob={item.descriptionOfJob}
+                      item={item}
+                      handleMarkOtherAdv={handleMarkOtherAdv}
+                    />
+                  </div>
+                ))
+              : "شغلی یافت نشد"}
           </div>
-
-          {/* <div className="row bg-white srounded-md sp-2">
-
-         {this.state.adsList?this.state.adsList.map((item,index)=>
-            )}
-      </div> */}
-
-          <nav className="smt-3 w-50 mx-auto">
-            <ul className="pagination bg-white srounded-md sshadow d-flex justify-content-center align-items-center sp-1">
-              <li className="page-item">
-                <a
-                  className="page-link shadow-none spx-2 border-0 ir-r c-grey"
-                  href="#"
-                >
-                  <i className="fas fa-chevron-right"></i>
-                </a>
-              </li>
-
-              {this.paginate()}
-
-              <li className="page-item">
-                <a
-                  className="page-link shadow-none spx-2 border-0 c-grey"
-                  href="#"
-                >
-                  <i className="fas fa-chevron-left"></i>
-                </a>
-              </li>
-            </ul>
-          </nav>
-
-          {/* {this.state.pageCount > 1 ? (
-            <Pagination pageCount={this.state.pageCount} />
-          ) : (
-            ""
-          )} */}
+          {adsList && (
+            <nav className="smt-3 w-50 mx-auto">
+              <Pagination
+                current={currentPage}
+                total={pageCount}
+                onPageChange={handlePaginate}
+              />
+            </nav>
+          )}
         </div>
       </div>
-    );
-  }
+    </>
+  )
 }

@@ -4,24 +4,34 @@ import Swal from "sweetalert2"
 import { toast } from "react-toastify"
 import { useHistory } from "react-router-dom"
 import { Formik, Field, Form, ErrorMessage, useField } from "formik"
+import CKEditor from "@ckeditor/ckeditor5-react"
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
 import Select from "react-select"
 
-import { CompleteRegister } from "../../core/validation/completeRegister"
-import API_ADDRESS from "../../API_ADDRESS"
-import { MiniSpinner } from "../../components/spinner/MiniSpinner"
-import "./Field.style.css"
+import { EditProfileEmployerVal } from "../../../core/validation/editProfileEmployer"
+import ADDRESS from "../../../ADDRESS"
+import API_ADDRESS from "../../../API_ADDRESS"
+import { MiniSpinner } from "../../../components/spinner/MiniSpinner"
+import "./../Field.style.css"
 
-const CompleteProfile = () => {
-  const initialData = {
+const EditProfileEmployer = () => {
+  const initialD = {
+    ManagmentFullName: "",
     PersianFullName: "",
     EngFullName: "",
     EmergencPhone: "",
     Image: "",
     url: "",
     FieldOfActivity: "",
-    NumberOfStaff: "",
+    NumberOfStaff: 0,
+    Email: "",
+    City: "",
+    ShortDescription: "",
   }
+
+  const [initialData, setInitialData] = useState(initialD)
   const [fieldOptions, setFieldOptions] = useState("")
+  const [cities, setCities] = useState()
   const [profilePicUrl, setProfilePicUrl] = useState("")
   const [PicUrl, setPicUrl] = useState("")
   const [imageError, setImageError] = useState("")
@@ -31,8 +41,8 @@ const CompleteProfile = () => {
   const history = useHistory()
 
   useEffect(() => {
-    // let categories
     let fieldOptions = []
+    let cities = []
     axios.get(API_ADDRESS + "Categories/GetAllCategories").then((res) => {
       res.data.resul.map((item) => {
         fieldOptions.push({
@@ -42,6 +52,42 @@ const CompleteProfile = () => {
       })
 
       setFieldOptions(fieldOptions)
+    })
+
+    axios.get(API_ADDRESS + "Account/GetCities").then((res) => {
+      res.data.resul.map((item) => {
+        cities.push({
+          value: item.cityDivisionCode,
+          label: `${item.provinceName}، ${item.cityName}`,
+        })
+      })
+      setCities(cities)
+    })
+  }, [])
+
+  useEffect(() => {
+    axios.get(API_ADDRESS + "Account/LoadEmployerProfile").then((res) => {
+      setSelectedValue(res.data.resul.fieldOfActivity?.map((item) => item.id))
+
+      setInitialData({
+        ManagmentFullName: res.data.resul.managmentFullName || "",
+        PersianFullName: res.data.resul.persianFullName || "",
+        EngFullName: res.data.resul.engFullName || "",
+        EmergencPhone: res.data.resul.emergencPhone || "",
+        Image: res.data.resul.image || "",
+        url: res.data.resul.url || "",
+        FieldOfActivity:
+          res.data.resul.fieldOfActivity?.map((item) => {
+            return {
+              value: item.id,
+              label: item.name,
+            }
+          }) || "",
+        NumberOfStaff: res.data.resul.numberOfStaff || 0,
+        Email: res.data.resul.email || "",
+        City: parseInt(res.data.resul.cities) || "",
+        ShortDescription: res.data.resul.shortDescription || "",
+      })
     })
   }, [])
 
@@ -83,22 +129,20 @@ const CompleteProfile = () => {
 
   const submitHandler = (values) => {
     setLoading(true)
-    let tempo = { ...values, Image: PicUrl, FieldOfActivity: selectedValue }
 
+    let tempo = { ...values, Image: PicUrl, FieldOfActivity: selectedValue }
     const correctFormat = convertObjToFormData(tempo)
+
     axios
-      .post(API_ADDRESS + "Account/CompanySubmitRegistrstion", correctFormat, {
+      .post(API_ADDRESS + "Account/EditEmployerProfile", correctFormat, {
         headers: {
           Authorization: `bearer ${localStorage.getItem("JWT")}`,
         },
       })
       .then((res) => {
-        if (res.status === 200) {
-          history.push("/Employer/Dashboard")
-        }
         Swal.fire({
           icon: "success",
-          title: "تکمیل فرم با موفقیت انجام شد",
+          title: "ویرایش اطلاعات با موفقیت انجام شد",
           showConfirmButton: false,
           timer: 1750,
         })
@@ -110,15 +154,14 @@ const CompleteProfile = () => {
             toast.error(e)
           })
         }
-        err.response.data.message.map((e) => {
-          toast.error(e)
-        })
+
         setLoading(false)
       })
   }
 
   const MultiMySelect = ({ label, options, ...props }) => {
-    const [field, meta, helpers] = useField(props)
+    const [field, , helpers] = useField(props)
+
     return (
       <div>
         <Select
@@ -127,9 +170,10 @@ const CompleteProfile = () => {
           options={options}
           onChange={(e) =>
             Array.isArray(e)
-              ? e.map((x) =>
+              ? e.map((x) => {
                   setSelectedValue((prev) => [...new Set(prev), x.value])
-                )
+                  helpers.setValue((prev) => [...new Set(prev), x.value])
+                })
               : []
           }
           value={
@@ -151,7 +195,7 @@ const CompleteProfile = () => {
   }
 
   const MySelect = ({ label, options, ...props }) => {
-    const [field, meta, helpers] = useField(props)
+    const [field, , helpers] = useField(props)
     return (
       <div>
         <Select
@@ -174,15 +218,53 @@ const CompleteProfile = () => {
     )
   }
 
+  const MyTextAreaInput = ({ ...props }) => {
+    const [, , helpers] = useField(props)
+    return (
+      <>
+        <label className="checkbox form-check-label">{props.label}</label>
+        <CKEditor
+          className="cke_rtl"
+          editor={ClassicEditor}
+          data={initialData.ShortDescription}
+          config={{
+            toolbar: [
+              "|",
+              "bold",
+              "italic",
+              "numberedList",
+              "bulletedList",
+              "|",
+              "undo",
+              "redo",
+            ],
+            removePlugins: ["Heading", "Link"],
+            language: "fa",
+          }}
+          onBlur={(_, editor) => {
+            const data = editor.getData()
+            helpers.setValue(data)
+          }}
+        />
+        <ErrorMessage
+          component="div"
+          className="errorMessage"
+          name={props.name}
+        />
+      </>
+    )
+  }
+
   return (
     <>
       {loading && MiniSpinner()}
       <Formik
         initialValues={initialData}
-        validationSchema={CompleteRegister}
+        validationSchema={EditProfileEmployerVal}
         onSubmit={(values) => {
           submitHandler(values)
         }}
+        enableReinitialize={true}
       >
         <section className="complete-register-form container-fluid spx-2 spx-lg-10 smy-10 spt-10">
           <div className="row">
@@ -190,8 +272,28 @@ const CompleteProfile = () => {
               <Form className="w-100">
                 <div className="bg-white srounded-md sp-2 smb-2">
                   <h1 className="fs-l c-dark d-block text-center smb-5 ir-bl">
-                    تکمیل پروفایل شرکت
+                    ویرایش اطلاعات شرکت
                   </h1>
+
+                  {/* ManagmentFullName   */}
+                  <div className="col-12 smb-2">
+                    <label className="ir-r d-block text-right smb-1">
+                      لطفا نام و نام خانوادگی مدیریت شرکت وارد کنید
+                    </label>
+                    <div className="form-group mb-0">
+                      <Field
+                        name="ManagmentFullName"
+                        className="form-control ir-r shadow-none"
+                        placeholder="نام و نام خانوادگی مدیریت شرکت"
+                        type="text"
+                      />
+                      <ErrorMessage
+                        component="div"
+                        className="errorMessage"
+                        name="ManagmentFullName"
+                      />
+                    </div>
+                  </div>
 
                   {/* PersianFullName  */}
                   <div className="col-12 smb-2">
@@ -240,7 +342,7 @@ const CompleteProfile = () => {
                     </label>
                     <div className="form-group mb-0">
                       <label className="uploadPic" htmlFor="Image ">
-                        <i class=" fas fa-camera "></i> بارگزاری عکس
+                        <i className=" fas fa-camera "></i> بارگزاری عکس
                       </label>
                       <input
                         id="Image "
@@ -250,7 +352,8 @@ const CompleteProfile = () => {
                         }}
                         className="form-control"
                       />
-                      {profilePicUrl && (
+
+                      {profilePicUrl ? (
                         <img
                           src={profilePicUrl}
                           style={{
@@ -259,10 +362,42 @@ const CompleteProfile = () => {
                             objectFit: "cover",
                           }}
                         />
+                      ) : (
+                        initialData.Image && (
+                          <img
+                            src={`${ADDRESS}img/CompanyLogo/${initialData.Image}`}
+                            style={{
+                              width: "80px",
+                              height: "80px",
+                              objectFit: "cover",
+                            }}
+                          />
+                        )
                       )}
+
                       {imageError && (
                         <div className="errorMessage">{imageError}</div>
                       )}
+                    </div>
+                  </div>
+
+                  {/* Email  */}
+                  <div className="col-12 smb-2">
+                    <label className="ir-r d-block text-right smb-1">
+                      لطفا ایمیل شرکت را وارد کنید
+                    </label>
+                    <div className="form-group mb-0">
+                      <Field
+                        name="Email"
+                        className="form-control ir-r shadow-none"
+                        placeholder="ایمیل شرکت"
+                        type="text"
+                      />
+                      <ErrorMessage
+                        component="div"
+                        className="errorMessage"
+                        name="Email"
+                      />
                     </div>
                   </div>
 
@@ -337,13 +472,33 @@ const CompleteProfile = () => {
                     />
                   </div>
 
+                  {/* City  */}
+                  <div className="col-12 smb-2">
+                    <label className="ir-r d-block text-right smb-1">
+                      شهر مقرر شرکت را وارد کنید
+                    </label>
+                    <MySelect
+                      name="City"
+                      placeholder="شهر را انتخاب کنید"
+                      options={cities}
+                    />
+                  </div>
+
+                  {/* ShortDescription  */}
+                  <div className="col-12 smb-2 ir-r">
+                    <MyTextAreaInput
+                      label="توضیحات آگهی"
+                      name="ShortDescription"
+                    />
+                  </div>
+
                   {/* submit button  */}
                   <div className="smt-3 col-12">
                     <button
                       type="submit"
-                      className="btn btn-warning ir-r spx-4"
+                      className="btn btn-success ir-r spx-4"
                     >
-                      تایید
+                      بروزرسانی
                     </button>
                   </div>
                 </div>
@@ -356,4 +511,4 @@ const CompleteProfile = () => {
   )
 }
 
-export { CompleteProfile }
+export { EditProfileEmployer }

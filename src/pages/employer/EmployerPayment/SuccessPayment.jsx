@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import { useHistory, useLocation } from "react-router-dom"
 
 import {
   PaymentresContainer,
@@ -13,7 +14,7 @@ import {
 
 const EmployerSuccessPage = () => {
   const [trackingnumber, setTrackingNumber] = useState()
-  const params = new URLSearchParams(window.location.search)
+  const params = new URLSearchParams(window.location)
 
   useEffect(() => {
     setTrackingNumber(params.get("trackingnumber"))
@@ -28,8 +29,8 @@ const EmployerSuccessPage = () => {
         <TitleSuccess> پرداخت با موفقیت انجام شد </TitleSuccess>
         <CodeTitle> : کد رهگیری </CodeTitle>
         <CodeNumber> {trackingnumber} </CodeNumber>
-        <DirectorSuccess to="/">
-          <i class="fa fa-caret-left"></i>
+        <DirectorSuccess to="/Employer/CreateAd">
+          <i className="fa fa-caret-left"></i>
           <span> بازگشت به خانه </span>
         </DirectorSuccess>
       </ContextContainers>

@@ -35,8 +35,13 @@ axios.interceptors.response.use(undefined, (error) => {
   }
 
   if (error?.response?.status == 401 || error?.response?.status == 403) {
+<<<<<<< HEAD
     localStorage.removeItem("JWT")
     localStorage.removeItem("userInfo")
+=======
+    window.localStorage.removeItem("JWT")
+    window.localStorage.removeItem("userInfo")
+>>>>>>> 7c54e83a3b735a9250ee6ca0c2d177ff43443cfd
     window.location.href = "/Employee/Login/"
 
     // history.push("/Employee/Login/");
@@ -100,17 +105,16 @@ const Adver = {
   asignResomeToListOfAdvers: (adverIdlist) =>
     requests.post(`/Resome/AsignResomeToListOfAdvers`, adverIdlist),
 
-  getAllAdverForCurrectUser: () => requests.get(`/Adver/GetAllAdverForCurrectUser`),
+  getAllAdverForCurrectUser: () =>
+    requests.get(`/Adver/GetAllAdverForCurrectUser`),
 
   GetAllAdverByStatusForCurrectUser: (adverStatus) =>
-    requests.get(`/Adver/GetAllAdverByStatusForCurrectUser?adverStatus=${adverStatus}`),
-
+    requests.get(
+      `/Adver/GetAllAdverByStatusForCurrectUser?adverStatus=${adverStatus}`
+    ),
 
   SearchAdverForCurrectUser: (key) =>
     requests.get(`/Adver/SearchAdverForCurrectUser?key=${key}`),
-
-
-
 }
 
 const CreateResome = {
@@ -146,25 +150,18 @@ const CreateResome = {
   GetResomePercent: () => requests.get("/Resome/GetResomePercent"),
 }
 
-
-
 const Resome = {
   ChangeAsignResomeStatus: (asignResomeId, asingResomeStatus, description) =>
-    requests.post(`/Resome/ChangeAsignResomeStatus?AsignResomeId=${asignResomeId}&&AsingResomeStatus=${asingResomeStatus}&&Description=${description}`),
-
-
+    requests.post(
+      `/Resome/ChangeAsignResomeStatus?AsignResomeId=${asignResomeId}&&AsingResomeStatus=${asingResomeStatus}&&Description=${description}`
+    ),
 
   GetUserShortInfoForResome: (asignId) =>
     requests.get(`/Resome/GetUserShortInfoForResome?asignId=${asignId}`),
 
-
   GetAsignResomeStatus: (asignId) =>
     requests.get(`/Resome/GetAsignResomeStatus?asignResomeId=${asignId}`),
-
-
-
 }
-
 
 const RequestDetails = {
   LoadCommentForAsignResome: (asignId) =>
@@ -199,5 +196,5 @@ export default {
   RequestDetails,
   Ticket,
   Plans,
-  Resome
+  Resome,
 }

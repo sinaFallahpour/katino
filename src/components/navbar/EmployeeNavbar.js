@@ -182,7 +182,7 @@ export class EmployeeNavbar extends Component {
                       className="ir-r c-grey text-decoration-none"
                       to="/Employee/plans"
                     >
-                      خرید پلن
+                      خرید اشتراک
                     </Link>
                   </li>
                   <li className="smb-1">
