@@ -250,14 +250,7 @@ export class EmployerNavbar extends Component {
                     ایجاد آگهی استخدام
                   </Link>
                 </li>
-                <li className="smb-1">
-                  <Link
-                    className="ir-r c-grey text-decoration-none"
-                    to="/Employer/Dashboard/Plans"
-                  >
-                    خرید پنل
-                  </Link>
-                </li>
+
                 <li className="smb-1">
                   <Link
                     className="ir-r c-grey text-decoration-none"
@@ -269,9 +262,25 @@ export class EmployerNavbar extends Component {
                 <li className="smb-1">
                   <Link
                     className="ir-r c-grey text-decoration-none"
+                    to="/Employer/Dashboard/Plans"
+                  >
+                    خرید اشتراک
+                  </Link>
+                </li>
+                <li className="smb-1">
+                  <Link
+                    className="ir-r c-grey text-decoration-none"
                     to="/Employer/EditProfile"
                   >
                     ویرایش اطلاعات شرکت
+                  </Link>
+                </li>
+                <li className="smb-1">
+                  <Link
+                    className="ir-r c-grey text-decoration-none"
+                    to="/Employer/registersheba"
+                  >
+                    ثبت شماره شبا بانکی
                   </Link>
                 </li>
                 <li className="smb-1">

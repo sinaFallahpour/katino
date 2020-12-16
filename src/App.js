@@ -27,6 +27,7 @@ import {
   EditAdver,
 } from "./pages/employer"
 import { EditProfileEmployer } from "./pages/employer/EditProfileEmployer"
+import { EmployerSheba } from "./pages/employer/EmployerSheba/EmployerSheba"
 import { ScrollToTop, Navbar } from "./components"
 import { Plans } from "./pages/employer/Plans"
 import { EmployeePlans } from "./pages/employee/Plans"
@@ -360,6 +361,21 @@ class App extends Component {
                     <PageTitle title="ویرایش آگهی">
                       <Navbar />
                       <EditAdver props={props} {...props} />
+                      <EmployerFooter />
+                    </PageTitle>
+                  )
+                }}
+              ></Route>
+
+              <Route
+                path="/Employer/registersheba"
+                render={(props) => {
+                  if (!this.isEmployer())
+                    return <Redirect exact to="/Employer/Login" />
+                  return (
+                    <PageTitle title="ثبت شماره شبا">
+                      <Navbar />
+                      <EmployerSheba props={props} {...props} />
                       <EmployerFooter />
                     </PageTitle>
                   )
