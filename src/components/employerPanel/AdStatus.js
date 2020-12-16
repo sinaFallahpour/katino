@@ -42,7 +42,7 @@ export function AdStatus(props) {
     axios
       .post(
         API_ADDRESS + `Adver/AddAdverFromDraft?adverId=${props.id}`,
-        {},
+        { params: { adverId: props.id } },
         {
           headers: {
             Authorization: `bearer ${localStorage.getItem("JWT")}`,
@@ -65,10 +65,6 @@ export function AdStatus(props) {
 
         setLoading(false)
       })
-  }
-
-  const AdverDetailsSubmit = (e) => {
-    console.log(e)
   }
 
   return (
@@ -104,7 +100,7 @@ export function AdStatus(props) {
 
               <div>
                 <Link
-                  to={`/Employer/AdInfo/1058`}
+                  to={`/Employer/AdverDetails/${props.id}`}
                   className="btn btn-light sml-1 ir-r"
                 >
                   بیشتر
