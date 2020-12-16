@@ -81,7 +81,6 @@ class App extends Component {
       return <>loading..</>
     }
 
-    console.log(this.state.userInfo)
     return (
       <div className="App">
         <BrowserRouter>
@@ -256,6 +255,7 @@ class App extends Component {
               ></Route>
 
               <Route
+                exact
                 path="/Employer/Dashboard/Plans/:id/Payment"
                 render={(props) => {
                   if (!this.isEmployer())
@@ -547,11 +547,11 @@ class App extends Component {
                 render={(props) => {
                   if (!this.isLogedIn())
                     return <Redirect exact to="/Employee/Login" />
-                  ;<PageTitle title="تیکت های پشتیبانی">
-                    <Navbar />
-                    <Detail props={props} {...props} />
-                    <LandingFooter className="d-none d-lg-block" />
-                  </PageTitle>
+                      ; <PageTitle title="تیکت های پشتیبانی">
+                        <Navbar />
+                        <Detail props={props} {...props} />
+                        <LandingFooter className="d-none d-lg-block" />
+                      </PageTitle>
                 }}
               ></Route>
 
@@ -574,7 +574,22 @@ class App extends Component {
                 <Security />
               </Route>
 
-              <Route component={NotFoundPage} />
+
+              {/* 
+              <Route
+                path="/notfound"
+                render={(props) => {
+                  return (
+                    <PageTitle title="">
+                      <NotFoundPage props={props} />
+                    </PageTitle>
+                  )
+                }}
+              ></Route> */}
+
+              {/* <Route exact component={NotFoundPage} /> */}
+              {/* <Redirect exact to="/notfound" /> */}
+
             </ScrollToTop>
           </Switch>
 

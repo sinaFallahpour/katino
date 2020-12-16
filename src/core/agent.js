@@ -35,7 +35,10 @@ axios.interceptors.response.use(undefined, (error) => {
   }
 
   if (error?.response?.status == 401 || error?.response?.status == 403) {
+    localStorage.removeItem("JWT")
+    localStorage.removeItem("userInfo")
     window.location.href = "/Employee/Login/"
+
     // history.push("/Employee/Login/");
   }
 
