@@ -40,7 +40,6 @@ import { EmployeeSuccessPage } from "./pages/employee/EmployeePayment/SuccessPay
 import { EmployeeFailurePage } from "./pages/employee/EmployeePayment/FailurePayment"
 import { EmployerSuccessPage } from "./pages/employer/EmployerPayment/SuccessPayment"
 import { EmployerFailurePage } from "./pages/employer/EmployerPayment/FailurePayment"
-import { AdverDetails } from "./components/employerPanel/AdverDetails"
 import { NotFoundPage } from "./components/notFoundPage/notFoundPage"
 import { history } from "../src/core/agent"
 class App extends Component {
@@ -401,6 +400,8 @@ class App extends Component {
               <Route
                 path="/JobDetails/:id"
                 render={(props) => {
+                  if (this.isEmployer())
+                    return <Redirect exact to="/Employer/Login" />
                   return (
                     <PageTitle title="مشاهده آگهی">
                       <Navbar />
@@ -537,22 +538,6 @@ class App extends Component {
                       <AdInfo props={props} {...props} />
                       <EmployerFooter className="d-none d-lg-block" />
                     </React.Fragment>
-                  )
-                }}
-              ></Route>
-
-              <Route
-                exact
-                path="/Employer/AdverDetails/:id"
-                render={(props) => {
-                  if (!this.isEmployer())
-                    return <Redirect exact to="/Employer/Login" />
-                  return (
-                    <PageTitle title="جزئیات آگهی">
-                      <Navbar />
-                      <AdverDetails props={props} {...props} />
-                      <EmployerFooter className="d-none d-lg-block" />
-                    </PageTitle>
                   )
                 }}
               ></Route>

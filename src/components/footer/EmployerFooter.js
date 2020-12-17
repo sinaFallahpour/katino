@@ -1,9 +1,9 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from "react"
+import { Link } from "react-router-dom"
 
 export function EmployerFooter() {
   return (
-    <footer className="g-footer border-top d-none d-lg-block container-fluid smt-10 spx-10 bg-white">
+    <footer className="g-footer border-top d-none d-block container-fluid smt-10 spx-10 bg-white">
       <div className="row">
         <div className="col-12 d-flex justify-content-center align-items-center spy-2">
           <Link className="ir-r c-grey sml-1" to="/">
@@ -18,5 +18,5 @@ export function EmployerFooter() {
         </div>
       </div>
     </footer>
-  );
+  )
 }

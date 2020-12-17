@@ -25,7 +25,7 @@ export class JobSearchBox extends Component {
     })
 
     return (
-      <div className="row w-100 sp-2 spy-2 bg-white rounded-content srounded-md">
+      <div className="row w-100 sp-2 spy-2 bg-white rounded-content srounded-md" style={{margin:"0 auto"}}>
         {/* What? */}
         <div className="col-12 col-lg-5 smb-2 pr-lg-0 mb-lg-0">
           <div className="form-group mb-0 ir-r srounded-md">

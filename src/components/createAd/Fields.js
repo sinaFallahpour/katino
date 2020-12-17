@@ -173,7 +173,8 @@ export const Fields = () => {
           })
         })
         .catch((err) => {
-          err.response.data.message.map((er) => toast.error(er))
+          err.response.data.message &&
+            err.response.data.message.map((er) => toast.error(er))
         })
   }
 
@@ -195,7 +196,8 @@ export const Fields = () => {
           })
         })
         .catch((err) => {
-          err.response.data.message.map((er) => toast.error(er))
+          err.response.data.message &&
+            err.response.data.message.map((er) => toast.error(er))
         })
   }
 

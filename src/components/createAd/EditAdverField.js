@@ -66,7 +66,7 @@ export const EditAdverField = () => {
         .get(API_ADDRESS + "Categories/GetAllCategories")
         .then((res) => {
           res.data.resul.map((item) => {
-            categoriesies.push({ value: item.name, label: item.name })
+            categoriesies.push({ value: item.id, label: item.name })
           })
         })
       setCategories(categoriesies)
