@@ -84,7 +84,6 @@ class App extends Component {
       return <>loading..</>
     }
 
-    console.log(this.state.userInfo)
     return (
       <div className="App">
         <BrowserRouter>
@@ -274,6 +273,9 @@ class App extends Component {
               ></Route>
 
               <Route
+<<<<<<< HEAD
+                exact
+=======
                 path="/Employer/EditProfile"
                 render={(props) => {
                   if (!this.isEmployer())
@@ -289,6 +291,7 @@ class App extends Component {
               ></Route>
 
               <Route
+>>>>>>> 7c54e83a3b735a9250ee6ca0c2d177ff43443cfd
                 path="/Employer/Dashboard/Plans/:id/Payment"
                 render={(props) => {
                   if (!this.isEmployer())
@@ -597,11 +600,11 @@ class App extends Component {
                 render={(props) => {
                   if (!this.isLogedIn())
                     return <Redirect exact to="/Employee/Login" />
-                  ;<PageTitle title="تیکت های پشتیبانی">
-                    <Navbar />
-                    <Detail props={props} {...props} />
-                    <LandingFooter className="d-none d-lg-block" />
-                  </PageTitle>
+                      ; <PageTitle title="تیکت های پشتیبانی">
+                        <Navbar />
+                        <Detail props={props} {...props} />
+                        <LandingFooter className="d-none d-lg-block" />
+                      </PageTitle>
                 }}
               ></Route>
 
@@ -624,8 +627,27 @@ class App extends Component {
                 <Security />
               </Route>
 
+<<<<<<< HEAD
+
+              {/* 
+              <Route
+                path="/notfound"
+                render={(props) => {
+                  return (
+                    <PageTitle title="">
+                      <NotFoundPage props={props} />
+                    </PageTitle>
+                  )
+                }}
+              ></Route> */}
+
+              {/* <Route exact component={NotFoundPage} /> */}
+              {/* <Redirect exact to="/notfound" /> */}
+
+=======
               {/* <Route  path="/not-found-page" component={NotFoundPage} />
               <Redirect to="/not-found-page" /> */}
+>>>>>>> 7c54e83a3b735a9250ee6ca0c2d177ff43443cfd
             </ScrollToTop>
           </Switch>
 
