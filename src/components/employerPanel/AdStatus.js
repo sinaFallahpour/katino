@@ -6,9 +6,12 @@ import Swal from "sweetalert2"
 import { toast } from "react-toastify"
 import { MiniSpinner } from "../spinner/MiniSpinner"
 import API_ADDRESS from "../../API_ADDRESS"
+import { AdverDetails } from "./AdverDetails"
 
 export function AdStatus(props) {
   const [loading, setLoading] = useState(false)
+  const [toggle, setToggle] = useState(false)
+  const [adverId, setAdverId] = useState()
 
   let asignments = {
     status_1: 0,
@@ -42,7 +45,7 @@ export function AdStatus(props) {
     axios
       .post(
         API_ADDRESS + `Adver/AddAdverFromDraft?adverId=${props.id}`,
-        { params: { adverId: props.id } },
+        {},
         {
           headers: {
             Authorization: `bearer ${localStorage.getItem("JWT")}`,
@@ -50,6 +53,7 @@ export function AdStatus(props) {
         }
       )
       .then((res) => {
+        window.location.reload()
         Swal.fire({
           icon: "success",
           title: "آگهی با موفقیت فعال شد",
@@ -67,9 +71,16 @@ export function AdStatus(props) {
       })
   }
 
+  function goto(event) {
+    if (event.target.id !== "modalContaierOfAdver") {
+      setToggle(false)
+    }
+  }
+  document.body.addEventListener("click", goto)
   return (
     <>
       {loading && MiniSpinner()}
+      {toggle && <AdverDetails adverId={adverId} />}
       <div className="card  srounded-sm sp-2">
         <div className="row">
           <header className="col-12 smb-2">
@@ -82,29 +93,34 @@ export function AdStatus(props) {
                   {adverStatus(props.adverStatus)}
                 </span>
 
-                <span
-                  className={`text-white  ir-r smr-1 srounded-sm sp-05 
+                {props.adverStatus !== 2 && (
+                  <span
+                    className={`text-white  ir-r smr-1 srounded-sm sp-05 
                 ${props.adverCreatationStatus === 1 && "bg-success"}
                 ${props.adverCreatationStatus === 3 && "bg-success"}
                 ${props.adverCreatationStatus === 2 && "bg-danger"}
                 ${props.adverCreatationStatus === 4 && "bg-danger"}
                 `}
-                  style={{ display: "inline-block" }}
-                >
-                  {props.adverCreatationStatus === 1 && "درحال بررسی"}
-                  {props.adverCreatationStatus === 2 && "رد شده"}
-                  {props.adverCreatationStatus === 3 && "پذیرفته شده"}
-                  {props.adverCreatationStatus === 4 && "برگشت خورده"}
-                </span>
+                    style={{ display: "inline-block" }}
+                  >
+                    {props.adverCreatationStatus === 1 && "درحال بررسی"}
+                    {props.adverCreatationStatus === 2 && "رد شده"}
+                    {props.adverCreatationStatus === 3 && "پذیرفته شده"}
+                    {props.adverCreatationStatus === 4 && "برگشت خورده"}
+                  </span>
+                )}
               </div>
 
               <div>
-                <Link
-                  to={`/Employer/AdverDetails/${props.id}`}
+                <span
                   className="btn btn-light sml-1 ir-r"
+                  onClick={() => {
+                    setToggle(true)
+                    setAdverId(props.id)
+                  }}
                 >
                   بیشتر
-                </Link>
+                </span>
 
                 {props.adverCreatationStatus === 1 && (
                   <Link
@@ -122,14 +138,7 @@ export function AdStatus(props) {
                     ویرایش
                   </Link>
                 )}
-                {props.adverStatus === 2 && (
-                  <Link
-                    to={`/Employer/editAdver?AdverId=${props.id}`}
-                    className="btn btn-light sml-1 ir-r"
-                  >
-                    ویرایش
-                  </Link>
-                )}
+
                 {props.adverStatus === 2 && (
                   <button
                     onClick={activeAdverDraft}

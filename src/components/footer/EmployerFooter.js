@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from "react"
+import { Link } from "react-router-dom"
 
 export function EmployerFooter() {
   return (
@@ -18,5 +18,5 @@ export function EmployerFooter() {
         </div>
       </div>
     </footer>
-  );
+  )
 }

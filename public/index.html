@@ -47,14 +47,30 @@
 
     <link rel="stylesheet" href="/css/spacing.min.css" />
     <link rel="stylesheet" href="/css/main.css" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="white" />
+    <meta name="apple-mobile-web-app-title" content="Katino" />
+    <link
+      rel="apple-touch-icon"
+      href="/favicon/android-chrome-192x192.png"
+      sizes="192x192"
+    />
+    <meta
+      name="msapplication-TileImage"
+      content="/favicon/android-chrome-192x192.png"
+    />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="theme-color" content="#fff" />
   </head>
   <body>
     <div id="root"></div>
     <script type="text/javascript">
       !(function () {
         function t() {
-          var t = document.createElement("script");
-          (t.type = "text/javascript"),
+          var t = document.createElement("script")
+          ;(t.type = "text/javascript"),
             (t.async = !0),
             localStorage.getItem("rayToken")
               ? (t.src =
@@ -68,19 +84,19 @@
                   "https://app.raychat.io/scripts/js/" +
                   o +
                   "?href=" +
-                  window.location.href);
-          var e = document.getElementsByTagName("script")[0];
-          e.parentNode.insertBefore(t, e);
+                  window.location.href)
+          var e = document.getElementsByTagName("script")[0]
+          e.parentNode.insertBefore(t, e)
         }
         var e = document,
           a = window,
-          o = "695cc050-0982-4d69-a54b-e9b7f46b49e7";
+          o = "695cc050-0982-4d69-a54b-e9b7f46b49e7"
         "complete" == e.readyState
           ? t()
           : a.attachEvent
           ? a.attachEvent("onload", t)
-          : a.addEventListener("load", t, !1);
-      })();
+          : a.addEventListener("load", t, !1)
+      })()
     </script>
   </body>
 </html>

@@ -1,16 +1,28 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { adverStatus } from "../../../enums";
+import React, { useState } from "react"
+import { Link } from "react-router-dom"
+import { adverStatus } from "../../../enums"
+import { AdverDetails } from "../AdverDetails"
 
-export class Header extends Component {
-  render() {
-    return (
+export const Header = ({ id, status, title }) => {
+  const [toggle, setToggle] = useState(false)
+  const [adverId, setAdverId] = useState()
+
+  function goto(event) {
+    if (event.target.id !== "modalContaierOfAdver") {
+      setToggle(false)
+    }
+  }
+  document.body.addEventListener("click", goto)
+
+  return (
+    <>
+      {toggle && <AdverDetails adverId={adverId} />}
       <header className="ad-info-header sp-2 w-100 bg-white srounded-md">
         <div className="top d-flex justify-content-between alig-items-center">
           <h3 className="ir-b c-dark text-right fs-m mb-0">
-            {this.props.title}
+            {title}
             <span className="bg-light ir-r fs-s smr-1 p-2 srounded-sm">
-              {adverStatus(this.props.status)}
+              {adverStatus(status)}
             </span>
           </h3>
         </div>
@@ -42,21 +54,25 @@ export class Header extends Component {
             <li className="options-item bg-white sml-lg-2">
               <Link
                 className="d-flex align-items-center justify-content-start ir-r fs-m c-regular text-decoration-none"
-                to={`/Employer/CreateAd/${this.props.id}`}
+                to={`/Employer/editAdver?AdverId=${id}`}
               >
                 <i className="far fa-edit sml-1"></i>
                 ویرایش
               </Link>
             </li>
 
-            <li className="options-item bg-white sml-lg-2">
-              <Link
-                className="d-flex align-items-center justify-content-start ir-r fs-m c-regular text-decoration-none"
-                to={`/JobDetails/${this.props.id}`}
-              >
+            <li
+              className="options-item bg-white sml-lg-2"
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                setToggle(true)
+                setAdverId(id)
+              }}
+            >
+              <span className="d-flex align-items-center justify-content-start ir-r fs-m c-regular text-decoration-none">
                 <i className="fas fa-eye sml-1"></i>
                 مشاهده
-              </Link>
+              </span>
             </li>
 
             <li className="options-item bg-white sml-lg-2">
@@ -81,6 +97,6 @@ export class Header extends Component {
           </ul>
         </div>
       </header>
-    );
-  }
+    </>
+  )
 }

@@ -1,11 +1,11 @@
-import React from "react";
-import { Post } from "./Post";
-import ADDRESS from "../../../ADDRESS";
-import { Link } from "react-router-dom";
+import React from "react"
+import { Post } from "./Post"
+import ADDRESS from "../../../ADDRESS"
+import { Link } from "react-router-dom"
 
 export function Blog(props) {
   return (
-    <section className="blog container-fluid spx-2 spx-lg-10 d-none d-lg-block">
+    <section className="blog container-fluid spx-2 spx-lg-10 d-none d-block">
       <header className="d-flex justify-content-between align-items-center smb-2">
         <h2 className="fs-l ir-b c-dark spl-1">وبلاگ</h2>
         <hr className="w-100" />
@@ -34,10 +34,10 @@ export function Blog(props) {
                   id={item.id}
                 />
               </div>
-            );
+            )
           }
         })}
       </div>
     </section>
-  );
+  )
 }

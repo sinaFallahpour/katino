@@ -40,7 +40,6 @@ import { EmployeeSuccessPage } from "./pages/employee/EmployeePayment/SuccessPay
 import { EmployeeFailurePage } from "./pages/employee/EmployeePayment/FailurePayment"
 import { EmployerSuccessPage } from "./pages/employer/EmployerPayment/SuccessPayment"
 import { EmployerFailurePage } from "./pages/employer/EmployerPayment/FailurePayment"
-import { AdverDetails } from "./components/employerPanel/AdverDetails"
 import { NotFoundPage } from "./components/notFoundPage/notFoundPage"
 import { history } from "../src/core/agent"
 class App extends Component {
@@ -400,6 +399,8 @@ class App extends Component {
               <Route
                 path="/JobDetails/:id"
                 render={(props) => {
+                  if (this.isEmployer())
+                    return <Redirect exact to="/Employer/Login" />
                   return (
                     <PageTitle title="مشاهده آگهی">
                       <Navbar />
@@ -541,22 +542,6 @@ class App extends Component {
               ></Route>
 
               <Route
-                exact
-                path="/Employer/AdverDetails/:id"
-                render={(props) => {
-                  if (!this.isEmployer())
-                    return <Redirect exact to="/Employer/Login" />
-                  return (
-                    <PageTitle title="جزئیات آگهی">
-                      <Navbar />
-                      <AdverDetails props={props} {...props} />
-                      <EmployerFooter className="d-none d-lg-block" />
-                    </PageTitle>
-                  )
-                }}
-              ></Route>
-
-              <Route
                 path="/Employer/AdInfo/:id/RequestDetails/:resumeId"
                 render={(props) => {
                   if (!this.isEmployer())
@@ -611,11 +596,11 @@ class App extends Component {
                 render={(props) => {
                   if (!this.isLogedIn())
                     return <Redirect exact to="/Employee/Login" />
-                      ; <PageTitle title="تیکت های پشتیبانی">
-                        <Navbar />
-                        <Detail props={props} {...props} />
-                        <LandingFooter className="d-none d-lg-block" />
-                      </PageTitle>
+                  ;<PageTitle title="تیکت های پشتیبانی">
+                    <Navbar />
+                    <Detail props={props} {...props} />
+                    <LandingFooter className="d-none d-lg-block" />
+                  </PageTitle>
                 }}
               ></Route>
 
@@ -638,8 +623,20 @@ class App extends Component {
                 <Security />
               </Route>
 
-              {/* <Route  path="/not-found-page" component={NotFoundPage} />
-              <Redirect to="/not-found-page" /> */}
+              {/* 
+              <Route
+                path="/notfound"
+                render={(props) => {
+                  return (
+                    <PageTitle title="">
+                      <NotFoundPage props={props} />
+                    </PageTitle>
+                  )
+                }}
+              ></Route> */}
+
+              {/* <Route exact component={NotFoundPage} /> */}
+              {/* <Redirect exact to="/notfound" /> */}
             </ScrollToTop>
           </Switch>
 

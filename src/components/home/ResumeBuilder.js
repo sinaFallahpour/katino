@@ -1,9 +1,9 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from "react"
+import { Link } from "react-router-dom"
 
 export function ResumeBuilder() {
   return (
-    <section className="container-fluid spy-10 spx-5  d-none d-lg-block">
+    <section className="container-fluid spy-10 spx-5  d-none d-block">
       <div className="row">
         <div className="col-12 col-lg-5 d-flex justify-content-center align-item-center">
           <img
@@ -29,5 +29,5 @@ export function ResumeBuilder() {
         </div>
       </div>
     </section>
-  );
+  )
 }

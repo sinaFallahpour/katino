@@ -1,11 +1,12 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from "react"
+import { Link } from "react-router-dom"
+import "./footer.styles.css"
 
 export function LandingFooter() {
   return (
-    <footer className="g-footer d-none d-block container-fluid smt-10 spx-10 bg-white">
-      <div className="row top spy-10 spx-2 sp-lg-10">
-        <aside className="col-12 mt-4 col-lg-3 d-flex flex-column justify-content-start align-items-start">
+    <footer className="footer-parent">
+      <div className="footer-holder ">
+        <aside className="footer-container">
           <h3 className="fs-m c-dark ir-b smb-2">کارجویان</h3>
 
           <Link className="fs-m c-regular ir-r smb-1" to="/Jobs">
@@ -25,7 +26,7 @@ export function LandingFooter() {
           </Link>
         </aside>
 
-        <aside className="col-12 mt-4 col-lg-3 d-flex flex-column justify-content-start align-items-start">
+        <aside className="footer-container ">
           <h3 className="fs-m c-dark ir-b smb-2">کارفرمایان</h3>
 
           <Link className="fs-m c-regular ir-r smb-1" to="/">
@@ -42,7 +43,7 @@ export function LandingFooter() {
           </Link>
         </aside>
 
-        <aside className="col-12 mt-4 col-lg-3 d-flex flex-column justify-content-start align-items-start">
+        <aside className="footer-container">
           <h3 className="fs-m c-dark ir-b smb-2">کاتینو</h3>
 
           <Link className="fs-m c-regular ir-r smb-1" to="/">
@@ -59,7 +60,7 @@ export function LandingFooter() {
           </Link>
         </aside>
 
-        <aside className="col-12 mt-4 col-lg-3 d-flex flex-column justify-content-start align-items-start">
+        <aside className="footer-container ">
           <h3 className="fs-m c-dark ir-b smb-2">شبکه های اجتماعی</h3>
 
           <div className="social w-100 d-flex justify-content-between align-item-center smb-4">
@@ -129,5 +130,5 @@ export function LandingFooter() {
         </div>
       </div>
     </footer>
-  );
+  )
 }
