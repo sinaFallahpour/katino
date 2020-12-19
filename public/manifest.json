@@ -1,7 +1,7 @@
 {
   "name": "کاتینو",
   "short_name": "کاتینو",
-  "start_url": "/index.html",
+  "start_url": "./index.html",
   "scope": ".",
   "icons": [
     {
