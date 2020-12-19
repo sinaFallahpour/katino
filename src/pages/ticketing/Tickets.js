@@ -49,96 +49,96 @@ export class Tickets extends Component {
                   تیکتی برای نمایش وجود ندارد.
                 </span>
               ) : (
-                  <div className="table-responsive">
-                    <table className="table mb-0">
-                      <thead>
-                        <tr>
-                          <th
-                            className="ir-b c-regular fs-s border-top-0"
-                            scope="col"
-                          >
-                            #
+                <div className="table-responsive">
+                  <table className="table mb-0">
+                    <thead>
+                      <tr>
+                        <th
+                          className="ir-b c-regular fs-s border-top-0"
+                          scope="col"
+                        >
+                          #
                         </th>
-                          <th
-                            className="ir-b c-regular fs-s border-top-0"
-                            scope="col"
-                          >
-                            عنوان تیکت
+                        <th
+                          className="ir-b c-regular fs-s border-top-0"
+                          scope="col"
+                        >
+                          عنوان تیکت
                         </th>
-                          <th
-                            className="ir-b c-regular fs-s border-top-0"
-                            scope="col"
-                          >
-                            اولویت
+                        <th
+                          className="ir-b c-regular fs-s border-top-0"
+                          scope="col"
+                        >
+                          اولویت
                         </th>
-                          <th
-                            className="ir-b c-regular fs-s border-top-0"
-                            scope="col"
-                          >
-                            تاریخ ارسال
+                        <th
+                          className="ir-b c-regular fs-s border-top-0"
+                          scope="col"
+                        >
+                          تاریخ ارسال
                         </th>
-                          <th
-                            className="ir-b c-regular fs-s border-top-0"
-                            scope="col"
-                          >
-                            عملیات
+                        <th
+                          className="ir-b c-regular fs-s border-top-0"
+                          scope="col"
+                        >
+                          عملیات
                         </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {this.state.list.map((item) => (
-                          <tr>
-                            <td className="ir-r c-regular fs-s">{`#${item.id}`}</td>
-                            <td>
-                              <span className="ir-r c-regular fs-s w-100 text-truncate">
-                                {item.subject}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {this.state.list.map((item, index) => (
+                        <tr key={index}>
+                          <td className="ir-r c-regular fs-s">{`#${item.id}`}</td>
+                          <td>
+                            <span className="ir-r c-regular fs-s w-100 text-truncate">
+                              {item.subject}
+                            </span>
+                          </td>
+                          <td>
+                            {item.ticketPriorityStatus === 1 ? (
+                              <span className="ir-r fs-s bg-danger-light c-danger py-1 px-2 srounded-sm">
+                                فوری
                               </span>
-                            </td>
-                            <td>
-                              {item.ticketPriorityStatus === 1 ? (
-                                <span className="ir-r fs-s bg-danger-light c-danger py-1 px-2 srounded-sm">
-                                  فوری
-                                </span>
-                              ) : item.ticketPriorityStatus === 2 ? (
-                                <span className="ir-r fs-s bg-light c-regular py-1 px-2 srounded-sm">
-                                  معمولی
-                                </span>
-                              ) : item.ticketPriorityStatus === 3 ? (
-                                <span className="ir-r fs-s bg-primary-light c-primary py-1 px-2 srounded-sm">
-                                  جهت اطلاع
-                                </span>
-                              ) : (
-                                      ""
-                                    )}
-                            </td>
-                            <td className="ir-r c-regular fs-s">
-                              {item.createDate.substring(0, 10)}
-                            </td>
-                            <td className="ir-r c-regular fs-s">
-                              <Link
-                                className="ir-r c-regular fs-s btn btn-light shadow-none sml-1"
-                                to={`/Tickets/${item.id}`}
-                              >
-                                مشاهده
+                            ) : item.ticketPriorityStatus === 2 ? (
+                              <span className="ir-r fs-s bg-light c-regular py-1 px-2 srounded-sm">
+                                معمولی
+                              </span>
+                            ) : item.ticketPriorityStatus === 3 ? (
+                              <span className="ir-r fs-s bg-primary-light c-primary py-1 px-2 srounded-sm">
+                                جهت اطلاع
+                              </span>
+                            ) : (
+                              ""
+                            )}
+                          </td>
+                          <td className="ir-r c-regular fs-s">
+                            {item.createDate.substring(0, 10)}
+                          </td>
+                          <td className="ir-r c-regular fs-s">
+                            <Link
+                              className="ir-r c-regular fs-s btn btn-light shadow-none sml-1"
+                              to={`/Tickets/${item.id}`}
+                            >
+                              مشاهده
                             </Link>
 
-                              {item.hasAnswer === true ? (
-                                <Link
-                                  className="ir-r fs-s btn btn-primary-light shadow-none"
-                                  to={`/Tickets/${item.id}`}
-                                >
-                                  پاسخ
-                                </Link>
-                              ) : (
-                                  ""
-                                )}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
+                            {item.hasAnswer === true ? (
+                              <Link
+                                className="ir-r fs-s btn btn-primary-light shadow-none"
+                                to={`/Tickets/${item.id}`}
+                              >
+                                پاسخ
+                              </Link>
+                            ) : (
+                              ""
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </div>
           </aside>
         </div>

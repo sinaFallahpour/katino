@@ -1,47 +1,47 @@
-import React, { useState } from "react"
-import { adverStatus } from "../../enums"
-import { Link } from "react-router-dom"
-import axios from "axios"
-import Swal from "sweetalert2"
-import { toast } from "react-toastify"
-import { MiniSpinner } from "../spinner/MiniSpinner"
-import API_ADDRESS from "../../API_ADDRESS"
-import { AdverDetails } from "./AdverDetails"
+import React, { useState } from "react";
+import { adverStatus } from "../../enums";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
+import { MiniSpinner } from "../spinner/MiniSpinner";
+import API_ADDRESS from "../../API_ADDRESS";
+import { AdverDetails } from "./AdverDetails";
 
 export function AdStatus(props) {
-  const [loading, setLoading] = useState(false)
-  const [toggle, setToggle] = useState(false)
-  const [adverId, setAdverId] = useState()
+  const [loading, setLoading] = useState(false);
+  const [toggle, setToggle] = useState(false);
+  const [adverId, setAdverId] = useState();
 
   let asignments = {
     status_1: 0,
     status_2: 0,
     status_3: 0,
     status_4: 0,
-  }
+  };
 
   props.asignStatusWithCounts.map((item) => {
     switch (item.asingResomeStatus) {
       case 1:
-        asignments.status_1 = item.count
-        break
+        asignments.status_1 = item.count;
+        break;
 
       case 2:
-        asignments.status_2 = item.count
-        break
+        asignments.status_2 = item.count;
+        break;
 
       case 3:
-        asignments.status_3 = item.count
-        break
+        asignments.status_3 = item.count;
+        break;
 
       case 4:
-        asignments.status_4 = item.count
-        break
+        asignments.status_4 = item.count;
+        break;
     }
-  })
+  });
 
   const activeAdverDraft = () => {
-    setLoading(true)
+    setLoading(true);
     axios
       .post(
         API_ADDRESS + `Adver/AddAdverFromDraft?adverId=${props.id}`,
@@ -52,31 +52,62 @@ export function AdStatus(props) {
           },
         }
       )
-      .then((res) => {
-        window.location.reload()
+      .then(() => {
+        window.location.reload();
         Swal.fire({
           icon: "success",
           title: "آگهی با موفقیت فعال شد",
           showConfirmButton: false,
           timer: 1750,
-        })
-        setLoading(false)
+        });
+        setLoading(false);
       })
       .catch((err) => {
         err?.response?.data?.message.map((e) => {
-          toast.error(e)
-        })
+          toast.error(e);
+        });
 
-        setLoading(false)
-      })
-  }
+        setLoading(false);
+      });
+  };
 
   function goto(event) {
     if (event.target.id !== "modalContaierOfAdver") {
-      setToggle(false)
+      setToggle(false);
     }
   }
-  document.body.addEventListener("click", goto)
+  document.body.addEventListener("click", goto);
+
+  const SetImmediateAdver = () => {
+    setLoading(true);
+    axios
+      .post(
+        API_ADDRESS + `Adver/SetImmediateAdver?adverId=${props.id}`,
+        {},
+        {
+          headers: {
+            Authorization: `bearer ${localStorage.getItem("JWT")}`,
+          },
+        }
+      )
+      .then(() => {
+        window.location.reload();
+        Swal.fire({
+          icon: "success",
+          title: "آگهی با موفقیت فوری سازی شد",
+          showConfirmButton: false,
+          timer: 1750,
+        });
+        setLoading(false);
+      })
+      .catch((err) => {
+        err?.response?.data?.message.map((e) => {
+          toast.error(e);
+        });
+
+        setLoading(false);
+      });
+  };
   return (
     <>
       {loading && MiniSpinner()}
@@ -89,7 +120,19 @@ export function AdStatus(props) {
                 <Link to={`/Employer/AdInfo/${props.id}`}>
                   <span className="ir-b c-dark"> {props.title} </span>
                 </Link>
-                <span className="c-grey ir-r smr-1 bg-body srounded-sm sp-05">
+                {props.isImmediate === "فوری" && (
+                  <span
+                    className="c-danger ir-r smr-1 bg-body srounded-sm sp-05"
+                    style={{ display: "inline-block" }}
+                  >
+                    آگهی فوری
+                  </span>
+                )}
+
+                <span
+                  className="c-grey ir-r smr-1 bg-body srounded-sm sp-05"
+                  style={{ display: "inline-block" }}
+                >
                   {adverStatus(props.adverStatus)}
                 </span>
 
@@ -115,8 +158,8 @@ export function AdStatus(props) {
                 <span
                   className="btn btn-light sml-1 ir-r"
                   onClick={() => {
-                    setToggle(true)
-                    setAdverId(props.id)
+                    setToggle(true);
+                    setAdverId(props.id);
                   }}
                 >
                   بیشتر
@@ -147,6 +190,17 @@ export function AdStatus(props) {
                     فعال کردن
                   </button>
                 )}
+
+                {props.adverCreatationStatus === 3 &&
+                  props.isImmediate !== "فوری" && (
+                    <span
+                      onClick={SetImmediateAdver}
+                      className="text-white  ir-r smr-1 srounded-sm sp-05 bg-danger"
+                      style={{ display: "inline-block", cursor: "pointer" }}
+                    >
+                      فوری سازی آگهی
+                    </span>
+                  )}
               </div>
             </div>
 
@@ -197,5 +251,5 @@ export function AdStatus(props) {
         </div>
       </div>
     </>
-  )
+  );
 }
