@@ -1,5 +1,6 @@
 const CACHE_NAME = "version-1";
-const urlsToChache = ["index.html", "offline.html"];
+const urlsToChache = ["index.html", "offline.html", "./static/js/main.chunk.js",
+  "./css/main.css", "./css/spacing.min.css", "./static/js/0.chunk.js"];
 
 const self = this;
 
