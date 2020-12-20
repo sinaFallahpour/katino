@@ -1,7 +1,7 @@
 {
   "name": "کاتینو",
-  "short_name": "کاتینو",
-  "start_url": "/index.html",
+  "short_name": "کاتینو کاریابی",
+  "start_url": "/",
   "scope": ".",
   "icons": [
     {
@@ -20,12 +20,5 @@
   "display": "standalone",
   "orientation": "portrait-primary",
   "description": "Katino is the job seeking",
-  "lang": "fa-IR",
-  "prefer_related_applications": true,
-  "related_applications": [
-    {
-      "platform": "play",
-      "id": "com.google.samples.apps.iosched"
-    }
-  ]
+  "lang": "fa-IR"
 }

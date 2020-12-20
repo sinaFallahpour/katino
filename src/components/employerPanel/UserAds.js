@@ -1,5 +1,5 @@
-import React from "react"
-import { AdStatus } from "./AdStatus"
+import React from "react";
+import { AdStatus } from "./AdStatus";
 
 export function UserAds(props) {
   return props.ads ? (
@@ -13,13 +13,14 @@ export function UserAds(props) {
             adverStatus={item.adverStatus}
             asignStatusWithCounts={item.asignStatusWithCounts}
             adminDescription={item.adminDescription}
+            isImmediate={item.isImmediate}
           />
         </div>
-      )
+      );
     })
   ) : (
     <span className="ir-r fs-l text-center c-regular d-block">
       آگهی ای درج نکرده اید
     </span>
-  )
+  );
 }
