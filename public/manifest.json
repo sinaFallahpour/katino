@@ -2,7 +2,7 @@
   "name": "کاتینو",
   "short_name": "کاتینو کاریابی",
   "start_url": "/",
-  "scope": "/",
+  "scope": ".",
   "icons": [
     {
       "src": "/favicon/android-chrome-192x192.png",

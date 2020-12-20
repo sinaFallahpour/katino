@@ -21,6 +21,7 @@
 
     <link rel="stylesheet" href="/css/spacing.min.css" />
     <link rel="stylesheet" href="/css/main.css" />
+    <link rel="icon" href="/favicon/favicon.ico" />
 
     <link rel="manifest" href="/manifest.json" />
   </head>
@@ -57,6 +58,20 @@
           ? a.attachEvent("onload", t)
           : a.addEventListener("load", t, !1);
       })();
+    </script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("./serviceWorker.js")
+            .then(function (reg) {
+              console.log("Successfully registered service worker");
+            })
+            .catch(function (err) {
+              console.warn("Error whilst registering service worker");
+            });
+        });
+      }
     </script>
   </body>
 </html>
