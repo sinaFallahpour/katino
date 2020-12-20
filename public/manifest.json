@@ -1,8 +1,8 @@
 {
   "name": "کاتینو",
   "short_name": "کاتینو کاریابی",
-  "start_url": ".",
-  "scope": ".",
+  "start_url": "./",
+  "scope": "./",
   "icons": [
     {
       "src": "/favicon/16x16.png",
@@ -21,7 +21,7 @@
     },
     {
       "src": "/favicon/64x64.png",
-      "sizes": "128x128",
+      "sizes": "64x64",
       "type": "image/png"
     },
     {

@@ -4,7 +4,9 @@ const CACHE_NAME = "version-1";
 
 const urlsToChache = ["./index.html", "./offline.html",
   "./css/main.css", "./css/spacing.min.css",
-  "./static/js/main.ef6d7cd0.chunk.js", "./static/js/2.26da0ab9.chunk.js", "./static/js/runtime-main.7f7134f8.js"
+  "./static/js/main.ef6d7cd0.chunk.js",
+  "./static/js/2.26da0ab9.chunk.js",
+  "./static/js/runtime-main.7f7134f8.js"
 ];
 
 
