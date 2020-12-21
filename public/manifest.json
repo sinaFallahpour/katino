@@ -1,7 +1,7 @@
 {
   "name": "کاتینو",
   "short_name": "کاتینو کاریابی",
-  "start_url": "/",
+  "start_url": ".",
   "scope": ".",
   "icons": [
     {

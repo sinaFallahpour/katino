@@ -132,6 +132,14 @@ export class EmployerNavbar extends Component {
               <li className="nav-item smr-lg-4">
                 <Link
                   className="nav-link text-white position-relative ir-r fs-m p-0"
+                  to="/"
+                >
+                  خانه
+                </Link>
+              </li>
+              <li className="nav-item smr-lg-4">
+                <Link
+                  className="nav-link text-white position-relative ir-r fs-m p-0"
                   to="/Employer/Dashboard"
                 >
                   داشبورد
@@ -141,7 +149,7 @@ export class EmployerNavbar extends Component {
               <li className="nav-item smr-lg-4">
                 <Link
                   className="nav-link text-white position-relative ir-r fs-m p-0"
-                  to="/Employer/Dashboard"
+                  to="/Employer/Profile"
                 >
                   پروفایل شرکت
                 </Link>
@@ -237,6 +245,14 @@ export class EmployerNavbar extends Component {
                 <li className="smb-1">
                   <Link
                     className="ir-r c-grey text-decoration-none"
+                    to="/Employer/Profile"
+                  >
+                    پروفایل شرکت
+                  </Link>
+                </li>
+                <li className="smb-1">
+                  <Link
+                    className="ir-r c-grey text-decoration-none"
                     to="/Employer/CreateAd"
                   >
                     ایجاد آگهی استخدام
@@ -256,7 +272,7 @@ export class EmployerNavbar extends Component {
                     className="ir-r c-grey text-decoration-none"
                     to="/Employer/Dashboard/Plans"
                   >
-                    خرید اشتراک
+                    خرید اشتراک و امور مالی
                   </Link>
                 </li>
                 <li className="smb-1">
@@ -278,7 +294,7 @@ export class EmployerNavbar extends Component {
                 <li className="smb-1">
                   <Link
                     className="ir-r c-grey text-decoration-none"
-                    to="/Employer/Dashboard"
+                    to="/Employer/History/Payment"
                   >
                     تاریخچه حساب
                   </Link>
@@ -289,15 +305,6 @@ export class EmployerNavbar extends Component {
                     to="/Tickets"
                   >
                     تیکت های پشتیبانی
-                  </Link>
-                </li>
-
-                <li className="smb-1">
-                  <Link
-                    className="ir-r c-grey text-decoration-none"
-                    to="/Employer/Dashboard"
-                  >
-                    مدیریت اطلاع رسانی ها
                   </Link>
                 </li>
                 <li className="mb-0">

@@ -29,7 +29,7 @@ export const DetailsContainer = styled.div`
 `;
 
 export const DetailsContent = styled.div`
-  margin: 50px auto;
+  margin: 0 auto;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -37,7 +37,7 @@ export const DetailsContent = styled.div`
   align-items: center;
   background-color: #fff;
   border-radius: 5px;
-  padding: 15px 30px;
+  padding: 0;
   max-width: 500px;
   max-height: 400px;
   overflow: auto;
@@ -75,12 +75,17 @@ export const DetailsContext = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 5px;
+  margin: 0;
   flex-wrap: wrap;
   width: 100%;
+  padding: 2px 8px;
 
   & > i {
     color: rgb(80, 216, 106);
+  }
+
+  &:nth-child(odd) {
+    background-color: #ddd;
   }
 
   @media only screen and (max-width: 420px) {
@@ -97,6 +102,10 @@ export const DetailsTitle = styled.div`
   border-radius: 5px;
   text-align: right;
   width: 100%;
-  border: 1px solid #f1f1f1;
   color: #666;
+
+  display: flex;
+  justify-content: space-between;
 `;
+export const Title = styled.div``;
+export const Result = styled.div``;

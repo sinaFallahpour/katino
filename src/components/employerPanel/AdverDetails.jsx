@@ -1,29 +1,29 @@
-import React, { useEffect, useState } from "react"
-import axios from "axios"
-import { toast } from "react-toastify"
-import API_ADDRESS from "../../API_ADDRESS"
-import { MiniSpinner } from "../spinner/MiniSpinner"
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import API_ADDRESS from "../../API_ADDRESS";
+import { MiniSpinner } from "../spinner/MiniSpinner";
 import {
   DetailsContainer,
   DetailsContent,
   DetailsContext,
   DetailsTitle,
-} from "./AdverDetails.styles"
-import { cooperationType } from "../../enums/cooperationType"
-import { educationDegree } from "../../enums/educationDegree"
-import { workExperience } from "../../enums/workExperience"
-import { gender } from "../../enums/gender"
-import { salary } from "../../enums/salary"
-import { adverStatus } from "../../enums/adverStatus"
-import ReactHtmlParser from "react-html-parser"
+} from "./AdverDetails.styles";
+import { cooperationType } from "../../enums/cooperationType";
+import { educationDegree } from "../../enums/educationDegree";
+import { workExperience } from "../../enums/workExperience";
+import { gender } from "../../enums/gender";
+import { salary } from "../../enums/salary";
+import { adverStatus } from "../../enums/adverStatus";
+import ReactHtmlParser from "react-html-parser";
 
 const AdverDetails = ({ adverId }) => {
-  const [loading, setLoading] = useState(false)
-  const [findCity, setFindCity] = useState(false)
-  const [data, setData] = useState({})
+  const [loading, setLoading] = useState(false);
+  const [findCity, setFindCity] = useState(false);
+  const [data, setData] = useState({});
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     adverId &&
       axios
         .get(
@@ -36,33 +36,33 @@ const AdverDetails = ({ adverId }) => {
           }
         )
         .then(({ data }) => {
-          const cityId = data.resul.city
-          setData(data.resul)
+          const cityId = data.resul.city;
+          setData(data.resul);
 
           axios.get(API_ADDRESS + "Account/GetCities").then((res) => {
             res.data.resul.map((item) => {
               parseInt(cityId) === item.cityDivisionCode &&
-                setFindCity(`${item.provinceName} - ${item.cityName}`)
-            })
-          })
+                setFindCity(`${item.provinceName} - ${item.cityName}`);
+            });
+          });
 
-          setLoading(false)
+          setLoading(false);
         })
         .catch((err) => {
           err.response.data.message &&
             err?.response?.data?.message.map((e) => {
-              toast.error(e)
-            })
+              toast.error(e);
+            });
 
-          setLoading(false)
-        })
-  }, [])
+          setLoading(false);
+        });
+  }, []);
 
   return (
     <>
-      {loading && MiniSpinner()}
-
-      {data ? (
+      {loading ? (
+        <MiniSpinner />
+      ) : data ? (
         <DetailsContainer>
           <DetailsContent className="modalContaierOfAdver">
             <DetailsContext>
@@ -176,7 +176,7 @@ const AdverDetails = ({ adverId }) => {
         "موردی یافت نشد"
       )}
     </>
-  )
-}
+  );
+};
 
-export { AdverDetails }
+export { AdverDetails };

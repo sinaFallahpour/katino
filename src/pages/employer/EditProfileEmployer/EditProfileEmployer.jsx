@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react"
-import axios from "axios"
-import Swal from "sweetalert2"
-import { toast } from "react-toastify"
-import { useHistory } from "react-router-dom"
-import { Formik, Field, Form, ErrorMessage, useField } from "formik"
-import CKEditor from "@ckeditor/ckeditor5-react"
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
-import Select from "react-select"
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
+import { Formik, Field, Form, ErrorMessage, useField } from "formik";
+import CKEditor from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import Select from "react-select";
 
-import { EditProfileEmployerVal } from "../../../core/validation/editProfileEmployer"
-import ADDRESS from "../../../ADDRESS"
-import API_ADDRESS from "../../../API_ADDRESS"
-import { MiniSpinner } from "../../../components/spinner/MiniSpinner"
-import "./../Field.style.css"
+import { EditProfileEmployerVal } from "../../../core/validation/editProfileEmployer";
+import ADDRESS from "../../../ADDRESS";
+import API_ADDRESS from "../../../API_ADDRESS";
+import { MiniSpinner } from "../../../components/spinner/MiniSpinner";
+import "./../Field.style.css";
 
 const EditProfileEmployer = () => {
   const initialD = {
@@ -27,47 +27,54 @@ const EditProfileEmployer = () => {
     Email: "",
     City: "",
     ShortDescription: "",
-  }
+    FieldOfActivity2: [],
+  };
 
-  const [initialData, setInitialData] = useState(initialD)
-  const [fieldOptions, setFieldOptions] = useState("")
-  const [cities, setCities] = useState()
-  const [profilePicUrl, setProfilePicUrl] = useState("")
-  const [PicUrl, setPicUrl] = useState("")
-  const [imageError, setImageError] = useState("")
-  const [selectedValue, setSelectedValue] = useState([])
-  const [loading, setLoading] = useState(false)
+  const [initialData, setInitialData] = useState(initialD);
+  const [fieldOptions, setFieldOptions] = useState("");
+  const [cities, setCities] = useState();
+  const [profilePicUrl, setProfilePicUrl] = useState("");
+  const [PicUrl, setPicUrl] = useState("");
+  const [imageError, setImageError] = useState("");
+  const [selectedValue, setSelectedValue] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const history = useHistory()
+  const history = useHistory();
 
   useEffect(() => {
-    let fieldOptions = []
-    let cities = []
+    setLoading(true);
+    let fieldOptions = [];
+    let cities = [];
     axios.get(API_ADDRESS + "Categories/GetAllCategories").then((res) => {
       res.data.resul.map((item) => {
         fieldOptions.push({
           value: item.id,
           label: item.name,
-        })
-      })
+        });
+      });
 
-      setFieldOptions(fieldOptions)
-    })
+      setFieldOptions(fieldOptions);
+    });
 
     axios.get(API_ADDRESS + "Account/GetCities").then((res) => {
       res.data.resul.map((item) => {
         cities.push({
           value: item.cityDivisionCode,
           label: `${item.provinceName}، ${item.cityName}`,
-        })
-      })
-      setCities(cities)
-    })
-  }, [])
+        });
+      });
+      setCities(cities);
+      setLoading(false);
+    });
+  }, []);
 
   useEffect(() => {
     axios.get(API_ADDRESS + "Account/LoadEmployerProfile").then((res) => {
-      setSelectedValue(res.data.resul.fieldOfActivity?.map((item) => item.id))
+      let fieldOfActivityData = res.data.resul.fieldOfActivity?.map(
+        (item) => item.id
+      );
+      setSelectedValue(fieldOfActivityData);
+      console.log(res.data.resul.fieldOfActivity);
 
       setInitialData({
         ManagmentFullName: res.data.resul.managmentFullName || "",
@@ -76,62 +83,56 @@ const EditProfileEmployer = () => {
         EmergencPhone: res.data.resul.emergencPhone || "",
         Image: res.data.resul.image || "",
         url: res.data.resul.url || "",
-        FieldOfActivity:
-          res.data.resul.fieldOfActivity?.map((item) => {
-            return {
-              value: item.id,
-              label: item.name,
-            }
-          }) || "",
+        FieldOfActivity: fieldOfActivityData,
         NumberOfStaff: res.data.resul.numberOfStaff || 0,
         Email: res.data.resul.email || "",
         City: parseInt(res.data.resul.cities) || "",
         ShortDescription: res.data.resul.shortDescription || "",
-      })
-    })
-  }, [])
+      });
+    });
+  }, []);
 
   const convertObjToFormData = (obj) => {
-    const fd = new FormData()
+    const fd = new FormData();
     for (let key in obj) {
       if (key !== "FieldOfActivity") {
-        fd.append(key, obj[key])
+        fd.append(key, obj[key]);
       }
     }
 
     obj["FieldOfActivity"].map((e) => {
-      fd.append("FieldOfActivity", e)
-    })
+      fd.append("FieldOfActivity", e);
+    });
 
-    return fd
-  }
+    return fd;
+  };
 
   const preview = (files) => {
-    setImageError("")
+    setImageError("");
     if (files?.length === 0) {
-      setProfilePicUrl(null)
-      return
+      setProfilePicUrl(null);
+      return;
     }
 
-    var mimeType = files[0].type
+    var mimeType = files[0].type;
     if (mimeType.match(/image\/*/) == null) {
-      setImageError("فرمت درست را وارد کنید")
-      return
+      setImageError("فرمت درست را وارد کنید");
+      return;
     }
 
-    setPicUrl(files[0])
-    var reader = new FileReader()
-    reader.readAsDataURL(files[0])
+    setPicUrl(files[0]);
+    var reader = new FileReader();
+    reader.readAsDataURL(files[0]);
     reader.onload = () => {
-      setProfilePicUrl(reader.result)
-    }
-  }
+      setProfilePicUrl(reader.result);
+    };
+  };
 
   const submitHandler = (values) => {
-    setLoading(true)
+    setLoading(true);
 
-    let tempo = { ...values, Image: PicUrl, FieldOfActivity: selectedValue }
-    const correctFormat = convertObjToFormData(tempo)
+    let tempo = { ...values, Image: PicUrl };
+    const correctFormat = convertObjToFormData(tempo);
 
     axios
       .post(API_ADDRESS + "Account/EditEmployerProfile", correctFormat, {
@@ -145,22 +146,43 @@ const EditProfileEmployer = () => {
           title: "ویرایش اطلاعات با موفقیت انجام شد",
           showConfirmButton: false,
           timer: 1750,
-        })
-        setLoading(false)
+        });
+        setLoading(false);
       })
       .catch((err) => {
         if (err.response.status === 400 && err.response) {
           err.response.data.message.map((e) => {
-            toast.error(e)
-          })
+            toast.error(e);
+          });
         }
 
-        setLoading(false)
-      })
-  }
+        setLoading(false);
+      });
+  };
 
   const MultiMySelect = ({ label, options, ...props }) => {
-    const [field, , helpers] = useField(props)
+    const [field, , helpers] = useField(props);
+
+    const onChangeSelectOption = (value, { action }) => {
+      let tempArray = [];
+      if (action === "select-option") {
+        value &&
+          value.map((x) => {
+            tempArray.push(x.value);
+          });
+      } else if (action === "remove-value") {
+        setSelectedValue([]);
+        value &&
+          value.map((x) => {
+            tempArray.push(x.value);
+          });
+      } else if (action === "clear") {
+        tempArray = [];
+      }
+
+      helpers.setValue(tempArray);
+      setSelectedValue(tempArray);
+    };
 
     return (
       <div>
@@ -168,14 +190,7 @@ const EditProfileEmployer = () => {
           {...field}
           {...props}
           options={options}
-          onChange={(e) =>
-            Array.isArray(e)
-              ? e.map((x) => {
-                  setSelectedValue((prev) => [...new Set(prev), x.value])
-                  helpers.setValue((prev) => [...new Set(prev), x.value])
-                })
-              : []
-          }
+          onChange={onChangeSelectOption}
           value={
             options
               ? options.filter((obj) => selectedValue.includes(obj.value))
@@ -191,11 +206,11 @@ const EditProfileEmployer = () => {
           name={props.name}
         />
       </div>
-    )
-  }
+    );
+  };
 
   const MySelect = ({ label, options, ...props }) => {
-    const [field, , helpers] = useField(props)
+    const [field, , helpers] = useField(props);
     return (
       <div>
         <Select
@@ -215,11 +230,11 @@ const EditProfileEmployer = () => {
           name={props.name}
         />
       </div>
-    )
-  }
+    );
+  };
 
   const MyTextAreaInput = ({ ...props }) => {
-    const [, , helpers] = useField(props)
+    const [, , helpers] = useField(props);
     return (
       <>
         <label className="checkbox form-check-label">{props.label}</label>
@@ -242,8 +257,8 @@ const EditProfileEmployer = () => {
             language: "fa",
           }}
           onBlur={(_, editor) => {
-            const data = editor.getData()
-            helpers.setValue(data)
+            const data = editor.getData();
+            helpers.setValue(data);
           }}
         />
         <ErrorMessage
@@ -252,17 +267,17 @@ const EditProfileEmployer = () => {
           name={props.name}
         />
       </>
-    )
-  }
+    );
+  };
 
   return (
     <>
-      {loading && MiniSpinner()}
+      {loading && <MiniSpinner />}
       <Formik
         initialValues={initialData}
         validationSchema={EditProfileEmployerVal}
         onSubmit={(values) => {
-          submitHandler(values)
+          submitHandler(values);
         }}
         enableReinitialize={true}
       >
@@ -348,7 +363,7 @@ const EditProfileEmployer = () => {
                         id="Image "
                         type="file"
                         onChange={(event) => {
-                          preview(event.currentTarget.files)
+                          preview(event.currentTarget.files);
                         }}
                         className="form-control"
                       />
@@ -508,7 +523,7 @@ const EditProfileEmployer = () => {
         </section>
       </Formik>
     </>
-  )
-}
+  );
+};
 
-export { EditProfileEmployer }
+export { EditProfileEmployer };

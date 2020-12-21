@@ -11,6 +11,9 @@ import {
   Title,
   Description,
   Status,
+  NotifFlex,
+  TicketContainer,
+  ImageContainer,
 } from "./notification.styles";
 
 const EmployerNotification = () => {
@@ -50,35 +53,44 @@ const EmployerNotification = () => {
       <section className="tickets container-fluid spx-2 spx-lg-10 smt-10 spt-3">
         <div className="row">
           <aside className="col-12">
-            <div className=" sbs-shadow srounded-md sp-2">
-              {dataList.length !== 0 ? (
-                dataList.map((item) => (
-                  <NotifContainre key={item.id}>
-                    <NotifIcon>
-                      <i
-                        class="fa fa-bell fa-1.5x c-primary"
-                        aria-hidden="true"
-                      ></i>
-                    </NotifIcon>
-                    <NotifContext>
-                      <Title>{item.title}</Title>
-                      <Description>
-                        {" "}
-                        توضیحات : {item.adminDescription}
-                      </Description>
-                      <Status>
-                        وضعیت :{" "}
-                        {adverCreatationStatus(item.adverCreatationStatus)}
-                      </Status>
-                    </NotifContext>
-                  </NotifContainre>
-                ))
-              ) : (
-                <span className="ir-r fs-s c-regular text-center d-block">
-                  اعلانی برای نمایش وجود ندارد.
-                </span>
-              )}
-            </div>
+            <NotifFlex>
+              <ImageContainer>
+                <img
+                  src="/img/ticket.svg"
+                  alt="ticket"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              </ImageContainer>
+              <TicketContainer className=" sbs-shadow srounded-md sp-2">
+                {dataList.length !== 0 ? (
+                  dataList.map((item) => (
+                    <NotifContainre key={item.id}>
+                      <NotifIcon>
+                        <i
+                          class="fa fa-bell fa-1.5x c-primary"
+                          aria-hidden="true"
+                        ></i>
+                      </NotifIcon>
+                      <NotifContext>
+                        <Title>{item.title}</Title>
+                        <Description>
+                          {" "}
+                          توضیحات : {item.adminDescription}
+                        </Description>
+                        <Status>
+                          وضعیت :{" "}
+                          {adverCreatationStatus(item.adverCreatationStatus)}
+                        </Status>
+                      </NotifContext>
+                    </NotifContainre>
+                  ))
+                ) : (
+                  <span className="ir-r fs-s c-regular text-center d-block">
+                    اعلانی برای نمایش وجود ندارد.
+                  </span>
+                )}
+              </TicketContainer>
+            </NotifFlex>
           </aside>
         </div>
       </section>

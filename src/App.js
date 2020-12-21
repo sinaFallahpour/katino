@@ -36,11 +36,13 @@ import { ToastContainer } from "react-toastify";
 import { SuccessPayment } from "./components/payment/SuccessPayment";
 import { EmployeeDashboard } from "./pages/employee";
 import { Security } from "./core/Security";
-import { Tickets, Detail, CreateTicket } from "./pages/ticketing";
+import { Tickets, CreateTicket, TicketDetail } from "./pages/ticketing";
 import { EmployeeSuccessPage } from "./pages/employee/EmployeePayment/SuccessPayment";
 import { EmployeeFailurePage } from "./pages/employee/EmployeePayment/FailurePayment";
 import { EmployerSuccessPage } from "./pages/employer/EmployerPayment/SuccessPayment";
 import { EmployerFailurePage } from "./pages/employer/EmployerPayment/FailurePayment";
+import { EmployerProfile } from "./pages/employer/EmployerProfile";
+import { EmployerHistoryPayment } from "./pages/employer/HistoryPayment";
 import { NotFoundPage } from "./components/notFoundPage/notFoundPage";
 import { history } from "../src/core/agent";
 class App extends Component {
@@ -243,21 +245,6 @@ class App extends Component {
                 )}
               ></Route>
 
-              {/* 
-              <Route
-                path="/Employer/CompleteProfile"
-                exact
-                render={(props) => {
-                  if (!this.isEmployee())
-                    return history.push("/Employer/Login");
-                  return (
-                    <PageTitle title="تکمیل پروفایل">
-                      <CompleteProfile props={props} {...props} />
-                    </PageTitle>
-                  );
-                }}
-              ></Route> */}
-
               <Route
                 path="/Employer/CompleteProfile"
                 render={(props) => {
@@ -279,7 +266,7 @@ class App extends Component {
                   if (!this.isEmployer())
                     return <Redirect exact to="/Employer/Login" />;
                   return (
-                    <PageTitle title="ویرایش اطلاعات">
+                    <PageTitle title="ویرایش پروفایل">
                       <Navbar />
                       <EditProfileEmployer props={props} {...props} />
                       <LandingFooter />
@@ -376,6 +363,22 @@ class App extends Component {
                     <PageTitle title="ویرایش آگهی">
                       <Navbar />
                       <EditAdver props={props} {...props} />
+                      <EmployerFooter />
+                    </PageTitle>
+                  );
+                }}
+              ></Route>
+
+              <Route
+                exact
+                path="/Employer/History/Payment"
+                render={(props) => {
+                  if (!this.isEmployer())
+                    return <Redirect exact to="/Employer/Login" />;
+                  return (
+                    <PageTitle title="تاریخچه حساب">
+                      <Navbar />
+                      <EmployerHistoryPayment props={props} {...props} />
                       <EmployerFooter />
                     </PageTitle>
                   );
@@ -598,25 +601,46 @@ class App extends Component {
               <Route
                 exact
                 path="/Tickets"
-                render={(props) => (
-                  <PageTitle title="تیکت های پشتیبانی">
-                    <Navbar />
-                    <Tickets props={props} {...props} />
-                    <LandingFooter className="d-none d-lg-block" />
-                  </PageTitle>
-                )}
+                render={(props) => {
+                  if (!this.isEmployer())
+                    return <Redirect exact to="/Employee/Login" />;
+                  return (
+                    <PageTitle title="تیکت های پشتیبانی">
+                      <Navbar />
+                      <Tickets props={props} {...props} />
+                      <LandingFooter className="d-none d-lg-block" />
+                    </PageTitle>
+                  );
+                }}
               ></Route>
 
               <Route
                 path="/Tickets/:id"
                 render={(props) => {
-                  if (!this.isLogedIn())
+                  if (!this.isEmployer())
                     return <Redirect exact to="/Employee/Login" />;
-                  <PageTitle title="تیکت های پشتیبانی">
-                    <Navbar />
-                    <Detail props={props} {...props} />
-                    <LandingFooter className="d-none d-lg-block" />
-                  </PageTitle>;
+                  return (
+                    <PageTitle title="تیکت های پشتیبانی">
+                      <Navbar />
+                      <TicketDetail props={props} {...props} />
+                      <LandingFooter className="d-none d-lg-block" />
+                    </PageTitle>
+                  );
+                }}
+              ></Route>
+
+              <Route
+                path="/Employer/Profile"
+                render={(props) => {
+                  if (!this.isEmployer())
+                    return <Redirect exact to="/Employee/Login" />;
+                  return (
+                    <PageTitle title="پروفایل کارفرما">
+                      <Navbar />
+                      <EmployerProfile props={props} {...props} />
+                      <LandingFooter className="d-none d-lg-block" />
+                    </PageTitle>
+                  );
                 }}
               ></Route>
 
@@ -626,7 +650,7 @@ class App extends Component {
                   if (!this.isLogedIn())
                     return <Redirect exact to="/Employee/Login" />;
                   return (
-                    <PageTitle title="تیکت های پشتیبانی">
+                    <PageTitle title="ایجاد تیکت">
                       <Navbar />
                       <CreateTicket props={props} {...props} />
                       <LandingFooter className="d-none d-lg-block" />

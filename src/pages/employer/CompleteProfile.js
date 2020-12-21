@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react"
-import axios from "axios"
-import Swal from "sweetalert2"
-import { toast } from "react-toastify"
-import { useHistory } from "react-router-dom"
-import { Formik, Field, Form, ErrorMessage, useField } from "formik"
-import Select from "react-select"
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
+import { Formik, Field, Form, ErrorMessage, useField } from "formik";
+import Select from "react-select";
 
-import { CompleteRegister } from "../../core/validation/completeRegister"
-import API_ADDRESS from "../../API_ADDRESS"
-import { MiniSpinner } from "../../components/spinner/MiniSpinner"
-import "./Field.style.css"
+import { CompleteRegister } from "../../core/validation/completeRegister";
+import API_ADDRESS from "../../API_ADDRESS";
+import { MiniSpinner } from "../../components/spinner/MiniSpinner";
+import "./Field.style.css";
 
 const CompleteProfile = () => {
   const initialData = {
@@ -20,72 +20,74 @@ const CompleteProfile = () => {
     url: "",
     FieldOfActivity: "",
     NumberOfStaff: "",
-  }
-  const [fieldOptions, setFieldOptions] = useState("")
-  const [profilePicUrl, setProfilePicUrl] = useState("")
-  const [PicUrl, setPicUrl] = useState("")
-  const [imageError, setImageError] = useState("")
-  const [selectedValue, setSelectedValue] = useState([])
-  const [loading, setLoading] = useState(false)
+    Email: "",
+    ManagmentFullName: "",
+  };
+  const [fieldOptions, setFieldOptions] = useState("");
+  const [profilePicUrl, setProfilePicUrl] = useState("");
+  const [PicUrl, setPicUrl] = useState("");
+  const [imageError, setImageError] = useState("");
+  const [selectedValue, setSelectedValue] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const history = useHistory()
+  const history = useHistory();
 
   useEffect(() => {
     // let categories
-    let fieldOptions = []
+    let fieldOptions = [];
     axios.get(API_ADDRESS + "Categories/GetAllCategories").then((res) => {
       res.data.resul.map((item) => {
         fieldOptions.push({
           value: item.id,
           label: item.name,
-        })
-      })
+        });
+      });
 
-      setFieldOptions(fieldOptions)
-    })
-  }, [])
+      setFieldOptions(fieldOptions);
+    });
+  }, []);
 
   const convertObjToFormData = (obj) => {
-    const fd = new FormData()
+    const fd = new FormData();
     for (let key in obj) {
       if (key !== "FieldOfActivity") {
-        fd.append(key, obj[key])
+        fd.append(key, obj[key]);
       }
     }
 
     obj["FieldOfActivity"].map((e) => {
-      fd.append("FieldOfActivity", e)
-    })
+      fd.append("FieldOfActivity", e);
+    });
 
-    return fd
-  }
+    return fd;
+  };
 
   const preview = (files) => {
-    setImageError("")
+    setImageError("");
     if (files?.length === 0) {
-      setProfilePicUrl(null)
-      return
+      setProfilePicUrl(null);
+      return;
     }
 
-    var mimeType = files[0].type
+    var mimeType = files[0].type;
     if (mimeType.match(/image\/*/) == null) {
-      setImageError("فرمت درست را وارد کنید")
-      return
+      setImageError("فرمت درست را وارد کنید");
+      return;
     }
 
-    setPicUrl(files[0])
-    var reader = new FileReader()
-    reader.readAsDataURL(files[0])
+    setPicUrl(files[0]);
+    var reader = new FileReader();
+    reader.readAsDataURL(files[0]);
     reader.onload = () => {
-      setProfilePicUrl(reader.result)
-    }
-  }
+      setProfilePicUrl(reader.result);
+    };
+  };
 
   const submitHandler = (values) => {
-    setLoading(true)
-    let tempo = { ...values, Image: PicUrl, FieldOfActivity: selectedValue }
+    setLoading(true);
+    let tempo = { ...values, Image: PicUrl };
 
-    const correctFormat = convertObjToFormData(tempo)
+    const correctFormat = convertObjToFormData(tempo);
     axios
       .post(API_ADDRESS + "Account/CompanySubmitRegistrstion", correctFormat, {
         headers: {
@@ -94,44 +96,60 @@ const CompleteProfile = () => {
       })
       .then((res) => {
         if (res.status === 200) {
-          history.push("/Employer/Dashboard")
+          history.push("/Employer/Dashboard");
         }
         Swal.fire({
           icon: "success",
           title: "تکمیل فرم با موفقیت انجام شد",
           showConfirmButton: false,
           timer: 1750,
-        })
-        setLoading(false)
+        });
+        setLoading(false);
       })
       .catch((err) => {
         if (err.response.status === 400 && err.response) {
           err.response.data.message.map((e) => {
-            toast.error(e)
-          })
+            toast.error(e);
+          });
         }
         err.response.data.message.map((e) => {
-          toast.error(e)
-        })
-        setLoading(false)
-      })
-  }
+          toast.error(e);
+        });
+        setLoading(false);
+      });
+  };
 
   const MultiMySelect = ({ label, options, ...props }) => {
-    const [field, meta, helpers] = useField(props)
+    const [field, meta, helpers] = useField(props);
+
+    const onChangeSelectOption = (value, { action }) => {
+      let tempArray = [];
+      if (action === "select-option") {
+        value &&
+          value.map((x) => {
+            tempArray.push(x.value);
+          });
+      } else if (action === "remove-value") {
+        setSelectedValue([]);
+        value &&
+          value.map((x) => {
+            tempArray.push(x.value);
+          });
+      } else if (action === "clear") {
+        tempArray = [];
+      }
+
+      helpers.setValue(tempArray);
+      setSelectedValue(tempArray);
+    };
+
     return (
       <div>
         <Select
           {...field}
           {...props}
           options={options}
-          onChange={(e) =>
-            Array.isArray(e)
-              ? e.map((x) =>
-                  setSelectedValue((prev) => [...new Set(prev), x.value])
-                )
-              : []
-          }
+          onChange={onChangeSelectOption}
           value={
             options
               ? options.filter((obj) => selectedValue.includes(obj.value))
@@ -147,11 +165,11 @@ const CompleteProfile = () => {
           name={props.name}
         />
       </div>
-    )
-  }
+    );
+  };
 
   const MySelect = ({ label, options, ...props }) => {
-    const [field, meta, helpers] = useField(props)
+    const [field, meta, helpers] = useField(props);
     return (
       <div>
         <Select
@@ -171,8 +189,8 @@ const CompleteProfile = () => {
           name={props.name}
         />
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <>
@@ -181,7 +199,7 @@ const CompleteProfile = () => {
         initialValues={initialData}
         validationSchema={CompleteRegister}
         onSubmit={(values) => {
-          submitHandler(values)
+          submitHandler(values);
         }}
       >
         <section className="complete-register-form container-fluid spx-2 spx-lg-10 smy-10 spt-10">
@@ -192,6 +210,26 @@ const CompleteProfile = () => {
                   <h1 className="fs-l c-dark d-block text-center smb-5 ir-bl">
                     تکمیل پروفایل شرکت
                   </h1>
+
+                  {/* ManagmentFullName   */}
+                  <div className="col-12 smb-2">
+                    <label className="ir-r d-block text-right smb-1">
+                      لطفا نام و نام خانوادگی مدیریت شرکت وارد کنید
+                    </label>
+                    <div className="form-group mb-0">
+                      <Field
+                        name="ManagmentFullName"
+                        className="form-control ir-r shadow-none"
+                        placeholder="نام و نام خانوادگی مدیریت شرکت"
+                        type="text"
+                      />
+                      <ErrorMessage
+                        component="div"
+                        className="errorMessage"
+                        name="ManagmentFullName"
+                      />
+                    </div>
+                  </div>
 
                   {/* PersianFullName  */}
                   <div className="col-12 smb-2">
@@ -246,7 +284,7 @@ const CompleteProfile = () => {
                         id="Image "
                         type="file"
                         onChange={(event) => {
-                          preview(event.currentTarget.files)
+                          preview(event.currentTarget.files);
                         }}
                         className="form-control"
                       />
@@ -263,6 +301,26 @@ const CompleteProfile = () => {
                       {imageError && (
                         <div className="errorMessage">{imageError}</div>
                       )}
+                    </div>
+                  </div>
+
+                  {/* Email  */}
+                  <div className="col-12 smb-2">
+                    <label className="ir-r d-block text-right smb-1">
+                      لطفا ایمیل شرکت را وارد کنید
+                    </label>
+                    <div className="form-group mb-0">
+                      <Field
+                        name="Email"
+                        className="form-control ir-r shadow-none"
+                        placeholder="ایمیل شرکت"
+                        type="text"
+                      />
+                      <ErrorMessage
+                        component="div"
+                        className="errorMessage"
+                        name="Email"
+                      />
                     </div>
                   </div>
 
@@ -353,7 +411,7 @@ const CompleteProfile = () => {
         </section>
       </Formik>
     </>
-  )
-}
+  );
+};
 
-export { CompleteProfile }
+export { CompleteProfile };

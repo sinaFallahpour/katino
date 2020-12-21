@@ -1,7 +1,7 @@
-import * as Yup from "yup"
-const faRegex = /^[ آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهیئ\s]+$/
-const enRegex = /^[A-Za-z]+$/
-const numRegex = /^-?[0-9][0-9,\.]+$/
+import * as Yup from "yup";
+const faRegex = /^[ آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهیئ\s]+$/;
+const enRegex = /^[ A-Za-z]+$/;
+const numRegex = /^-?[0-9][0-9,\.]+$/;
 
 const EditProfileEmployerVal = Yup.object({
   ManagmentFullName: Yup.string("لطفا از کارکتر استفاده کنید").required(
@@ -26,6 +26,6 @@ const EditProfileEmployerVal = Yup.object({
     .min(0, "لطفا شهر خود را وارد کنید")
     .required("لطفا شهر خود را وارد کنید"),
   FieldOfActivity: Yup.array().required("لطفا حوزه فعالیت خود را وارد کنید"),
-})
+});
 
-export { EditProfileEmployerVal }
+export { EditProfileEmployerVal };
