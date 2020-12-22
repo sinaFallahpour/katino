@@ -243,6 +243,11 @@ export class EmployerNavbar extends Component {
             >
               <ul className="m-0">
                 <li className="smb-1">
+                  <Link className="ir-r c-grey text-decoration-none" to="/">
+                    خانه
+                  </Link>
+                </li>
+                <li className="smb-1">
                   <Link
                     className="ir-r c-grey text-decoration-none"
                     to="/Employer/Profile"

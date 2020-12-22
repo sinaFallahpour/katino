@@ -1,0 +1,24 @@
+.errorMessage {
+  color: #d8000c;
+  background-color: #ffbaba;
+  border: 1px solid #d8000c;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.email-input {
+  text-align: right;
+  direction: rtl;
+}
+
+.contact-title {
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #444;
+  padding: 20px;
+  margin-bottom: 20px;
+  margin-top: -50px;
+  background-color: #fff;
+  border-radius: 10px;
+}

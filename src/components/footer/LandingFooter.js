@@ -1,6 +1,6 @@
-import React from "react"
-import { Link } from "react-router-dom"
-import "./footer.styles.css"
+import React from "react";
+import { Link } from "react-router-dom";
+import "./footer.styles.css";
 
 export function LandingFooter() {
   return (
@@ -46,10 +46,13 @@ export function LandingFooter() {
         <aside className="footer-container">
           <h3 className="fs-m c-dark ir-b smb-2">کاتینو</h3>
 
-          <Link className="fs-m c-regular ir-r smb-1" to="/">
+          <Link className="fs-m c-regular ir-r smb-1" to="/Policy">
+            قوانین کاتینو
+          </Link>
+          <Link className="fs-m c-regular ir-r smb-1" to="/Contact">
             تماس با کاتینو
           </Link>
-          <Link className="fs-m c-regular ir-r smb-1" to="/">
+          <Link className="fs-m c-regular ir-r smb-1" to="/AboutUS">
             درباره کاتینو
           </Link>
           <Link className="fs-m c-regular ir-r smb-1" to="/">
@@ -130,5 +133,5 @@ export function LandingFooter() {
         </div>
       </div>
     </footer>
-  )
+  );
 }

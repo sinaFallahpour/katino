@@ -43,6 +43,10 @@ import { EmployerSuccessPage } from "./pages/employer/EmployerPayment/SuccessPay
 import { EmployerFailurePage } from "./pages/employer/EmployerPayment/FailurePayment";
 import { EmployerProfile } from "./pages/employer/EmployerProfile";
 import { EmployerHistoryPayment } from "./pages/employer/HistoryPayment";
+import { AboutUsPage } from "./pages/KatinoInfoPages/AboutUs";
+import { ContactPage } from "./pages/KatinoInfoPages/Contact";
+import { PolicyPage } from "./pages/KatinoInfoPages/Policy";
+
 import { NotFoundPage } from "./components/notFoundPage/notFoundPage";
 import { history } from "../src/core/agent";
 class App extends Component {
@@ -657,6 +661,42 @@ class App extends Component {
                     </PageTitle>
                   );
                 }}
+              ></Route>
+
+              <Route
+                exact
+                path="/Policy"
+                render={(props) => (
+                  <PageTitle title="قوانین کاتینو">
+                    <Navbar />
+                    <PolicyPage props={props} {...props} />
+                    <LandingFooter />
+                  </PageTitle>
+                )}
+              ></Route>
+
+              <Route
+                exact
+                path="/Contact"
+                render={(props) => (
+                  <PageTitle title="تماس با کاتینو">
+                    <Navbar />
+                    <ContactPage props={props} {...props} />
+                    <LandingFooter />
+                  </PageTitle>
+                )}
+              ></Route>
+
+              <Route
+                exact
+                path="/AboutUS"
+                render={(props) => (
+                  <PageTitle title="درباره کاتینو">
+                    <Navbar />
+                    <AboutUsPage props={props} {...props} />
+                    <LandingFooter />
+                  </PageTitle>
+                )}
               ></Route>
 
               <Route path="/Security/:username/:key/:role">
