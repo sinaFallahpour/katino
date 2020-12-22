@@ -1,6 +1,6 @@
-import React, { Component } from "react"
-import { Link } from "react-router-dom"
-import auth from "../../core/authService"
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import auth from "../../core/authService";
 
 export class EmployeeNavbar extends Component {
   state = {
@@ -12,11 +12,11 @@ export class EmployeeNavbar extends Component {
     notifDropdown: false,
     notifActivity: "",
     notifCount: 10,
-  }
+  };
 
   componentDidMount() {
-    const user = auth.getCurrentUser()
-    this.setState({ user })
+    const user = auth.getCurrentUser();
+    this.setState({ user });
   }
 
   profileDropdown = () => {
@@ -27,15 +27,15 @@ export class EmployeeNavbar extends Component {
         notifDropdown: false,
         profileActivity: "active",
         notifActivity: "",
-      })
+      });
     } else {
       this.setState({
         ...this.state,
         profileDropdown: false,
         profileActivity: "",
-      })
+      });
     }
-  }
+  };
 
   notifDropdown = () => {
     if (this.state.notifDropdown === false) {
@@ -46,20 +46,20 @@ export class EmployeeNavbar extends Component {
         notifActivity: "active",
         profileActivity: "",
         notifCount: 0,
-      })
+      });
     } else {
       this.setState({
         ...this.state,
         notifDropdown: false,
         notifActivity: "",
-      })
+      });
     }
-  }
+  };
 
   logout = async () => {
-    await window.localStorage.clear()
-    window.location.href = "/"
-  }
+    await window.localStorage.clear();
+    window.location.href = "/";
+  };
 
   render() {
     return (
@@ -113,7 +113,7 @@ export class EmployeeNavbar extends Component {
               <li className="nav-item smr-lg-1 smr-xl-4">
                 <Link
                   className="nav-link text-center position-relative ir-r fs-s p-0"
-                  to="/Employee/Home"
+                  to="/Blog"
                 >
                   وبلاگ
                 </Link>
@@ -254,6 +254,6 @@ export class EmployeeNavbar extends Component {
           </div>
         )}
       </header>
-    )
+    );
   }
 }

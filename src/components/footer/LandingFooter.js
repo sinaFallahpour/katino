@@ -38,9 +38,6 @@ export function LandingFooter() {
           <Link className="fs-m c-regular ir-r smb-1" to="/">
             تعرفه انتشار آگهی
           </Link>
-          <Link className="fs-m c-regular ir-r mb-0" to="/">
-            سوالات متداول
-          </Link>
         </aside>
 
         <aside className="footer-container">
@@ -56,9 +53,12 @@ export function LandingFooter() {
             درباره کاتینو
           </Link>
           <Link className="fs-m c-regular ir-r smb-1" to="/">
+            سوالات متداول
+          </Link>
+          <Link className="fs-m c-regular ir-r smb-1" to="/EmployerTraining">
             راهنمای استفاده برای کارجویان
           </Link>
-          <Link className="fs-m c-regular ir-r mb-0" to="/">
+          <Link className="fs-m c-regular ir-r smb-1" to="/Blog">
             وبلاگ
           </Link>
         </aside>
@@ -72,7 +72,7 @@ export function LandingFooter() {
             </Link>
 
             <Link className="fs-l c-regular" to="/">
-              <i className="fab fa-telegram-plane"></i>
+              <i class="fab fa-whatsapp"></i>
             </Link>
 
             <Link className="fs-l c-regular" to="/">

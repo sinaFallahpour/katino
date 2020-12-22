@@ -2,6 +2,7 @@ import React from "react";
 import { Info } from "./Info";
 
 export function Profile(props) {
+  console.log(props.allInfo);
 
   let preferencesList = [
     props.allInfo?.userJobPreference?.educationCourses ? "دوره های آموزشی" : "",
@@ -82,86 +83,69 @@ export function Profile(props) {
           list={[
             {
               key: "نام و نام خانوادگی",
-              value: props.allInfo.userPersonalInfoForResome.fullName
-                ? props.allInfo.userPersonalInfoForResome.fullName
-                : "-",
+              value: props.allInfo.userPersonalInfoForResome?.fullName || "-",
             },
             {
               key: "عنوان شغلی",
-              value: props.allInfo.userPersonalInfoForResome.jobTitle
-                ? props.allInfo.userPersonalInfoForResome.jobTitle
-                : "-",
+              value: props.allInfo.userPersonalInfoForResome?.jobTitle || "-",
             },
             {
               key: "وضعیت اشتغال",
-              value: employmentStatus(
-                props.allInfo.userPersonalInfoForResome.employmentStatus
-                  ? props.allInfo.userPersonalInfoForResome.employmentStatus
-                  : "-"
-              ),
+              value: props.allInfo.userPersonalInfoForResome?.employmentStatus
+                ? employmentStatus(
+                    props.allInfo.userPersonalInfoForResome?.employmentStatus
+                  )
+                : "-",
             },
             {
               key: "آخرین شرکت",
-              value: props.allInfo.userPersonalInfoForResome.lastCompanies
-                ? props.allInfo.userPersonalInfoForResome.lastCompanies
-                : "-",
+              value:
+                props.allInfo.userPersonalInfoForResome?.lastCompanies || "-",
             },
             {
               key: "آخرین مدرک تحصیلی",
-              value: props.allInfo.userPersonalInfoForResome
-                .lastDegreeOfEducation
-                ? props.allInfo.userPersonalInfoForResome.lastDegreeOfEducation
-                : "-",
+              value:
+                props.allInfo.userPersonalInfoForResome
+                  ?.lastDegreeOfEducation || "-",
             },
             {
               key: "آدرس ایمیل",
-              value: props.allInfo.userPersonalInfoForResome.email
-                ? props.allInfo.userPersonalInfoForResome.email
-                : "-",
+              value: props.allInfo.userPersonalInfoForResome?.email || "-",
             },
             {
               key: "شماره موبایل",
-              value: props.allInfo.userPersonalInfoForResome.phoneNumber
-                ? props.allInfo.userPersonalInfoForResome.phoneNumber
-                : "-",
+              value:
+                props.allInfo.userPersonalInfoForResome?.phoneNumber || "-",
             },
             {
               key: "شهر محل سکونت",
-              value: props.allInfo.userPersonalInfoForResome.city
-                ? props.allInfo.userPersonalInfoForResome.city
-                : "-",
+              value: props.allInfo.userPersonalInfoForResome?.city || "-",
             },
             {
               key: "آدرس محل سکونت",
-              value: props.allInfo.userPersonalInfoForResome.address
-                ? props.allInfo.userPersonalInfoForResome.address
-                : "-",
+              value: props.allInfo.userPersonalInfoForResome?.address || "-",
             },
             {
               key: "وضعیت تاهل",
-              value: props.allInfo.userPersonalInfoForResome.isMarried
-                ? props.allInfo.userPersonalInfoForResome.isMarried === true
+              value: props.allInfo.userPersonalInfoForResome?.isMarried
+                ? props.allInfo.userPersonalInfoForResome?.isMarried === true
                   ? "متاهل"
                   : "مجرد"
                 : "-",
             },
             {
               key: "سال تولد",
-              value: props.allInfo.userPersonalInfoForResome.birthYear
-                ? props.allInfo.userPersonalInfoForResome.birthYear
-                : "-",
+              value: props.allInfo.userPersonalInfoForResome?.birthYear || "-",
             },
             {
               key: "جنسیت",
-              value: props.allInfo.userPersonalInfoForResome.gender
-                ? gender(props.allInfo.userPersonalInfoForResome.gender)
+              value: props.allInfo.userPersonalInfoForResome?.gender
+                ? gender(props.allInfo.userPersonalInfoForResome?.gender)
                 : "-",
             },
             {
               key: "وضعیت خدمت سربازی",
-              value: props.allInfo.userPersonalInfoForResome.military
-                ? props.allInfo.userPersonalInfoForResome.military
-                : "-",
+              value: props.allInfo.userPersonalInfoForResome?.military || "-",
             },
           ]}
         />
@@ -171,7 +155,7 @@ export function Profile(props) {
         <Info
           type="paragraph"
           title="درباره من"
-          text={props.allInfo.abouteMe}
+          text={props.allInfo.abouteMe || "-"}
         />
       </div>
 
@@ -198,34 +182,34 @@ export function Profile(props) {
           list={[
             {
               key: "شهرهای مورد نظر برای کار",
-              value: props.allInfo.userJobPreference.city
-                ? props.allInfo.userJobPreference.city
-                : "-",
+              value: props.allInfo.userJobPreference?.city || "-",
             },
             {
               key: "دسته‌بندی شغلی و زمینه کاری",
-              value: props.allInfo.userJobPreference.userJobPreferenceCategories
-                ? props.allInfo.userJobPreference.userJobPreferenceCategories
-                : "-",
+              value:
+                props.allInfo.userJobPreference?.userJobPreferenceCategories ||
+                "-",
             },
             {
               key: "سطح ارشدیت در زمینه فعالیت",
-              value: props.allInfo.userJobPreference.senioritylevel
-                ? senioritylevel(props.allInfo.userJobPreference.senioritylevel)
+              value: props.allInfo.userJobPreference?.senioritylevel
+                ? senioritylevel(
+                    props.allInfo.userJobPreference?.senioritylevel
+                  )
                 : "-",
             },
             {
               key: "نوع قراردادهای قابل قبول",
-              value: props.allInfo.userJobPreference.typeOfCooperation
+              value: props.allInfo.userJobPreference?.typeOfCooperation
                 ? typeOfCooperation(
-                  props.allInfo.userJobPreference.typeOfCooperation
-                )
+                    props.allInfo.userJobPreference?.typeOfCooperation
+                  )
                 : "-",
             },
             {
               key: "حقوق مورد نظر",
-              value: props.allInfo.userJobPreference.salary
-                ? salary(props.allInfo.userJobPreference.salary)
+              value: props.allInfo.userJobPreference?.salary
+                ? salary(props.allInfo.userJobPreference?.salary)
                 : "-",
             },
             {
