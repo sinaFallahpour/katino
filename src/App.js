@@ -47,6 +47,7 @@ import { AboutUsPage } from "./pages/KatinoInfoPages/AboutUs";
 import { ContactPage } from "./pages/KatinoInfoPages/Contact";
 import { PolicyPage } from "./pages/KatinoInfoPages/Policy";
 import { EmployerTraining } from "./pages/KatinoInfoPages/EmployerTraining";
+import { FrequentQ } from "./pages/KatinoInfoPages/FrequentQ";
 
 import { NotFoundPage } from "./components/notFoundPage/notFoundPage";
 import { history } from "../src/core/agent";
@@ -599,6 +600,18 @@ class App extends Component {
                   <PageTitle title="وبلاگ">
                     <Navbar />
                     <EmployerTraining props={props} {...props} />
+                    <LandingFooter className="d-none d-lg-block" />
+                  </PageTitle>
+                )}
+              ></Route>
+
+              <Route
+                exact
+                path="/FrequentQuestion"
+                render={(props) => (
+                  <PageTitle title="وبلاگ">
+                    <Navbar />
+                    <FrequentQ props={props} {...props} />
                     <LandingFooter className="d-none d-lg-block" />
                   </PageTitle>
                 )}

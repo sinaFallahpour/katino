@@ -12,16 +12,19 @@ import "./ContractUs.styles.css";
 
 const ContactPage = () => {
   const initialData = {
-    FullName: "",
-    Email: "",
-    descriptionOfJob: "",
+    fullName: "",
+    email: "",
+    comment: "",
+    phoneNumber: "",
   };
 
   const MyTextAreaInput = ({ ...props }) => {
     const [, meta, helpers] = useField(props);
     return (
       <>
-        <label className="checkbox form-check-label">{props.label}</label>
+        <label className="checkbox form-check-label LabelOfInput">
+          {props.label}
+        </label>
         <CKEditor
           className="cke_rtl"
           editor={ClassicEditor}
@@ -55,11 +58,7 @@ const ContactPage = () => {
 
   const submitHandler = (values) => {
     axios
-      .post(API_ADDRESS + "Adver/CreateAdver", values, {
-        headers: {
-          Authorization: `bearer ${window.localStorage.getItem("JWT")}`,
-        },
-      })
+      .post(API_ADDRESS + "Setting/CreateContactUs", values)
       .then((res) => {
         Swal.fire({
           icon: "success",
@@ -90,14 +89,14 @@ const ContactPage = () => {
               >
                 <Form className="w-100">
                   <div className="row">
-                    {/* FullName  */}
+                    {/* fullName  */}
                     <div className="col-12 smb-2">
-                      <label className="ir-r d-block text-right smb-1">
+                      <label className="ir-r d-block text-right smb-1 LabelOfInput">
                         نام و نام خانوادگی
                       </label>
                       <div className="form-group mb-0">
                         <Field
-                          name="FullName"
+                          name="fullName"
                           className="form-control ir-r shadow-none"
                           placeholder="نام و نام خانوادگی خود را وارد کنید"
                           type="text"
@@ -105,19 +104,19 @@ const ContactPage = () => {
                         <ErrorMessage
                           component="div"
                           className="errorMessage"
-                          name="FullName"
+                          name="fullName"
                         />
                       </div>
                     </div>
 
-                    {/* Email  */}
+                    {/* email  */}
                     <div className="col-12 smb-2">
-                      <label className="ir-r d-block text-right smb-1">
+                      <label className="ir-r d-block text-right smb-1  LabelOfInput">
                         ایمیل
                       </label>
                       <div className="form-group mb-0">
                         <Field
-                          name="Email"
+                          name="email"
                           className="form-control ir-r shadow-none email-input"
                           placeholder="ایمیل خود را وارد کنید"
                           type="text"
@@ -125,17 +124,34 @@ const ContactPage = () => {
                         <ErrorMessage
                           component="div"
                           className="errorMessage"
-                          name="Email"
+                          name="email"
+                        />
+                      </div>
+                    </div>
+
+                    {/* PhoneNumber  */}
+                    <div className="col-12 smb-2">
+                      <label className="ir-r d-block text-right smb-1">
+                        شماره تماس
+                      </label>
+                      <div className="form-group mb-0">
+                        <Field
+                          name="phoneNumber"
+                          className="form-control ir-r shadow-none email-input"
+                          placeholder="شماره تماس خود را وارد کنید"
+                          type="text"
+                        />
+                        <ErrorMessage
+                          component="div"
+                          className="errorMessage"
+                          name="phoneNumber"
                         />
                       </div>
                     </div>
 
                     {/* descriptionOfJob  */}
                     <div className="col-12 smb-2 ir-r">
-                      <MyTextAreaInput
-                        label="توضیحات آگهی"
-                        name="descriptionOfJob"
-                      />
+                      <MyTextAreaInput label="توضیحات آگهی" name="comment" />
                     </div>
 
                     {/* submit button  */}

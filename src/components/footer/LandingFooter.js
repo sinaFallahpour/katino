@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./footer.styles.css";
 
 export function LandingFooter() {
+  const [userStatus, setUserStatus] = useState();
+
+  useEffect(() => {
+    const userInfo = localStorage.getItem("userInfo");
+    userInfo === "Employee" ? setUserStatus(userInfo) : setUserStatus(null);
+  }, []);
+
   return (
     <footer className="footer-parent">
       <div className="footer-holder ">
@@ -12,34 +19,46 @@ export function LandingFooter() {
           <Link className="fs-m c-regular ir-r smb-1" to="/Jobs">
             آگهی های استخدام
           </Link>
-          <Link className="fs-m c-regular ir-r smb-1" to="/">
-            ورود/ثبت نام کارجویان
-          </Link>
+          {!userStatus && (
+            <Link className="fs-m c-regular ir-r smb-1" to="/Employee/Login/">
+              ورود/ثبت نام کارجویان
+            </Link>
+          )}
           <Link className="fs-m c-regular ir-r smb-1" to="/">
             ایمیل های اطلاع رسانی
           </Link>
-          <Link className="fs-m c-regular ir-r smb-1" to="/">
+          <Link
+            className="fs-m c-regular ir-r smb-1"
+            to="/Employee/CreateResume"
+          >
             رزومه ساز آنلاین
           </Link>
-          <Link className="fs-m c-regular ir-r mb-0" to="/">
+          <Link className="fs-m c-regular ir-r mb-0" to="/AllCompanies">
             آشنایی با شرکت ها
           </Link>
         </aside>
 
-        <aside className="footer-container ">
-          <h3 className="fs-m c-dark ir-b smb-2">کارفرمایان</h3>
+        {!userStatus && (
+          <aside className="footer-container ">
+            <h3 className="fs-m c-dark ir-b smb-2">کارفرمایان</h3>
 
-          <Link className="fs-m c-regular ir-r smb-1" to="/">
-            درج آگهی استخدام
-          </Link>
-          <Link className="fs-m c-regular ir-r smb-1" to="/">
-            ورود به بخش کارفرمایان
-          </Link>
-          <Link className="fs-m c-regular ir-r smb-1" to="/">
-            تعرفه انتشار آگهی
-          </Link>
-        </aside>
-
+            <Link className="fs-m c-regular ir-r smb-1" to="/Employer/CreateAd">
+              درج آگهی استخدام
+            </Link>
+            <Link
+              className="fs-m c-regular ir-r smb-1"
+              to="/Employer/Dashboard"
+            >
+              ورود به بخش کارفرمایان
+            </Link>
+            <Link
+              className="fs-m c-regular ir-r smb-1"
+              to="/Employer/Dashboard/Plans"
+            >
+              تعرفه انتشار آگهی
+            </Link>
+          </aside>
+        )}
         <aside className="footer-container">
           <h3 className="fs-m c-dark ir-b smb-2">کاتینو</h3>
 
@@ -52,7 +71,7 @@ export function LandingFooter() {
           <Link className="fs-m c-regular ir-r smb-1" to="/AboutUS">
             درباره کاتینو
           </Link>
-          <Link className="fs-m c-regular ir-r smb-1" to="/">
+          <Link className="fs-m c-regular ir-r smb-1" to="/FrequentQuestion">
             سوالات متداول
           </Link>
           <Link className="fs-m c-regular ir-r smb-1" to="/EmployerTraining">
@@ -62,7 +81,6 @@ export function LandingFooter() {
             وبلاگ
           </Link>
         </aside>
-
         <aside className="footer-container ">
           <h3 className="fs-m c-dark ir-b smb-2">شبکه های اجتماعی</h3>
 

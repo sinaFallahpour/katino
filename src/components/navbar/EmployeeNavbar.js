@@ -177,14 +177,14 @@ export class EmployeeNavbar extends Component {
                     </Link>
                   </li>
 
-                  <li className="smb-1">
+                  {/* <li className="smb-1">
                     <Link
                       className="ir-r c-grey text-decoration-none"
                       to="/Employee/plans"
                     >
                       خرید اشتراک
                     </Link>
-                  </li>
+                  </li> */}
                   <li className="smb-1">
                     <Link
                       className="ir-r c-grey text-decoration-none"

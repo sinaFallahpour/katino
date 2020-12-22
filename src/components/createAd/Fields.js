@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react"
-import axios from "axios"
-import API_ADDRESS from "../../API_ADDRESS"
-import Select from "react-select"
-import CKEditor from "@ckeditor/ckeditor5-react"
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
-import { Link, useHistory } from "react-router-dom"
-import { Formik, Field, Form, ErrorMessage, useField } from "formik"
-import { CreateAdValidate } from "../../core/validation/createAd"
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import API_ADDRESS from "../../API_ADDRESS";
+import Select from "react-select";
+import CKEditor from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { Link, useHistory } from "react-router-dom";
+import { Formik, Field, Form, ErrorMessage, useField } from "formik";
+import { CreateAdValidate } from "../../core/validation/createAd";
 import {
   cooperationType,
   salaries,
@@ -14,20 +14,20 @@ import {
   exprience,
   education,
   initialData,
-} from "./createAdData"
-import "./Field.style.css"
-import Swal from "sweetalert2"
-import { toast } from "react-toastify"
+} from "./createAdData";
+import "./Field.style.css";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 export const Fields = () => {
-  const [hasPlan, setHasPlan] = useState(false)
-  const [planId, setPlanId] = useState()
-  const [secondButton, setSecondButton] = useState(false)
-  const [planDetails, setPlanDetails] = useState()
-  const [categories, setCategories] = useState([])
-  const [cities, setCities] = useState([])
+  const [hasPlan, setHasPlan] = useState(false);
+  const [planId, setPlanId] = useState();
+  const [secondButton, setSecondButton] = useState(false);
+  const [planDetails, setPlanDetails] = useState();
+  const [categories, setCategories] = useState([]);
+  const [cities, setCities] = useState([]);
 
-  const history = useHistory()
+  const history = useHistory();
 
   useEffect(() => {
     axios
@@ -42,42 +42,42 @@ export const Fields = () => {
       )
       .then((res) => {
         if (res.data.resul.hasPlan === false) {
-          setHasPlan(false)
-          setPlanId(res.data.resul.allPlanFor.id)
-          setPlanDetails(res.data.resul.allPlanFor)
+          setHasPlan(false);
+          setPlanId(res.data.resul.allPlanFor.id);
+          setPlanDetails(res.data.resul.allPlanFor);
         } else {
-          setHasPlan(true)
+          setHasPlan(true);
         }
-      })
+      });
 
     const fetchData = async () => {
-      const categoriesies = []
-      const cities = []
+      const categoriesies = [];
+      const cities = [];
       await axios
         .get(API_ADDRESS + "Categories/GetAllCategories")
         .then((res) => {
           res.data.resul.map((item) => {
-            categoriesies.push({ value: item.id, label: item.name })
-          })
-        })
-      setCategories(categoriesies)
+            categoriesies.push({ value: item.id, label: item.name });
+          });
+        });
+      setCategories(categoriesies);
 
       await axios.get(API_ADDRESS + "Account/GetCities").then((res) => {
         res.data.resul.map((item) => {
           cities.push({
             value: item.cityDivisionCode,
             label: `${item.provinceName}، ${item.cityName}`,
-          })
-        })
-      })
-      setCities(cities)
-    }
+          });
+        });
+      });
+      setCities(cities);
+    };
 
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
   const MySelect = ({ label, options, ...props }) => {
-    const [field, meta, helpers] = useField(props)
+    const [field, meta, helpers] = useField(props);
     return (
       <div>
         <Select
@@ -97,11 +97,11 @@ export const Fields = () => {
           name={props.name}
         />
       </div>
-    )
-  }
+    );
+  };
 
   const MyCheckbox = ({ ...props }) => {
-    const [, meta] = useField({ ...props, type: "radio" })
+    const [, meta] = useField({ ...props, type: "radio" });
     return (
       <>
         <div className="form-check form-check-inline">
@@ -116,11 +116,11 @@ export const Fields = () => {
           </label>
         </div>
       </>
-    )
-  }
+    );
+  };
 
   const MyTextAreaInput = ({ ...props }) => {
-    const [, meta, helpers] = useField(props)
+    const [, meta, helpers] = useField(props);
     return (
       <>
         <label className="checkbox form-check-label">{props.label}</label>
@@ -142,8 +142,8 @@ export const Fields = () => {
             language: "fa",
           }}
           onBlur={(_, editor) => {
-            const data = editor.getData()
-            helpers.setValue(data)
+            const data = editor.getData();
+            helpers.setValue(data);
           }}
         />
         <ErrorMessage
@@ -152,8 +152,8 @@ export const Fields = () => {
           name={props.name}
         />
       </>
-    )
-  }
+    );
+  };
 
   const submitHandler = (values) => {
     hasPlan === true &&
@@ -164,19 +164,19 @@ export const Fields = () => {
           },
         })
         .then((res) => {
-          history.push("/Employer/Dashboard")
+          history.push("/Employer/Dashboard");
           Swal.fire({
             icon: "success",
             title: "ثبت آگهی با موفقیت ثبت شد",
             showConfirmButton: false,
             timer: 1750,
-          })
+          });
         })
         .catch((err) => {
           err.response.data.message &&
-            err.response.data.message.map((er) => toast.error(er))
-        })
-  }
+            err.response.data.message.map((er) => toast.error(er));
+        });
+  };
 
   const submitAddToDraft = (values) => {
     hasPlan === true &&
@@ -187,19 +187,19 @@ export const Fields = () => {
           },
         })
         .then((res) => {
-          history.push("/Employer/Dashboard")
+          history.push("/Employer/Dashboard");
           Swal.fire({
             icon: "success",
             title: "آگهی در پیش نویس با موفقیت ذخیره شد",
             showConfirmButton: false,
             timer: 1750,
-          })
+          });
         })
         .catch((err) => {
           err.response.data.message &&
-            err.response.data.message.map((er) => toast.error(er))
-        })
-  }
+            err.response.data.message.map((er) => toast.error(er));
+        });
+  };
 
   return (
     <>
@@ -209,9 +209,9 @@ export const Fields = () => {
         onSubmit={(values) => {
           secondButton === true
             ? submitAddToDraft(values)
-            : submitHandler(values)
+            : submitHandler(values);
 
-          setSecondButton(false)
+          setSecondButton(false);
         }}
       >
         <Form className="w-100">
@@ -383,5 +383,5 @@ export const Fields = () => {
         </Form>
       </Formik>
     </>
-  )
-}
+  );
+};
