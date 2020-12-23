@@ -1,0 +1,17 @@
+.force-border {
+  border-radius: 5px 5px 0 0 !important;
+}
+
+.tabs-option {
+  color: #999 !important;
+  padding: 15px !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+}
+.selected-option {
+  color: #007bff !important;
+  border-left: 1px solid #007bff !important;
+  border-right: 1px solid #007bff !important;
+  padding: 15px !important;
+  border-top: 3px solid #007bff !important;
+}

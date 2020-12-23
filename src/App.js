@@ -47,6 +47,7 @@ import { AboutUsPage } from "./pages/KatinoInfoPages/AboutUs";
 import { ContactPage } from "./pages/KatinoInfoPages/Contact";
 import { PolicyPage } from "./pages/KatinoInfoPages/Policy";
 import { EmployerTraining } from "./pages/KatinoInfoPages/EmployerTraining";
+import { MyRequestDetails } from "./pages/employee/MyRequest/MyRequestDetails";
 import { FrequentQ } from "./pages/KatinoInfoPages/FrequentQ";
 
 import { NotFoundPage } from "./components/notFoundPage/notFoundPage";
@@ -546,6 +547,22 @@ class App extends Component {
                       <EmployeeDashboard props={props} {...props} />
                       <LandingFooter />
                     </React.Fragment>
+                  );
+                }}
+              ></Route>
+
+              <Route
+                exact
+                path="/Employee/Dashboard/Requests/:id"
+                render={(props) => {
+                  if (!this.isEmployee())
+                    return <Redirect exact to="/Employee/Login" />;
+                  return (
+                    <PageTitle title="جزئیات درخواست من">
+                      <Navbar />
+                      <MyRequestDetails props={props} {...props} />
+                      <LandingFooter />
+                    </PageTitle>
                   );
                 }}
               ></Route>

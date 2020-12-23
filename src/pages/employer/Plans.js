@@ -75,20 +75,23 @@ export class Plans extends Component {
                     ) : (
                       <React.Fragment>
                         <span
-                          className="d-block ir-b c-dark text-center smt-5 smb-1 c-success"
-                          style={{ fontSize: "24px" }}
-                        >
-                          {`${numberSeparator(
-                            item.price * (1 - item.discount / 100)
-                          )} تومان`}
-                        </span>
-                        <span
-                          className="d-block ir-b c-dark text-center smb-2 spb-3 c-danger"
+                          className="d-block ir-b c-dark text-center smt-5 smb-1 c-danger"
                           style={{
                             fontSize: "20px",
                             textDecoration: "line-through",
                           }}
-                        >{`${numberSeparator(item.price)} تومان`}</span>
+                        >
+                          {`${numberSeparator(item.price)} تومان`}
+                        </span>
+                        <span
+                          className="d-block ir-b c-dark text-center smb-2 spb-3 c-success"
+                          style={{ fontSize: "24px" }}
+                        >
+                          {" "}
+                          {`${numberSeparator(
+                            item.price * (1 - item.discount / 100)
+                          )} تومان`}
+                        </span>
                       </React.Fragment>
                     )}
 

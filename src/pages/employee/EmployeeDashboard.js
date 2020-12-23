@@ -1,13 +1,17 @@
 import React, { Component } from "react";
 import { SideBar, Header, NotRequested } from "../../components/employeePanel";
+import { MyRequest } from "./MyRequest";
+import { MySuggestAdvers } from "./MySuggestAdvers";
 import { PageTitle } from "../../components/PageTitle";
 import * as service from "../../components/employeePanel";
 import { toast } from "react-toastify";
-
 import agent from "../../core/agent";
-export class EmployeeDashboard extends Component {
+import "./EmployeeDashboard.css";
+
+class EmployeeDashboard extends Component {
   state = {
     currentPage: "Requests",
+    resomeAsignForEmployee: [],
 
     visibility: {
       requests: true,
@@ -57,6 +61,9 @@ export class EmployeeDashboard extends Component {
       //   });
       //   break;
     }
+
+    await this.getResomePercent();
+    await this.getResomeAsignForEmployee();
 
     service
       .getMarkedAds(1, 5)
@@ -149,11 +156,38 @@ export class EmployeeDashboard extends Component {
 
       // toast.success("رزومه با موفقیت ارسال شد");
     } catch (err) {
-
       if (err.response.status === 401) toast.error("لطفا وارد شوید.");
       else if (err.response.status === 404) toast.error("خطای رخ داده  ");
       else if (err.response.status === 500) toast.error("مشکلی رخ داده ");
       else toast.error(err.response.data.message[0]);
+    }
+  };
+
+  getResomePercent = async () => {
+    // event.preventDefault();
+
+    try {
+      // return params;
+      let { data } = await agent.CreateResome.GetResomePercent();
+      this.setState({ resomePercent: data.resul });
+      // toast.success("رزومه با موفقیت ارسال شد");
+    } catch (err) {
+      if (err.response.status === 401) toast.error("لطفا وارد شوید.");
+      else if (err.response.status === 404) toast.error("خطای رخ داده  ");
+      else if (err.response.status === 500) toast.error("مشکلی رخ داده ");
+      else toast.error(err.response.message[0]);
+    }
+  };
+
+  getResomeAsignForEmployee = async () => {
+    try {
+      let { data } = await agent.CreateResome.GetResomeAsignForEmployee();
+      this.setState({ resomeAsignForEmployee: data.resul });
+    } catch (err) {
+      if (err.response.status === 401) toast.error("لطفا وارد شوید.");
+      else if (err.response.status === 404) toast.error("خطای رخ داده  ");
+      else if (err.response.status === 500) toast.error("مشکلی رخ داده ");
+      else toast.error(err.response.message[0]);
     }
   };
 
@@ -165,7 +199,7 @@ export class EmployeeDashboard extends Component {
         <section className="employee-dashboard spx-2 spx-lg-10 container-fluid smt-10 spt-3">
           <div className="row">
             <aside className="col-12 col-lg-9 smb-2 mb-lg-0">
-              <div className="smb-2">
+              <div classNamde="smb-2">
                 <Header
                   title={this.state.pageTitle}
                   type={this.state.currentPage}
@@ -177,12 +211,16 @@ export class EmployeeDashboard extends Component {
               </div>
 
               <div className="smb-2">
-                <div className="bg-white srounded-md sp-2">
+                <div className="bg-white srounded-md force-border">
                   <div className="row">
                     <div className="col-12 col-lg-4 smb-2 mb-lg-0">
                       <span
                         onClick={this.tabsHandler}
-                        className={`btn ir-r d-block w-100 ${this.state.currentPage==="Requests"?"c-primary":""}`}
+                        className={`btn ir-r d-block w-100 tabs-option ${
+                          this.state.currentPage === "Requests"
+                            ? "c-primary selected-option"
+                            : ""
+                        }`}
                         name="Requests"
                       >
                         درخواست های من
@@ -192,7 +230,11 @@ export class EmployeeDashboard extends Component {
                     <div className="col-12 col-lg-4 smb-2 mb-lg-0">
                       <span
                         onClick={this.tabsHandler}
-                        className={`btn ir-r d-block w-100 ${this.state.currentPage==="Bookmarks"?"c-primary":""}`}
+                        className={`btn ir-r d-block w-100 tabs-option ${
+                          this.state.currentPage === "Bookmarks"
+                            ? "c-primary selected-option"
+                            : ""
+                        }`}
                         name="Bookmarks"
                       >
                         آگهی های نشان شده
@@ -202,7 +244,11 @@ export class EmployeeDashboard extends Component {
                     <div className="col-12 col-lg-4 mb-0">
                       <span
                         onClick={this.tabsHandler}
-                        className={`btn ir-r d-block w-100 ${this.state.currentPage==="Recommanded"?"c-primary":""}`}
+                        className={`btn ir-r d-block w-100 tabs-option ${
+                          this.state.currentPage === "Recommanded"
+                            ? "c-primary selected-option"
+                            : ""
+                        }`}
                         name="Recommanded"
                       >
                         آگهی های پیشنهادی
@@ -218,7 +264,9 @@ export class EmployeeDashboard extends Component {
                   this.state.visibility.requests === true ? "d-block" : "d-none"
                 }
               >
-                Requests
+                <MyRequest
+                  resomeAsignForEmployee={this.state.resomeAsignForEmployee}
+                />
               </div>
 
               <div
@@ -243,12 +291,12 @@ export class EmployeeDashboard extends Component {
                     : "d-none"
                 }
               >
-                Recommanded
+                <MySuggestAdvers />
               </div>
             </aside>
 
             <aside className="col-12 col-lg-3 mb-0">
-              <SideBar />
+              <SideBar resomePercent={this.state.resomePercent} />
             </aside>
           </div>
         </section>
@@ -265,8 +313,7 @@ function pageTitle(page) {
       return "آگهی های نشان شده";
     default:
       return "آگهی های پیشنهادی";
-
-    // case "Recommanded":
-    //   return "آگهی های پیشنهادی";
   }
 }
+
+export { EmployeeDashboard };

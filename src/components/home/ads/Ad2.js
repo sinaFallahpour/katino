@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { cooperationType, salary } from "../../../enums";
+import { cooperationType, salary, findCities } from "../../../enums";
 import "react-toastify/dist/ReactToastify.css";
 
 export class Ad2 extends Component {
@@ -56,7 +56,7 @@ export class Ad2 extends Component {
 
             <span className="ir-r c-grey fs-m sml-1">
               <i className="fas fa-map-marker-alt ml-2"></i>
-              {this.props.city}
+              {findCities(this.props.city)}
             </span>
 
             <span className="ir-r text-success fs-m sml-1">

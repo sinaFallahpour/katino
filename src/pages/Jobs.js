@@ -1,54 +1,54 @@
-import React, { Component, useEffect, useRef, useState } from "react"
-import agent from "../core/agent"
-import Swal from "sweetalert2"
-import Pagination from "react-responsive-pagination"
-import { toast } from "react-toastify"
-import { useHistory, useLocation } from "react-router-dom"
+import React, { Component, useEffect, useRef, useState } from "react";
+import agent from "../core/agent";
+import Swal from "sweetalert2";
+import Pagination from "react-responsive-pagination";
+import { toast } from "react-toastify";
+import { useHistory, useLocation } from "react-router-dom";
 
-import { MiniSpinner } from "../components/spinner/MiniSpinner"
+import { MiniSpinner } from "../components/spinner/MiniSpinner";
 import {
   JobSearchBox,
   citiesService,
   Ad,
   Filters,
   searchAdverFilter,
-} from "../components"
+} from "../components";
 
 export const Jobs = () => {
-  const [loading, setLoading] = useState(false)
-  const [currentPage, setCurentPage] = useState(1)
-  const pageSize = 14
-  const [cities, setCities] = useState([])
-  const [adsList, setAdsList] = useState([])
-  const [pageCount, setPageCount] = useState(20)
-  const pathName = useLocation().pathname
-  const url = useLocation().search
-  const history = useHistory()
-  const params = new URLSearchParams(window.location.search)
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurentPage] = useState(1);
+  const pageSize = 14;
+  const [cities, setCities] = useState([]);
+  const [adsList, setAdsList] = useState([]);
+  const [pageCount, setPageCount] = useState(20);
+  const pathName = useLocation().pathname;
+  const url = useLocation().search;
+  const history = useHistory();
+  const params = new URLSearchParams(window.location.search);
 
   useEffect(() => {
-    let cp = params.get("currentPage")
-    let pz = params.get("pageSize")
+    let cp = params.get("currentPage");
+    let pz = params.get("pageSize");
 
-    !cp && params.set("currentPage", 1)
-    !pz && params.set("pageSize", pageSize)
+    !cp && params.set("currentPage", 1);
+    !pz && params.set("pageSize", pageSize);
 
-    !cp && !pz && history.replace(`${pathName}?${params.toString()}`)
+    !cp && !pz && history.replace(`${pathName}?${params.toString()}`);
 
-    citiesService.getCities().then((res) => setCities(res.data.resul))
-  }, [])
+    citiesService.getCities().then((res) => setCities(res.data.resul));
+  }, []);
 
   useEffect(() => {
-    let key = params.get("key")
-    let city = params.get("city")
-    let curentPage = params.get("currentPage")
-    let pageSizee = params.get("pageSize")
-    let category = params.get("category")
-    let salary = params.get("salary")
-    let typeOfCooperation = params.get("typeOfCooperation")
-    let workExperience = params.get("workExperience")
+    let key = params.get("key");
+    let city = params.get("city");
+    let curentPage = params.get("currentPage");
+    let pageSizee = params.get("pageSize");
+    let category = params.get("category");
+    let salary = params.get("salary");
+    let typeOfCooperation = params.get("typeOfCooperation");
+    let workExperience = params.get("workExperience");
 
-    setCurentPage(parseInt(curentPage))
+    setCurentPage(parseInt(curentPage));
 
     const SearchParams = {
       key: key,
@@ -57,50 +57,50 @@ export const Jobs = () => {
       typeOfCooperation: parseInt(typeOfCooperation),
       workExperience: parseInt(workExperience),
       salary: parseInt(salary),
-    }
+    };
 
     const fetchData = async () => {
-      setLoading(true)
+      setLoading(true);
       try {
         const { data } = await searchAdverFilter(
           parseInt(curentPage),
           parseInt(pageSizee),
           SearchParams
-        )
-        setAdsList([])
-        setAdsList(data.resul.listOfData)
-        setPageCount(data.resul.pageCount)
-        setLoading(false)
+        );
+        setAdsList([]);
+        setAdsList(data.resul.listOfData);
+        setPageCount(data.resul.pageCount);
+        setLoading(false);
       } catch (ex) {
-        toast.error(ex.message)
-        setLoading(false)
+        toast.error(ex.message);
+        setLoading(false);
       }
-    }
+    };
 
-    fetchData()
-  }, [url])
+    fetchData();
+  }, [url]);
 
   const handleFilter = async (inp) => {
-    inp.category && params.set("category", inp.category)
-    inp.city && params.set("city", inp.city)
-    inp.salary && params.set("salary", inp.salary)
+    inp.category && params.set("category", inp.category);
+    inp.city && params.set("city", inp.city);
+    inp.salary && params.set("salary", inp.salary);
     inp.typeOfCooperation &&
-      params.set("typeOfCooperation", inp.typeOfCooperation)
-    inp.workExperience && params.set("workExperience", inp.workExperience)
+      params.set("typeOfCooperation", inp.typeOfCooperation);
+    inp.workExperience && params.set("workExperience", inp.workExperience);
 
-    history.replace(`${pathName}?${params.toString()}`)
-  }
+    history.replace(`${pathName}?${params.toString()}`);
+  };
 
   const handleSearch = async (inp) => {
-    inp.key && params.set("key", inp.key)
-    inp.city && params.set("city", inp.city)
+    inp.key && params.set("key", inp.key);
+    inp.city && params.set("city", inp.city);
 
-    history.replace(`${pathName}?${params.toString()}`)
-  }
+    history.replace(`${pathName}?${params.toString()}`);
+  };
 
   const handleMarkOtherAdv = async (adverId) => {
     try {
-      let currentAdver = adsList.find((c) => c.id == adverId)
+      let currentAdver = adsList.find((c) => c.id == adverId);
       if (currentAdver.isMarked) {
         // this.setState({ isMarked: false });
 
@@ -108,39 +108,39 @@ export const Jobs = () => {
           adsList: adsList.map((el) =>
             el.id === adverId ? Object.assign({}, el, { isMarked: false }) : el
           ),
-        })
-        await agent.Adver.unmarkAdvder(adverId)
+        });
+        await agent.Adver.unmarkAdvder(adverId);
       } else {
         this.setState({
           adsList: this.state.adsList.map((el) =>
             el.id === adverId ? Object.assign({}, el, { isMarked: true }) : el
           ),
-        })
+        });
 
-        await agent.Adver.markAdvder(adverId)
+        await agent.Adver.markAdvder(adverId);
       }
     } catch (ex) {
-      this.setState({ isMarked: !this.state.isMarked })
+      this.setState({ isMarked: !this.state.isMarked });
 
       if (ex?.response?.data) {
-        toast.error(ex.response?.data?.message[0])
+        toast.error(ex.response?.data?.message[0]);
         this.setState({
           data: this.state.adsList.map((el) =>
             el.id === adverId
               ? Object.assign({}, el, { isMarked: !el.isMarked })
               : el
           ),
-        })
+        });
       }
     }
-  }
+  };
 
   const handlePaginate = (number) => {
-    setCurentPage(number)
-    const params = new URLSearchParams(window.location.search)
-    params.set("currentPage", number)
-    history.replace(`${pathName}?${params.toString()}`)
-  }
+    setCurentPage(number);
+    const params = new URLSearchParams(window.location.search);
+    params.set("currentPage", number);
+    history.replace(`${pathName}?${params.toString()}`);
+  };
 
   return (
     <>
@@ -191,5 +191,5 @@ export const Jobs = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};

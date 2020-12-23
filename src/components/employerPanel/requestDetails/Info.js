@@ -1,27 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { mainUrl } from "../../../core/agent";
 
 export function Info(props) {
-  const Downloader = (e) => {
-    fetch(e.target.href, {
-      method: "GET",
-      headers: {},
-    })
-      .then((response) => {
-        response.arrayBuffer().then(function (buffer) {
-          const url = window.URL.createObjectURL(new Blob([buffer]));
-          const link = document.createElement("a");
-          link.href = url;
-          link.setAttribute("download", "00.pdf"); //or any other extension
-          document.body.appendChild(link);
-          link.click();
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   return (
     <>
       {props.type && (
@@ -34,13 +15,13 @@ export function Info(props) {
               {props.title}
 
               {props.type === "file" ? (
-                <button
+                <a
                   className="btn bg-white border srounded-sm ir-r fs-s p-2"
                   href={mainUrl + `PDF/resomePDF/${props.pdfUrl}`}
-                  onClick={Downloader}
+                  target="_blank"
                 >
                   دانلود
-                </button>
+                </a>
               ) : (
                 ""
               )}

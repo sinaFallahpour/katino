@@ -89,15 +89,6 @@ const EmployerHistoryPayment = () => {
             <h2 className="ir-b fs-s c-dark text-right smb-2 mb-lg-0">
               تاریخچه حساب
             </h2>
-
-            <div>
-              <a
-                className="d-block d-lg-inline-block shadow-none ir-r fs-s c-regular btn border srounded-sm smb-2 mb-lg-0"
-                href="tel:01133333333"
-              >
-                تماس تلفنی
-              </a>
-            </div>
           </header>
 
           <hr className="smy-2" />
