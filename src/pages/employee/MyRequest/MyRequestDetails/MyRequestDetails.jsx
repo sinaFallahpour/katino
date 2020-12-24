@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { GetAwnserAndQuestion } from "../../../../core/api/asign-resome-details";
 import {
   Container,
@@ -18,8 +18,6 @@ const MyRequestDetails = () => {
   const [data, setData] = useState();
   const params = useParams();
 
-  //     : null
-
   useEffect(() => {
     const fetchData = async () => {
       const data = await GetAwnserAndQuestion(params.id);
@@ -36,12 +34,15 @@ const MyRequestDetails = () => {
           <aside className="col-12 col-lg-9 smb-2 mb-lg-0">
             <div className="smb-2">
               <div className="bg-white srounded-md force-border pb-1">
-                <div className="row">
+                <div className="row" style={{ position: "relative" }}>
                   <div className="col-12 col-lg-4 smb-2 mb-lg-0">
                     <span className="btn ir-r d-block w-100 tabs-option c-primary selected-option">
                       درخواست های من
                     </span>
                   </div>
+                  <Link to="/Employee/Dashboard/Requests" className="comeback">
+                    بازگشت
+                  </Link>
                 </div>
                 {data && (
                   <div class="container">

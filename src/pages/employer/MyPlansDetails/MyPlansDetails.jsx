@@ -4,19 +4,23 @@ import axios from "axios";
 import API_ADDRESS from "../../../API_ADDRESS";
 import { toast } from "react-toastify";
 import { MiniSpinner } from "../../../components/spinner/MiniSpinner";
-import { EmployerHistoryPaymentDetails } from "./HistoryPaymentDetails";
 
-const EmployerHistoryPayment = () => {
+const MyPlansDetails = () => {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [idNumber, setIdNumber] = useState();
-  const [modalStatus, setModalStatus] = useState(false);
+
+  // planAdverCount: "10000000"
+  // planImmediateAdverCount: "20"
+  // planName: "طرح طلایی"
+  // remainingAdversCount: "9999984"
+  // remainingDays: "51.00498324158681"
+  // remainingImmediateAdversCount: "19"
 
   useEffect(() => {
     setLoading(true);
     axios
       .get(
-        API_ADDRESS + `Account/GetLastOfOrder`,
+        API_ADDRESS + `Plan/GetPlanInfo`,
         {},
         {
           headers: {
@@ -25,7 +29,7 @@ const EmployerHistoryPayment = () => {
         }
       )
       .then(({ data }) => {
-        setList(data.resul);
+        setList([data.resul]);
 
         setLoading(false);
       })
@@ -38,15 +42,9 @@ const EmployerHistoryPayment = () => {
       });
   }, []);
 
-  function goto(event) {
-    setModalStatus(false);
-  }
-  document.body.addEventListener("click", goto);
-
   return (
     <>
       {loading && <MiniSpinner />}
-      {modalStatus && <EmployerHistoryPaymentDetails idNumber={idNumber} />}
 
       <section className="dashboard container-fluid spx-2 smt-10 spx-lg-10">
         <div className="row">
@@ -69,7 +67,8 @@ const EmployerHistoryPayment = () => {
 
                   <li className="nav-item smr-lg-4">
                     <Link
-                      className="nav-link position-relative ir-r fs-m p-0 active"
+                      className="nav-link position-relative c-grey ir-r fs-m p-0 active"
+                      style={{ color: "#00BCD4 !important" }}
                       to="/Employer/History/Payment"
                     >
                       تاریخچه حساب
@@ -78,9 +77,8 @@ const EmployerHistoryPayment = () => {
 
                   <li className="nav-item smr-lg-4">
                     <Link
-                      className="nav-link position-relative c-grey ir-r fs-m p-0 active"
-                      style={{ color: "#00BCD4 !important" }}
-                      to="/Employer/MyPlansDetails"
+                      className="nav-link position-relative ir-r fs-m p-0 active"
+                      to="/Employer/Dashboard/Plans"
                     >
                       اطلاعات اشتراک من
                     </Link>
@@ -122,15 +120,14 @@ const EmployerHistoryPayment = () => {
                       className="ir-b c-regular fs-s border-top-0"
                       scope="col"
                     >
-                      نام بسته
+                      تاریخ خرید
                     </th>
                     <th
                       className="ir-b c-regular fs-s border-top-0"
                       scope="col"
                     >
-                      تاریخ خرید
+                      نام بسته
                     </th>
-
                     <th
                       className="ir-b c-regular fs-s border-top-0"
                       scope="col"
@@ -186,18 +183,6 @@ const EmployerHistoryPayment = () => {
                           {item.orderType}
                         </span>
                       </td>
-
-                      <td className="ir-r c-regular fs-s">
-                        <button
-                          className="ir-r c-regular fs-s btn btn-light shadow-none sml-1"
-                          onClick={() => {
-                            setModalStatus(true);
-                            setIdNumber(item.orderId);
-                          }}
-                        >
-                          مشاهده
-                        </button>
-                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -210,4 +195,4 @@ const EmployerHistoryPayment = () => {
   );
 };
 
-export { EmployerHistoryPayment };
+export { MyPlansDetails };

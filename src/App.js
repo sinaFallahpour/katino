@@ -56,6 +56,7 @@ import { ContactPage } from "./pages/KatinoInfoPages/Contact";
 import { PolicyPage } from "./pages/KatinoInfoPages/Policy";
 import { EmployerTraining } from "./pages/KatinoInfoPages/EmployerTraining";
 import { MyRequestDetails } from "./pages/employee/MyRequest/MyRequestDetails";
+import { MyPlansDetails } from "./pages/employer/MyPlansDetails";
 import { FrequentQ } from "./pages/KatinoInfoPages/FrequentQ";
 
 import { NotFoundPage } from "./components/notFoundPage/notFoundPage";
@@ -394,6 +395,22 @@ class App extends Component {
                     <PageTitle title="تاریخچه حساب">
                       <Navbar />
                       <EmployerHistoryPayment props={props} {...props} />
+                      <EmployerFooter />
+                    </PageTitle>
+                  );
+                }}
+              ></Route>
+
+              <Route
+                exact
+                path="/Employer/MyPlansDetails"
+                render={(props) => {
+                  if (!this.isEmployer())
+                    return <Redirect exact to="/Employer/Login" />;
+                  return (
+                    <PageTitle title="تاریخچه حساب">
+                      <Navbar />
+                      <MyPlansDetails props={props} {...props} />
                       <EmployerFooter />
                     </PageTitle>
                   );

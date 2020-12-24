@@ -52,6 +52,15 @@ export class Plans extends Component {
                         تاریخچه حساب
                       </Link>
                     </li>
+
+                    <li className="nav-item smr-lg-4">
+                      <Link
+                        className="nav-link position-relative c-grey ir-r fs-m p-0 active"
+                        to="/Employer/MyPlansDetails"
+                      >
+                        اطلاعات اشتراک من
+                      </Link>
+                    </li>
                   </ul>
                 </div>
               </nav>

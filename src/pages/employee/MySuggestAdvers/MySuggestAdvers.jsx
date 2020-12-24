@@ -32,8 +32,23 @@ const MySuggestAdvers = ({}) => {
 
   useEffect(() => {
     setLoading(true);
-    let curentPage = params.get("currentPage");
-    let pageSizee = params.get("pageSize");
+    let cp = params.get("currentPage");
+    let pz = params.get("pageSize");
+    let curentPage = "";
+    let pageSizee = "";
+
+    if (cp && pz) {
+      curentPage = params.get("currentPage");
+      pageSizee = params.get("pageSize");
+    } else {
+      !cp && params.set("currentPage", 1);
+      !pz && params.set("pageSize", pageSize);
+
+      !cp && !pz && history.replace(`${pathName}?${params.toString()}`);
+
+      curentPage = 1;
+      pageSizee = pageSize;
+    }
 
     setCurentPage(parseInt(curentPage));
 
