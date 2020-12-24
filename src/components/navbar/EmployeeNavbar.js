@@ -224,7 +224,7 @@ export class EmployeeNavbar extends Component {
                   <li className="smb-1">
                     <Link
                       className="ir-r c-grey text-decoration-none"
-                      to="/Tickets"
+                      to="/Employee/Tickets"
                     >
                       تیکت های پشتیبانی
                     </Link>

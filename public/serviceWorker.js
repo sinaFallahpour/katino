@@ -2,15 +2,15 @@ const CACHE_NAME = "version-1";
 // const urlsToChache = ["index.html", "offline.html", "./static/js/main.chunk.js",
 //   "./css/main.css", "./css/spacing.min.css", "./static/js/0.chunk.js"];
 
-const urlsToChache = ["./index.html", "./offline.html",
-  "./css/main.css", "./css/spacing.min.css",
+const urlsToChache = [
+  "./index.html",
+  "./offline.html",
+  "./css/main.css",
+  "./css/spacing.min.css",
   "./static/js/main.ef6d7cd0.chunk.js",
   "./static/js/2.26da0ab9.chunk.js",
-  "./static/js/runtime-main.7f7134f8.js"
+  "./static/js/runtime-main.7f7134f8.js",
 ];
-
-
-
 const self = this;
 
 // Install sw

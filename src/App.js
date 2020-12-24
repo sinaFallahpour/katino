@@ -36,7 +36,15 @@ import { ToastContainer } from "react-toastify";
 import { SuccessPayment } from "./components/payment/SuccessPayment";
 import { EmployeeDashboard } from "./pages/employee";
 import { Security } from "./core/Security";
-import { Tickets, CreateTicket, TicketDetail } from "./pages/ticketing";
+import {
+  Tickets,
+  CreateTicket,
+  CreateTicketEmployee,
+  TicketDetail,
+  EmployeeTickets,
+  EmployeeTicketDetail,
+} from "./pages/ticketing";
+
 import { EmployeeSuccessPage } from "./pages/employee/EmployeePayment/SuccessPayment";
 import { EmployeeFailurePage } from "./pages/employee/EmployeePayment/FailurePayment";
 import { EmployerSuccessPage } from "./pages/employer/EmployerPayment/SuccessPayment";
@@ -670,6 +678,52 @@ class App extends Component {
                     <PageTitle title="تیکت های پشتیبانی">
                       <Navbar />
                       <TicketDetail props={props} {...props} />
+                      <LandingFooter className="d-none d-lg-block" />
+                    </PageTitle>
+                  );
+                }}
+              ></Route>
+
+              <Route
+                exact
+                path="/Employee/Tickets"
+                render={(props) => {
+                  if (!this.isEmployee())
+                    return <Redirect exact to="/Employee/Login" />;
+                  return (
+                    <PageTitle title="تیکت های پشتیبانی">
+                      <Navbar />
+                      <EmployeeTickets props={props} {...props} />
+                      <LandingFooter className="d-none d-lg-block" />
+                    </PageTitle>
+                  );
+                }}
+              ></Route>
+
+              <Route
+                path="/Employee/Tickets/:id"
+                render={(props) => {
+                  if (!this.isEmployee())
+                    return <Redirect exact to="/Employee/Login" />;
+                  return (
+                    <PageTitle title="تیکت های پشتیبانی">
+                      <Navbar />
+                      <EmployeeTicketDetail props={props} {...props} />
+                      <LandingFooter className="d-none d-lg-block" />
+                    </PageTitle>
+                  );
+                }}
+              ></Route>
+
+              <Route
+                path="/Employee/createTicket"
+                render={(props) => {
+                  if (!this.isEmployee())
+                    return <Redirect exact to="/Employee/Login" />;
+                  return (
+                    <PageTitle title="ایجاد تیکت">
+                      <Navbar />
+                      <CreateTicketEmployee props={props} {...props} />
                       <LandingFooter className="d-none d-lg-block" />
                     </PageTitle>
                   );

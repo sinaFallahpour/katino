@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import * as service from "../../components/tickets";
 import { Link } from "react-router-dom";
-import validator from "validator";
 import { toast } from "react-toastify";
 
 import agent from "../../core/agent";
 
-export class CreateTicket extends Component {
+export class CreateTicketEmployee extends Component {
   state = {
     details: {},
     id: null,
@@ -39,7 +37,7 @@ export class CreateTicket extends Component {
       // let { data } = await agent.CreateResome.editEmployeePersonalInformation(
       //   data1
       // );
-      this.props.history.push("/Tickets");
+      this.props.history.push("/Employee/Tickets");
       toast.success("ثبت موفقیت آمیز");
       // this.setState({ editMode1: false });
     } catch (err) {
@@ -71,44 +69,11 @@ export class CreateTicket extends Component {
 
                 <Link
                   className="ir-r fs-s btn bg-white shadow-none border"
-                  to="/Tickets"
+                  to="/Employee/Tickets"
                 >
                   بازگشت
                 </Link>
               </header>
-
-              {/* 
-              <div className="first-content">
-                <span className="d-block text-right ir-b fs-s smb-1 c-regular">
-                  {this.state.details.senderFullName}
-                </span>
-                <span className="d-block text-right ir-r fs-s smb-1 c-regular">
-                  {this.state.details.content}
-                </span>
-                <span className="d-block text-right ir-r fs-s mb-0 c-light">
-                  {this.state.details.createDate}
-                </span>
-              </div> */}
-
-              {/* {this.state.details.answer !== null ? (
-                <React.Fragment>
-                  <hr className="smy-2" />
-
-                  <div className="first-content">
-                    <span className="d-block text-right ir-b fs-s smb-1 c-regular">
-                      {this.state.details.receiverFullName}
-                    </span>
-                    <span className="d-block text-right ir-r fs-s smb-1 c-regular">
-                      {this.state.details.answer}
-                    </span>
-                    <span className="d-block text-right ir-r fs-s mb-0 c-light">
-                      {this.state.details.answerDate}
-                    </span>
-                  </div>
-                </React.Fragment>
-              ) : (
-                  ""
-                )} */}
 
               <hr className="smy-2" />
 
