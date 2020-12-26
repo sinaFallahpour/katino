@@ -29,12 +29,9 @@ export class CreateResume extends Component {
     const res = await agent.Cities.Cities();
 
     const { data } = await agent.CreateResome.loadEmployeePersonalInformation();
-
     const resAboutMe = await agent.CreateResome.LoadEmployeeAboutMe();
-
     const resJobSkill = await agent.CreateResome.GetAlljobSkillsForSelect();
     const resuserJobSkill = await agent.CreateResome.getAllUserJobSkillsForCurrentUser();
-
     const resuJobPreference = await agent.CreateResome.GetUserJobPreferenceForCurrentUser();
 
     await this.getResomePercent();
@@ -45,7 +42,19 @@ export class CreateResume extends Component {
       jobSkills: resJobSkill.data.resul,
       userJobSkills: resuserJobSkill.data.resul,
       aboutMen: resAboutMe.data.resul,
-      info8: resuJobPreference.data.resul,
+      info8: resuJobPreference.data.resul || {
+        city: "",
+        typeOfCooperation: 0,
+        senioritylevel: 0,
+        salary: 0,
+        promotion: 0,
+        insurance: 0,
+        educationCourses: 0,
+        flexibleWorkingTime: 0,
+        hasMeel: 0,
+        transportationService: 0,
+        categoryIds: [],
+      },
     });
   }
 
@@ -107,6 +116,9 @@ export class CreateResume extends Component {
 
   cancel() {
     this.setState({ editMode: false });
+    this.setState({ editMode2: false });
+    this.setState({ editMode3: false });
+    this.setState({ editMode4: false });
   }
 
   async radionHandler(event) {
@@ -159,8 +171,8 @@ export class CreateResume extends Component {
   returnGenderStatus = () => {
     var genderStatus = this.state.info2?.gender;
     // if (!genderStatus) return;
-    if (genderStatus == 0) return "مرد";
-    if (genderStatus == 1) return "زن";
+    if (genderStatus == 1) return "مرد";
+    if (genderStatus == 2) return "زن";
   };
 
   returnMarridStatus = () => {
@@ -200,8 +212,8 @@ export class CreateResume extends Component {
   returnMarridStatus = () => {
     var marridStatus = this.state.info2?.isMarreid;
     // if (!genderStatus) return;
-    if (marridStatus) return "مجرد";
-    if (!marridStatus) return "متاهل";
+    if (!marridStatus) return "مجرد";
+    if (marridStatus) return "متاهل";
   };
 
   submitHandler = async (event) => {
@@ -228,12 +240,14 @@ export class CreateResume extends Component {
       // return params;
       let data1 = { ...this.state.info2 };
       if (data1.isMarreid == "false") data1.isMarreid = false;
-      else data1.isMarreid = true;
+      if (data1.isMarreid == "true") data1.isMarreid = true;
+
       let { data } = await agent.CreateResome.editEmployeePersonalInformation(
         data1
       );
       toast.success("ثبت موفقیت آمیز");
       this.setState({ editMode1: false });
+      this.cancel();
     } catch (err) {
       if (err.response.status === 401) toast.error("لطفا وارد شوید.");
       else if (err.response.status === 404) toast.error("خطای رخ داده  ");
@@ -243,6 +257,7 @@ export class CreateResume extends Component {
           toast.error(err.response.data.message[index]);
         }
       }
+      this.cancel();
     }
   };
 
@@ -255,6 +270,7 @@ export class CreateResume extends Component {
       let { data } = await agent.CreateResome.AddEmployeeAboutMen(obj);
       toast.success("ثبت موفقیت آمیز");
       this.setState({ editMode2: false });
+      this.cancel();
     } catch (err) {
       if (err.response?.status === 401) toast.error("لطفا وارد شوید.");
       else if (err.response.status === 404) toast.error("خطای رخ داده  ");
@@ -264,6 +280,7 @@ export class CreateResume extends Component {
           toast.error(err.response.data.message[index]);
         }
       }
+      this.cancel();
     }
   };
 
@@ -301,9 +318,11 @@ export class CreateResume extends Component {
   SubmitJobPreference = async (event) => {
     event.preventDefault();
 
+    console.log(this.state.info8);
+
     try {
       let obj = this.state.info8;
-      let { data } = await agent.CreateResome.AddUserJobPreference(obj);
+      await agent.CreateResome.AddUserJobPreference(obj);
       this.setState({
         editMode8: false,
       });
@@ -325,12 +344,8 @@ export class CreateResume extends Component {
   };
 
   deleJobSkills = async (id) => {
-    // event.preventDefault();
     try {
-      // // return params;
-      // let currentJobSkill = this.state.currentJobSkill
-      // let obj = { jobSkillId: currentJobSkill?.id }
-      let { data } = await agent.CreateResome.DeleteUserJobSkill(id);
+      await agent.CreateResome.DeleteUserJobSkill(id);
 
       this.setState({
         userJobSkills: this.state.userJobSkills.filter(
@@ -394,6 +409,7 @@ export class CreateResume extends Component {
       <section className="container-fluid create-ad spx-2 spx-lg-10 smy-10 spt-10">
         <div className="row">
           <aside className="col-12 col-lg-8 smb-2 mb-lg-0">
+            {/* aside and edit profile */}
             <h3 className="d-block text-right ir-b smb-3 c-dark">
               ویرایش پروفایل
             </h3>
@@ -644,7 +660,6 @@ export class CreateResume extends Component {
                 </div>
               </div>
             </div>
-            {/* </aside> */}
 
             {/* <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4"> */}
             <h3 className="d-block text-right ir-b smb-3 c-dark">
@@ -734,16 +749,18 @@ export class CreateResume extends Component {
                           </span>
                         </li>
 
-                        <li className="list-group-item border-0 pr-0">
-                          <span className="ir-b c-grey sml-1">
-                            وضعیت نظام :
-                            <span className="c-regular">
-                              {this.state.info2
-                                ? this.state.info2?.military
-                                : "-"}
+                        {this.state.info2?.gender !== 2 && (
+                          <li className="list-group-item border-0 pr-0">
+                            <span className="ir-b c-grey sml-1">
+                              وضعیت نظام :
+                              <span className="c-regular">
+                                {this.state.info2
+                                  ? this.state.info2?.military
+                                  : "-"}
+                              </span>
                             </span>
-                          </span>
-                        </li>
+                          </li>
+                        )}
 
                         <li className="list-group-item border-0 pr-0">
                           <span className="ir-b c-grey sml-1">
@@ -763,28 +780,33 @@ export class CreateResume extends Component {
                           </span>
                         </li>
 
-                        <li className="list-group-item border-0 pr-0">
-                          <span className="ir-b c-grey sml-1">
-                            تاریخ معافیت :
-                            <span className="c-regular">
-                              {this.state.info2
-                                ? this.state.info2?.exemptionExpirestionDate
-                                : "-"}
-                            </span>
-                          </span>
-                        </li>
+                        {this.state.info2?.gender !== 2 && (
+                          <>
+                            <li className="list-group-item border-0 pr-0">
+                              <span className="ir-b c-grey sml-1">
+                                تاریخ معافیت :
+                                <span className="c-regular">
+                                  {this.state.info2?.exemptionExpirestionDate
+                                    ? this.state.info2?.exemptionExpirestionDate
+                                    : "-"}
+                                </span>
+                              </span>
+                            </li>
 
-                        <li className="list-group-item border-0 pr-0">
-                          <span className="ir-b c-grey sml-1">
-                            تاریخ دریافت کارت معافیت:
-                            <span className="c-regular">
-                              {this.state.info2
-                                ? this.state.info2
+                            <li className="list-group-item border-0 pr-0">
+                              <span className="ir-b c-grey sml-1">
+                                تاریخ دریافت کارت معافیت:
+                                <span className="c-regular">
+                                  {this.state.info2
                                     ?.exemptionExpirestionRecieveDate
-                                : "-"}
-                            </span>
-                          </span>
-                        </li>
+                                    ? this.state.info2
+                                        ?.exemptionExpirestionRecieveDate
+                                    : "-"}
+                                </span>
+                              </span>
+                            </li>
+                          </>
+                        )}
                       </ul>
                     </div>
                   ) : (
@@ -821,10 +843,6 @@ export class CreateResume extends Component {
 
                               <div className="form-group ">
                                 <Select
-                                  // value={this.state.cities.filter(
-                                  //   (option) =>
-                                  //     option.cityName !== this.state.info2?.city
-                                  // )}
                                   onChange={(e) => {
                                     this.setState({
                                       info2: {
@@ -835,8 +853,6 @@ export class CreateResume extends Component {
                                   }}
                                   placeholder="انتخاب شهر"
                                   styles={{ fontFamily: "iransans-regular" }}
-                                  // options={this.state.cities}
-
                                   options={this.state.cities.map((item) => {
                                     return {
                                       value: item.cityName,
@@ -886,10 +902,10 @@ export class CreateResume extends Component {
                             />
                           </li>
 
-                          <li className="list-group-item border-0 p-0">
+                          <li className="list-group-item border-0 p-0 mb-3">
                             <div className="text-input srounded-sm">
                               <label
-                                className="ir-r text-regular text-right smb-1 label bg-white"
+                                className="ir-r text-regular text-right label bg-white"
                                 htmlFor="employmentStatus"
                               >
                                 وضعیت تاهل
@@ -904,8 +920,8 @@ export class CreateResume extends Component {
                                   label={"متاهل"}
                                   type="radio"
                                   value={true}
-                                  id="status1"
-                                  name="status"
+                                  id="status20"
+                                  name="status20"
                                   onChange={(e) => {
                                     this.setState({
                                       info2: {
@@ -923,8 +939,8 @@ export class CreateResume extends Component {
                                   label={"مجرد"}
                                   type="radio"
                                   value={false}
-                                  id="status2"
-                                  name="status"
+                                  id="status21"
+                                  name="status21"
                                   onChange={(e) => {
                                     this.setState({
                                       info2: {
@@ -938,49 +954,171 @@ export class CreateResume extends Component {
                             </div>
                           </li>
 
-                          <li className="list-group-item border-0 p-0">
-                            <InputText
-                              type="text"
-                              id="exemptionExpirestionDate"
-                              name="exemptionExpirestionDate"
-                              label={"تاریخ معافیت"}
-                              value={
-                                this.state.info2?.exemptionExpirestionDate || ""
-                              }
-                              onChange={(e) => {
-                                this.setState({
-                                  info2: {
-                                    ...this.state.info2,
-                                    exemptionExpirestionDate: e.target.value,
-                                  },
-                                });
-                              }}
-                              placeholder="مثال: 1374/11/01"
-                            />
-                          </li>
+                          <li className="list-group-item border-0 p-0 mb-3">
+                            <div className="text-input srounded-sm">
+                              <label
+                                className="ir-r text-regular text-right  label bg-white"
+                                htmlFor="employmentStatus"
+                              >
+                                جنسیت
+                              </label>
 
-                          <li className="list-group-item border-0 p-0">
-                            <InputText
-                              type="text"
-                              id="exemptionExpirestionDate"
-                              name="exemptionExpirestionDate"
-                              label={"تاریخ دریافت کارت معافیت"}
-                              value={
-                                this.state.info2
-                                  ?.exemptionExpirestionRecieveDate || ""
-                              }
-                              onChange={(e) => {
-                                this.setState({
-                                  info2: {
-                                    ...this.state.info2,
-                                    exemptionExpirestionRecieveDate:
-                                      e.target.value,
-                                  },
-                                });
-                              }}
-                              placeholder="مثال: 1374/11/01"
-                            />
+                              <div>
+                                <InputRadio
+                                  checked={
+                                    this.state.info2?.gender == 1 ||
+                                    this.state.info2?.gender == 1
+                                  }
+                                  label={"مرد"}
+                                  type="radio"
+                                  value={true}
+                                  id="status22"
+                                  name="status22"
+                                  onChange={(e) => {
+                                    this.setState({
+                                      info2: {
+                                        ...this.state.info2,
+                                        gender: 1,
+                                      },
+                                    });
+                                  }}
+                                />
+                                <InputRadio
+                                  checked={
+                                    this.state.info2?.gender == 2 ||
+                                    this.state.info2?.gender == 2
+                                  }
+                                  label={"زن"}
+                                  type="radio"
+                                  value={false}
+                                  id="status4"
+                                  name="status4"
+                                  onChange={(e) => {
+                                    this.setState({
+                                      info2: {
+                                        ...this.state.info2,
+                                        gender: 2,
+                                      },
+                                    });
+                                  }}
+                                />
+                              </div>
+                            </div>
                           </li>
+                          {this.state.info2.gender === 1 && (
+                            <>
+                              <label
+                                className="ir-r text-regular text-right smb-1 label bg-white"
+                                htmlFor="employmentStatus"
+                              >
+                                وضعیت خدمت
+                              </label>
+                              <div>
+                                <InputRadio
+                                  checked={
+                                    this.state.info2?.military === "مشمول"
+                                  }
+                                  label={"مشمول"}
+                                  type="radio"
+                                  id="status10"
+                                  name="status10"
+                                  onChange={(e) => {
+                                    this.setState({
+                                      info2: {
+                                        ...this.state.info2,
+                                        military: "مشمول",
+                                      },
+                                    });
+                                  }}
+                                />
+                                <InputRadio
+                                  checked={
+                                    this.state.info2?.military === "معاف"
+                                  }
+                                  label={"معاف"}
+                                  type="radio"
+                                  id="status11"
+                                  name="status11"
+                                  onChange={(e) => {
+                                    this.setState({
+                                      info2: {
+                                        ...this.state.info2,
+                                        military: "معاف",
+                                      },
+                                    });
+                                  }}
+                                />
+                                <InputRadio
+                                  checked={
+                                    this.state.info2?.military ===
+                                    "دارای کارت پایان خدمت"
+                                  }
+                                  label={"دارای کارت پایان خدمت"}
+                                  type="radio"
+                                  id="status12"
+                                  name="status12"
+                                  onChange={(e) => {
+                                    this.setState({
+                                      info2: {
+                                        ...this.state.info2,
+                                        military: "دارای کارت پایان خدمت",
+                                      },
+                                    });
+                                  }}
+                                />
+                              </div>
+                            </>
+                          )}
+
+                          {this.state.info2.gender === 1 &&
+                            this.state.info2.military !== "مشمول" && (
+                              <>
+                                <li className="list-group-item border-0 p-0 mt-3">
+                                  <InputText
+                                    type="text"
+                                    id="exemptionExpirestionDate"
+                                    name="exemptionExpirestionDate"
+                                    label={"تاریخ معافیت"}
+                                    value={
+                                      this.state.info2
+                                        ?.exemptionExpirestionDate || ""
+                                    }
+                                    onChange={(e) => {
+                                      this.setState({
+                                        info2: {
+                                          ...this.state.info2,
+                                          exemptionExpirestionDate:
+                                            e.target.value,
+                                        },
+                                      });
+                                    }}
+                                    placeholder="مثال: 1374/11/01"
+                                  />
+                                </li>
+                                <li className="list-group-item border-0 p-0">
+                                  <InputText
+                                    type="text"
+                                    id="exemptionExpirestionDate"
+                                    name="exemptionExpirestionDate"
+                                    label={"تاریخ دریافت کارت معافیت"}
+                                    value={
+                                      this.state.info2
+                                        ?.exemptionExpirestionRecieveDate || ""
+                                    }
+                                    onChange={(e) => {
+                                      this.setState({
+                                        info2: {
+                                          ...this.state.info2,
+                                          exemptionExpirestionRecieveDate:
+                                            e.target.value,
+                                        },
+                                      });
+                                    }}
+                                    placeholder="مثال: 1374/11/01"
+                                  />
+                                </li>
+                              </>
+                            )}
                         </ul>
 
                         <button
@@ -1004,14 +1142,7 @@ export class CreateResume extends Component {
                 <div className="col-12">
                   {!this.state.editMode3 ? (
                     <header className="d-flex justify-content-between align-items-center">
-                      {/* <h3 className="ir-b c-primary text-right d-block fs-m smb-2">
-                        {this.state.info
-                          ? this.state.info.userFullName
-                          : "درحال بارگذاری..."}
-                      </h3> */}
-
                       <button
-                        // onClick={this.editDesc.bind(this)}
                         onClick={() => {
                           this.setState({ editMode3: true });
                         }}
@@ -1028,7 +1159,6 @@ export class CreateResume extends Component {
                       </h3>
 
                       <button
-                        // onClick={this.cancel.bind(this)}
                         onClick={() => {
                           this.setState({ editMode3: false });
                         }}
@@ -1107,14 +1237,7 @@ export class CreateResume extends Component {
                 <div className="col-12 col-lg-12">
                   {!this.state.editMode4 ? (
                     <header className="d-flex justify-content-between align-items-center">
-                      {/* <h3 className="ir-b c-primary text-right d-block fs-m smb-2">
-                        {this.state.info
-                          ? this.state.info.userFullName
-                          : "درحال بارگذاری..."}
-                      </h3> */}
-
                       <button
-                        // onClick={this.editDesc.bind(this)}
                         onClick={() => {
                           this.setState({ editMode4: true });
                         }}
@@ -1131,7 +1254,6 @@ export class CreateResume extends Component {
                       </h3>
 
                       <button
-                        // onClick={this.cancel.bind(this)}
                         onClick={() => {
                           this.setState({ editMode4: false });
                         }}
@@ -1149,11 +1271,6 @@ export class CreateResume extends Component {
                         <li className="list-group-item border-0 pr-0">
                           <span className="ir-b c-grey sml-1">
                             مهارت‌های حرفه‌ای :
-                            {/* <span className="c-regular">
-                              {this.state.info3
-                                ? this.state.info3?.aboutMen
-                                : "-"}
-                            </span> */}
                           </span>
                         </li>
                       </ul>
@@ -1170,6 +1287,7 @@ export class CreateResume extends Component {
                                 onClick={() => {
                                   this.deleJobSkills(item.id);
                                 }}
+                                style={{ cursor: "default" }}
                               ></i>
                             </button>
                           );
@@ -1243,14 +1361,7 @@ export class CreateResume extends Component {
                 <div className="col-12">
                   {!this.state.editMode8 ? (
                     <header className="d-flex justify-content-between align-items-center">
-                      {/* <h3 className="ir-b c-primary text-right d-block fs-m smb-2">
-                        {this.state.info
-                          ? this.state.info.userFullName
-                          : "درحال بارگذاری..."}
-                      </h3> */}
-
                       <button
-                        // onClick={this.editDesc.bind(this)}
                         onClick={() => {
                           this.setState({ editMode8: true });
                         }}
@@ -1267,7 +1378,6 @@ export class CreateResume extends Component {
                       </h3>
 
                       <button
-                        // onClick={this.cancel.bind(this)}
                         onClick={() => {
                           this.setState({ editMode8: false });
                         }}
@@ -1346,10 +1456,6 @@ export class CreateResume extends Component {
 
                               <div className="form-group ">
                                 <Select
-                                  // value={this.state.cities.filter(
-                                  //   (option) =>
-                                  //     option.label === this.state.info8.city
-                                  // )}
                                   onChange={(e) => {
                                     this.setState({
                                       info8: {
@@ -1360,8 +1466,6 @@ export class CreateResume extends Component {
                                   }}
                                   placeholder="انتخاب شهر"
                                   styles={{ fontFamily: "iransans-regular" }}
-                                  // options={this.state.cities}
-
                                   options={this.state.cities.map((item) => {
                                     return {
                                       value: item.cityName,
@@ -1384,8 +1488,6 @@ export class CreateResume extends Component {
 
                               <div className="form-group ">
                                 <Select
-                                  // isMulti
-
                                   isClearable
                                   onChange={async (e) => {
                                     this.setState({
@@ -1415,13 +1517,11 @@ export class CreateResume extends Component {
 
                               <div className="form-group ">
                                 <Select
-                                  // isMulti
-                                  // isClearable
                                   onChange={async (e) => {
                                     this.setState({
                                       info8: {
                                         ...this.state.info8,
-                                        typeOfCooperation: e.value,
+                                        typeOfCooperation: [e.value],
                                       },
                                     });
                                   }}
@@ -1445,8 +1545,6 @@ export class CreateResume extends Component {
 
                               <div className="form-group ">
                                 <Select
-                                  // isMulti
-                                  // isClearable
                                   onChange={async (e) => {
                                     this.setState({
                                       info8: {
@@ -1465,32 +1563,192 @@ export class CreateResume extends Component {
                           </li>
 
                           <li>
+                            <div className="text-input srounded-sm">
+                              <label
+                                className="ir-r text-regular text-right smb-1 label bg-white"
+                                htmlFor="jobTitle"
+                              >
+                                دسته بندی ها
+                              </label>
+
+                              <div className="form-group ">
+                                <Select
+                                  onChange={async (e) => {
+                                    this.setState({
+                                      info8: {
+                                        ...this.state.info8,
+                                        categoryIds: e.value,
+                                      },
+                                    });
+                                  }}
+                                  isSearchable={false}
+                                  placeholder={"دسته بندی ها"}
+                                  options={expriences}
+                                  styles={{ fontFamily: "iransans-regular" }}
+                                />
+                              </div>
+                            </div>
+                          </li>
+
+                          <li>
                             <div className="custom-control custom-radio custom-control-inline">
                               <input
                                 checked={
-                                  this.state.info8?.insurance == "true" ||
-                                  this.state.info8?.insurance == true
+                                  this.state.info8?.insurance === "true" ||
+                                  this.state.info8?.insurance === true
                                 }
                                 onChange={async (e) => {
                                   await this.setState({
                                     info8: {
                                       ...this.state.info8,
-                                      insurance: e.target.value,
+                                      insurance: true,
                                     },
                                   });
                                 }}
                                 type="checkbox"
-                                value={false}
-                                // value={this.state.info8?.insurance}
-                                id="status1"
-                                name="status1"
+                                id="status40"
+                                name="status40"
                                 className="custom-control-input"
                               />
                               <label
                                 className="custom-control-label ir-r"
-                                htmlFor="status1"
+                                htmlFor="status40"
                               >
                                 بیمه
+                              </label>
+                            </div>
+                            <div className="custom-control custom-radio custom-control-inline">
+                              <input
+                                checked={
+                                  this.state.info8?.promotion === "true" ||
+                                  this.state.info8?.promotion === true
+                                }
+                                onChange={async (e) => {
+                                  await this.setState({
+                                    info8: {
+                                      ...this.state.info8,
+                                      promotion: true,
+                                    },
+                                  });
+                                }}
+                                type="checkbox"
+                                id="status41"
+                                name="status41"
+                                className="custom-control-input"
+                              />
+                              <label
+                                className="custom-control-label ir-r"
+                                htmlFor="status41"
+                              >
+                                ارتقا شغلی
+                              </label>
+                            </div>
+                            <div className="custom-control custom-radio custom-control-inline">
+                              <input
+                                checked={
+                                  this.state.info8?.flexibleWorkingTime ===
+                                    "true" ||
+                                  this.state.info8?.flexibleWorkingTime === true
+                                }
+                                onChange={async (e) => {
+                                  await this.setState({
+                                    info8: {
+                                      ...this.state.info8,
+                                      flexibleWorkingTime: true,
+                                    },
+                                  });
+                                }}
+                                type="checkbox"
+                                id="status42"
+                                name="status42"
+                                className="custom-control-input"
+                              />
+                              <label
+                                className="custom-control-label ir-r"
+                                htmlFor="status42"
+                              >
+                                انعطاف پذیر بودن ساعت کاری
+                              </label>
+                            </div>
+                            <div className="custom-control custom-radio custom-control-inline">
+                              <input
+                                checked={
+                                  this.state.info8?.hasMeel === "true" ||
+                                  this.state.info8?.hasMeel === true
+                                }
+                                onChange={async (e) => {
+                                  await this.setState({
+                                    info8: {
+                                      ...this.state.info8,
+                                      hasMeel: true,
+                                    },
+                                  });
+                                }}
+                                type="checkbox"
+                                id="status43"
+                                name="status43"
+                                className="custom-control-input"
+                              />
+                              <label
+                                className="custom-control-label ir-r"
+                                htmlFor="status43"
+                              >
+                                همراه با وعده غذایی
+                              </label>
+                            </div>
+                            <div className="custom-control custom-radio custom-control-inline">
+                              <input
+                                checked={
+                                  this.state.info8?.transportationService ===
+                                    "true" ||
+                                  this.state.info8?.transportationService ===
+                                    true
+                                }
+                                onChange={async (e) => {
+                                  await this.setState({
+                                    info8: {
+                                      ...this.state.info8,
+                                      transportationService: true,
+                                    },
+                                  });
+                                }}
+                                type="checkbox"
+                                id="status44"
+                                name="status44"
+                                className="custom-control-input"
+                              />
+                              <label
+                                className="custom-control-label ir-r"
+                                htmlFor="status44"
+                              >
+                                همراه با سرویس رفت و آمد
+                              </label>
+                            </div>
+                            <div className="custom-control custom-radio custom-control-inline">
+                              <input
+                                checked={
+                                  this.state.info8?.educationCourses ===
+                                    "true" ||
+                                  this.state.info8?.educationCourses === true
+                                }
+                                onChange={async (e) => {
+                                  await this.setState({
+                                    info8: {
+                                      ...this.state.info8,
+                                      educationCourses: true,
+                                    },
+                                  });
+                                }}
+                                type="checkbox"
+                                id="status45"
+                                name="status45"
+                                className="custom-control-input"
+                              />
+                              <label
+                                className="custom-control-label ir-r"
+                                htmlFor="status45"
+                              >
+                                رشته تحصیلی
                               </label>
                             </div>
                           </li>
