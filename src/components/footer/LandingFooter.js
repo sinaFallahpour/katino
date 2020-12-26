@@ -1,13 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { GetLandingPage } from "../../core/api/landing-page";
 import "./footer.styles.css";
 
 export function LandingFooter() {
   const [userStatus, setUserStatus] = useState();
+  const [whatsApp, setWhatsApp] = useState("");
+  const [Twitter, setTwitter] = useState("");
+  const [Linkedin, setLinkedin] = useState("");
+  const [Instagram, setInstagram] = useState("");
 
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
     userInfo === "Employee" ? setUserStatus(userInfo) : setUserStatus(null);
+
+    GetLandingPage().then((res) =>
+      res?.resul?.map((item) => {
+        item.key === "whatsApp" && setWhatsApp(item.value);
+        item.key === "Twitter" && setTwitter(item.value);
+        item.key === "Linkedin" && setLinkedin(item.value);
+        item.key === "Instagram" && setInstagram(item.value);
+      })
+    );
   }, []);
 
   return (
@@ -81,23 +95,40 @@ export function LandingFooter() {
             وبلاگ
           </Link>
         </aside>
+
         <aside className="footer-container ">
           <h3 className="fs-m c-dark ir-b smb-2">شبکه های اجتماعی</h3>
 
           <div className="social w-100 d-flex justify-content-between align-item-center smb-4">
-            <Link className="fs-l c-regular" to="/">
+            <Link
+              className="fs-l c-regular"
+              target="_blank"
+              to={{ pathname: Instagram }}
+            >
               <i className="fab fa-instagram"></i>
             </Link>
 
-            <Link className="fs-l c-regular" to="/">
+            <Link
+              className="fs-l c-regular"
+              target="_blank"
+              to={{ pathname: whatsApp }}
+            >
               <i class="fab fa-whatsapp"></i>
             </Link>
 
-            <Link className="fs-l c-regular" to="/">
+            <Link
+              className="fs-l c-regular"
+              target="_blank"
+              to={{ pathname: Twitter }}
+            >
               <i className="fab fa-twitter"></i>
             </Link>
 
-            <Link className="fs-l c-regular" to="/">
+            <Link
+              className="fs-l c-regular"
+              target="_blank"
+              to={{ pathname: Linkedin }}
+            >
               <i className="fab fa-linkedin-in"></i>
             </Link>
           </div>

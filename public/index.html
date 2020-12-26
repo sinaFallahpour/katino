@@ -65,10 +65,10 @@
         window.addEventListener("load", () => {
           navigator.serviceWorker
             .register("./serviceWorker.js")
-            .then(function (reg) {
+            .then(function () {
               console.log("Successfully registered service worker");
             })
-            .catch(function (err) {
+            .catch(function () {
               console.warn("Error whilst registering service worker");
             });
         });

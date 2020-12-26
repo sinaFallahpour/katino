@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import auth from "../../core/authService";
+import ADDRESS from "../../ADDRESS";
 
 export class EmployeeNavbar extends Component {
   state = {
@@ -67,7 +68,14 @@ export class EmployeeNavbar extends Component {
         {/* Links */}
         <nav className="navbar navbar-expand-lg navbar-light pr-0 py-0">
           <Link className="navbar-brand p-0 m-0" to="/Employee/Home">
-            <img src="/img/logo.png" height="40" alt="کاتینو" loading="lazy" />
+            <img
+              src={
+                this.props.Logo && `${ADDRESS}img/setting/${this.props.Logo}`
+              }
+              height="40"
+              alt="کاتینو"
+              loading="lazy"
+            />
           </Link>
 
           <div

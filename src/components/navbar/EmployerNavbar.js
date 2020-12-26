@@ -109,7 +109,9 @@ export class EmployerNavbar extends Component {
           <Link className="navbar-brand p-0 m-0" to="/Employer/Dashboard">
             <img
               className="d-none d-lg-block"
-              src="/img/logo-white.png"
+              src={
+                this.props.Logo && `${ADDRESS}img/setting/${this.props.Logo}`
+              }
               height="40"
               alt="کاتینو"
               loading="lazy"

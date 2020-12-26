@@ -1,7 +1,7 @@
-import React from "react"
-import { Link } from "react-router-dom"
+import React from "react";
+import { Link } from "react-router-dom";
 
-export function ResumeBuilder() {
+export function ResumeBuilder({ title, content }) {
   return (
     <section className="container-fluid spy-10 spx-5  d-none d-block">
       <div className="row">
@@ -13,10 +13,14 @@ export function ResumeBuilder() {
           />
         </div>
         <div className="col-12 col-lg-7 d-flex flex-column justify-content-center align-items-start">
-          <h3 className="c-dark ir-bl smb-2">آنلاین رزومه ات رو بساز!</h3>
+          <h3 className="c-dark ir-bl smb-2">
+            {title ? title : "آنلاین رزومه ات رو بساز!"}
+          </h3>
 
           <p className="fs-m ir-r text-justify smb-2">
-            با رزومه ساز آنلاین کاتینو می‌توانید به راحتی رزومه خود را بسازید.
+            {content
+              ? content
+              : " با رزومه ساز آنلاین کاتینو می‌توانید به راحتی رزومه خود را بسازید."}
           </p>
 
           <Link
@@ -29,5 +33,5 @@ export function ResumeBuilder() {
         </div>
       </div>
     </section>
-  )
+  );
 }

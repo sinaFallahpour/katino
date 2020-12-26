@@ -8,6 +8,7 @@ import {
   companyService,
   adsServices,
 } from "../components/home";
+import { GetLandingPage } from "../core/api/landing-page";
 
 import { citiesService } from "../components";
 import * as service from "../components/blog";
@@ -22,7 +23,15 @@ export class Home extends Component {
     latestAds: [],
     cities: [],
     blog: [],
+    LandingInfo: [],
+    Landin_Resome_Title: "",
+    Landin_Resome_Content: "",
+    Landing_Img: "",
   };
+
+  // 0: {id: 3, key: "Instagram", value: "Instagram", title: "اینستاگرام"}
+  // 1: {id: 5, key: "Linkedin", value: "Linkedin.com", title: "لینکدین"}
+  // 2: {id: 6, key: "Twitter", value: "Twitter", title: "توییتر"}
 
   componentDidMount() {
     // Cities for Search Box
@@ -45,7 +54,18 @@ export class Home extends Component {
       .getImmediately()
       .then((res) => this.setState({ immediatelyAds: res.data.resul }));
 
-      service.getBlogs().then(res=>this.setState({blog:res.data.resul}))
+    service.getBlogs().then((res) => this.setState({ blog: res.data.resul }));
+
+    GetLandingPage().then((res) =>
+      res?.resul?.map((item) => {
+        item.key === "Landin_Resome_Title" &&
+          this.setState({ Landin_Resome_Title: item.value });
+        item.key === "Landin_Resome_Content" &&
+          this.setState({ Landin_Resome_Content: item.value });
+        item.key === "Landing_Img" &&
+          this.setState({ Landing_Img: item.value });
+      })
+    );
   }
 
   handleMarkOtherAdv = async (adverId) => {
@@ -99,7 +119,11 @@ export class Home extends Component {
   render() {
     return (
       <div className="home">
-        <SearchBox props={this.props.props} cities={this.state.cities} />
+        <SearchBox
+          LandingImg={this.state.Landing_Img}
+          props={this.props.props}
+          cities={this.state.cities}
+        />
 
         <Companies logos={this.state.companiesLogo} />
         <Ads
@@ -108,8 +132,10 @@ export class Home extends Component {
           handleMarkOtherAdv={this.handleMarkOtherAdv}
         />
 
-        <ResumeBuilder />
-
+        <ResumeBuilder
+          title={this.state.Landin_Resome_Title}
+          content={this.state.Landin_Resome_Content}
+        />
         <Blog posts={this.state.blog} />
       </div>
     );

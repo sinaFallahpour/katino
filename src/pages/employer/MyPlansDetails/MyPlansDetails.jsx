@@ -9,13 +9,6 @@ const MyPlansDetails = () => {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // planAdverCount: "10000000"
-  // planImmediateAdverCount: "20"
-  // planName: "طرح طلایی"
-  // remainingAdversCount: "9999984"
-  // remainingDays: "51.00498324158681"
-  // remainingImmediateAdversCount: "19"
-
   useEffect(() => {
     setLoading(true);
     axios
@@ -41,6 +34,10 @@ const MyPlansDetails = () => {
         setLoading(false);
       });
   }, []);
+
+  const FixedNumber = (num) => {
+    return Math.floor(num);
+  };
 
   return (
     <>
@@ -95,7 +92,7 @@ const MyPlansDetails = () => {
         >
           <header className="header d-lg-flex w-100 justify-content-lg-between align-items-lg-center">
             <h2 className="ir-b fs-s c-dark text-right smb-2 mb-lg-0">
-              تاریخچه حساب
+              اطلاعات اشتراک من
             </h2>
           </header>
 
@@ -103,7 +100,7 @@ const MyPlansDetails = () => {
 
           {list.length === 0 ? (
             <span className="ir-r fs-s c-regular text-center d-block">
-              رسیدی برای نمایش وجود ندارد.
+              اشتراکی برای نمایش وجود ندارد.
             </span>
           ) : (
             <div className="table-responsive">
@@ -120,44 +117,45 @@ const MyPlansDetails = () => {
                       className="ir-b c-regular fs-s border-top-0"
                       scope="col"
                     >
-                      تاریخ خرید
+                      نام طرح
                     </th>
                     <th
                       className="ir-b c-regular fs-s border-top-0"
                       scope="col"
                     >
-                      نام بسته
+                      تعداد کل آگهی ها
+                    </th>
+
+                    <th
+                      className="ir-b c-regular fs-s border-top-0"
+                      scope="col"
+                    >
+                      تعداد آگهی های باقی مانده
                     </th>
                     <th
                       className="ir-b c-regular fs-s border-top-0"
                       scope="col"
                     >
-                      قابل پرداخت (تومان)
+                      تعداد کل آگهی های فوری
                     </th>
                     <th
                       className="ir-b c-regular fs-s border-top-0"
                       scope="col"
                     >
-                      مبلغ + مالیات (تومان)
+                      تعداد آگهی های فوری باقی مانده
                     </th>
                     <th
                       className="ir-b c-regular fs-s border-top-0"
                       scope="col"
                     >
-                      نوع سفارش
-                    </th>
-                    <th
-                      className="ir-b c-regular fs-s border-top-0"
-                      scope="col"
-                    >
-                      عملیات
+                      تا پایان دوره
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   {list.map((item, index) => (
                     <tr key={index}>
-                      <td className="ir-r c-regular fs-s">{`#${item.orderId}`}</td>
+                      <td className="ir-r c-regular fs-s">{`#${index + 1}`}</td>
                       <td>
                         <span className="ir-r c-regular fs-s w-100 text-truncate">
                           {item.planName}
@@ -165,22 +163,27 @@ const MyPlansDetails = () => {
                       </td>
                       <td>
                         <span className="ir-r c-regular fs-s w-100 text-truncate">
-                          {item.date}
+                          {item.planAdverCount}
                         </span>
                       </td>
                       <td>
                         <span className="ir-r c-regular fs-s w-100 text-truncate">
-                          {item.price} تومان
+                          {item.remainingAdversCount}
                         </span>
                       </td>
                       <td>
                         <span className="ir-r c-regular fs-s w-100 text-truncate">
-                          {item.priceWithTax} تومان
+                          {item.planImmediateAdverCount}
                         </span>
                       </td>
                       <td>
                         <span className="ir-r c-regular fs-s w-100 text-truncate">
-                          {item.orderType}
+                          {item.remainingImmediateAdversCount}
+                        </span>
+                      </td>
+                      <td>
+                        <span className="ir-r c-regular fs-s w-100 text-truncate">
+                          {FixedNumber(item.remainingDays)} روز
                         </span>
                       </td>
                     </tr>
