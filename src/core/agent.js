@@ -134,6 +134,10 @@ const CreateResome = {
   getAllUserJobSkillsForCurrentUser: () =>
     requests.get("/UserJobSkill/GetAllUserJobSkillsForCurrentUser"),
 
+
+  getAllCategories: () =>
+    requests.get("/Categories/GetAllCategories"),
+
   employeeChangeAvatar: () => requests.get("/Account/EmployeeChangeAvatar"),
 
   GetUserJobPreferenceForCurrentUser: () =>
