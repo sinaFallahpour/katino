@@ -33,7 +33,7 @@ export class CreateResume extends Component {
     const resJobSkill = await agent.CreateResome.GetAlljobSkillsForSelect();
     const resuserJobSkill = await agent.CreateResome.getAllUserJobSkillsForCurrentUser();
     const resuJobPreference = await agent.CreateResome.GetUserJobPreferenceForCurrentUser();
-
+     
     await this.getResomePercent();
 
     await this.setState({
@@ -318,11 +318,17 @@ export class CreateResume extends Component {
   SubmitJobPreference = async (event) => {
     event.preventDefault();
 
-    console.log(this.state.info8);
+    let tempo = this.state.info8
+    delete tempo["id"]
+    delete tempo["categoryForJobPrefence"]
+    if(!tempo["categoryIds"] ){
+      tempo["categoryIds"] = []
+    }
+    console.log(tempo);
 
     try {
-      let obj = this.state.info8;
-      await agent.CreateResome.AddUserJobPreference(obj);
+    
+      await agent.CreateResome.AddUserJobPreference(tempo);
       this.setState({
         editMode8: false,
       });
@@ -1416,11 +1422,24 @@ export class CreateResume extends Component {
 
                         <li className="list-group-item border-0 pr-0">
                           <span className="ir-b c-grey sml-1">
-                            دسته شغلی :
+                           
+                            نوع همکاری :
                             <span className="c-regular">
                               {this.state.info8
                                 ? this.returnTypeOfCooperation(
                                     this.state.editMode8?.typeOfCooperation
+                                  )
+                                : "-"}
+                            </span>
+                          </span>
+                        </li>
+                        <li className="list-group-item border-0 pr-0">
+                          <span className="ir-b c-grey sml-1">
+                          دسته شغلی :
+                            <span className="c-regular">
+                              {this.state.info8
+                                ? this.returnTypeOfCooperation(
+                                    this.state.editMode8?.categoryForJobPrefence
                                   )
                                 : "-"}
                             </span>
@@ -1439,6 +1458,68 @@ export class CreateResume extends Component {
                             </span>
                           </span>
                         </li>
+
+                        <li className="list-group-item border-0 pr-0">
+                          <span className="ir-b c-grey sml-1">
+                          بیمه :{" "}
+                            <span className="c-regular">
+                              {this.state.info8?.insurance 
+                                ? <i class="fas fa-check c-success"></i>
+                                : <i class="fas fa-times c-danger"></i> }
+                            </span>
+                          </span>
+                        </li>
+                        <li className="list-group-item border-0 pr-0">
+                          <span className="ir-b c-grey sml-1">
+                          ارتقا شغلی :{" "}
+                            <span className="c-regular">
+                              {this.state.info8?.promotion 
+                                ? <i class="fas fa-check c-success"></i>
+                                : <i class="fas fa-times c-danger"></i> }
+                            </span>
+                          </span>
+                        </li>
+                        <li className="list-group-item border-0 pr-0">
+                          <span className="ir-b c-grey sml-1">
+                          انعطاف پذیر بودن ساعت کاری :{" "}
+                            <span className="c-regular">
+                              {this.state.info8?.flexibleWorkingTime 
+                                ? <i class="fas fa-check c-success"></i>
+                                : <i class="fas fa-times c-danger"></i> }
+                            </span>
+                          </span>
+                        </li>
+                        <li className="list-group-item border-0 pr-0">
+                          <span className="ir-b c-grey sml-1">
+                          همراه با وعده غذایی :{" "}
+                            <span className="c-regular">
+                              {this.state.info8?.hasMeel 
+                                ? <i class="fas fa-check c-success"></i>
+                                : <i class="fas fa-times c-danger"></i> }
+                            </span>
+                          </span>
+                        </li>
+                        <li className="list-group-item border-0 pr-0">
+                          <span className="ir-b c-grey sml-1">
+                          همراه با سرویس رفت و آمد :{" "}
+                            <span className="c-regular">
+                              {this.state.info8?.transportationService 
+                                ? <i class="fas fa-check c-success"></i>
+                                : <i class="fas fa-times c-danger"></i> }
+                            </span>
+                          </span>
+                        </li>
+                        <li className="list-group-item border-0 pr-0">
+                          <span className="ir-b c-grey sml-1">
+                          مدرک تحصیلی :{" "}
+                            <span className="c-regular">
+                              {this.state.info8?.educationCourses 
+                                ? <i class="fas fa-check c-success"></i>
+                                : <i class="fas fa-times c-danger"></i> }
+                            </span>
+                          </span>
+                        </li>
+                     
                       </ul>
                     </div>
                   ) : (
@@ -1485,7 +1566,6 @@ export class CreateResume extends Component {
                               >
                                 میزان حقوق
                               </label>
-
                               <div className="form-group ">
                                 <Select
                                   isClearable
@@ -1512,9 +1592,35 @@ export class CreateResume extends Component {
                                 className="ir-r text-regular text-right smb-1 label bg-white"
                                 htmlFor="jobTitle"
                               >
+                                نوع همکاری
+                              </label>
+                              <div className="form-group ">
+                                <Select
+                                  onChange={async (e) => {
+                                    this.setState({
+                                      info8: {
+                                        ...this.state.info8,
+                                        typeOfCooperation: [e.value],
+                                      },
+                                    });
+                                  }}
+                                  isSearchable={false}
+                                  placeholder=" نوع همکاری"
+                                  options={typeOfCooperation}
+                                  styles={{ fontFamily: "iransans-regular" }}
+                                />
+                              </div>
+                            </div>
+                          </li>
+                          
+                          <li>
+                            <div className="text-input srounded-sm">
+                              <label
+                                className="ir-r text-regular text-right smb-1 label bg-white"
+                                htmlFor="jobTitle"
+                              >
                                 دسته شغلی
                               </label>
-
                               <div className="form-group ">
                                 <Select
                                   onChange={async (e) => {
@@ -1542,7 +1648,6 @@ export class CreateResume extends Component {
                               >
                                 سابقه کار
                               </label>
-
                               <div className="form-group ">
                                 <Select
                                   onChange={async (e) => {
@@ -1570,14 +1675,13 @@ export class CreateResume extends Component {
                               >
                                 دسته بندی ها
                               </label>
-
                               <div className="form-group ">
                                 <Select
                                   onChange={async (e) => {
                                     this.setState({
                                       info8: {
                                         ...this.state.info8,
-                                        categoryIds: e.value,
+                                        categoryIds: [0],
                                       },
                                     });
                                   }}
@@ -1597,11 +1701,12 @@ export class CreateResume extends Component {
                                   this.state.info8?.insurance === "true" ||
                                   this.state.info8?.insurance === true
                                 }
-                                onChange={async (e) => {
-                                  await this.setState({
+                                onChange={ (e) => {
+                          
+                                   this.setState({
                                     info8: {
                                       ...this.state.info8,
-                                      insurance: true,
+                                      insurance: e.target.checked,
                                     },
                                   });
                                 }}
@@ -1627,7 +1732,7 @@ export class CreateResume extends Component {
                                   await this.setState({
                                     info8: {
                                       ...this.state.info8,
-                                      promotion: true,
+                                      promotion: e.target.checked,
                                     },
                                   });
                                 }}
@@ -1654,7 +1759,7 @@ export class CreateResume extends Component {
                                   await this.setState({
                                     info8: {
                                       ...this.state.info8,
-                                      flexibleWorkingTime: true,
+                                      flexibleWorkingTime: e.target.checked,
                                     },
                                   });
                                 }}
@@ -1680,7 +1785,7 @@ export class CreateResume extends Component {
                                   await this.setState({
                                     info8: {
                                       ...this.state.info8,
-                                      hasMeel: true,
+                                      hasMeel: e.target.checked,
                                     },
                                   });
                                 }}
@@ -1708,7 +1813,7 @@ export class CreateResume extends Component {
                                   await this.setState({
                                     info8: {
                                       ...this.state.info8,
-                                      transportationService: true,
+                                      transportationService: e.target.checked,
                                     },
                                   });
                                 }}
@@ -1735,7 +1840,7 @@ export class CreateResume extends Component {
                                   await this.setState({
                                     info8: {
                                       ...this.state.info8,
-                                      educationCourses: true,
+                                      educationCourses: e.target.checked,
                                     },
                                   });
                                 }}
@@ -1748,7 +1853,7 @@ export class CreateResume extends Component {
                                 className="custom-control-label ir-r"
                                 htmlFor="status45"
                               >
-                                رشته تحصیلی
+                                مدرک تحصیلی
                               </label>
                             </div>
                           </li>
