@@ -3,7 +3,6 @@ import { ImmediateAds } from "./ImmediateAds";
 import { ResumeQuality } from "./ResumeQuality";
 
 export function SideBar({ resomePercent }) {
-  console.log(resomePercent);
   return (
     <React.Fragment>
       <div className="smb-2">
