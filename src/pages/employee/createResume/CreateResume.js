@@ -34,7 +34,6 @@ export class CreateResume extends Component {
     const resuserJobSkill = await agent.CreateResome.getAllUserJobSkillsForCurrentUser();
     const AllCategories = await agent.CreateResome.getAllCategories();
     const resuJobPreference = await agent.CreateResome.GetUserJobPreferenceForCurrentUser();
-    console.log(resuJobPreference.data.resul);
 
     let Category = await AllCategories?.data.resul.map(({ id, name }) => {
       return { value: id, label: name };
@@ -208,7 +207,8 @@ export class CreateResume extends Component {
   };
 
   returnCategoryIds = (listOfData) => {
-    var status = this.state.info8?.categories;
+    var status = this.state.categories;
+
     let finalList = status?.map(({ value, label }) => {
       if (listOfData.includes(value)) {
         return label;
@@ -393,6 +393,36 @@ export class CreateResume extends Component {
     }
   };
 
+  onChangeSelectOption = (value, { action }) => {
+    let tempArray = [];
+    if (action === "select-option") {
+      value &&
+        value.map((x) => {
+          tempArray.push(x.value);
+        });
+    } else if (action === "remove-value") {
+      this.setState({
+        info8: {
+          ...this.state.info8,
+          categoryIds: [],
+        },
+      });
+      value &&
+        value.map((x) => {
+          tempArray.push(x.value);
+        });
+    } else if (action === "clear") {
+      tempArray = [];
+    }
+
+    this.setState({
+      info8: {
+        ...this.state.info8,
+        categoryIds: tempArray,
+      },
+    });
+  };
+
   // SubmitJobSkill = async (event) => {
   //   event.preventDefault();
 
@@ -415,6 +445,7 @@ export class CreateResume extends Component {
   // };
 
   // get cities=()=>{}
+
   render() {
     // let cities = [];
 
@@ -1449,11 +1480,26 @@ export class CreateResume extends Component {
                           <span className="ir-b c-grey sml-1">
                             دسته شغلی :
                             <span className="c-regular">
-                              {this.state.info8
-                                ? this.returnCategoryIds(
+                              {this.state.info8?.categoryIds ? (
+                                <div className="p-1">
+                                  {this.returnCategoryIds(
                                     this.state.info8?.categoryIds
-                                  )
-                                : "-"}
+                                  ).map((item, indx) => {
+                                    if (item) {
+                                      return (
+                                        <button
+                                          key={indx}
+                                          className="btn btn-success  m-1"
+                                        >
+                                          {item}
+                                        </button>
+                                      );
+                                    }
+                                  })}
+                                </div>
+                              ) : (
+                                "-"
+                              )}
                             </span>
                           </span>
                         </li>
@@ -1663,18 +1709,12 @@ export class CreateResume extends Component {
                               </label>
                               <div className="form-group ">
                                 <Select
-                                  onChange={async (e) => {
-                                    this.setState({
-                                      info8: {
-                                        ...this.state.info8,
-                                        categoryIds: [e.value],
-                                      },
-                                    });
-                                  }}
+                                  onChange={this.onChangeSelectOption}
                                   isSearchable={false}
                                   placeholder={" دسته بندی شغلی"}
                                   options={this.state.categories}
                                   styles={{ fontFamily: "iransans-regular" }}
+                                  isMulti
                                 />
                               </div>
                             </div>
