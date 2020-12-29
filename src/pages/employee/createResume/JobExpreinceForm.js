@@ -6,16 +6,16 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { AddWorkExperience } from "../../../core/api/work-experience";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
-import { Calendar, DatePicker } from "react-persian-datepicker";
-import "react-persian-datepicker/lib/styles/basic.css";
-import moment from "moment-jalaali";
 import { MiniSpinner } from "../../../components/spinner/MiniSpinner";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import "./style.css";
+import { DatePickerModern } from "../../../core/utils/datepicker.util";
 
 const JobExpreinceForm = ({ DeleteForm, idOfForm }) => {
   const [loading, setLoading] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
+
   const initialData = {
     workTitle: "",
     companyName: "",
@@ -23,24 +23,13 @@ const JobExpreinceForm = ({ DeleteForm, idOfForm }) => {
     endDate: "",
     description: "",
   };
-  let styles = {
-    calendarContainer: "calendarContainer",
-    dayPickerContainer: "dayPickerContainer",
-    monthsList: "monthsList",
-    daysOfWeek: "daysOfWeek",
-    dayWrapper: "dayWrapper",
-    selected: "selected",
-    heading: "heading",
-    next: "next",
-    prev: "prev",
-    title: "title",
-    currentMonth: "currentMonth",
-  };
+
   const submitHandler = async (values) => {
-    console.log(values);
+    const tempo = { ...values, startDate: startDate, endDate: endDate };
+    console.log(tempo);
     setLoading(true);
     try {
-      await AddWorkExperience(values);
+      await AddWorkExperience(tempo);
 
       Swal.fire({
         icon: "success",
@@ -84,36 +73,6 @@ const JobExpreinceForm = ({ DeleteForm, idOfForm }) => {
             const data = editor.getData();
             helpers.setValue(data);
           }}
-        />
-        <ErrorMessage
-          component="div"
-          className="errorMessage"
-          name={props.name}
-        />
-      </>
-    );
-  };
-
-  const DatePickerInput = ({ ...props }) => {
-    const [, , helpers] = useField(props);
-    const selectedName =
-      props.name === "startDate"
-        ? startDate
-        : props.name === "endDate" && endDate;
-    return (
-      <>
-        <DatePicker
-          calendarStyles={styles}
-          className="form-control ir-r shadow-none "
-          // value={selectedName}
-          value={moment(selectedName, "jYYYY/jMM/jDD")}
-          onChange={(date) => {
-            helpers.setValue(date);
-            props.name === "startDate" && setStartDate(date._d);
-            props.name === "endtDate" && setEndDate(date._d);
-            console.log(date._d);
-          }}
-          name={props.name}
         />
         <ErrorMessage
           component="div"
@@ -186,7 +145,10 @@ const JobExpreinceForm = ({ DeleteForm, idOfForm }) => {
                       تاریخ شروع کار را وارد کنید
                     </label>
                     <div className="form-group mb-0 ">
-                      <DatePickerInput name="startDate" />
+                      <DatePickerModern
+                        handleChange={setStartDate}
+                        name="startDate"
+                      />
                     </div>
                   </div>
 
@@ -196,7 +158,10 @@ const JobExpreinceForm = ({ DeleteForm, idOfForm }) => {
                       تاریخ پایان کار را وارد کنید
                     </label>
                     <div className="form-group mb-0">
-                      <DatePickerInput name="endDate" />
+                      <DatePickerModern
+                        handleChange={setEndDate}
+                        name="endDate"
+                      />
                     </div>
                   </div>
                 </div>
@@ -240,3 +205,34 @@ const JobExpreinceForm = ({ DeleteForm, idOfForm }) => {
 };
 
 export { JobExpreinceForm };
+
+// const DatePickerInput = ({ ...props }) => {
+//   const [, , helpers] = useField(props);
+//   const selectedName =
+//     props.name === "startDate"
+//       ? startDate
+//       : props.name === "endDate" && endDate;
+
+//   const covertToEngNUm = (startDate) => {
+//     const convertToJalali = new Date(startDate).toLocaleDateString("fa-IR");
+//     const convertToEngNUm = persianjs(convertToJalali).toEnglishNumber()._str;
+//     return convertToEngNUm;
+//   };
+//   const finalNum = covertToEngNUm(selectedName);
+
+//   return (
+//     <>
+//       <DatePicker
+//         calendarStyles={styles}
+//         className="form-control ir-r shadow-none "
+//         value={moment(finalNum, "jYYYY/jM/jD")}
+//         onChange={(date) => {
+//           console.log(date);
+//           // props.name === "startDate" && setStartDate(date._d);
+//           // props.name === "endDate" && setEndDate(date._d);
+//         }}
+//         locale="fa-IR"
+//       />
+//     </>
+//   );
+// };
