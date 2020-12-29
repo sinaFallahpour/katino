@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 import { SideBar } from "../../../components";
 import agent, { avatarUrl } from "../../../core/agent";
 import { salaries, typeOfCooperation, expriences } from "./salaries";
+import { JobExpreinceFormGenerator } from "./JobExpreinceFormGenerator";
+import { JobExpreinceDetails } from "./JobExpreinceDetails";
 
 export class CreateResume extends Component {
   state = {
@@ -34,6 +36,7 @@ export class CreateResume extends Component {
     const resuserJobSkill = await agent.CreateResome.getAllUserJobSkillsForCurrentUser();
     const AllCategories = await agent.CreateResome.getAllCategories();
     const resuJobPreference = await agent.CreateResome.GetUserJobPreferenceForCurrentUser();
+    const getAllWorkExperience = await agent.CreateResome.GetAllWorkExperience();
 
     let Category = await AllCategories?.data.resul.map(({ id, name }) => {
       return { value: id, label: name };
@@ -47,6 +50,7 @@ export class CreateResume extends Component {
       jobSkills: resJobSkill.data.resul,
       userJobSkills: resuserJobSkill.data.resul,
       aboutMen: resAboutMe.data.resul,
+      getAllWorkExperience: getAllWorkExperience.data.resul,
       info8: resuJobPreference.data.resul || {
         city: "",
         typeOfCooperation: 0,
@@ -711,7 +715,6 @@ export class CreateResume extends Component {
                 </div>
               </div>
             </div>
-
             {/* <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4"> */}
             <h3 className="d-block text-right ir-b smb-3 c-dark">
               اطلاعات فردی
@@ -1185,7 +1188,6 @@ export class CreateResume extends Component {
               </div>
             </div>
             {/* </aside> */}
-
             {/* <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4"> */}
             <h3 className="d-block text-right ir-b smb-3 c-dark">درباره من</h3>
             <div className="bg-white srounded-md sp-2 smb-3">
@@ -1278,7 +1280,6 @@ export class CreateResume extends Component {
               </div>
             </div>
             {/* </aside> */}
-
             {/* <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4"> */}
             <h3 className="d-block text-right ir-b smb-3 c-dark">
               مهارت‌های حرفه‌ای
@@ -1402,7 +1403,6 @@ export class CreateResume extends Component {
               </div>
             </div>
             {/* </aside> */}
-
             {/* <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4"> */}
             <h3 className="d-block text-right ir-b smb-3 c-dark">
               ترجیحات شغلی
@@ -1922,6 +1922,56 @@ export class CreateResume extends Component {
                           ذخیره
                         </button>
                       </form>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+            {/* </aside> */}
+            {/* <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4"> */}
+            <h3 className="d-block text-right ir-b smb-3 c-dark">تجربه کاری</h3>
+            <div className="bg-white srounded-md sp-2 smb-3">
+              <div className="row">
+                <div className="col-12">
+                  {!this.state.editMode9 ? (
+                    <header className="d-flex justify-content-between align-items-center">
+                      <button
+                        onClick={() => {
+                          this.setState({ editMode9: true });
+                        }}
+                        type="button"
+                        className="btn btn-light ir-r"
+                      >
+                        ویرایش
+                      </button>
+                    </header>
+                  ) : (
+                    <header className="d-flex justify-content-between align-items-center">
+                      <h3 className="ir-b c-primary text-right d-block fs-m smb-2">
+                        ویرایش اطلاعات
+                      </h3>
+
+                      <button
+                        onClick={() => {
+                          this.setState({ editMode9: false });
+                        }}
+                        type="button"
+                        className="btn btn-light ir-r"
+                      >
+                        بازگشت
+                      </button>
+                    </header>
+                  )}
+
+                  {!this.state.editMode9 ? (
+                    <div className="content d-lg-flex flex-column justify-content-center">
+                      <JobExpreinceDetails
+                        AllWorkExperience={this.state.getAllWorkExperience}
+                      />
+                    </div>
+                  ) : (
+                    <div className="content d-lg-flex flex-column justify-content-center">
+                      <JobExpreinceFormGenerator />
                     </div>
                   )}
                 </div>

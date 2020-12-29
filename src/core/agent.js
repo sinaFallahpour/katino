@@ -134,14 +134,15 @@ const CreateResome = {
   getAllUserJobSkillsForCurrentUser: () =>
     requests.get("/UserJobSkill/GetAllUserJobSkillsForCurrentUser"),
 
-
-  getAllCategories: () =>
-    requests.get("/Categories/GetAllCategories"),
+  getAllCategories: () => requests.get("/Categories/GetAllCategories"),
 
   employeeChangeAvatar: () => requests.get("/Account/EmployeeChangeAvatar"),
 
   GetUserJobPreferenceForCurrentUser: () =>
     requests.get("/UserJobPreference/GetUserJobPreferenceForCurrentUser"),
+
+  GetAllWorkExperience: () =>
+    requests.get("/UserWorkExperience/GetAllWorkExperienceForCuurectUser"),
 
   AddUserJobPreference: (body) =>
     requests.post("/UserJobPreference/AddUserJobPreference", body),
