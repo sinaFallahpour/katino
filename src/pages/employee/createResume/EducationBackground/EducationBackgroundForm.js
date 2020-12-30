@@ -3,7 +3,7 @@ import { Formik, Field, Form, ErrorMessage, useField } from "formik";
 import { JobExprience } from "../../../../core/validation/jobExprience";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { AddWorkExperience } from "../../../../core/api/work-experience";
+import { AddEduBackground } from "../../../../core/api/education-background";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { MiniSpinner } from "../../../../components/spinner/MiniSpinner";
@@ -39,7 +39,7 @@ const EducationalBackgroundForm = ({
 
     setLoading(true);
     try {
-      const data = await AddWorkExperience(tempo);
+      const data = await AddEduBackground(tempo);
 
       const DataList = [...listOfData];
       DataList.push(tempo);

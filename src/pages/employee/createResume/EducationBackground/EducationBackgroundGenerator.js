@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { EducationalBackgroundForm } from "./EducationBackgroundForm";
 
 const EducationalBackgroundFormGenerator = ({

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReactHtmlParser from "react-html-parser";
-import { DeleteWorkExperience } from "../../../../core/api/work-experience";
+import { DeleteEduBackground } from "../../../../core/api/education-background";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { EducationalBackgroundEdit } from "./EducationBackgroundEdit";
@@ -31,7 +31,7 @@ const EducationalBackgroundDetails = ({ AllWorkExperience }) => {
       if (result.value) {
         const fetchData = async () => {
           try {
-            await DeleteWorkExperience(id);
+            await DeleteEduBackground(id);
             const deletedList = [...initialData];
             const filterData = deletedList.filter(
               (item) => parseInt(item.id) !== parseInt(id)

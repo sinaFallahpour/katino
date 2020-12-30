@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { getWorkExperience } from "../../../../core/api/work-experience";
 
 import { Formik, Field, Form, ErrorMessage, useField } from "formik";
 import { JobExprience } from "../../../../core/validation/jobExprience";
@@ -11,7 +10,8 @@ import { MiniSpinner } from "../../../../components/spinner/MiniSpinner";
 import "../style.css";
 import { DatePickerModern } from "../../../../core/utils/datepicker.util";
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
-import { EditWorkExperience } from "../../../../core/api/work-experience";
+import { getEduBackground } from "../../../../core/api/education-background";
+import { editEduBackground } from "../../../../core/api/education-background";
 
 const EducationalBackgroundEdit = ({
   id,
@@ -32,7 +32,7 @@ const EducationalBackgroundEdit = ({
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getWorkExperience(id);
+      const data = await getEduBackground(id);
       setInitalData(data.resul);
       setStartDate(data.resul.startDate);
       setEndDate(data.resul.endDate);
@@ -46,7 +46,7 @@ const EducationalBackgroundEdit = ({
 
     setLoading(true);
     try {
-      await EditWorkExperience(tempo);
+      await editEduBackground(tempo);
       const listOfData = [...initialEditableList];
       const editedList = listOfData.map((item) => {
         if (item.id === id) {
