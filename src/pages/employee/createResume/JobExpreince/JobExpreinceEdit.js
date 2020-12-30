@@ -1,21 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { getWorkExperience } from "../../../../core/api/work-experience";
+
 import { Formik, Field, Form, ErrorMessage, useField } from "formik";
-import { JobExprience } from "../../../core/validation/jobExprience";
+import { JobExprience } from "../../../../core/validation/jobExprience";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { AddWorkExperience } from "../../../core/api/work-experience";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
-import { MiniSpinner } from "../../../components/spinner/MiniSpinner";
+import { MiniSpinner } from "../../../../components/spinner/MiniSpinner";
+import "../style.css";
+import { DatePickerModern } from "../../../../core/utils/datepicker.util";
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
-import "./style.css";
-import { DatePickerModern } from "../../../core/utils/datepicker.util";
+import { EditWorkExperience } from "../../../../core/api/work-experience";
 
-const JobExpreinceForm = ({ DeleteForm, idOfForm }) => {
-  const [loading, setLoading] = useState(false);
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
-
+const JobExpreinceEdit = ({ id }) => {
   const initialData = {
     workTitle: "",
     companyName: "",
@@ -23,20 +21,35 @@ const JobExpreinceForm = ({ DeleteForm, idOfForm }) => {
     endDate: "",
     description: "",
   };
+  const [initalData, setInitalData] = useState(initialData);
+  const [loading, setLoading] = useState(false);
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getWorkExperience(id);
+      setInitalData(data.resul);
+      setStartDate(data.resul.startDate);
+      setEndDate(data.resul.endDate);
+    };
+
+    fetchData();
+  }, []);
 
   const submitHandler = async (values) => {
     const tempo = { ...values, startDate: startDate, endDate: endDate };
-    console.log(tempo);
+
     setLoading(true);
     try {
-      await AddWorkExperience(tempo);
-
+      await EditWorkExperience(tempo);
       Swal.fire({
         icon: "success",
-        title: "تکمیل فرم با موفقیت انجام شد",
+        title: "ویرایش با موفقیت انجام شد",
         showConfirmButton: false,
         timer: 1750,
       });
+
       setLoading(false);
     } catch (err) {
       err.response?.data?.message?.map((e) => {
@@ -53,6 +66,7 @@ const JobExpreinceForm = ({ DeleteForm, idOfForm }) => {
         <CKEditor
           className="cke_rtl"
           editor={ClassicEditor}
+          data={initalData.description}
           config={{
             toolbar: [
               "|",
@@ -87,11 +101,12 @@ const JobExpreinceForm = ({ DeleteForm, idOfForm }) => {
     <>
       {loading && <MiniSpinner />}
       <Formik
-        initialValues={initialData}
+        initialValues={initalData}
         validationSchema={JobExprience}
         onSubmit={(values) => {
           submitHandler(values);
         }}
+        enableReinitialize={true}
       >
         <section className="complete-register-form container-fluid  spt-10">
           <aside className="form-container-bg  mx-auto">
@@ -138,6 +153,7 @@ const JobExpreinceForm = ({ DeleteForm, idOfForm }) => {
                     </div>
                   </div>
                 </div>
+
                 <div className="Field-Container col-12">
                   {/* startDate */}
                   <div className=" smb-2">
@@ -148,6 +164,7 @@ const JobExpreinceForm = ({ DeleteForm, idOfForm }) => {
                       <DatePickerModern
                         handleChange={setStartDate}
                         name="startDate"
+                        dateVal={startDate && startDate}
                       />
                     </div>
                   </div>
@@ -161,6 +178,7 @@ const JobExpreinceForm = ({ DeleteForm, idOfForm }) => {
                       <DatePickerModern
                         handleChange={setEndDate}
                         name="endDate"
+                        dateVal={endDate && endDate}
                       />
                     </div>
                   </div>
@@ -177,23 +195,13 @@ const JobExpreinceForm = ({ DeleteForm, idOfForm }) => {
                 <div className="smt-3 col-12">
                   <button
                     type="submit"
-                    className="btn btn-warning ir-r spx-4 text-white"
+                    className="btn btn-success ir-r spx-4 text-white"
                     style={{
                       width: "100%",
                     }}
                   >
-                    ثبت تجربه کاری
+                    ویرایش اطلاعات
                   </button>
-                  <span
-                    onClick={DeleteForm}
-                    className="btn btn-danger ir-r spx-4 text-white mt-1"
-                    style={{
-                      width: "100%",
-                    }}
-                    id={idOfForm}
-                  >
-                    حذف فرم
-                  </span>
                 </div>
               </div>
             </Form>
@@ -204,35 +212,4 @@ const JobExpreinceForm = ({ DeleteForm, idOfForm }) => {
   );
 };
 
-export { JobExpreinceForm };
-
-// const DatePickerInput = ({ ...props }) => {
-//   const [, , helpers] = useField(props);
-//   const selectedName =
-//     props.name === "startDate"
-//       ? startDate
-//       : props.name === "endDate" && endDate;
-
-//   const covertToEngNUm = (startDate) => {
-//     const convertToJalali = new Date(startDate).toLocaleDateString("fa-IR");
-//     const convertToEngNUm = persianjs(convertToJalali).toEnglishNumber()._str;
-//     return convertToEngNUm;
-//   };
-//   const finalNum = covertToEngNUm(selectedName);
-
-//   return (
-//     <>
-//       <DatePicker
-//         calendarStyles={styles}
-//         className="form-control ir-r shadow-none "
-//         value={moment(finalNum, "jYYYY/jM/jD")}
-//         onChange={(date) => {
-//           console.log(date);
-//           // props.name === "startDate" && setStartDate(date._d);
-//           // props.name === "endDate" && setEndDate(date._d);
-//         }}
-//         locale="fa-IR"
-//       />
-//     </>
-//   );
-// };
+export { JobExpreinceEdit };

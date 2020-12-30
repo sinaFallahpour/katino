@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react"
-import axios from "axios"
-import API_ADDRESS from "../../API_ADDRESS"
-import Select from "react-select"
-import CKEditor from "@ckeditor/ckeditor5-react"
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
-import { Link, useHistory, useLocation, useParams } from "react-router-dom"
-import { Formik, Field, Form, ErrorMessage, useField } from "formik"
-import { CreateAdValidate } from "../../core/validation/createAd"
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import API_ADDRESS from "../../API_ADDRESS";
+import Select from "react-select";
+import CKEditor from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { Link, useHistory, useLocation, useParams } from "react-router-dom";
+import { Formik, Field, Form, ErrorMessage, useField } from "formik";
+import { CreateAdValidate } from "../../core/validation/createAd";
 import {
   cooperationType,
   salaries,
@@ -14,23 +14,23 @@ import {
   exprience,
   education,
   initialData,
-} from "./createAdData"
-import { MiniSpinner } from "../spinner/MiniSpinner"
-import "./Field.style.css"
-import Swal from "sweetalert2"
-import { toast } from "react-toastify"
+} from "./createAdData";
+import { MiniSpinner } from "../spinner/MiniSpinner";
+import "./Field.style.css";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 export const EditAdverField = () => {
-  const [initialState, setInitialState] = useState(initialData)
-  const [categories, setCategories] = useState([])
-  const [cities, setCities] = useState([])
-  const [loading, setLoading] = useState(false)
+  const [initialState, setInitialState] = useState(initialData);
+  const [categories, setCategories] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const history = useHistory()
+  const history = useHistory();
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    const adverId = params.get("AdverId")
+    const params = new URLSearchParams(window.location.search);
+    const adverId = params.get("AdverId");
 
     adverId &&
       axios
@@ -56,37 +56,37 @@ export const EditAdverField = () => {
             gender: data.resul.gender || 0,
             military: data.resul.military || "",
             descriptionOfJob: data.resul.descriptionOfJob || "",
-          })
-        })
+          });
+        });
 
     const fetchData = async () => {
-      const categoriesies = []
-      const cities = []
+      const categoriesies = [];
+      const cities = [];
       await axios
         .get(API_ADDRESS + "Categories/GetAllCategories")
         .then((res) => {
           res.data.resul.map((item) => {
-            categoriesies.push({ value: item.id, label: item.name })
-          })
-        })
-      setCategories(categoriesies)
+            categoriesies.push({ value: item.id, label: item.name });
+          });
+        });
+      setCategories(categoriesies);
 
       await axios.get(API_ADDRESS + "Account/GetCities").then((res) => {
         res.data.resul.map((item) => {
           cities.push({
             value: item.cityDivisionCode,
             label: `${item.provinceName}، ${item.cityName}`,
-          })
-        })
-      })
-      setCities(cities)
-    }
+          });
+        });
+      });
+      setCities(cities);
+    };
 
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
   const submitHandler = (values) => {
-    setLoading(true)
+    setLoading(true);
 
     axios
       .post(API_ADDRESS + "Adver/EditAdver", values, {
@@ -95,22 +95,22 @@ export const EditAdverField = () => {
         },
       })
       .then(() => {
-        setLoading(false)
+        setLoading(false);
         Swal.fire({
           icon: "success",
           title: "ویرایش آگهی با موفقیت ثبت شد",
           showConfirmButton: false,
           timer: 1750,
-        })
+        });
       })
       .catch((err) => {
-        err.response.data.message.map((er) => toast.error(er))
-        setLoading(false)
-      })
-  }
+        err.response.data.message.map((er) => toast.error(er));
+        setLoading(false);
+      });
+  };
 
   const MySelect = ({ label, options, ...props }) => {
-    const [field, meta, helpers] = useField(props)
+    const [field, meta, helpers] = useField(props);
     return (
       <div>
         <Select
@@ -130,11 +130,11 @@ export const EditAdverField = () => {
           name={props.name}
         />
       </div>
-    )
-  }
+    );
+  };
 
   const MyCheckbox = ({ ...props }) => {
-    const [, meta] = useField({ ...props, type: "radio" })
+    const [, meta] = useField({ ...props, type: "radio" });
     return (
       <>
         <div className="form-check form-check-inline">
@@ -149,11 +149,11 @@ export const EditAdverField = () => {
           </label>
         </div>
       </>
-    )
-  }
+    );
+  };
 
   const MyTextAreaInput = ({ ...props }) => {
-    const [, meta, helpers] = useField(props)
+    const [, meta, helpers] = useField(props);
     return (
       <>
         <label className="checkbox form-check-label">{props.label}</label>
@@ -176,8 +176,8 @@ export const EditAdverField = () => {
             language: "fa",
           }}
           onBlur={(_, editor) => {
-            const data = editor.getData()
-            helpers.setValue(data)
+            const data = editor.getData();
+            helpers.setValue(data);
           }}
         />
         <ErrorMessage
@@ -186,8 +186,8 @@ export const EditAdverField = () => {
           name={props.name}
         />
       </>
-    )
-  }
+    );
+  };
 
   return (
     <>
@@ -196,7 +196,7 @@ export const EditAdverField = () => {
         initialValues={initialState}
         validationSchema={CreateAdValidate}
         onSubmit={(values) => {
-          submitHandler(values)
+          submitHandler(values);
         }}
         enableReinitialize={true}
       >
@@ -339,5 +339,5 @@ export const EditAdverField = () => {
         </Form>
       </Formik>
     </>
-  )
-}
+  );
+};

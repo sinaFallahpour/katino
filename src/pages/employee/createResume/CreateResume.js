@@ -7,8 +7,8 @@ import { toast } from "react-toastify";
 import { SideBar } from "../../../components";
 import agent, { avatarUrl } from "../../../core/agent";
 import { salaries, typeOfCooperation, expriences } from "./salaries";
-import { JobExpreinceFormGenerator } from "./JobExpreinceFormGenerator";
-import { JobExpreinceDetails } from "./JobExpreinceDetails";
+import { JobExpreinceFormGenerator } from "./JobExpreince/JobExpreinceFormGenerator";
+import { JobExpreinceDetails } from "./JobExpreince/JobExpreinceDetails";
 
 export class CreateResume extends Component {
   state = {
@@ -466,7 +466,7 @@ export class CreateResume extends Component {
           <aside className="col-12 col-lg-8 smb-2 mb-lg-0">
             {/* aside and edit profile */}
             <h3 className="d-block text-right ir-b smb-3 c-dark">
-              ویرایش پروفایل
+              تکمیل پروفایل
             </h3>
             <div className="bg-white srounded-md sp-2 smb-3">
               <div className="row">
@@ -507,7 +507,7 @@ export class CreateResume extends Component {
                       <button
                         onClick={this.editDesc.bind(this)}
                         type="button"
-                        className="btn btn-light ir-r"
+                        className="btn btn-info ir-r"
                       >
                         ویرایش
                       </button>
@@ -521,7 +521,7 @@ export class CreateResume extends Component {
                       <button
                         onClick={this.cancel.bind(this)}
                         type="button"
-                        className="btn btn-light ir-r"
+                        className="btn btn-info ir-r"
                       >
                         بازگشت
                       </button>
@@ -723,20 +723,13 @@ export class CreateResume extends Component {
               <div className="row">
                 <div className="col-12">
                   {!this.state.editMode2 ? (
-                    <header className="d-flex justify-content-between align-items-center">
-                      {/* <h3 className="ir-b c-primary text-right d-block fs-m smb-2">
-                        {this.state.info
-                          ? this.state.info.userFullName
-                          : "درحال بارگذاری..."}
-                      </h3> */}
-
+                    <header className="d-flex justify-content-between align-items-center flex-row-reverse">
                       <button
-                        // onClick={this.editDesc.bind(this)}
                         onClick={() => {
                           this.setState({ editMode2: true });
                         }}
                         type="button"
-                        className="btn btn-light ir-r"
+                        className="btn btn-info ir-r "
                       >
                         ویرایش
                       </button>
@@ -748,12 +741,11 @@ export class CreateResume extends Component {
                       </h3>
 
                       <button
-                        // onClick={this.cancel.bind(this)}
                         onClick={() => {
                           this.setState({ editMode2: false });
                         }}
                         type="button"
-                        className="btn btn-light ir-r"
+                        className="btn btn-info ir-r"
                       >
                         بازگشت
                       </button>
@@ -1194,13 +1186,13 @@ export class CreateResume extends Component {
               <div className="row">
                 <div className="col-12">
                   {!this.state.editMode3 ? (
-                    <header className="d-flex justify-content-between align-items-center">
+                    <header className="d-flex justify-content-between align-items-center flex-row-reverse">
                       <button
                         onClick={() => {
                           this.setState({ editMode3: true });
                         }}
                         type="button"
-                        className="btn btn-light ir-r"
+                        className="btn btn-info ir-r"
                       >
                         ویرایش
                       </button>
@@ -1216,7 +1208,7 @@ export class CreateResume extends Component {
                           this.setState({ editMode3: false });
                         }}
                         type="button"
-                        className="btn btn-light ir-r"
+                        className="btn btn-info ir-r"
                       >
                         بازگشت
                       </button>
@@ -1288,13 +1280,13 @@ export class CreateResume extends Component {
               <div className="row">
                 <div className="col-12 col-lg-12">
                   {!this.state.editMode4 ? (
-                    <header className="d-flex justify-content-between align-items-center">
+                    <header className="d-flex justify-content-between align-items-center flex-row-reverse">
                       <button
                         onClick={() => {
                           this.setState({ editMode4: true });
                         }}
                         type="button"
-                        className="btn btn-light ir-r"
+                        className="btn btn-info ir-r"
                       >
                         ویرایش
                       </button>
@@ -1310,7 +1302,7 @@ export class CreateResume extends Component {
                           this.setState({ editMode4: false });
                         }}
                         type="button"
-                        className="btn btn-light ir-r"
+                        className="btn btn-info ir-r"
                       >
                         بازگشت
                       </button>
@@ -1411,13 +1403,13 @@ export class CreateResume extends Component {
               <div className="row">
                 <div className="col-12">
                   {!this.state.editMode8 ? (
-                    <header className="d-flex justify-content-between align-items-center">
+                    <header className="d-flex justify-content-between align-items-center flex-row-reverse">
                       <button
                         onClick={() => {
                           this.setState({ editMode8: true });
                         }}
                         type="button"
-                        className="btn btn-light ir-r"
+                        className="btn btn-info ir-r"
                       >
                         ویرایش
                       </button>
@@ -1433,7 +1425,7 @@ export class CreateResume extends Component {
                           this.setState({ editMode8: false });
                         }}
                         type="button"
-                        className="btn btn-light ir-r"
+                        className="btn btn-info ir-r"
                       >
                         بازگشت
                       </button>
@@ -1934,15 +1926,15 @@ export class CreateResume extends Component {
               <div className="row">
                 <div className="col-12">
                   {!this.state.editMode9 ? (
-                    <header className="d-flex justify-content-between align-items-center">
+                    <header className="d-flex justify-content-between align-items-center flex-row-reverse">
                       <button
                         onClick={() => {
                           this.setState({ editMode9: true });
                         }}
                         type="button"
-                        className="btn btn-light ir-r"
+                        className="btn btn-info ir-r"
                       >
-                        ویرایش
+                        ثبت تجربه کاری
                       </button>
                     </header>
                   ) : (
@@ -1956,7 +1948,7 @@ export class CreateResume extends Component {
                           this.setState({ editMode9: false });
                         }}
                         type="button"
-                        className="btn btn-light ir-r"
+                        className="btn btn-info ir-r"
                       >
                         بازگشت
                       </button>

@@ -40,6 +40,17 @@
 
 // self.addEventListener("fetch", (event) => {
 //   event.respondWith(
+//     caches.open(CACHE_DYNAMIC_NAME).then((cache) => {
+//       return fetch(event.request).then((res) => {
+//         cache.put(event.request, res.clone());
+//         return res;
+//       });
+//     })
+//   );
+// });
+
+// self.addEventListener("fetch", (event) => {
+//   event.respondWith(
 //     caches.match(event.request).then((response) => {
 //       if (response) {
 //         return response;
