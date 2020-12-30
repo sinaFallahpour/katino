@@ -115,13 +115,13 @@ const JobExpreinceForm = ({
                   {/* workTitle   */}
                   <div className=" smb-2">
                     <label className="ir-r d-block text-right smb-1">
-                      عنوان آگهی را وارد کنید
+                      عنوان شغل را وارد کنید
                     </label>
                     <div className="form-group mb-0">
                       <Field
                         name="workTitle"
                         className="form-control ir-r shadow-none"
-                        placeholder="عنوان آگهی"
+                        placeholder="عنوان شغل"
                         type="text"
                       />
                       <ErrorMessage
@@ -219,34 +219,3 @@ const JobExpreinceForm = ({
 };
 
 export { JobExpreinceForm };
-
-// const DatePickerInput = ({ ...props }) => {
-//   const [, , helpers] = useField(props);
-//   const selectedName =
-//     props.name === "startDate"
-//       ? startDate
-//       : props.name === "endDate" && endDate;
-
-//   const covertToEngNUm = (startDate) => {
-//     const convertToJalali = new Date(startDate).toLocaleDateString("fa-IR");
-//     const convertToEngNUm = persianjs(convertToJalali).toEnglishNumber()._str;
-//     return convertToEngNUm;
-//   };
-//   const finalNum = covertToEngNUm(selectedName);
-
-//   return (
-//     <>
-//       <DatePicker
-//         calendarStyles={styles}
-//         className="form-control ir-r shadow-none "
-//         value={moment(finalNum, "jYYYY/jM/jD")}
-//         onChange={(date) => {
-//           console.log(date);
-//           // props.name === "startDate" && setStartDate(date._d);
-//           // props.name === "endDate" && setEndDate(date._d);
-//         }}
-//         locale="fa-IR"
-//       />
-//     </>
-//   );
-// };

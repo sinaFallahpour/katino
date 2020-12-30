@@ -1968,7 +1968,7 @@ export class CreateResume extends Component {
                         type="button"
                         className="btn btn-info ir-r"
                       >
-                        ثبت تجربه کاری
+                        ثبت تحصیلات
                       </span>
                     </header>
                   ) : (

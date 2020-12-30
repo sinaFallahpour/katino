@@ -10,6 +10,7 @@ import { MiniSpinner } from "../../../../components/spinner/MiniSpinner";
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import "../style.css";
 import { DatePickerModern } from "../../../../core/utils/datepicker.util";
+import Select from "react-select";
 
 const EducationalBackgroundForm = ({
   DeleteForm,
@@ -17,9 +18,19 @@ const EducationalBackgroundForm = ({
   AllWorkExperience,
   addItemToList,
 }) => {
+  const degreeOfEducationsList = [
+    { value: 1, label: "مهم نیست" },
+    { value: 2, label: "دیپلم" },
+    { value: 3, label: "کاردانی" },
+    { value: 4, label: "کارشناسی" },
+    { value: 5, label: "کارشناسی ارشد" },
+    { value: 6, label: "دکترا" },
+  ];
+
   const initialData = {
-    workTitle: "",
-    companyName: "",
+    fieldOfStudy: "",
+    universityName: "",
+    degreeOfEducation: "",
     startDate: "",
     endDate: "",
     description: "",
@@ -97,6 +108,31 @@ const EducationalBackgroundForm = ({
     );
   };
 
+  const MySelect = ({ label, options, ...props }) => {
+    const [field, meta, helpers] = useField(props);
+    return (
+      <div>
+        <label className="ir-r d-block text-right smb-1">{label}</label>
+        <Select
+          {...field}
+          {...props}
+          options={options}
+          value={
+            options
+              ? options.find((option) => option.value === field.value)
+              : ""
+          }
+          onChange={(option) => helpers.setValue(option.value)}
+        />
+        <ErrorMessage
+          component="div"
+          className="errorMessage"
+          name={props.name}
+        />
+      </div>
+    );
+  };
+
   return (
     <>
       {loading && <MiniSpinner />}
@@ -111,23 +147,24 @@ const EducationalBackgroundForm = ({
           <aside className="form-container-bg  mx-auto">
             <Form>
               <div className=" srounded-md  smb-1 mt-4">
+                {/* Info */}
                 <div className="Field-Container col-12">
-                  {/* workTitle   */}
+                  {/* fieldOfStudy   */}
                   <div className=" smb-2">
                     <label className="ir-r d-block text-right smb-1">
-                      عنوان آگهی را وارد کنید
+                      رشته تحصیلی را وارد کنید
                     </label>
                     <div className="form-group mb-0">
                       <Field
-                        name="workTitle"
+                        name="fieldOfStudy"
                         className="form-control ir-r shadow-none"
-                        placeholder="عنوان آگهی"
+                        placeholder="رشته تحصیلی"
                         type="text"
                       />
                       <ErrorMessage
                         component="div"
                         className="errorMessage"
-                        name="workTitle"
+                        name="fieldOfStudy"
                       />
                     </div>
                   </div>
@@ -135,24 +172,36 @@ const EducationalBackgroundForm = ({
                   {/* companyName */}
                   <div className=" smb-2">
                     <label className="ir-r d-block text-right smb-1">
-                      نام شرکت را وارد کنید
+                      دانشگاه محل تحصیل را وارد کنید
                     </label>
                     <div className="form-group mb-0">
                       <Field
-                        name="companyName"
+                        name="universityName"
                         className="form-control ir-r shadow-none"
-                        placeholder="نام شرکت"
+                        placeholder="دانشگاه محل تحصیل"
                         type="text"
                       />
                       <ErrorMessage
                         component="div"
                         className="errorMessage"
-                        name="companyName"
+                        name="universityName"
                       />
                     </div>
                   </div>
                 </div>
+
+                {/* Date */}
                 <div className="Field-Container col-12">
+                  {/* degree  */}
+                  <div className=" smb-2 ml-2">
+                    <MySelect
+                      name="degreeOfEducation"
+                      placeholder="مدرک تحصیلی"
+                      options={degreeOfEducationsList}
+                      label="مدرک تحصیلی خود را وارد کنید"
+                    />
+                  </div>
+
                   {/* startDate */}
                   <div className=" smb-2">
                     <label className="ir-r d-block text-right smb-1">
@@ -179,6 +228,7 @@ const EducationalBackgroundForm = ({
                     </div>
                   </div>
                 </div>
+
                 {/* description */}
                 <div className="col-12 smb-2">
                   <label className="ir-r d-block text-right smb-1">
@@ -196,7 +246,7 @@ const EducationalBackgroundForm = ({
                       width: "100%",
                     }}
                   >
-                    ثبت تجربه کاری
+                    ثبت تحصیلات
                   </button>
                   <span
                     onClick={DeleteForm}
