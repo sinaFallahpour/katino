@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { JobExpreinceForm } from "./JobExpreinceForm";
+import { EducationalBackgroundForm } from "./EducationBackgroundForm";
 
-const JobExpreinceFormGenerator = ({ AllWorkExperience, addItemToList }) => {
+const EducationalBackgroundFormGenerator = ({
+  AllWorkExperience,
+  addItemToList,
+}) => {
   const [formCount, setFormCount] = useState([{ form: 1 }]);
   const [limitFormNumber, setLimitFormNumber] = useState(1);
 
@@ -27,7 +30,7 @@ const JobExpreinceFormGenerator = ({ AllWorkExperience, addItemToList }) => {
   return (
     <>
       {formCount.map(({ form }) => (
-        <JobExpreinceForm
+        <EducationalBackgroundForm
           key={form}
           idOfForm={form}
           AllWorkExperience={AllWorkExperience}
@@ -66,4 +69,4 @@ const JobExpreinceFormGenerator = ({ AllWorkExperience, addItemToList }) => {
   );
 };
 
-export { JobExpreinceFormGenerator };
+export { EducationalBackgroundFormGenerator };

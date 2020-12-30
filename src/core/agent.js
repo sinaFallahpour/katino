@@ -144,6 +144,11 @@ const CreateResome = {
   GetAllWorkExperience: () =>
     requests.get("/UserWorkExperience/GetAllWorkExperienceForCuurectUser"),
 
+  GetAllEduBackground: () =>
+    requests.get(
+      "/EducationalBackground/GetAllEducationalBackgroundForCuurectUser"
+    ),
+
   AddUserJobPreference: (body) =>
     requests.post("/UserJobPreference/AddUserJobPreference", body),
 

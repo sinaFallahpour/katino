@@ -9,6 +9,8 @@ import agent, { avatarUrl } from "../../../core/agent";
 import { salaries, typeOfCooperation, expriences } from "./salaries";
 import { JobExpreinceFormGenerator } from "./JobExpreince/JobExpreinceFormGenerator";
 import { JobExpreinceDetails } from "./JobExpreince/JobExpreinceDetails";
+import { EducationalBackgroundFormGenerator } from "./EducationBackground/EducationBackgroundGenerator";
+import { EducationalBackgroundDetails } from "./EducationBackground/EducationBackgroundDetails";
 
 export class CreateResume extends Component {
   state = {
@@ -37,6 +39,7 @@ export class CreateResume extends Component {
     const AllCategories = await agent.CreateResome.getAllCategories();
     const resuJobPreference = await agent.CreateResome.GetUserJobPreferenceForCurrentUser();
     const getAllWorkExperience = await agent.CreateResome.GetAllWorkExperience();
+    const getAllEduBackground = await agent.CreateResome.GetAllEduBackground();
 
     let Category = await AllCategories?.data.resul.map(({ id, name }) => {
       return { value: id, label: name };
@@ -51,6 +54,7 @@ export class CreateResume extends Component {
       userJobSkills: resuserJobSkill.data.resul,
       aboutMen: resAboutMe.data.resul,
       getAllWorkExperience: getAllWorkExperience.data.resul,
+      getAllEduBackground: getAllEduBackground.data.resul,
       info8: resuJobPreference.data.resul || {
         city: "",
         typeOfCooperation: 0,
@@ -429,6 +433,10 @@ export class CreateResume extends Component {
 
   addItemToList = (value) => {
     this.setState({ getAllWorkExperience: value });
+  };
+
+  addItemToListEduBack = (value) => {
+    this.setState({ getAllEduBackground: value });
   };
 
   render() {
@@ -1944,6 +1952,60 @@ export class CreateResume extends Component {
                 </div>
               </div>
             </div>
+
+            {/* </aside> */}
+            {/* <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4"> */}
+            <h3 className="d-block text-right ir-b smb-3 c-dark">تحصیلات</h3>
+            <div className="bg-white srounded-md sp-2 smb-3">
+              <div className="row">
+                <div className="col-12">
+                  {!this.state.editMode10 ? (
+                    <header className="d-flex justify-content-between align-items-center flex-row-reverse">
+                      <span
+                        onClick={() => {
+                          this.setState({ editMode10: true });
+                        }}
+                        type="button"
+                        className="btn btn-info ir-r"
+                      >
+                        ثبت تجربه کاری
+                      </span>
+                    </header>
+                  ) : (
+                    <header className="d-flex justify-content-between align-items-center">
+                      <h3 className="ir-b c-primary text-right d-block fs-m smb-2">
+                        ویرایش اطلاعات
+                      </h3>
+
+                      <span
+                        onClick={() => {
+                          this.setState({ editMode10: false });
+                        }}
+                        type="button"
+                        className="btn btn-info ir-r"
+                      >
+                        بازگشت
+                      </span>
+                    </header>
+                  )}
+
+                  {!this.state.editMode10 ? (
+                    <div className="content d-lg-flex flex-column justify-content-center">
+                      <EducationalBackgroundDetails
+                        AllWorkExperience={this.state.getAllEduBackground}
+                      />
+                    </div>
+                  ) : (
+                    <div className="content d-lg-flex flex-column justify-content-center">
+                      <EducationalBackgroundFormGenerator
+                        AllWorkExperience={this.state.getAllEduBackground}
+                        addItemToList={this.addItemToListEduBack}
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
           </aside>
 
           <aside className="col-12 col-lg-4">
@@ -2008,19 +2070,3 @@ const InputRadio = ({
     </>
   );
 };
-
-// <div className="custom-control custom-radio custom-control-inline">
-// <input
-//   onChange={this.radionHandler.bind(this)}
-//   {...rest}
-//   checked={this.state.info.employmentStatus == 3}
-//   type="radio"
-//   value={value}
-//   id="status3"
-//   name="status"
-//   className="custom-control-input"
-// />
-// <label className="custom-control-label ir-r" htmlFor="status3">
-//   به دنبال شغل بهتر
-// </label>
-// </div>
