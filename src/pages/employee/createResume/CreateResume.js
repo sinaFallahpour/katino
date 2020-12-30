@@ -504,13 +504,13 @@ export class CreateResume extends Component {
                           : "درحال بارگذاری..."}
                       </h3>
 
-                      <button
+                      <span
                         onClick={this.editDesc.bind(this)}
                         type="button"
                         className="btn btn-info ir-r"
                       >
                         ویرایش
-                      </button>
+                      </span>
                     </header>
                   ) : (
                     <header className="d-flex justify-content-between align-items-center">
@@ -518,13 +518,13 @@ export class CreateResume extends Component {
                         ویرایش اطلاعات
                       </h3>
 
-                      <button
+                      <span
                         onClick={this.cancel.bind(this)}
                         type="button"
                         className="btn btn-info ir-r"
                       >
                         بازگشت
-                      </button>
+                      </span>
                     </header>
                   )}
 
@@ -724,7 +724,7 @@ export class CreateResume extends Component {
                 <div className="col-12">
                   {!this.state.editMode2 ? (
                     <header className="d-flex justify-content-between align-items-center flex-row-reverse">
-                      <button
+                      <span
                         onClick={() => {
                           this.setState({ editMode2: true });
                         }}
@@ -732,7 +732,7 @@ export class CreateResume extends Component {
                         className="btn btn-info ir-r "
                       >
                         ویرایش
-                      </button>
+                      </span>
                     </header>
                   ) : (
                     <header className="d-flex justify-content-between align-items-center">
@@ -740,7 +740,7 @@ export class CreateResume extends Component {
                         ویرایش اطلاعات
                       </h3>
 
-                      <button
+                      <span
                         onClick={() => {
                           this.setState({ editMode2: false });
                         }}
@@ -748,7 +748,7 @@ export class CreateResume extends Component {
                         className="btn btn-info ir-r"
                       >
                         بازگشت
-                      </button>
+                      </span>
                     </header>
                   )}
 
@@ -1187,7 +1187,7 @@ export class CreateResume extends Component {
                 <div className="col-12">
                   {!this.state.editMode3 ? (
                     <header className="d-flex justify-content-between align-items-center flex-row-reverse">
-                      <button
+                      <span
                         onClick={() => {
                           this.setState({ editMode3: true });
                         }}
@@ -1195,7 +1195,7 @@ export class CreateResume extends Component {
                         className="btn btn-info ir-r"
                       >
                         ویرایش
-                      </button>
+                      </span>
                     </header>
                   ) : (
                     <header className="d-flex justify-content-between align-items-center">
@@ -1203,7 +1203,7 @@ export class CreateResume extends Component {
                         ویرایش اطلاعات
                       </h3>
 
-                      <button
+                      <span
                         onClick={() => {
                           this.setState({ editMode3: false });
                         }}
@@ -1211,7 +1211,7 @@ export class CreateResume extends Component {
                         className="btn btn-info ir-r"
                       >
                         بازگشت
-                      </button>
+                      </span>
                     </header>
                   )}
 
@@ -1281,7 +1281,7 @@ export class CreateResume extends Component {
                 <div className="col-12 col-lg-12">
                   {!this.state.editMode4 ? (
                     <header className="d-flex justify-content-between align-items-center flex-row-reverse">
-                      <button
+                      <span
                         onClick={() => {
                           this.setState({ editMode4: true });
                         }}
@@ -1289,7 +1289,7 @@ export class CreateResume extends Component {
                         className="btn btn-info ir-r"
                       >
                         ویرایش
-                      </button>
+                      </span>
                     </header>
                   ) : (
                     <header className="d-flex justify-content-between align-items-center">
@@ -1297,7 +1297,7 @@ export class CreateResume extends Component {
                         ویرایش اطلاعات
                       </h3>
 
-                      <button
+                      <span
                         onClick={() => {
                           this.setState({ editMode4: false });
                         }}
@@ -1305,7 +1305,7 @@ export class CreateResume extends Component {
                         className="btn btn-info ir-r"
                       >
                         بازگشت
-                      </button>
+                      </span>
                     </header>
                   )}
 
@@ -1404,7 +1404,7 @@ export class CreateResume extends Component {
                 <div className="col-12">
                   {!this.state.editMode8 ? (
                     <header className="d-flex justify-content-between align-items-center flex-row-reverse">
-                      <button
+                      <span
                         onClick={() => {
                           this.setState({ editMode8: true });
                         }}
@@ -1412,7 +1412,7 @@ export class CreateResume extends Component {
                         className="btn btn-info ir-r"
                       >
                         ویرایش
-                      </button>
+                      </span>
                     </header>
                   ) : (
                     <header className="d-flex justify-content-between align-items-center">
@@ -1420,7 +1420,7 @@ export class CreateResume extends Component {
                         ویرایش اطلاعات
                       </h3>
 
-                      <button
+                      <span
                         onClick={() => {
                           this.setState({ editMode8: false });
                         }}
@@ -1428,7 +1428,7 @@ export class CreateResume extends Component {
                         className="btn btn-info ir-r"
                       >
                         بازگشت
-                      </button>
+                      </span>
                     </header>
                   )}
 
@@ -1927,7 +1927,7 @@ export class CreateResume extends Component {
                 <div className="col-12">
                   {!this.state.editMode9 ? (
                     <header className="d-flex justify-content-between align-items-center flex-row-reverse">
-                      <button
+                      <span
                         onClick={() => {
                           this.setState({ editMode9: true });
                         }}
@@ -1935,7 +1935,7 @@ export class CreateResume extends Component {
                         className="btn btn-info ir-r"
                       >
                         ثبت تجربه کاری
-                      </button>
+                      </span>
                     </header>
                   ) : (
                     <header className="d-flex justify-content-between align-items-center">
@@ -1943,7 +1943,7 @@ export class CreateResume extends Component {
                         ویرایش اطلاعات
                       </h3>
 
-                      <button
+                      <span
                         onClick={() => {
                           this.setState({ editMode9: false });
                         }}
@@ -1951,7 +1951,7 @@ export class CreateResume extends Component {
                         className="btn btn-info ir-r"
                       >
                         بازگشت
-                      </button>
+                      </span>
                     </header>
                   )}
 

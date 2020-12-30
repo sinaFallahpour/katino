@@ -130,7 +130,20 @@ const JobExpreinceDetails = ({ AllWorkExperience }) => {
           </ul>
         ))
       ) : (
-        <JobExpreinceEdit id={idOfItems} />
+        <>
+          <header className="d-flex justify-content-between align-items-center mt-1">
+            <h3 className="ir-b c-primary text-right d-block fs-m smb-2"></h3>
+
+            <span
+              onClick={() => setEditMode(false)}
+              type="button"
+              className="btn btn-info ir-r"
+            >
+              بازگشت
+            </span>
+          </header>
+          <JobExpreinceEdit id={idOfItems} />
+        </>
       )}
     </>
   );
