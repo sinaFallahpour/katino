@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactHtmlParser from "react-html-parser";
 import { DeleteWorkExperience } from "../../../../core/api/work-experience";
 import Swal from "sweetalert2";
@@ -10,10 +10,14 @@ import "../style.css";
 const JobExpreinceDetails = ({ AllWorkExperience }) => {
   const [editMode, setEditMode] = useState(false);
   const [idOfItems, setIdOfItems] = useState(null);
+  const [initialData, setInitialData] = useState();
+
+  useEffect(() => {
+    setInitialData(AllWorkExperience);
+  }, [AllWorkExperience]);
 
   const DeletItem = async (e) => {
     const id = e.target.id;
-    console.log(id);
 
     Swal.fire({
       title: "آیا مطمئن هستید میخواهید حذف کنید؟",
@@ -27,7 +31,12 @@ const JobExpreinceDetails = ({ AllWorkExperience }) => {
       if (result.value) {
         const fetchData = async () => {
           try {
-            const data = await DeleteWorkExperience(id);
+            await DeleteWorkExperience(id);
+            const deletedList = [...initialData];
+            const filterData = deletedList.filter(
+              (item) => parseInt(item.id) !== parseInt(id)
+            );
+            setInitialData(filterData);
             Swal.fire({
               icon: "success",
               title: "تجربه کاری با موفقیت حذف شد",
@@ -53,7 +62,7 @@ const JobExpreinceDetails = ({ AllWorkExperience }) => {
 
   return (
     <>
-      {AllWorkExperience && AllWorkExperience.length === 0 ? (
+      {initialData && initialData.length === 0 ? (
         <ul className="list-group list-group-flush p-0">
           <li className="list-group-item border-0 pr-0">
             <span className="ir-b c-grey sml-1">عنوان کار : -</span>
@@ -71,8 +80,8 @@ const JobExpreinceDetails = ({ AllWorkExperience }) => {
             <span className="ir-b c-grey sml-1">توضیحات : -</span>
           </li>
         </ul>
-      ) : AllWorkExperience && !editMode ? (
-        AllWorkExperience.map((item, indx) => (
+      ) : !editMode && initialData ? (
+        initialData.map((item, indx) => (
           <ul
             key={indx}
             className="list-group list-group-flush  JobExpreinceDetails"
@@ -142,7 +151,11 @@ const JobExpreinceDetails = ({ AllWorkExperience }) => {
               بازگشت
             </span>
           </header>
-          <JobExpreinceEdit id={idOfItems} />
+          <JobExpreinceEdit
+            id={idOfItems}
+            setInitialData={setInitialData}
+            initialEditableList={initialData}
+          />
         </>
       )}
     </>

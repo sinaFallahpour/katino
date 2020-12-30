@@ -427,39 +427,11 @@ export class CreateResume extends Component {
     });
   };
 
-  // SubmitJobSkill = async (event) => {
-  //   event.preventDefault();
-
-  //   try {
-  //     // return params;
-  //     console.clear()
-  //     let { data } = await agent.CreateResome.AddUserJobSkill(this.state.currentJobSkill.id);
-  //     toast.success("ثبت موقیت آمیز");
-  //     this.setState({ editMode2: false });
-  //   } catch (err) {
-  //     if (err.response?.status === 401) toast.error("لطفا وارد شوید.");
-  //     else if (err.response.status === 404) toast.error("خطای رخ داده  ");
-  //     else if (err.response.status === 500) toast.error("مشکلی رخ داده ");
-  //     else {
-  //       for (let index = 0; index < err.response.data.message.length; index++) {
-  //         toast.error(err.response.data.message[index]);
-  //       }
-  //     }
-  //   }
-  // };
-
-  // get cities=()=>{}
+  addItemToList = (value) => {
+    this.setState({ getAllWorkExperience: value });
+  };
 
   render() {
-    // let cities = [];
-
-    // this.props.cities.map((id) => {
-    //   cities.push({
-    //     value: id.cityName,
-    //     label: ` ${id.provinceName}، ${id.cityName} `,
-    //   });
-    // });
-
     return (
       <section className="container-fluid create-ad spx-2 spx-lg-10 smy-10 spt-10">
         <div className="row">
@@ -1963,7 +1935,10 @@ export class CreateResume extends Component {
                     </div>
                   ) : (
                     <div className="content d-lg-flex flex-column justify-content-center">
-                      <JobExpreinceFormGenerator />
+                      <JobExpreinceFormGenerator
+                        AllWorkExperience={this.state.getAllWorkExperience}
+                        addItemToList={this.addItemToList}
+                      />
                     </div>
                   )}
                 </div>

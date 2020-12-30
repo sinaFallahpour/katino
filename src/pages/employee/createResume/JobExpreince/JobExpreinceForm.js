@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Field, Form, ErrorMessage, useField } from "formik";
 import { JobExprience } from "../../../../core/validation/jobExprience";
 import CKEditor from "@ckeditor/ckeditor5-react";
@@ -11,11 +11,12 @@ import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import "../style.css";
 import { DatePickerModern } from "../../../../core/utils/datepicker.util";
 
-const JobExpreinceForm = ({ DeleteForm, idOfForm }) => {
-  const [loading, setLoading] = useState(false);
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
-
+const JobExpreinceForm = ({
+  DeleteForm,
+  idOfForm,
+  AllWorkExperience,
+  addItemToList,
+}) => {
   const initialData = {
     workTitle: "",
     companyName: "",
@@ -24,13 +25,25 @@ const JobExpreinceForm = ({ DeleteForm, idOfForm }) => {
     description: "",
   };
 
+  const [loading, setLoading] = useState(false);
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
+  const [listOfData, setListOfData] = useState();
+
+  useEffect(() => {
+    setListOfData(AllWorkExperience);
+  }, [AllWorkExperience]);
+
   const submitHandler = async (values) => {
     const tempo = { ...values, startDate: startDate, endDate: endDate };
 
     setLoading(true);
     try {
-      await AddWorkExperience(tempo);
+      const data = await AddWorkExperience(tempo);
 
+      const DataList = [...listOfData];
+      DataList.push(tempo);
+      addItemToList(DataList);
       Swal.fire({
         icon: "success",
         title: "تکمیل فرم با موفقیت انجام شد",

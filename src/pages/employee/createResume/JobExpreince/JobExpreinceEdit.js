@@ -13,7 +13,7 @@ import { DatePickerModern } from "../../../../core/utils/datepicker.util";
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import { EditWorkExperience } from "../../../../core/api/work-experience";
 
-const JobExpreinceEdit = ({ id }) => {
+const JobExpreinceEdit = ({ id, setInitialData, initialEditableList }) => {
   const initialData = {
     workTitle: "",
     companyName: "",
@@ -43,6 +43,20 @@ const JobExpreinceEdit = ({ id }) => {
     setLoading(true);
     try {
       await EditWorkExperience(tempo);
+      const listOfData = [...initialEditableList];
+      const editedList = listOfData.map((item) => {
+        if (item.id === id) {
+          return {
+            workTitle: tempo.workTitle,
+            companyName: tempo.companyName,
+            startDate: tempo.startDate,
+            endDate: tempo.endDate,
+            description: tempo.description,
+          };
+        }
+      });
+      setInitialData(editedList);
+
       Swal.fire({
         icon: "success",
         title: "ویرایش با موفقیت انجام شد",

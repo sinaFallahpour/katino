@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { JobExpreinceForm } from "./JobExpreinceForm";
 
-const JobExpreinceFormGenerator = () => {
+const JobExpreinceFormGenerator = ({ AllWorkExperience, addItemToList }) => {
   const [formCount, setFormCount] = useState([{ form: 1 }]);
   const [limitFormNumber, setLimitFormNumber] = useState(1);
 
@@ -27,7 +27,13 @@ const JobExpreinceFormGenerator = () => {
   return (
     <>
       {formCount.map(({ form }) => (
-        <JobExpreinceForm key={form} idOfForm={form} DeleteForm={DeleteForm} />
+        <JobExpreinceForm
+          key={form}
+          idOfForm={form}
+          AllWorkExperience={AllWorkExperience}
+          addItemToList={addItemToList}
+          DeleteForm={DeleteForm}
+        />
       ))}
 
       <section className="complete-register-form container-fluid col-12 ">
