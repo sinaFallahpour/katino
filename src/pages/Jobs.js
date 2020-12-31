@@ -3,7 +3,7 @@ import agent from "../core/agent";
 import { GetLandingPage } from "../core/api/landing-page";
 import Pagination from "react-responsive-pagination";
 import { toast } from "react-toastify";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { FilterContainer } from "./Job.styles";
 import { MiniSpinner } from "../components/spinner/MiniSpinner";
 import {
@@ -28,6 +28,9 @@ export const Jobs = () => {
   const params = new URLSearchParams(window.location.search);
 
   useEffect(() => {
+    console.log(params.keys());
+    console.log(params.keys);
+
     let cp = params.get("currentPage");
     let pz = params.get("pageSize");
 
