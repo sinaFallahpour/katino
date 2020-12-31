@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>عدم اتصال به اینترنت</title>
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+      }
+      .ErrorContainer {
+        height: 100vh;
+        width: 100vw;
+        background-color: #795aa4;
+        padding: 0;
+        margin: 0;
+      }
+      .ImageContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: 100vw;
+      }
+      .ImageContainer > img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+
+      .TextContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: 100vw;
+      }
+      .ErrorContainer h2 {
+        font-size: 3rem;
+        color: #fff;
+      }
+
+      @media only screen and (max-width: 480px) {
+        .ErrorContainer h2 {
+          font-size: 2rem;
+          color: #fff;
+        }
+      }
+      @media only screen and (max-width: 360px) {
+        .ErrorContainer h2 {
+          font-size: 1.6rem;
+          color: #fff;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ErrorContainer">
+      <div class="ImageContainer">
+        <img src="/img/internet-error.svg" />
+      </div>
+      <div class="TextContainer">
+        <h2>اینترنت خود را بررسی</h2>
+      </div>
+    </div>
+  </body>
+</html>

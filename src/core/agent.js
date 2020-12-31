@@ -27,7 +27,7 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(undefined, (error) => {
   if (error.message === "Network Error" && !error.response) {
-    toast.error("Network error - make sure API is running!");
+    toast.error("اینترنت خود را بررسی کنید");
   }
 
   if (error?.response?.status == 404) {
