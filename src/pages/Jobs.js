@@ -87,20 +87,22 @@ export const Jobs = () => {
     fetchData();
   }, [url]);
 
+  const handleUrl = (name, value) => {
+    value ? params.set(name, value) : params.delete(name);
+  };
+
   const handleFilter = async (inp) => {
-    inp.category && params.set("category", inp.category);
-    inp.city && params.set("city", inp.city);
-    inp.salary && params.set("salary", inp.salary);
-    inp.typeOfCooperation &&
-      params.set("typeOfCooperation", inp.typeOfCooperation);
-    inp.workExperience && params.set("workExperience", inp.workExperience);
+    handleUrl("category", inp.category);
+    handleUrl("salary", inp.salary);
+    handleUrl("typeOfCooperation", inp.typeOfCooperation);
+    handleUrl("workExperience", inp.workExperience);
 
     history.replace(`${pathName}?${params.toString()}`);
   };
 
   const handleSearch = async (inp) => {
-    inp.key && params.set("key", inp.key);
-    inp.city && params.set("city", inp.city);
+    handleUrl("key", inp.key);
+    handleUrl("city", inp.city);
 
     history.replace(`${pathName}?${params.toString()}`);
   };
@@ -157,7 +159,11 @@ export const Jobs = () => {
           LandingImg={landingImg}
           className="container-fluid spx-2 spx-lg-10 "
         >
-          <JobSearchBox handleSearch={handleSearch} cities={cities} />
+          <JobSearchBox
+            handleFilter={handleSearch}
+            handleSearch={handleSearch}
+            cities={cities}
+          />
 
           <Filters handleFilter={handleFilter} />
         </FilterContainer>

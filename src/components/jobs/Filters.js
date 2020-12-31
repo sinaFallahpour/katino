@@ -116,6 +116,25 @@ export class Filters extends Component {
     );
   };
 
+  handleFilter = async (e, { action, name }) => {
+    if (action === "select-option") {
+      if (name === "category") {
+        await this.setState({
+          data: { ...this.state.data, [name]: e ? e.label : "" },
+        });
+      } else {
+        await this.setState({
+          data: { ...this.state.data, [name]: e ? e.value : "" },
+        });
+      }
+      this.props.handleFilter(this.state.data);
+    } else if (action === "clear") {
+      await this.setState({
+        data: { ...this.state.data, [name]: null },
+      });
+      this.props.handleFilter(this.state.data);
+    }
+  };
   render() {
     return (
       <div className=" filterContainer">
@@ -124,15 +143,11 @@ export class Filters extends Component {
           <div className="srounded-md sbs-content sp-1">
             <Select
               isClearable
-              onChange={async (e) => {
-                await this.setState({
-                  data: { ...this.state.data, category: e ? e?.label : "" },
-                });
-                this.props.handleFilter(this.state.data);
-              }}
+              onChange={this.handleFilter}
               isSearchable={false}
               placeholder={"دسته بندی شغلی"}
               options={this.state.categories}
+              name="category"
             />
           </div>
         </div>
@@ -142,18 +157,11 @@ export class Filters extends Component {
           <div className="srounded-md sbs-content sp-1">
             <Select
               isClearable
-              onChange={async (e) => {
-                await this.setState({
-                  data: {
-                    ...this.state.data,
-                    typeOfCooperation: e ? e.value : null,
-                  },
-                });
-                this.props.handleFilter(this.state.data);
-              }}
+              onChange={this.handleFilter}
               isSearchable={false}
               placeholder={"نوع قرارداد"}
               options={this.state.typeOfCooperation}
+              name="typeOfCooperation"
             />
           </div>
         </div>
@@ -163,15 +171,11 @@ export class Filters extends Component {
           <div className="srounded-md sbs-content  sp-1">
             <Select
               isClearable
-              onChange={async (e) => {
-                await this.setState({
-                  data: { ...this.state.data, salary: e ? e.value : null },
-                });
-                this.props.handleFilter(this.state.data);
-              }}
+              onChange={this.handleFilter}
               isSearchable={false}
               placeholder={"میزان حقوق"}
               options={this.state.salary}
+              name="salary"
             />
           </div>
         </div>
@@ -181,18 +185,11 @@ export class Filters extends Component {
           <div className="srounded-md sbs-content sp-1">
             <Select
               isClearable
-              onChange={async (e) => {
-                await this.setState({
-                  data: {
-                    ...this.state.data,
-                    workExperience: e ? e.value : null,
-                  },
-                });
-                this.props.handleFilter(this.state.data);
-              }}
+              onChange={this.handleFilter}
               isSearchable={false}
               placeholder={"سابقه کار"}
               options={this.state.expriences}
+              name="workExperience"
             />
           </div>
         </div>

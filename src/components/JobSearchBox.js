@@ -13,7 +13,21 @@ export class JobSearchBox extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  cityHandler = (event) => this.setState({ city: event.value });
+  handleFilterSearch = async (e, { action, name }) => {
+    if (action === "select-option") {
+      await this.setState({
+        ...this.state.data,
+        [name]: e ? e.value : "",
+      });
+      this.props.handleFilter(this.state);
+    } else if (action === "clear") {
+      await this.setState({
+        ...this.state.data,
+        [name]: null,
+      });
+      this.props.handleFilter(this.state);
+    }
+  };
 
   render() {
     let cities = [];
@@ -48,10 +62,12 @@ export class JobSearchBox extends Component {
           <div className="form-group mb-0 ir-r srounded-md">
             <label className="fs-regular ir-b c-dark">در کدام شهر؟</label>
             <Select
-              onChange={this.cityHandler}
+              isClearable
+              onChange={this.handleFilterSearch}
               placeholder="انتخاب شهر"
               styles={{ fontFamily: "iransans-regular" }}
               options={cities}
+              name="city"
             />
           </div>
         </div>
