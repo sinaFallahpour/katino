@@ -9,8 +9,9 @@ export class JobSearchBox extends Component {
     key: "",
   };
 
-  changeHandler = (event) =>
+  changeHandler = (event) => {
     this.setState({ [event.target.name]: event.target.value });
+  };
 
   cityHandler = (event) => this.setState({ city: event.value });
 
@@ -19,7 +20,7 @@ export class JobSearchBox extends Component {
 
     this.props.cities.map((id) => {
       cities.push({
-        value: id.cityName,
+        value: id.cityDivisionCode,
         label: ` ${id.provinceName}، ${id.cityName} `,
       });
     });

@@ -161,8 +161,8 @@ export const Jobs = () => {
 
           <Filters handleFilter={handleFilter} />
         </FilterContainer>
-        <div className="container-fluid spx-2 spx-lg-10 smt-10">
-          <hr className="smy-5" />
+        <div className="container-fluid spx-2 spx-lg-10 smt-5">
+          <hr className="smb-5" />
 
           <div className="row bg-white srounded-md sp-2">
             {adsList
