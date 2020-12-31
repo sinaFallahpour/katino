@@ -1,10 +1,10 @@
-import React, { Component, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import agent from "../core/agent";
-import Swal from "sweetalert2";
+import { GetLandingPage } from "../core/api/landing-page";
 import Pagination from "react-responsive-pagination";
 import { toast } from "react-toastify";
 import { useHistory, useLocation } from "react-router-dom";
-
+import { FilterContainer } from "./Job.styles";
 import { MiniSpinner } from "../components/spinner/MiniSpinner";
 import {
   JobSearchBox,
@@ -16,6 +16,7 @@ import {
 
 export const Jobs = () => {
   const [loading, setLoading] = useState(false);
+  const [landingImg, setLandingImg] = useState(false);
   const [currentPage, setCurentPage] = useState(1);
   const pageSize = 14;
   const [cities, setCities] = useState([]);
@@ -36,6 +37,12 @@ export const Jobs = () => {
     !cp && !pz && history.replace(`${pathName}?${params.toString()}`);
 
     citiesService.getCities().then((res) => setCities(res.data.resul));
+
+    GetLandingPage().then((res) =>
+      res?.resul?.map((item) => {
+        item.key === "Landing_Img" && setLandingImg(item.value);
+      })
+    );
   }, []);
 
   useEffect(() => {
@@ -145,12 +152,16 @@ export const Jobs = () => {
   return (
     <>
       {loading && <MiniSpinner />}
-      <div className="search-jobs spt-10">
-        <div className="container-fluid spx-2 spx-lg-10 smt-10">
+      <div className="search-jobs spt-5">
+        <FilterContainer
+          LandingImg={landingImg}
+          className="container-fluid spx-2 spx-lg-10 "
+        >
           <JobSearchBox handleSearch={handleSearch} cities={cities} />
 
           <Filters handleFilter={handleFilter} />
-
+        </FilterContainer>
+        <div className="container-fluid spx-2 spx-lg-10 smt-10">
           <hr className="smy-5" />
 
           <div className="row bg-white srounded-md sp-2">

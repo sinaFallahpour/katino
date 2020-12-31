@@ -1,0 +1,16 @@
+.filterContainer {
+  margin: 30px auto;
+  display: flex;
+  padding: 0 !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap;
+}
+.filterContainer > * {
+  width: 280px;
+}
+
+@media only screen and (max-width: 960px) {
+  .filterContainer {
+    justify-content: center !important;
+  }
+}

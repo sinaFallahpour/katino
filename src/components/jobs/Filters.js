@@ -1,7 +1,8 @@
-import React, { Component } from "react"
-import Select from "react-select"
-import { jobServices } from "./jobServices"
-import { citiesService } from "../citiesService"
+import React, { Component } from "react";
+import Select from "react-select";
+import { jobServices } from "./jobServices";
+import { citiesService } from "../citiesService";
+import "./filter.style.css";
 
 export class Filters extends Component {
   state = {
@@ -81,74 +82,65 @@ export class Filters extends Component {
         label: "بیشتر از 7 سال",
       },
     ],
-  }
+  };
 
   componentDidMount() {
     jobServices.getCategories().then((res) => {
-      let categories = []
+      let categories = [];
 
       res.data.resul.map((item) =>
         categories.push({ value: item.id, label: item.name })
-      )
+      );
 
       this.setState({
         categories: [...categories],
-      })
-    })
+      });
+    });
 
     citiesService.getCities().then((res) => {
-      let cities = []
+      let cities = [];
       res.data.resul.map((item) => {
         cities.push({
           value: item.cityName,
           label: ` ${item.provinceName}، ${item.cityName} `,
-        })
-      })
+        });
+      });
 
-      this.setState({ cities: [...cities] })
-    })
+      this.setState({ cities: [...cities] });
+    });
   }
 
   changeHandler = (event) => {
-    this.setSelectedValue(Array.isArray(event) ? event.map((x) => x.value) : [])
-  }
+    this.setSelectedValue(
+      Array.isArray(event) ? event.map((x) => x.value) : []
+    );
+  };
 
   render() {
     return (
-      <div className="filters row smt-4">
+      <div className=" filterContainer">
         {/* type of job  */}
-        <div className="col-12 col-lg-3 ir-r smb-2">
-          <div className="srounded-md sbs-content bg-white sp-1">
+        <div>
+          <div className="srounded-md sbs-content sp-1">
             <Select
-              // onChange={this.changeHandler}
-              // isMulti
               isClearable
-              // value={this.state.categories.filter((obj) =>
-              //   this.state.selectedValue.includes(obj.value)
-              // )}
-
               onChange={async (e) => {
                 await this.setState({
                   data: { ...this.state.data, category: e ? e?.label : "" },
-                })
-                this.props.handleFilter(this.state.data)
+                });
+                this.props.handleFilter(this.state.data);
               }}
               isSearchable={false}
               placeholder={"دسته بندی شغلی"}
               options={this.state.categories}
-              // options={this.state.categories?.map((item) => ({
-              //   value: item.id,
-              //   label: item.name,
-              // }))}
-              // options={this.state.categories}
             />
           </div>
         </div>
 
-        <div className="col-12 col-lg-3 ir-r smb-2">
-          <div className="srounded-md sbs-content bg-white sp-1">
+        {/* type of cooperation  */}
+        <div>
+          <div className="srounded-md sbs-content sp-1">
             <Select
-              // isMulti
               isClearable
               onChange={async (e) => {
                 await this.setState({
@@ -156,8 +148,8 @@ export class Filters extends Component {
                     ...this.state.data,
                     typeOfCooperation: e ? e.value : null,
                   },
-                })
-                this.props.handleFilter(this.state.data)
+                });
+                this.props.handleFilter(this.state.data);
               }}
               isSearchable={false}
               placeholder={"نوع قرارداد"}
@@ -166,33 +158,16 @@ export class Filters extends Component {
           </div>
         </div>
 
-        <div className="col-12 col-lg-3 ir-r smb-2">
-          <div className="srounded-md sbs-content bg-white sp-1">
+        {/* salary  */}
+        <div>
+          <div className="srounded-md sbs-content  sp-1">
             <Select
-              isClearable
-              onChange={async (e) => {
-                await this.setState({
-                  data: { ...this.state.data, city: e ? e.value : "" },
-                })
-                this.props.handleFilter(this.state.data)
-              }}
-              //  isMulti
-              placeholder={"شهر"}
-              options={this.state.cities}
-            />
-          </div>
-        </div>
-
-        <div className="col-12 col-lg-3 ir-r smb-2">
-          <div className="srounded-md sbs-content bg-white sp-1">
-            <Select
-              // isMulti
               isClearable
               onChange={async (e) => {
                 await this.setState({
                   data: { ...this.state.data, salary: e ? e.value : null },
-                })
-                this.props.handleFilter(this.state.data)
+                });
+                this.props.handleFilter(this.state.data);
               }}
               isSearchable={false}
               placeholder={"میزان حقوق"}
@@ -201,8 +176,9 @@ export class Filters extends Component {
           </div>
         </div>
 
-        <div className="col-12 col-lg-3 ir-r mb-0">
-          <div className="srounded-md sbs-content bg-white sp-1">
+        {/* experience  */}
+        <div>
+          <div className="srounded-md sbs-content sp-1">
             <Select
               isClearable
               onChange={async (e) => {
@@ -211,10 +187,9 @@ export class Filters extends Component {
                     ...this.state.data,
                     workExperience: e ? e.value : null,
                   },
-                })
-                this.props.handleFilter(this.state.data)
+                });
+                this.props.handleFilter(this.state.data);
               }}
-              // isMulti
               isSearchable={false}
               placeholder={"سابقه کار"}
               options={this.state.expriences}
@@ -222,6 +197,6 @@ export class Filters extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }

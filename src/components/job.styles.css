@@ -1,0 +1,21 @@
+.jobSearchContainer {
+  margin: 0 auto;
+  background: #fff !important;
+  background-color: #fff !important;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  border-radius: 10px;
+  position: relative;
+}
+.jobSearchContainer::before {
+  content: "";
+  background: #fff !important;
+  background-color: #fff !important;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
