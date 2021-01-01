@@ -4,7 +4,10 @@
     <title></title>
 
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
 
     <link
       rel="stylesheet"
@@ -24,6 +27,31 @@
     <link rel="icon" href="/favicon/favicon.ico" />
 
     <link rel="manifest" href="manifest.json" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="white" />
+    <meta name="apple-mobile-web-app-title" content="کاتینو" />
+    <link rel="apple-touch-icon" href="/favicon/16x16.png" sizes="16x16" />
+    <link rel="apple-touch-icon" href="/favicon/32x32.png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/favicon/48x48.png" sizes="48x48" />
+    <link rel="apple-touch-icon" href="/favicon/64x64.png" sizes="64x64" />
+    <link rel="apple-touch-icon" href="/favicon/128x128.png" sizes="128x128" />
+    <link
+      rel="apple-touch-icon"
+      href="/favicon/android-chrome-192x192.png"
+      sizes="192x192"
+    />
+    <link
+      rel="apple-touch-icon"
+      href="/favicon/android-chrome-256x256.png"
+      sizes="256x256"
+    />
+    <meta
+      name="msapplication-TileImage"
+      content="/favicon/android-chrome-192x192.png"
+    />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="theme-color" content="#fff" />
   </head>
   <body>
     <div id="root"></div>
@@ -60,7 +88,7 @@
           : a.addEventListener("load", t, !1);
       })();
     </script>
-    <!-- <script>
+    <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
           navigator.serviceWorker
@@ -73,6 +101,6 @@
             });
         });
       }
-    </script> -->
+    </script>
   </body>
 </html>
