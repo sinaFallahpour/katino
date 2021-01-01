@@ -75,10 +75,8 @@ export class CreateResume extends Component {
     // event.preventDefault();
 
     try {
-      // return params;
       let { data } = await agent.CreateResome.GetResomePercent();
       this.setState({ resomePercent: data.resul });
-      // toast.success("رزومه با موفقیت ارسال شد");
     } catch (err) {
       if (err.response.status === 401) toast.error("لطفا وارد شوید.");
       else if (err.response.status === 404) toast.error("خطای رخ داده  ");
@@ -88,10 +86,6 @@ export class CreateResume extends Component {
   };
 
   async avatarHandler(event) {
-    // await this.setState({
-    //   avatarFile: event.target.files[0],
-    // });
-
     await this.setState({
       avatarSRC: URL.createObjectURL(event.target.files[0]),
     });
@@ -107,12 +101,9 @@ export class CreateResume extends Component {
         },
       })
       .then(async (data) => {
-        // avatarUrl + "/" + this.state.info2?.employeeAvatar
         await this.setState({
           info2: { ...this.state.info2, employeeAvatar: data.data.resul },
         });
-
-        // this.setState({ hasImage: true })
       })
       .catch(
         this.setState({
@@ -183,21 +174,21 @@ export class CreateResume extends Component {
 
   returnGenderStatus = () => {
     var genderStatus = this.state.info2?.gender;
-    // if (!genderStatus) return;
+
     if (genderStatus == 1) return "مرد";
     if (genderStatus == 2) return "زن";
   };
 
   returnMarridStatus = () => {
     var marridStatus = this.state.info2?.isMarreid;
-    // if (!genderStatus) return;
+
     if (marridStatus) return "مجرد";
     if (!marridStatus) return "متاهل";
   };
 
   returnSalary = () => {
     var status = this.state.info8?.salary;
-    // if (!genderStatus) return;
+
     if (status == 0) return "کمتر از 1 میلیون";
     if (status == 1) return "بین 2.5 تا 3.5 میلیون";
     if (status == 2) return "بین 3.5 تا 5 میلیون";
@@ -235,7 +226,7 @@ export class CreateResume extends Component {
 
   returnMarridStatus = () => {
     var marridStatus = this.state.info2?.isMarreid;
-    // if (!genderStatus) return;
+
     if (!marridStatus) return "مجرد";
     if (marridStatus) return "متاهل";
   };
@@ -244,7 +235,6 @@ export class CreateResume extends Component {
     event.preventDefault();
 
     try {
-      // return params;
       let { data } = await agent.CreateResome.editEmployeePersonalInformation(
         this.props.id
       );
@@ -261,7 +251,6 @@ export class CreateResume extends Component {
     event.preventDefault();
 
     try {
-      // return params;
       let data1 = { ...this.state.info2 };
       if (data1.isMarreid == "false") data1.isMarreid = false;
       if (data1.isMarreid == "true") data1.isMarreid = true;
@@ -289,7 +278,6 @@ export class CreateResume extends Component {
     event.preventDefault();
 
     try {
-      // return params;
       let obj = { aboutMe: this.state.aboutMen };
       let { data } = await agent.CreateResome.AddEmployeeAboutMen(obj);
       toast.success("ثبت موفقیت آمیز");
@@ -312,12 +300,10 @@ export class CreateResume extends Component {
     event.preventDefault();
 
     try {
-      // return params;
       let currentJobSkill = this.state.currentJobSkill;
       let obj = { jobSkillId: currentJobSkill?.id };
       let { data } = await agent.CreateResome.AddUserJobSkill(obj);
 
-      // let userJobSkills = this.state.userJobSkills.concat({ id: currentJobSkill.id, jobSkillName: currentJobSkill.jobSkillName });
       let userJobSkills = this.state.userJobSkills.concat({
         id: data.resul,
         jobSkillName: currentJobSkill.jobSkillName,
@@ -381,14 +367,7 @@ export class CreateResume extends Component {
         ),
       });
 
-      // let userJobSkills = this.state.userJobSkills.concat({ id: currentJobSkill.id, jobSkillName: currentJobSkill.jobSkillName });
-      // this.setState({
-      //   userJobSkills,
-      //   editMode4: false
-      // });
-
       toast.success("حذف موفقیت آمیز");
-      // this.setState({ editMode2: false });
     } catch (err) {
       if (err.response?.status === 401) toast.error("لطفا وارد شوید.");
       else if (err.response.status === 404) toast.error("خطای رخ داده  ");

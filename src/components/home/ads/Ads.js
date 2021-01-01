@@ -10,7 +10,7 @@ export function Ads({ immediately, latest, handleMarkOtherAdv }) {
             آگهی های <span className="badge badge-danger ir-b fs-m">فوری</span>
           </h3>
           <div className="bg-white sp-1 sp-lg-2 srounded-md smb-2 mb-lg-0">
-            <Immediately immediately={immediately.listOfData} />
+            <Immediately immediately={immediately} />
           </div>
         </div>
         <div className="col-12 col-lg-4">
@@ -20,7 +20,7 @@ export function Ads({ immediately, latest, handleMarkOtherAdv }) {
           <div className="bg-white sp-1 sp-lg-2 srounded-md">
             <Latest
               hasMoreButton={true}
-              latest={latest.listOfData}
+              latest={latest}
               handleMarkOtherAdv={handleMarkOtherAdv}
             />
           </div>

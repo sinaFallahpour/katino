@@ -6,16 +6,13 @@ import StickyBox from "react-sticky-box";
 export class SendResume extends Component {
   state = {};
 
-  componentDidMount() { }
+  componentDidMount() {}
 
   submitHandler = async (event) => {
     event.preventDefault();
 
     try {
-      alert(1)
-      // return params;
       await agent.Adver.asignResomeToAdver(this.props.id);
-      alert(12)
       toast.success("رزومه با موفقیت ارسال شد");
     } catch (err) {
       console.log(err.response);
@@ -24,24 +21,6 @@ export class SendResume extends Component {
       else if (err.response?.status === 500) toast.error("مشکلی رخ داده ");
       else toast.error(err.response?.data?.message[0]);
     }
-
-    // axios
-    //   .post(
-    //     API_ADDRESS + `​/Resome/AsignResomeToAdver?adverId=${this.props.id}`,
-    //     {},
-    //     {
-    //       headers: {
-    //         Authorization: `bearer ${window.localStorage.getItem("JWT")}`,
-    //       },
-    //     }
-    //   )
-    //   .then(() => toast.success("رزومه با موفقیت ارسال شد"))
-    //   .catch((err) => {
-    //     if (err.response.status === 401) toast.error("لطفا وارد شوید.");
-    //     else if (err.response.status === 404) toast.error("خطای رخ داده  ");
-    //     else if (err.response.status === 500) toast.error("مشکلی رخ داده ");
-    //     else toast.error(err.response.message[0]);
-    //   });
   };
 
   render() {

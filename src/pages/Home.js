@@ -41,14 +41,18 @@ export class Home extends Component {
       .then((res) => this.setState({ companiesLogo: res.data.resul }));
 
     // Latest Ads
-    adsServices
-      .getLatest()
-      .then((res) => this.setState({ latestAds: res.data.resul }));
+    adsServices.getLatest().then((res) =>
+      this.setState({
+        latestAds: res.data.resul.listOfData.filter((_, indx) => indx < 16),
+      })
+    );
 
     // Immediately Ads
-    adsServices
-      .getImmediately()
-      .then((res) => this.setState({ immediatelyAds: res.data.resul }));
+    adsServices.getImmediately().then((res) =>
+      this.setState({
+        immediatelyAds: res.data.resul.listOfData.filter((_, indx) => indx < 8),
+      })
+    );
 
     service.getBlogs().then((res) => this.setState({ blog: res.data.resul }));
 
