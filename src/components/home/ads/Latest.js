@@ -16,8 +16,6 @@ export function Latest({ latest, handleMarkOtherAdv }) {
             salary={item.salary}
             type={item.typeOfCooperation}
             typeOfCooperation={item.typeOfCooperation}
-            // immediately={this.state.immediatelyAds}
-            // latest={this.state.latestAds}
             item={item}
             handleMarkOtherAdv={handleMarkOtherAdv}
           />

@@ -29,10 +29,6 @@ export class Home extends Component {
     Landing_Img: "",
   };
 
-  // 0: {id: 3, key: "Instagram", value: "Instagram", title: "اینستاگرام"}
-  // 1: {id: 5, key: "Linkedin", value: "Linkedin.com", title: "لینکدین"}
-  // 2: {id: 6, key: "Twitter", value: "Twitter", title: "توییتر"}
-
   componentDidMount() {
     // Cities for Search Box
     citiesService

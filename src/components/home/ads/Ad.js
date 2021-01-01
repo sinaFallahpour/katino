@@ -50,14 +50,6 @@ export class Ad extends Component {
         .catch();
     }
   };
-  // id={item.id}
-  // title={item.title}
-  // companyName={item.companyName}
-  // city={item.city}
-  // salary={item.salary}
-  // typeOfCooperation={item.typeOfCooperation}
-  // descriptionOfJob={item.descriptionOfJob}
-  // item={item}
 
   render() {
     return (
@@ -72,7 +64,6 @@ export class Ad extends Component {
           </a>
 
           <i
-            // onClick={this.adMarker}
             onClick={() => {
               this.props?.handleMarkOtherAdv(this.props.id);
             }}

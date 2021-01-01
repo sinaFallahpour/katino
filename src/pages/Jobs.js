@@ -128,36 +128,30 @@ export const Jobs = () => {
     try {
       let currentAdver = adsList.find((c) => c.id == adverId);
       if (currentAdver.isMarked) {
-        // this.setState({ isMarked: false });
+        const newList = adsList.map((el) =>
+          el.id === adverId ? Object.assign({}, el, { isMarked: false }) : el
+        );
+        setAdsList(newList);
 
-        this.setState({
-          adsList: adsList.map((el) =>
-            el.id === adverId ? Object.assign({}, el, { isMarked: false }) : el
-          ),
-        });
         await agent.Adver.unmarkAdvder(adverId);
       } else {
-        this.setState({
-          adsList: this.state.adsList.map((el) =>
-            el.id === adverId ? Object.assign({}, el, { isMarked: true }) : el
-          ),
-        });
+        const newList = adsList.map((el) =>
+          el.id === adverId ? Object.assign({}, el, { isMarked: true }) : el
+        );
+        setAdsList(newList);
 
         await agent.Adver.markAdvder(adverId);
       }
     } catch (ex) {
-      this.setState({ isMarked: !this.state.isMarked });
+      ex.response?.data?.message &&
+        ex.response?.data?.message?.map((err) =>
+          toast.error(ex.response?.data?.message[0])
+        );
 
-      if (ex?.response?.data) {
-        toast.error(ex.response?.data?.message[0]);
-        this.setState({
-          data: this.state.adsList.map((el) =>
-            el.id === adverId
-              ? Object.assign({}, el, { isMarked: !el.isMarked })
-              : el
-          ),
-        });
-      }
+      const newList = adsList.map((el) =>
+        el.id === adverId ? Object.assign({}, el, { isMarked: true }) : el
+      );
+      setAdsList(newList);
     }
   };
 
