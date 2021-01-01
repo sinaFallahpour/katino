@@ -9,6 +9,19 @@ export class JobSearchBox extends Component {
     key: "",
   };
 
+  componentWillReceiveProps = (nextProps) => {
+    if (nextProps.InitialUrlValue !== this.props.InitialUrlValue) {
+      const listOfData = { ...nextProps.InitialUrlValue };
+
+      for (let key in listOfData) {
+        this.setState((prevState) => ({
+          ...prevState.data,
+          [key]: listOfData[key] ? listOfData[key] : "",
+        }));
+      }
+    }
+  };
+
   changeHandler = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
@@ -49,6 +62,7 @@ export class JobSearchBox extends Component {
             </label>
 
             <input
+              value={this.state.key}
               onChange={this.changeHandler}
               name="key"
               className="form-control ir-r"
@@ -63,6 +77,9 @@ export class JobSearchBox extends Component {
             <label className="fs-regular ir-b c-dark">در کدام شهر؟</label>
             <Select
               isClearable
+              value={cities.filter(
+                (option) => option.value === parseInt(this.state.city)
+              )}
               onChange={this.handleFilterSearch}
               placeholder="انتخاب شهر"
               styles={{ fontFamily: "iransans-regular" }}
