@@ -59,6 +59,7 @@ export class Ad extends Component {
             className="fs-m ir-b c-dark text-truncate"
             href={`/JobDetails/${this.props.id}`}
             dideo-checked="true"
+            style={{ textDecoration: "none" }}
           >
             {this.props.title}
           </a>
@@ -73,12 +74,16 @@ export class Ad extends Component {
           ></i>
         </header>
 
-        <div className="card-body p-0">
+        <a
+          className="card-body p-0"
+          href={`/JobDetails/${this.props.id}`}
+          style={{ textDecoration: "none" }}
+        >
           <div className="detail smb-1">
-            <Link className="ir-r c-grey fs-m sml-1" to="/">
+            <span className="ir-r c-grey fs-m sml-1" to="/">
               <i className="fas fa-building ml-2"></i>
               {this.props.companyName}
-            </Link>
+            </span>
 
             <span className="ir-r c-grey fs-m sml-1">
               <i className="fas fa-map-marker-alt ml-2"></i>
@@ -98,7 +103,7 @@ export class Ad extends Component {
             className="d-block text-right ir-r fs-m mb-0 c-regular"
             dangerouslySetInnerHTML={{ __html: `${this.state.desc}...` }}
           ></p>
-        </div>
+        </a>
       </div>
     );
   }
