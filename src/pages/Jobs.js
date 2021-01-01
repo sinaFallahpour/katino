@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useEffect, useReducer, useState } from "react";
 import agent from "../core/agent";
 import { GetLandingPage } from "../core/api/landing-page";
 import Pagination from "react-responsive-pagination";
 import { toast } from "react-toastify";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { FilterContainer } from "./Job.styles";
 import { MiniSpinner } from "../components/spinner/MiniSpinner";
 import {
@@ -15,6 +15,13 @@ import {
 } from "../components";
 
 export const Jobs = () => {
+  const [initialValue, dispatchUrl] = useReducer(
+    (s, a) => ({
+      ...s,
+      [a.name]: a.payload,
+    }),
+    {}
+  );
   const [loading, setLoading] = useState(false);
   const [landingImg, setLandingImg] = useState(false);
   const [currentPage, setCurentPage] = useState(1);
@@ -28,8 +35,11 @@ export const Jobs = () => {
   const params = new URLSearchParams(window.location.search);
 
   useEffect(() => {
-    console.log(params.keys());
-    console.log(params.keys);
+    const urlParams = new URLSearchParams(window.location.search);
+    const keys = urlParams.entries();
+    for (let [key, value] of keys) {
+      dispatchUrl({ name: key, payload: value });
+    }
 
     let cp = params.get("currentPage");
     let pz = params.get("pageSize");
@@ -89,6 +99,10 @@ export const Jobs = () => {
 
     fetchData();
   }, [url]);
+
+  const InitialUrlValue = useMemo(() => {
+    return initialValue;
+  }, [initialValue]);
 
   const handleUrl = (name, value) => {
     value ? params.set(name, value) : params.delete(name);
@@ -163,41 +177,57 @@ export const Jobs = () => {
           className="container-fluid spx-2 spx-lg-10 "
         >
           <JobSearchBox
+            InitialUrlValue={InitialUrlValue}
             handleFilter={handleSearch}
             handleSearch={handleSearch}
             cities={cities}
           />
 
-          <Filters handleFilter={handleFilter} />
+          <Filters
+            InitialUrlValue={InitialUrlValue}
+            handleFilter={handleFilter}
+          />
         </FilterContainer>
         <div className="container-fluid spx-2 spx-lg-10 smt-5">
           <hr className="smb-5" />
 
           <div className="row bg-white srounded-md sp-2">
-            {adsList
-              ? adsList.map((item, index) => (
-                  <div
-                    key={index}
-                    className={
-                      index + 1 !== adsList.length
-                        ? "col-12 smb-2"
-                        : "col-12 mb-0"
-                    }
-                  >
-                    <Ad
-                      id={item.id}
-                      title={item.title}
-                      companyName={item.companyName}
-                      city={item.city}
-                      salary={item.salary}
-                      typeOfCooperation={item.typeOfCooperation}
-                      descriptionOfJob={item.descriptionOfJob}
-                      item={item}
-                      handleMarkOtherAdv={handleMarkOtherAdv}
-                    />
-                  </div>
-                ))
-              : "شغلی یافت نشد"}
+            {adsList.length !== 0 ? (
+              adsList.map((item, index) => (
+                <div
+                  key={index}
+                  className={
+                    index + 1 !== adsList.length
+                      ? "col-12 smb-2"
+                      : "col-12 mb-0"
+                  }
+                >
+                  <Ad
+                    id={item.id}
+                    title={item.title}
+                    companyName={item.companyName}
+                    city={item.city}
+                    salary={item.salary}
+                    typeOfCooperation={item.typeOfCooperation}
+                    descriptionOfJob={item.descriptionOfJob}
+                    item={item}
+                    handleMarkOtherAdv={handleMarkOtherAdv}
+                  />
+                </div>
+              ))
+            ) : (
+              <div
+                style={{
+                  width: "100%",
+                  fontSize: "1.4rem",
+                  textAlign: "center",
+                  fontFamily: "iransans-regular",
+                  color: "#555",
+                }}
+              >
+                آگهی یافت نشد{" "}
+              </div>
+            )}
           </div>
           {adsList && (
             <nav className="smt-3 w-50 mx-auto">

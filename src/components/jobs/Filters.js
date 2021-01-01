@@ -13,11 +13,30 @@ export class Filters extends Component {
     setSelectedValue: [],
     data: {
       category: "",
-      city: "",
       typeOfCooperation: null,
       workExperience: null,
       salary: null,
     },
+    customStyles: {
+      option: (provided) => ({
+        ...provided,
+        fontFamily: "iransans-regular",
+      }),
+
+      singleValue: (provided) => ({
+        ...provided,
+        fontFamily: "iransans-regular",
+      }),
+      valueContainer: (provided) => ({
+        ...provided,
+        fontFamily: "iransans-regular",
+      }),
+      placeholder: (provided) => ({
+        ...provided,
+        fontFamily: "iransans-regular",
+      }),
+    },
+
     typeOfCooperation: [
       {
         value: 1,
@@ -84,6 +103,21 @@ export class Filters extends Component {
     ],
   };
 
+  componentWillReceiveProps = (nextProps) => {
+    if (nextProps.InitialUrlValue !== this.props.InitialUrlValue) {
+      const listOfData = { ...nextProps.InitialUrlValue };
+
+      for (let key in listOfData) {
+        this.setState((prevState) => ({
+          data: {
+            ...prevState.data,
+            [key]: listOfData[key] ? listOfData[key] : "",
+          },
+        }));
+      }
+    }
+  };
+
   componentDidMount() {
     jobServices.getCategories().then((res) => {
       let categories = [];
@@ -135,19 +169,27 @@ export class Filters extends Component {
       this.props.handleFilter(this.state.data);
     }
   };
+
   render() {
     return (
       <div className=" filterContainer">
         {/* type of job  */}
         <div>
-          <div className="srounded-md sbs-content sp-1">
+          <div
+            className="srounded-md sbs-content sp-1"
+            styles={{ fontFamily: "iransans-regular" }}
+          >
             <Select
               isClearable
+              value={this.state.categories.filter(
+                (option) => option.label === this.state.data.category
+              )}
               onChange={this.handleFilter}
               isSearchable={false}
               placeholder={"دسته بندی شغلی"}
               options={this.state.categories}
               name="category"
+              styles={this.state.customStyles}
             />
           </div>
         </div>
@@ -157,11 +199,16 @@ export class Filters extends Component {
           <div className="srounded-md sbs-content sp-1">
             <Select
               isClearable
+              value={this.state.typeOfCooperation.filter(
+                (option) =>
+                  option.value === parseInt(this.state.data.typeOfCooperation)
+              )}
               onChange={this.handleFilter}
               isSearchable={false}
               placeholder={"نوع قرارداد"}
               options={this.state.typeOfCooperation}
               name="typeOfCooperation"
+              styles={this.state.customStyles}
             />
           </div>
         </div>
@@ -171,11 +218,15 @@ export class Filters extends Component {
           <div className="srounded-md sbs-content  sp-1">
             <Select
               isClearable
+              value={this.state.salary.filter(
+                (option) => option.value === parseInt(this.state.data.salary)
+              )}
               onChange={this.handleFilter}
               isSearchable={false}
               placeholder={"میزان حقوق"}
               options={this.state.salary}
               name="salary"
+              styles={this.state.customStyles}
             />
           </div>
         </div>
@@ -185,11 +236,16 @@ export class Filters extends Component {
           <div className="srounded-md sbs-content sp-1">
             <Select
               isClearable
+              value={this.state.expriences.filter(
+                (option) =>
+                  option.value === parseInt(this.state.data.workExperience)
+              )}
               onChange={this.handleFilter}
               isSearchable={false}
               placeholder={"سابقه کار"}
               options={this.state.expriences}
               name="workExperience"
+              styles={this.state.customStyles}
             />
           </div>
         </div>
