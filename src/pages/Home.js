@@ -68,53 +68,89 @@ export class Home extends Component {
     );
   }
 
-  handleMarkOtherAdv = async (adverId) => {
-    try {
-      let currentAdver = this.state.latestAds.listOfData.find(
-        (c) => c.id == adverId
-      );
-      if (currentAdver.isMarked) {
-        this.setState({
-          latestAds: {
-            ...this.state.latestAds,
-            listOfData: this.state.latestAds.listOfData.map((el) =>
-              el.id === adverId
-                ? Object.assign({}, el, { isMarked: false })
-                : el
-            ),
-          },
-        });
-        await agent.Adver.unmarkAdvder(adverId);
-      } else {
-        this.setState({
-          latestAds: {
-            ...this.state.latestAds,
-            listOfData: this.state.latestAds.listOfData.map((el) =>
-              el.id === adverId ? Object.assign({}, el, { isMarked: true }) : el
-            ),
-          },
-        });
+  handleMarkOtherAdv = async (adverId, status) => {
+    if (status === "latest") {
+      try {
+        let currentAdver = this.state.latestAds.find((c) => c.id == adverId);
+        if (currentAdver.isMarked) {
+          const newList = this.state.latestAds.map((el) =>
+            el.id === adverId ? Object.assign({}, el, { isMarked: false }) : el
+          );
 
-        await agent.Adver.markAdvder(adverId);
+          this.setState({
+            latestAds: newList,
+          });
+          await agent.Adver.unmarkAdvder(adverId);
+        } else {
+          const newList = this.state.latestAds.map((el) =>
+            el.id === adverId ? Object.assign({}, el, { isMarked: true }) : el
+          );
+
+          this.setState({
+            latestAds: newList,
+          });
+
+          await agent.Adver.markAdvder(adverId);
+        }
+      } catch (ex) {
+        this.setState({ isMarked: !this.state.isMarked });
+
+        if (ex?.response?.data) {
+          toast.error(ex.response?.data?.message[0]);
+          const newList = this.state.latestAds.map((el) =>
+            el.id === adverId
+              ? Object.assign({}, el, { isMarked: !el.isMarked })
+              : el
+          );
+          this.setState({
+            latestAds: newList,
+          });
+        }
       }
-    } catch (ex) {
-      this.setState({ isMarked: !this.state.isMarked });
+    } else if (status === "immediate") {
+      try {
+        let currentAdver = this.state.immediatelyAds.find(
+          (c) => c.id == adverId
+        );
+        if (currentAdver.isMarked) {
+          console.log(this.state.immediatelyAds);
+          const newList = this.state.immediatelyAds.map((el) =>
+            el.id === adverId ? Object.assign({}, el, { isMarked: false }) : el
+          );
+          this.setState({
+            immediatelyAds: newList,
+          });
+          await agent.Adver.unmarkAdvder(adverId);
+        } else {
+          console.log(this.state.immediatelyAds);
+          const newList = this.state.immediatelyAds.map((el) =>
+            el.id === adverId ? Object.assign({}, el, { isMarked: true }) : el
+          );
+          this.setState({
+            immediatelyAds: newList,
+          });
 
-      if (ex?.response?.data) {
-        toast.error(ex.response?.data?.message[0]);
-        this.setState({
-          latestAds: {
-            ...this.state.latestAds,
-            listOfData: this.state.latestAds.listOfData.map((el) =>
-              el.id === adverId
-                ? Object.assign({}, el, { isMarked: !el.isMarked })
-                : el
-            ),
-          },
-        });
+          await agent.Adver.markAdvder(adverId);
+        }
+      } catch (ex) {
+        this.setState({ isMarked: !this.state.isMarked });
+
+        if (ex?.response?.data) {
+          toast.error(ex.response?.data?.message[0]);
+          const newList = this.state.immediatelyAds.map((el) =>
+            el.id === adverId
+              ? Object.assign({}, el, { isMarked: !el.isMarked })
+              : el
+          );
+          this.setState({
+            immediatelyAds: newList,
+          });
+        }
       }
     }
   };
+
+  handleMarkImediate = async (adverId) => {};
 
   render() {
     return (

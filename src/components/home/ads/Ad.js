@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { cooperationType, salary, findCities } from "../../../enums";
 import axios from "axios";
 import API_ADDRESS from "../../../API_ADDRESS";
@@ -66,7 +65,12 @@ export class Ad extends Component {
 
           <i
             onClick={() => {
-              this.props?.handleMarkOtherAdv(this.props.id);
+              this.props.status === "latest" &&
+                this.props?.handleMarkOtherAdv(this.props.id, "latest");
+              this.props.status === "immediate" &&
+                this.props?.handleMarkOtherAdv(this.props.id, "immediate");
+              !this.props.status &&
+                this.props?.handleMarkOtherAdv(this.props.id);
             }}
             className={`bookmarker-btn c-dark fs-l ${
               this.props.item?.isMarked === false ? "far" : "fas"

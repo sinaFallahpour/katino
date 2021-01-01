@@ -1,7 +1,7 @@
 import React from "react";
 import { Ad } from "./";
 
-export function Immediately({ immediately }) {
+export function Immediately({ immediately, handleMarkOtherAdv, status }) {
   if (!immediately) return <></>;
   return (
     <div className="row">
@@ -15,6 +15,8 @@ export function Immediately({ immediately }) {
             salary={item.salary}
             typeOfCooperation={item.typeOfCooperation}
             descriptionOfJob={item.descriptionOfJob}
+            handleMarkOtherAdv={handleMarkOtherAdv}
+            status={status}
           />
         </div>
       ))}
