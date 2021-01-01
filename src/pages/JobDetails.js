@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {
-  // Header,
   ShortDetails,
   Description,
   OtherAds,
@@ -19,8 +18,6 @@ export class JobDetails extends Component {
   };
 
   async componentDidMount() {
-    // this.returnLoading("صبر کنید...");
-
     const id = this.props.match.params.id;
 
     await axios
@@ -32,8 +29,6 @@ export class JobDetails extends Component {
       .then((res) => this.setState({ latestAds: res.data.resul.listOfData }));
 
     this.setState({ loading: false });
-
-    // Swal.close();
   }
 
   handleMark = async () => {
@@ -61,8 +56,6 @@ export class JobDetails extends Component {
     try {
       let currentAdver = this.state.latestAds.find((c) => c.id == adverId);
       if (currentAdver.isMarked) {
-        // this.setState({ isMarked: false });
-
         this.setState({
           latestAds: this.state.latestAds.map((el) =>
             el.id === adverId ? Object.assign({}, el, { isMarked: false }) : el
@@ -127,8 +120,6 @@ export class JobDetails extends Component {
             <div className="row">
               <div className="col-12 col-lg-8">
                 <div className="bg-white srounded-md sp-2 smb-5">
-                  {/* <Header title={this.state.title} /> */}
-
                   <header className="d-flex justify-content-between align-items-center smb-3">
                     <h3 className="ir-b c-dark text-right fs-l mb-0">
                       {this.state.title}
@@ -136,8 +127,9 @@ export class JobDetails extends Component {
 
                     <i
                       onClick={this.handleMark}
-                      className={`bookmarker-btn c-dark fs-l ${this.state.isMarked === false ? "far" : "fas"
-                        } fa-bookmark`}
+                      className={`bookmarker-btn c-dark fs-l ${
+                        this.state.isMarked === false ? "far" : "fas"
+                      } fa-bookmark`}
                     ></i>
                   </header>
 
@@ -153,8 +145,6 @@ export class JobDetails extends Component {
                   />
                   <hr className="desc-separator smb-5 d-block mx-auto mt-0" />
                   <Description description={this.state.descriptionOfJob} />
-                  {/* <hr className="desc-separator smb-5 d-block mx-auto mt-0" />
-                <Description /> */}
                 </div>
 
                 <OtherAds
