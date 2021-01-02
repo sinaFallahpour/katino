@@ -4,17 +4,27 @@ import { DeleteEduBackground } from "../../../../core/api/education-background";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { EducationalBackgroundEdit } from "./EducationBackgroundEdit";
+import { educationDegree } from "../../../../enums/educationDegree";
 
 import "../style.css";
 
-const EducationalBackgroundDetails = ({ AllWorkExperience }) => {
+const EducationalBackgroundDetails = ({ AllEduBackground }) => {
   const [editMode, setEditMode] = useState(false);
   const [idOfItems, setIdOfItems] = useState(null);
   const [initialData, setInitialData] = useState();
 
+  // : 4
+  // description: "<p>تست2</p>"
+  // endDate: "1399/10/20"
+  // : "تست2"
+  // id: 8
+  // startDate: "1399/10/30"
+  // : "تست2"
+
   useEffect(() => {
-    setInitialData(AllWorkExperience);
-  }, [AllWorkExperience]);
+    setInitialData(AllEduBackground);
+    console.log(AllEduBackground);
+  }, [AllEduBackground]);
 
   const DeletItem = async (e) => {
     const id = e.target.id;
@@ -106,16 +116,26 @@ const EducationalBackgroundDetails = ({ AllWorkExperience }) => {
             </header>
             <li>
               <span className="ir-b c-grey sml-1">
-                عنوان کار :{" "}
-                <span className="c-regular">{item.workTitle || "-"}</span>
+                رشته تحصیلی :{" "}
+                <span className="c-regular">{item.fieldOfStudy || "-"}</span>
               </span>
             </li>
             <li>
               <span className="ir-b c-grey sml-1">
-                نام شرکت :{" "}
-                <span className="c-regular">{item.companyName || "-"}</span>
+                نام دانشگاه :{" "}
+                <span className="c-regular">{item.universityName || "-"}</span>
               </span>
             </li>
+            {item.degreeOfEducation && (
+              <li>
+                <span className="ir-b c-grey sml-1">
+                  مدرک تحصیلی :{" "}
+                  <span className="c-regular">
+                    {educationDegree(item.degreeOfEducation) || "-"}
+                  </span>
+                </span>
+              </li>
+            )}
             <li>
               <span className="ir-b c-grey sml-1">
                 تاریخ شروع کار :{" "}

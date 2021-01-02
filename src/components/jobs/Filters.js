@@ -79,7 +79,15 @@ export class Filters extends Component {
       },
       {
         value: 6,
-        label: "بیشتر از یک میلیون",
+        label: "بیشتر از 8 میلیون تومان",
+      },
+      {
+        value: 7,
+        label: "بصورت توافقی",
+      },
+      {
+        value: 8,
+        label: "قانون کار",
       },
     ],
 

@@ -1971,13 +1971,13 @@ export class CreateResume extends Component {
                   {!this.state.editMode10 ? (
                     <div className="content d-lg-flex flex-column justify-content-center">
                       <EducationalBackgroundDetails
-                        AllWorkExperience={this.state.getAllEduBackground}
+                        AllEduBackground={this.state.getAllEduBackground}
                       />
                     </div>
                   ) : (
                     <div className="content d-lg-flex flex-column justify-content-center">
                       <EducationalBackgroundFormGenerator
-                        AllWorkExperience={this.state.getAllEduBackground}
+                        AllEduBackground={this.state.getAllEduBackground}
                         addItemToList={this.addItemToListEduBack}
                       />
                     </div>

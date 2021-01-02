@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { EducationalBackgroundForm } from "./EducationBackgroundForm";
 
 const EducationalBackgroundFormGenerator = ({
-  AllWorkExperience,
+  AllEduBackground,
   addItemToList,
 }) => {
   const [formCount, setFormCount] = useState([{ form: 1 }]);
@@ -33,7 +33,7 @@ const EducationalBackgroundFormGenerator = ({
         <EducationalBackgroundForm
           key={form}
           idOfForm={form}
-          AllWorkExperience={AllWorkExperience}
+          AllEduBackground={AllEduBackground}
           addItemToList={addItemToList}
           DeleteForm={DeleteForm}
         />

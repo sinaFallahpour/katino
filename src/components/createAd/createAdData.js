@@ -15,7 +15,7 @@ export const cooperationType = [
     value: 4,
     label: "دور کاری",
   },
-]
+];
 
 export const salaries = [
   {
@@ -46,7 +46,11 @@ export const salaries = [
     value: 7,
     label: "توافقی",
   },
-]
+  {
+    value: 8,
+    label: "قانون کار",
+  },
+];
 
 export const sex = [
   {
@@ -61,7 +65,7 @@ export const sex = [
     value: 3,
     label: "زن",
   },
-]
+];
 
 export const exprience = [
   {
@@ -80,7 +84,7 @@ export const exprience = [
     value: 4,
     label: "بیشتر از هفت سال",
   },
-]
+];
 
 export const education = [
   {
@@ -107,7 +111,7 @@ export const education = [
     value: 6,
     label: "دکترا",
   },
-]
+];
 
 export const initialData = {
   fieldOfActivity: "",
@@ -120,4 +124,4 @@ export const initialData = {
   gender: 0,
   military: "",
   descriptionOfJob: "",
-}
+};

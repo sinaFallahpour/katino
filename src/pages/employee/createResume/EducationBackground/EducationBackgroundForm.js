@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Formik, Field, Form, ErrorMessage, useField } from "formik";
-import { JobExprience } from "../../../../core/validation/jobExprience";
+import { EducationBackground } from "../../../../core/validation/EducationBackground";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { AddEduBackground } from "../../../../core/api/education-background";
@@ -15,7 +15,7 @@ import Select from "react-select";
 const EducationalBackgroundForm = ({
   DeleteForm,
   idOfForm,
-  AllWorkExperience,
+  AllEduBackground,
   addItemToList,
 }) => {
   const degreeOfEducationsList = [
@@ -30,24 +30,24 @@ const EducationalBackgroundForm = ({
   const initialData = {
     fieldOfStudy: "",
     universityName: "",
-    degreeOfEducation: "",
+    degreeOfEducation: 0,
     startDate: "",
     endDate: "",
     description: "",
   };
 
   const [loading, setLoading] = useState(false);
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [listOfData, setListOfData] = useState();
 
   useEffect(() => {
-    setListOfData(AllWorkExperience);
-  }, [AllWorkExperience]);
+    setListOfData(AllEduBackground);
+  }, [AllEduBackground]);
 
   const submitHandler = async (values) => {
     const tempo = { ...values, startDate: startDate, endDate: endDate };
-
+    console.log(tempo);
     setLoading(true);
     try {
       const data = await AddEduBackground(tempo);
@@ -138,7 +138,7 @@ const EducationalBackgroundForm = ({
       {loading && <MiniSpinner />}
       <Formik
         initialValues={initialData}
-        validationSchema={JobExprience}
+        validationSchema={EducationBackground}
         onSubmit={(values) => {
           submitHandler(values);
         }}

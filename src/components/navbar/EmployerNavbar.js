@@ -134,14 +134,6 @@ export class EmployerNavbar extends Component {
               <li className="nav-item smr-lg-4">
                 <Link
                   className="nav-link text-white position-relative ir-r fs-m p-0"
-                  to="/"
-                >
-                  خانه
-                </Link>
-              </li>
-              <li className="nav-item smr-lg-4">
-                <Link
-                  className="nav-link text-white position-relative ir-r fs-m p-0"
                   to="/Employer/Dashboard"
                 >
                   داشبورد
@@ -244,11 +236,6 @@ export class EmployerNavbar extends Component {
               className={`profile-dropdown bg-white position-absolute shadow ${this.state.profileActivity}`}
             >
               <ul className="m-0">
-                <li className="smb-1">
-                  <Link className="ir-r c-grey text-decoration-none" to="/">
-                    خانه
-                  </Link>
-                </li>
                 <li className="smb-1">
                   <Link
                     className="ir-r c-grey text-decoration-none"

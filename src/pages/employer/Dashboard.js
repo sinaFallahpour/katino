@@ -7,6 +7,7 @@ import { useDebounce } from "../../core/customHook/debounce.hook";
 
 export const Dashboard = () => {
   const [userAds, setUserAds] = useState();
+  const [marked, setMarked] = useState(0);
   const [searchTerm, setSearchTerm] = useState();
   const [loading, setLoading] = useState(false);
 
@@ -16,12 +17,14 @@ export const Dashboard = () => {
     setLoading(true);
     let params = new URLSearchParams(window.location.search);
     const adverStatus = params.get("adverStatus");
+    setMarked(parseInt(adverStatus));
 
     const fetcData = async () => {
       if (adverStatus) {
         const { data } = await agent.Adver.GetAllAdverByStatusForCurrectUser(
           adverStatus
         );
+        console.log(data);
         setUserAds(data.resul);
         setLoading(false);
         return;
@@ -69,40 +72,37 @@ export const Dashboard = () => {
                   <li className="nav-item smr-lg-4">
                     <a
                       href="/Employer/Dashboard"
-                      className="nav-link position-relative c-grey ir-r fs-m p-0 smb-1 mb-lg-0"
+                      className={`
+                      ${
+                        !marked ? "c-primary" : "c-grey"
+                      } nav-link position-relative  ir-r fs-m p-0 smb-1 mb-lg-0
+                      `}
                     >
                       همه آگهی ها
                     </a>
-
-                    {/* <Link
-                      className="nav-link position-relative c-main ir-r fs-m p-0 smb-1 mb-lg-0 active"
-                      to="/Employer/Dashboard"
-                    >
-                      همه آگهی ها
-                    </Link> */}
                   </li>
 
                   <li className="nav-item smr-lg-4">
                     <a
                       href="/Employer/Dashboard?adverStatus=1"
-                      className="nav-link position-relative c-grey ir-r fs-m p-0 smb-1 mb-lg-0"
+                      className={`
+                      ${
+                        marked === 1 ? "c-primary " : "c-grey"
+                      } nav-link position-relative  ir-r fs-m p-0 smb-1 mb-lg-0
+                      `}
                     >
                       فعال
                     </a>
-
-                    {/* <Link
-                      className="nav-link position-relative c-grey ir-r fs-m p-0 smb-1 mb-lg-0 active"
-                      to={`/Employer/Dashboard?adverStatus=1`}
-
-                    >
-                      فعال
-                    </Link> */}
                   </li>
 
                   <li className="nav-item smr-lg-4">
                     <a
                       href="/Employer/Dashboard?adverStatus=2"
-                      className="nav-link position-relative c-grey ir-r fs-m p-0 smb-1 mb-lg-0"
+                      className={`
+                      ${
+                        marked === 2 ? "c-primary " : "c-grey"
+                      } nav-link position-relative  ir-r fs-m p-0 smb-1 mb-lg-0
+                      `}
                     >
                       پیش نویس
                     </a>
@@ -110,45 +110,16 @@ export const Dashboard = () => {
 
                   <li className="nav-item smr-lg-4">
                     <a
-                      href="/Employer/Dashboard?adverStatus=3"
-                      className="nav-link position-relative c-grey ir-r fs-m p-0 smb-1 mb-lg-0"
-                    >
-                      آرشیو
-                    </a>
-                  </li>
-
-                  <li className="nav-item smr-lg-4">
-                    <a
-                      href="/Employer/Dashboard?adverStatus=4"
-                      className="nav-link position-relative c-grey ir-r fs-m p-0 smb-1 mb-lg-0"
-                    >
-                      پایان یافته
-                    </a>
-                  </li>
-
-                  <li className="nav-item smr-lg-4">
-                    <a
-                      href="/Employer/Dashboard?adverStatus=5"
-                      className="nav-link position-relative c-grey ir-r fs-m p-0 smb-1 mb-lg-0"
-                    >
-                      غیر فعال
-                    </a>
-                  </li>
-
-                  <li className="nav-item smr-lg-4">
-                    <a
                       href="/Employer/Dashboard?adverStatus=6"
-                      className="nav-link position-relative c-grey ir-r fs-m p-0 smb-1 mb-lg-0"
+                      className={`
+                      ${
+                        marked === 6 ? "c-primary " : "c-grey"
+                      } nav-link position-relative  ir-r fs-m p-0 smb-1 mb-lg-0
+                      `}
+                      style={{ background: " red !important" }}
                     >
                       منقضی شده
                     </a>
-
-                    {/* <Link
-                      className="nav-link position-relative c-grey ir-r fs-m p-0 smb-1 mb-lg-0"
-                      to={`/Employer/Dashboard?adverStatus=6`}
-                    >
-                      منقضی شده
-                    </Link> */}
                   </li>
                 </ul>
               </div>
