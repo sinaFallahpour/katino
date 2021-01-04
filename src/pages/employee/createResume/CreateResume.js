@@ -11,6 +11,8 @@ import { JobExpreinceFormGenerator } from "./JobExpreince/JobExpreinceFormGenera
 import { JobExpreinceDetails } from "./JobExpreince/JobExpreinceDetails";
 import { EducationalBackgroundFormGenerator } from "./EducationBackground/EducationBackgroundGenerator";
 import { EducationalBackgroundDetails } from "./EducationBackground/EducationBackgroundDetails";
+import { DatePickerModern } from "../../../core/utils/datepicker.util";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
 
 export class CreateResume extends Component {
   state = {
@@ -1003,6 +1005,8 @@ export class CreateResume extends Component {
                                       info2: {
                                         ...this.state.info2,
                                         gender: 2,
+                                        exemptionExpirestionDate: "",
+                                        exemptionExpirestionRecieveDate: "",
                                       },
                                     });
                                   }}
@@ -1032,6 +1036,8 @@ export class CreateResume extends Component {
                                       info2: {
                                         ...this.state.info2,
                                         military: "مشمول",
+                                        exemptionExpirestionDate: "",
+                                        exemptionExpirestionRecieveDate: "",
                                       },
                                     });
                                   }}
@@ -1079,48 +1085,52 @@ export class CreateResume extends Component {
                             this.state.info2.military !== "مشمول" && (
                               <>
                                 <li className="list-group-item border-0 p-0 mt-3">
-                                  <InputText
-                                    type="text"
-                                    id="exemptionExpirestionDate"
-                                    name="exemptionExpirestionDate"
-                                    label={"تاریخ معافیت"}
-                                    value={
-                                      this.state.info2
-                                        ?.exemptionExpirestionDate || ""
-                                    }
-                                    onChange={(e) => {
-                                      this.setState({
-                                        info2: {
-                                          ...this.state.info2,
-                                          exemptionExpirestionDate:
-                                            e.target.value,
-                                        },
-                                      });
-                                    }}
-                                    placeholder="مثال: 1374/11/01"
-                                  />
+                                  <label className="ir-r text-regular text-right smb-1 label bg-white">
+                                    تاریخ معافیت
+                                  </label>
+                                  <div className="form-group mb-0 ">
+                                    <DatePickerModern
+                                      handleChange={(e) => {
+                                        this.setState({
+                                          info2: {
+                                            ...this.state.info2,
+                                            exemptionExpirestionDate: e,
+                                          },
+                                        });
+                                      }}
+                                      dateVal={
+                                        this.state.info2
+                                          .exemptionExpirestionDate &&
+                                        this.state.info2
+                                          .exemptionExpirestionDate
+                                      }
+                                      name="exemptionExpirestionDate"
+                                    />
+                                  </div>
                                 </li>
                                 <li className="list-group-item border-0 p-0">
-                                  <InputText
-                                    type="text"
-                                    id="exemptionExpirestionDate"
-                                    name="exemptionExpirestionDate"
-                                    label={"تاریخ دریافت کارت معافیت"}
-                                    value={
-                                      this.state.info2
-                                        ?.exemptionExpirestionRecieveDate || ""
-                                    }
-                                    onChange={(e) => {
-                                      this.setState({
-                                        info2: {
-                                          ...this.state.info2,
-                                          exemptionExpirestionRecieveDate:
-                                            e.target.value,
-                                        },
-                                      });
-                                    }}
-                                    placeholder="مثال: 1374/11/01"
-                                  />
+                                  <label className="ir-r text-regular text-right smb-1 label bg-white">
+                                    تاریخ دریافت کارت معافیت
+                                  </label>
+                                  <div className="form-group mb-0 ">
+                                    <DatePickerModern
+                                      handleChange={(e) => {
+                                        this.setState({
+                                          info2: {
+                                            ...this.state.info2,
+                                            exemptionExpirestionRecieveDate: e,
+                                          },
+                                        });
+                                      }}
+                                      dateVal={
+                                        this.state.info2
+                                          .exemptionExpirestionRecieveDate &&
+                                        this.state.info2
+                                          .exemptionExpirestionRecieveDate
+                                      }
+                                      name="exemptionExpirestionRecieveDate"
+                                    />
+                                  </div>
                                 </li>
                               </>
                             )}
@@ -1431,22 +1441,20 @@ export class CreateResume extends Component {
                           <span className="ir-b c-grey sml-1">
                             دسته شغلی :
                             <span className="c-regular">
-                              {this.state.info8?.categoryIds ? (
+                              {this.state.info8?.categoryForJobPrefence ? (
                                 <div className="p-1">
-                                  {this.returnCategoryIds(
-                                    this.state.info8?.categoryIds
-                                  ).map((item, indx) => {
-                                    if (item) {
+                                  {this.state.info8?.categoryForJobPrefence.map(
+                                    ({ categoryName }, indxItem) => {
                                       return (
                                         <button
-                                          key={indx}
-                                          className="btn btn-success  m-1"
+                                          key={indxItem}
+                                          className="btn btn-success  m-1 mb-0"
                                         >
-                                          {item}
+                                          {categoryName}
                                         </button>
                                       );
                                     }
-                                  })}
+                                  )}
                                 </div>
                               ) : (
                                 "-"
@@ -1660,6 +1668,12 @@ export class CreateResume extends Component {
                               </label>
                               <div className="form-group ">
                                 <Select
+                                  defaultValue={this.state.info8?.categoryForJobPrefence?.map(
+                                    ({ categoryId, categoryName }) => ({
+                                      value: categoryId,
+                                      label: categoryName,
+                                    })
+                                  )}
                                   onChange={this.onChangeSelectOption}
                                   isSearchable={false}
                                   placeholder={" دسته بندی شغلی"}
