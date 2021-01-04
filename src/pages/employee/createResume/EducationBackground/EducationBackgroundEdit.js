@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { Formik, Field, Form, ErrorMessage, useField } from "formik";
-import { JobExprience } from "../../../../core/validation/jobExprience";
+import { EducationBackground } from "../../../../core/validation/EducationBackground";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Swal from "sweetalert2";
@@ -12,15 +12,26 @@ import { DatePickerModern } from "../../../../core/utils/datepicker.util";
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import { getEduBackground } from "../../../../core/api/education-background";
 import { editEduBackground } from "../../../../core/api/education-background";
+import Select from "react-select";
 
 const EducationalBackgroundEdit = ({
   id,
   setInitialData,
   initialEditableList,
 }) => {
+  const degreeOfEducationsList = [
+    { value: 1, label: "مهم نیست" },
+    { value: 2, label: "دیپلم" },
+    { value: 3, label: "کاردانی" },
+    { value: 4, label: "کارشناسی" },
+    { value: 5, label: "کارشناسی ارشد" },
+    { value: 6, label: "دکترا" },
+  ];
+
   const initialData = {
-    workTitle: "",
-    companyName: "",
+    fieldOfStudy: "",
+    universityName: "",
+    degreeOfEducation: 0,
     startDate: "",
     endDate: "",
     description: "",
@@ -34,6 +45,7 @@ const EducationalBackgroundEdit = ({
     const fetchData = async () => {
       const data = await getEduBackground(id);
       setInitalData(data.resul);
+      console.log(data.resul);
       setStartDate(data.resul.startDate);
       setEndDate(data.resul.endDate);
     };
@@ -46,14 +58,16 @@ const EducationalBackgroundEdit = ({
 
     setLoading(true);
     try {
+      console.log(tempo);
       await editEduBackground(tempo);
       const listOfData = [...initialEditableList];
       const editedList = listOfData.map((item) => {
         if (item.id === id) {
           return {
-            workTitle: tempo.workTitle,
-            companyName: tempo.companyName,
+            fieldOfStudy: tempo.workTitle,
+            universityName: tempo.companyName,
             startDate: tempo.startDate,
+            degreeOfEducation: tempo.degreeOfEducation,
             endDate: tempo.endDate,
             description: tempo.description,
           };
@@ -115,12 +129,37 @@ const EducationalBackgroundEdit = ({
     );
   };
 
+  const MySelect = ({ label, options, ...props }) => {
+    const [field, meta, helpers] = useField(props);
+    return (
+      <div>
+        <label className="ir-r d-block text-right smb-1">{label}</label>
+        <Select
+          {...field}
+          {...props}
+          options={options}
+          value={
+            options
+              ? options.find((option) => option.value === field.value)
+              : ""
+          }
+          onChange={(option) => helpers.setValue(option.value)}
+        />
+        <ErrorMessage
+          component="div"
+          className="errorMessage"
+          name={props.name}
+        />
+      </div>
+    );
+  };
+
   return (
     <>
       {loading && <MiniSpinner />}
       <Formik
         initialValues={initalData}
-        validationSchema={JobExprience}
+        validationSchema={EducationBackground}
         onSubmit={(values) => {
           submitHandler(values);
         }}
@@ -134,19 +173,19 @@ const EducationalBackgroundEdit = ({
                   {/* workTitle   */}
                   <div className=" smb-2">
                     <label className="ir-r d-block text-right smb-1">
-                      عنوان آگهی را وارد کنید
+                      رشته تحصیلی را وارد کنید
                     </label>
                     <div className="form-group mb-0">
                       <Field
-                        name="workTitle"
+                        name="fieldOfStudy"
                         className="form-control ir-r shadow-none"
-                        placeholder="عنوان آگهی"
+                        placeholder="رشته تحصیلی"
                         type="text"
                       />
                       <ErrorMessage
                         component="div"
                         className="errorMessage"
-                        name="workTitle"
+                        name="fieldOfStudy"
                       />
                     </div>
                   </div>
@@ -154,25 +193,35 @@ const EducationalBackgroundEdit = ({
                   {/* companyName */}
                   <div className=" smb-2">
                     <label className="ir-r d-block text-right smb-1">
-                      نام شرکت را وارد کنید
+                      نام دانشگاه را وارد کنید
                     </label>
                     <div className="form-group mb-0">
                       <Field
-                        name="companyName"
+                        name="universityName"
                         className="form-control ir-r shadow-none"
-                        placeholder="نام شرکت"
+                        placeholder="نام دانشگاه"
                         type="text"
                       />
                       <ErrorMessage
                         component="div"
                         className="errorMessage"
-                        name="companyName"
+                        name="universityName"
                       />
                     </div>
                   </div>
                 </div>
 
                 <div className="Field-Container col-12">
+                  {/* degree  */}
+                  <div className=" smb-2 ml-2">
+                    <MySelect
+                      name="degreeOfEducation"
+                      placeholder="مدرک تحصیلی"
+                      options={degreeOfEducationsList}
+                      label="مدرک تحصیلی خود را وارد کنید"
+                    />
+                  </div>
+
                   {/* startDate */}
                   <div className=" smb-2">
                     <label className="ir-r d-block text-right smb-1">

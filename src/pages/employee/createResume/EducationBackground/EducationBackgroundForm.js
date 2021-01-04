@@ -143,7 +143,7 @@ const EducationalBackgroundForm = ({
           submitHandler(values);
         }}
       >
-        <section className="complete-register-form container-fluid  spt-10">
+        <section className="complete-register-form container-fluid spt-10 FormContainerAnimation">
           <aside className="form-container-bg  mx-auto">
             <Form>
               <div className=" srounded-md  smb-1 mt-4">
@@ -172,13 +172,13 @@ const EducationalBackgroundForm = ({
                   {/* companyName */}
                   <div className=" smb-2">
                     <label className="ir-r d-block text-right smb-1">
-                      دانشگاه محل تحصیل را وارد کنید
+                      نام دانشگاه را وارد کنید
                     </label>
                     <div className="form-group mb-0">
                       <Field
                         name="universityName"
                         className="form-control ir-r shadow-none"
-                        placeholder="دانشگاه محل تحصیل"
+                        placeholder="نام دانشگاه"
                         type="text"
                       />
                       <ErrorMessage

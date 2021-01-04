@@ -107,7 +107,7 @@ const JobExpreinceForm = ({
           submitHandler(values);
         }}
       >
-        <section className="complete-register-form container-fluid  spt-10">
+        <section className="complete-register-form container-fluid  spt-10 FormContainerAnimation">
           <aside className="form-container-bg  mx-auto">
             <Form>
               <div className=" srounded-md  smb-1 mt-4">

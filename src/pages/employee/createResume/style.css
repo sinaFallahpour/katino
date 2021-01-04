@@ -38,3 +38,19 @@
   flex-basis: 0 !important;
   padding: 5px 8px !important;
 }
+
+.FormContainerAnimation:not(:nth-child(1)) {
+  animation: anim 0.5s ease-in-out;
+  position: relative;
+  top: 0;
+  right: 0;
+}
+
+@keyframes anim {
+  from {
+    top: -80px;
+  }
+  to {
+    top: 0;
+  }
+}
