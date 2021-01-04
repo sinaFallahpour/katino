@@ -149,6 +149,11 @@ const CreateResome = {
       "/EducationalBackground/GetAllEducationalBackgroundForCuurectUser"
     ),
 
+  GetAllLanguageForCurrentUser: () =>
+    requests.get("/UserLanguage/GetAllUserLanguagesForCurrentUser"),
+
+  GetAllLanguages: () => requests.get("/Languages/GetAllLanguages"),
+
   AddUserJobPreference: (body) =>
     requests.post("/UserJobPreference/AddUserJobPreference", body),
 

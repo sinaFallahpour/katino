@@ -11,7 +11,11 @@ import { JobExpreinceFormGenerator } from "./JobExpreince/JobExpreinceFormGenera
 import { JobExpreinceDetails } from "./JobExpreince/JobExpreinceDetails";
 import { EducationalBackgroundFormGenerator } from "./EducationBackground/EducationBackgroundGenerator";
 import { EducationalBackgroundDetails } from "./EducationBackground/EducationBackgroundDetails";
+import { LanguageGenerator } from "./LanguageSection/LanguageGenerator";
+import { LanguageDetails } from "./LanguageSection/LanguageDetails";
+
 import { DatePickerModern } from "../../../core/utils/datepicker.util";
+
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
 
 export class CreateResume extends Component {
@@ -42,6 +46,8 @@ export class CreateResume extends Component {
     const resuJobPreference = await agent.CreateResome.GetUserJobPreferenceForCurrentUser();
     const getAllWorkExperience = await agent.CreateResome.GetAllWorkExperience();
     const getAllEduBackground = await agent.CreateResome.GetAllEduBackground();
+    const getAllLanguageForCurrentUser = await agent.CreateResome.GetAllLanguageForCurrentUser();
+    const getAllLanguages = await agent.CreateResome.GetAllLanguages();
 
     let Category = await AllCategories?.data.resul.map(({ id, name }) => {
       return { value: id, label: name };
@@ -57,6 +63,8 @@ export class CreateResume extends Component {
       aboutMen: resAboutMe.data.resul,
       getAllWorkExperience: getAllWorkExperience.data.resul,
       getAllEduBackground: getAllEduBackground.data.resul,
+      getAllLanguageForCurrentUser: getAllLanguageForCurrentUser.data.resul,
+      getAllLanguages: getAllLanguages.data.resul,
       info8: resuJobPreference.data.resul || {
         city: "",
         typeOfCooperation: 0,
@@ -420,6 +428,10 @@ export class CreateResume extends Component {
     this.setState({ getAllEduBackground: value });
   };
 
+  addItemToListUserLanguage = (value) => {
+    this.setState({ getAllLanguageForCurrentUser: value });
+  };
+
   render() {
     return (
       <section className="container-fluid create-ad spx-2 spx-lg-10 smy-10 spt-10">
@@ -676,7 +688,8 @@ export class CreateResume extends Component {
                 </div>
               </div>
             </div>
-            {/* <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4"> */}
+
+            {/* </aside> */}
             <h3 className="d-block text-right ir-b smb-3 c-dark">
               اطلاعات فردی
             </h3>
@@ -1148,8 +1161,8 @@ export class CreateResume extends Component {
                 </div>
               </div>
             </div>
+
             {/* </aside> */}
-            {/* <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4"> */}
             <h3 className="d-block text-right ir-b smb-3 c-dark">درباره من</h3>
             <div className="bg-white srounded-md sp-2 smb-3">
               <div className="row">
@@ -1240,8 +1253,8 @@ export class CreateResume extends Component {
                 </div>
               </div>
             </div>
+
             {/* </aside> */}
-            {/* <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4"> */}
             <h3 className="d-block text-right ir-b smb-3 c-dark">
               مهارت‌های حرفه‌ای
             </h3>
@@ -1363,8 +1376,8 @@ export class CreateResume extends Component {
                 </div>
               </div>
             </div>
+
             {/* </aside> */}
-            {/* <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4"> */}
             <h3 className="d-block text-right ir-b smb-3 c-dark">
               ترجیحات شغلی
             </h3>
@@ -1892,8 +1905,8 @@ export class CreateResume extends Component {
                 </div>
               </div>
             </div>
+
             {/* </aside> */}
-            {/* <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4"> */}
             <h3 className="d-block text-right ir-b smb-3 c-dark">تجربه کاری</h3>
             <div className="bg-white srounded-md sp-2 smb-3">
               <div className="row">
@@ -1947,7 +1960,6 @@ export class CreateResume extends Component {
             </div>
 
             {/* </aside> */}
-            {/* <aside className="col-12 col-lg-8 smb-2 mb-lg-0 mt-4"> */}
             <h3 className="d-block text-right ir-b smb-3 c-dark">تحصیلات</h3>
             <div className="bg-white srounded-md sp-2 smb-3">
               <div className="row">
@@ -1986,6 +1998,7 @@ export class CreateResume extends Component {
                     <div className="content d-lg-flex flex-column justify-content-center">
                       <EducationalBackgroundDetails
                         AllEduBackground={this.state.getAllEduBackground}
+                        GetAllLanguages={this.state.getAllLanguages}
                       />
                     </div>
                   ) : (
@@ -1993,6 +2006,64 @@ export class CreateResume extends Component {
                       <EducationalBackgroundFormGenerator
                         AllEduBackground={this.state.getAllEduBackground}
                         addItemToList={this.addItemToListEduBack}
+                        GetAllLanguages={this.state.getAllLanguages}
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* language */}
+            <h3 className="d-block text-right ir-b smb-3 c-dark">زبان ها</h3>
+            <div className="bg-white srounded-md sp-2 smb-3">
+              <div className="row">
+                <div className="col-12">
+                  {!this.state.editMode10 ? (
+                    <header className="d-flex justify-content-between align-items-center flex-row-reverse">
+                      <span
+                        onClick={() => {
+                          this.setState({ editMode10: true });
+                        }}
+                        type="button"
+                        className="btn btn-info ir-r"
+                      >
+                        ثبت زبان
+                      </span>
+                    </header>
+                  ) : (
+                    <header className="d-flex justify-content-between align-items-center">
+                      <h3 className="ir-b c-primary text-right d-block fs-m smb-2">
+                        ویرایش اطلاعات
+                      </h3>
+
+                      <span
+                        onClick={() => {
+                          this.setState({ editMode10: false });
+                        }}
+                        type="button"
+                        className="btn btn-info ir-r"
+                      >
+                        بازگشت
+                      </span>
+                    </header>
+                  )}
+
+                  {!this.state.editMode10 ? (
+                    <div className="content d-lg-flex flex-column justify-content-center">
+                      <LanguageDetails
+                        getAllLanguageForCurrentUser={
+                          this.state.getAllLanguageForCurrentUser
+                        }
+                      />
+                    </div>
+                  ) : (
+                    <div className="content d-lg-flex flex-column justify-content-center">
+                      <LanguageGenerator
+                        getAllLanguageForCurrentUser={
+                          this.state.getAllLanguageForCurrentUser
+                        }
+                        addItemToList={this.addItemToListUserLanguage}
                       />
                     </div>
                   )}

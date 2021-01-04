@@ -3,19 +3,19 @@ import ReactHtmlParser from "react-html-parser";
 import { DeleteEduBackground } from "../../../../core/api/education-background";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
-import { EducationalBackgroundEdit } from "./EducationBackgroundEdit";
+import { LanguageEdit } from "./LanguageEdit";
 import { educationDegree } from "../../../../enums/educationDegree";
 
 import "../style.css";
 
-const EducationalBackgroundDetails = ({ AllEduBackground }) => {
+const LanguageDetails = ({ getAllLanguageForCurrentUser }) => {
   const [editMode, setEditMode] = useState(false);
   const [idOfItems, setIdOfItems] = useState(null);
   const [initialData, setInitialData] = useState();
 
   useEffect(() => {
-    setInitialData(AllEduBackground);
-  }, [AllEduBackground]);
+    setInitialData(getAllLanguageForCurrentUser);
+  }, [getAllLanguageForCurrentUser]);
 
   const DeletItem = async (e) => {
     const id = e.target.id;
@@ -162,7 +162,7 @@ const EducationalBackgroundDetails = ({ AllEduBackground }) => {
               بازگشت
             </span>
           </header>
-          <EducationalBackgroundEdit
+          <LanguageEdit
             id={idOfItems}
             setInitialData={setInitialData}
             initialEditableList={initialData}
@@ -173,4 +173,4 @@ const EducationalBackgroundDetails = ({ AllEduBackground }) => {
   );
 };
 
-export { EducationalBackgroundDetails };
+export { LanguageDetails };

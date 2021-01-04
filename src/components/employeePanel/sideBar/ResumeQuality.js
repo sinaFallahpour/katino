@@ -14,8 +14,18 @@ export function ResumeQuality({ resomePercent, percent }) {
           <div className="holder mx-auto position-relative">
             <div
               className="quality position-absolute"
-              style={{ height: `${percent}%` }}
-            ></div>
+              style={{
+                height: `${percent}%`,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                fontSize: "1.4rem",
+                color: "#444",
+                fontFamily: "iransans-bold",
+              }}
+            >
+              <span>{percent}%</span>
+            </div>
           </div>
           <span className="percent-text text-right smt-2 c-regular d-block  ir-r fs-l">{`${percent}% از پروفایل شما تکمیل شده است.`}</span>
         </>
