@@ -47,7 +47,6 @@ export class CreateResume extends Component {
     const getAllWorkExperience = await agent.CreateResome.GetAllWorkExperience();
     const getAllEduBackground = await agent.CreateResome.GetAllEduBackground();
     const getAllLanguageForCurrentUser = await agent.CreateResome.GetAllLanguageForCurrentUser();
-    const getAllLanguages = await agent.CreateResome.GetAllLanguages();
 
     let Category = await AllCategories?.data.resul.map(({ id, name }) => {
       return { value: id, label: name };
@@ -64,7 +63,7 @@ export class CreateResume extends Component {
       getAllWorkExperience: getAllWorkExperience.data.resul,
       getAllEduBackground: getAllEduBackground.data.resul,
       getAllLanguageForCurrentUser: getAllLanguageForCurrentUser.data.resul,
-      getAllLanguages: getAllLanguages.data.resul,
+
       info8: resuJobPreference.data.resul || {
         city: "",
         typeOfCooperation: 0,
@@ -1925,9 +1924,7 @@ export class CreateResume extends Component {
                     </header>
                   ) : (
                     <header className="d-flex justify-content-between align-items-center">
-                      <h3 className="ir-b c-primary text-right d-block fs-m smb-2">
-                        ویرایش اطلاعات
-                      </h3>
+                      <h3 className="ir-b c-primary text-right d-block fs-m smb-2"></h3>
 
                       <span
                         onClick={() => {
@@ -1978,9 +1975,7 @@ export class CreateResume extends Component {
                     </header>
                   ) : (
                     <header className="d-flex justify-content-between align-items-center">
-                      <h3 className="ir-b c-primary text-right d-block fs-m smb-2">
-                        ویرایش اطلاعات
-                      </h3>
+                      <h3 className="ir-b c-primary text-right d-block fs-m smb-2"></h3>
 
                       <span
                         onClick={() => {
@@ -2019,11 +2014,11 @@ export class CreateResume extends Component {
             <div className="bg-white srounded-md sp-2 smb-3">
               <div className="row">
                 <div className="col-12">
-                  {!this.state.editMode10 ? (
+                  {!this.state.editMode11 ? (
                     <header className="d-flex justify-content-between align-items-center flex-row-reverse">
                       <span
                         onClick={() => {
-                          this.setState({ editMode10: true });
+                          this.setState({ editMode11: true });
                         }}
                         type="button"
                         className="btn btn-info ir-r"
@@ -2033,13 +2028,11 @@ export class CreateResume extends Component {
                     </header>
                   ) : (
                     <header className="d-flex justify-content-between align-items-center">
-                      <h3 className="ir-b c-primary text-right d-block fs-m smb-2">
-                        ویرایش اطلاعات
-                      </h3>
+                      <h3 className="ir-b c-primary text-right d-block fs-m smb-2"></h3>
 
                       <span
                         onClick={() => {
-                          this.setState({ editMode10: false });
+                          this.setState({ editMode11: false });
                         }}
                         type="button"
                         className="btn btn-info ir-r"
@@ -2049,7 +2042,7 @@ export class CreateResume extends Component {
                     </header>
                   )}
 
-                  {!this.state.editMode10 ? (
+                  {!this.state.editMode11 ? (
                     <div className="content d-lg-flex flex-column justify-content-center">
                       <LanguageDetails
                         getAllLanguageForCurrentUser={

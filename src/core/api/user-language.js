@@ -8,7 +8,7 @@ const deleteLanguageEndPoint =
   API_ADDRESS + "UserLanguage/DeleteWorkExperience";
 const editLanguageEndPoint = API_ADDRESS + "UserLanguage/EditUserLanguage";
 
-export const getEduBackground = async (id) => {
+export const getLanguage = async (id) => {
   const { data } = await axios.get(
     `${getLanguagesEndPoint}?id=${id}`,
     {},
@@ -22,7 +22,7 @@ export const getEduBackground = async (id) => {
   return data;
 };
 
-export const AddEduBackground = async (formData) => {
+export const AddLanguage = async (formData) => {
   const { data } = await axios.post(`${AddLanguageEndPoint}`, formData, {
     headers: {
       Authorization: `bearer ${window.localStorage.getItem("JWT")}`,
@@ -32,7 +32,7 @@ export const AddEduBackground = async (formData) => {
   return data;
 };
 
-export const DeleteEduBackground = async (id) => {
+export const DeleteLanguage = async (id) => {
   const { data } = await axios.delete(
     `${deleteLanguageEndPoint}?id=${id}`,
     {},
@@ -46,7 +46,7 @@ export const DeleteEduBackground = async (id) => {
   return data;
 };
 
-export const editEduBackground = async (form) => {
+export const editLanguage = async (form) => {
   const { data } = await axios.post(editLanguageEndPoint, form, {
     headers: {
       Authorization: `bearer ${window.localStorage.getItem("JWT")}`,

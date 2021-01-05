@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import ReactHtmlParser from "react-html-parser";
 import { DeleteEduBackground } from "../../../../core/api/education-background";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { LanguageEdit } from "./LanguageEdit";
-import { educationDegree } from "../../../../enums/educationDegree";
-
+import { Languagelevel } from "../../../../enums/languageLevel";
 import "../style.css";
 
 const LanguageDetails = ({ getAllLanguageForCurrentUser }) => {
@@ -66,19 +64,10 @@ const LanguageDetails = ({ getAllLanguageForCurrentUser }) => {
       {initialData && initialData.length === 0 ? (
         <ul className="list-group list-group-flush p-0">
           <li className="list-group-item border-0 pr-0">
-            <span className="ir-b c-grey sml-1">عنوان کار : -</span>
+            <span className="ir-b c-grey sml-1">زبان : -</span>
           </li>
           <li className="list-group-item border-0 pr-0">
-            <span className="ir-b c-grey sml-1">نام شرکت : -</span>
-          </li>
-          <li className="list-group-item border-0 pr-0">
-            <span className="ir-b c-grey sml-1">تاریخ شروع کار : -</span>
-          </li>
-          <li className="list-group-item border-0 pr-0">
-            <span className="ir-b c-grey sml-1">تاریخ پایان کار : -</span>
-          </li>
-          <li className="list-group-item border-0 pr-0">
-            <span className="ir-b c-grey sml-1">توضیحات : -</span>
+            <span className="ir-b c-grey sml-1">سطح زبان : -</span>
           </li>
         </ul>
       ) : !editMode && initialData ? (
@@ -107,43 +96,15 @@ const LanguageDetails = ({ getAllLanguageForCurrentUser }) => {
             </header>
             <li>
               <span className="ir-b c-grey sml-1">
-                رشته تحصیلی :{" "}
-                <span className="c-regular">{item.fieldOfStudy || "-"}</span>
+                زبان :{" "}
+                <span className="c-regular">{item.languageName || "-"}</span>
               </span>
             </li>
             <li>
               <span className="ir-b c-grey sml-1">
-                نام دانشگاه :{" "}
-                <span className="c-regular">{item.universityName || "-"}</span>
-              </span>
-            </li>
-            {item.degreeOfEducation && (
-              <li>
-                <span className="ir-b c-grey sml-1">
-                  مدرک تحصیلی :{" "}
-                  <span className="c-regular">
-                    {educationDegree(item.degreeOfEducation) || "-"}
-                  </span>
-                </span>
-              </li>
-            )}
-            <li>
-              <span className="ir-b c-grey sml-1">
-                تاریخ شروع کار :{" "}
-                <span className="c-regular">{item.startDate || "-"}</span>
-              </span>
-            </li>
-            <li>
-              <span className="ir-b c-grey sml-1">
-                تاریخ پایان کار :{" "}
-                <span className="c-regular">{item.endDate || "-"}</span>
-              </span>
-            </li>
-            <li>
-              <span className="ir-b c-grey sml-1">
-                توضیحات :{" "}
+                سطح زبان :{" "}
                 <span className="c-regular">
-                  {ReactHtmlParser(item.description) || "-"}
+                  {item.languageLevel ? Languagelevel(item.languageLevel) : "-"}
                 </span>
               </span>
             </li>
