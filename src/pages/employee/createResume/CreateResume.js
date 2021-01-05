@@ -477,7 +477,7 @@ export class CreateResume extends Component {
         categoryName: label,
       };
     });
-
+    console.log(listOfcategory);
     this.setState({
       info8: {
         ...this.state.info8,
@@ -798,7 +798,7 @@ export class CreateResume extends Component {
                       <ul className="list-group list-group-flush p-0">
                         <li className="list-group-item border-0 pr-0">
                           <span className="ir-b c-grey sml-1">
-                            ایمیل:
+                            ایمیل:{" "}
                             <span className="c-regular">
                               {this.state.info2 ? this.state.info2?.email : "-"}
                             </span>
@@ -807,7 +807,16 @@ export class CreateResume extends Component {
 
                         <li className="list-group-item border-0 pr-0">
                           <span className="ir-b c-grey sml-1">
-                            شماره موبایل:
+                            شهر :{" "}
+                            <span className="c-regular">
+                              {this.state.info2 ? this.state.info2?.city : "-"}
+                            </span>
+                          </span>
+                        </li>
+
+                        <li className="list-group-item border-0 pr-0">
+                          <span className="ir-b c-grey sml-1">
+                            شماره موبایل:{" "}
                             <span className="c-regular">
                               {this.state.info2
                                 ? this.state.info2?.phoneNumber
@@ -818,7 +827,7 @@ export class CreateResume extends Component {
 
                         <li className="list-group-item border-0 pr-0">
                           <span className="ir-b c-grey sml-1">
-                            آدرس محل سکونت (اختیاری) :
+                            آدرس محل سکونت (اختیاری) :{" "}
                             <span className="c-regular">
                               {this.state.info2
                                 ? this.state.info2?.address
@@ -827,19 +836,10 @@ export class CreateResume extends Component {
                           </span>
                         </li>
 
-                        <li className="list-group-item border-0 pr-0">
-                          <span className="ir-b c-grey sml-1">
-                            شهر :
-                            <span className="c-regular">
-                              {this.state.info2 ? this.state.info2?.city : "-"}
-                            </span>
-                          </span>
-                        </li>
-
                         {this.state.info2?.gender !== 2 && (
                           <li className="list-group-item border-0 pr-0">
                             <span className="ir-b c-grey sml-1">
-                              وضعیت نظام :
+                              وضعیت نظام :{" "}
                               <span className="c-regular">
                                 {this.state.info2
                                   ? this.state.info2?.military
@@ -939,6 +939,16 @@ export class CreateResume extends Component {
                                     });
                                   }}
                                   placeholder="انتخاب شهر"
+                                  value={this.state.cities.map((item) => {
+                                    if (
+                                      this.state.info2?.city === item.cityName
+                                    ) {
+                                      return {
+                                        value: item.cityName,
+                                        label: ` ${item.provinceName}، ${item.cityName} `,
+                                      };
+                                    }
+                                  })}
                                   styles={{ fontFamily: "iransans-regular" }}
                                   options={this.state.cities.map((item) => {
                                     return {
