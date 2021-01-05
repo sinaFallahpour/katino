@@ -47,7 +47,7 @@ const EducationalBackgroundForm = ({
 
   const submitHandler = async (values) => {
     const tempo = { ...values, startDate: startDate, endDate: endDate };
-    console.log(tempo);
+
     setLoading(true);
     try {
       const data = await AddEduBackground(tempo);

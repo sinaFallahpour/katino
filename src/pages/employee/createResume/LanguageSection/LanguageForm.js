@@ -45,7 +45,7 @@ const LanguageForm = ({
           value: id,
           label: name,
         }));
-        console.log(convertedList);
+
         setAllLAnguages(convertedList);
       } catch (err) {
         err.response?.data?.message?.map((e) => {

@@ -57,7 +57,6 @@ const EducationalBackgroundEdit = ({
 
     setLoading(true);
     try {
-      console.log(tempo);
       await editEduBackground(tempo);
       const listOfData = [...initialEditableList];
       const editedList = listOfData.map((item) => {

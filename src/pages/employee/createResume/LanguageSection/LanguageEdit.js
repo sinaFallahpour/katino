@@ -31,7 +31,6 @@ const LanguageEdit = ({ id, setInitialData, initialEditableList }) => {
     const fetchData = async () => {
       try {
         const res = id && (await getLanguage(id));
-        res && setInitalData(res.resul);
 
         const { data } = await agent.CreateResome.GetAllLanguages();
         const convertedList = await data.resul.map(({ id, name }) => ({
@@ -45,9 +44,10 @@ const LanguageEdit = ({ id, setInitialData, initialEditableList }) => {
         );
         const idOfCityName = (await idOfCity) ? idOfCity[0]?.value : null;
 
-        idOfCityName &&
+        res &&
+          idOfCityName &&
           setInitalData({
-            ...allLanguages,
+            ...res.resul,
             languageId: idOfCityName,
             id: res.resul.id,
           });
@@ -67,7 +67,7 @@ const LanguageEdit = ({ id, setInitialData, initialEditableList }) => {
     const languageName = listOfCities.filter(
       ({ value }) => value === values.languageId
     );
-    console.log(values);
+
     try {
       await editLanguage(values);
       const listOfData = [...initialEditableList];
