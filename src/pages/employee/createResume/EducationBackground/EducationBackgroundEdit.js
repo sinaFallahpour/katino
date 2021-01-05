@@ -43,11 +43,10 @@ const EducationalBackgroundEdit = ({
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getEduBackground(id);
-      setInitalData(data.resul);
-      console.log(data.resul);
-      setStartDate(data.resul.startDate);
-      setEndDate(data.resul.endDate);
+      const data = id && (await getEduBackground(id));
+      data && setInitalData(data.resul);
+      data && setStartDate(data.resul.startDate);
+      data && setEndDate(data.resul.endDate);
     };
 
     fetchData();

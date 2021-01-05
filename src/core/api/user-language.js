@@ -4,8 +4,7 @@ import API_ADDRESS from "../../API_ADDRESS";
 
 const getLanguagesEndPoint = API_ADDRESS + "UserLanguage/GetUserLanguage";
 const AddLanguageEndPoint = API_ADDRESS + "UserLanguage/AddUserLanguage";
-const deleteLanguageEndPoint =
-  API_ADDRESS + "UserLanguage/DeleteWorkExperience";
+const deleteLanguageEndPoint = API_ADDRESS + "UserLanguage/DeleteUserLanguage";
 const editLanguageEndPoint = API_ADDRESS + "UserLanguage/EditUserLanguage";
 
 export const getLanguage = async (id) => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { DeleteEduBackground } from "../../../../core/api/education-background";
+import { DeleteLanguage } from "../../../../core/api/user-language";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { LanguageEdit } from "./LanguageEdit";
@@ -30,7 +30,7 @@ const LanguageDetails = ({ getAllLanguageForCurrentUser }) => {
       if (result.value) {
         const fetchData = async () => {
           try {
-            await DeleteEduBackground(id);
+            await DeleteLanguage(id);
             const deletedList = [...initialData];
             const filterData = deletedList.filter(
               (item) => parseInt(item.id) !== parseInt(id)
@@ -38,7 +38,7 @@ const LanguageDetails = ({ getAllLanguageForCurrentUser }) => {
             setInitialData(filterData);
             Swal.fire({
               icon: "success",
-              title: "تجربه کاری با موفقیت حذف شد",
+              title: "با موفقیت حذف شد",
               showConfirmButton: false,
               timer: 1750,
             });

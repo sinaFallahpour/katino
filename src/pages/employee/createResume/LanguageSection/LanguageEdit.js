@@ -1,74 +1,87 @@
 import React, { useEffect, useState } from "react";
 
-import { Formik, Field, Form, ErrorMessage, useField } from "formik";
-import { EducationBackground } from "../../../../core/validation/EducationBackground";
-import CKEditor from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { Formik, Form, ErrorMessage, useField } from "formik";
+import { LanguageFormValidation } from "../../../../core/validation/languageForm";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { MiniSpinner } from "../../../../components/spinner/MiniSpinner";
-import "../style.css";
-import { DatePickerModern } from "../../../../core/utils/datepicker.util";
+import agent from "../../../../core/agent";
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
-import { getEduBackground } from "../../../../core/api/education-background";
-import { editEduBackground } from "../../../../core/api/education-background";
+import { getLanguage, editLanguage } from "../../../../core/api/user-language";
 import Select from "react-select";
+import "../style.css";
 
 const LanguageEdit = ({ id, setInitialData, initialEditableList }) => {
-  const degreeOfEducationsList = [
-    { value: 1, label: "مهم نیست" },
-    { value: 2, label: "دیپلم" },
-    { value: 3, label: "کاردانی" },
-    { value: 4, label: "کارشناسی" },
-    { value: 5, label: "کارشناسی ارشد" },
-    { value: 6, label: "دکترا" },
+  const initialData = {
+    languageId: 0,
+    languageLevel: 0,
+  };
+  const LanguageLevelOption = [
+    { value: 1, label: "مبتدی" },
+    { value: 2, label: "متوسط" },
+    { value: 3, label: "حرفه ای" },
+    { value: 4, label: "زبان بومی" },
   ];
 
-  const initialData = {
-    fieldOfStudy: "",
-    universityName: "",
-    degreeOfEducation: 0,
-    startDate: "",
-    endDate: "",
-    description: "",
-  };
-  const [initalData, setInitalData] = useState(initialData);
+  const [initalDataList, setInitalData] = useState(initialData);
   const [loading, setLoading] = useState(false);
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
+  const [allLanguages, setAllLAnguages] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getEduBackground(id);
-      setInitalData(data.resul);
-      console.log(data.resul);
-      setStartDate(data.resul.startDate);
-      setEndDate(data.resul.endDate);
+      try {
+        const res = id && (await getLanguage(id));
+        res && setInitalData(res.resul);
+
+        const { data } = await agent.CreateResome.GetAllLanguages();
+        const convertedList = await data.resul.map(({ id, name }) => ({
+          value: id,
+          label: name,
+        }));
+        setAllLAnguages(convertedList);
+
+        const idOfCity = await convertedList.filter(
+          ({ label }) => label === res.resul.languageName
+        );
+        const idOfCityName = (await idOfCity) ? idOfCity[0]?.value : null;
+
+        idOfCityName &&
+          setInitalData({
+            ...allLanguages,
+            languageId: idOfCityName,
+            id: res.resul.id,
+          });
+      } catch (err) {
+        err.response?.data?.message?.map((e) => {
+          toast.error(e);
+        });
+      }
     };
 
     fetchData();
   }, []);
 
   const submitHandler = async (values) => {
-    const tempo = { ...values, startDate: startDate, endDate: endDate };
-
     setLoading(true);
+    const listOfCities = [...allLanguages];
+    const languageName = listOfCities.filter(
+      ({ value }) => value === values.languageId
+    );
+    console.log(values);
     try {
-      console.log(tempo);
-      await editEduBackground(tempo);
+      await editLanguage(values);
       const listOfData = [...initialEditableList];
       const editedList = listOfData.map((item) => {
-        if (item.id === id) {
+        if (item.id === parseInt(id)) {
           return {
-            fieldOfStudy: tempo.workTitle,
-            universityName: tempo.companyName,
-            startDate: tempo.startDate,
-            degreeOfEducation: tempo.degreeOfEducation,
-            endDate: tempo.endDate,
-            description: tempo.description,
+            id: values.id,
+            languageId: values.languageId,
+            languageLevel: values.languageLevel,
+            languageName: languageName[0].label,
           };
         }
       });
+
       setInitialData(editedList);
 
       Swal.fire({
@@ -87,46 +100,8 @@ const LanguageEdit = ({ id, setInitialData, initialEditableList }) => {
     }
   };
 
-  const MyTextAreaInput = ({ ...props }) => {
-    const [, , helpers] = useField(props);
-    return (
-      <>
-        <CKEditor
-          className="cke_rtl"
-          editor={ClassicEditor}
-          data={initalData.description}
-          config={{
-            toolbar: [
-              "|",
-              "bold",
-              "italic",
-              "numberedList",
-              "bulletedList",
-              "|",
-              "undo",
-              "redo",
-            ],
-            removePlugins: ["Heading", "Link"],
-            language: "fa",
-            minHeight: "100px",
-            height: "100px",
-          }}
-          onBlur={(_, editor) => {
-            const data = editor.getData();
-            helpers.setValue(data);
-          }}
-        />
-        <ErrorMessage
-          component="div"
-          className="errorMessage"
-          name={props.name}
-        />
-      </>
-    );
-  };
-
   const MySelect = ({ label, options, ...props }) => {
-    const [field, meta, helpers] = useField(props);
+    const [field, , helpers] = useField(props);
     return (
       <div>
         <label className="ir-r d-block text-right smb-1">{label}</label>
@@ -154,8 +129,8 @@ const LanguageEdit = ({ id, setInitialData, initialEditableList }) => {
     <>
       {loading && <MiniSpinner />}
       <Formik
-        initialValues={initalData}
-        validationSchema={EducationBackground}
+        initialValues={initalDataList}
+        validationSchema={LanguageFormValidation}
         onSubmit={(values) => {
           submitHandler(values);
         }}
@@ -165,93 +140,26 @@ const LanguageEdit = ({ id, setInitialData, initialEditableList }) => {
           <aside className="form-container-bg  mx-auto">
             <Form>
               <div className=" srounded-md  smb-1 mt-4">
+                {/* languageId */}
                 <div className="Field-Container col-12">
-                  {/* workTitle   */}
                   <div className=" smb-2">
-                    <label className="ir-r d-block text-right smb-1">
-                      رشته تحصیلی را وارد کنید
-                    </label>
-                    <div className="form-group mb-0">
-                      <Field
-                        name="fieldOfStudy"
-                        className="form-control ir-r shadow-none"
-                        placeholder="رشته تحصیلی"
-                        type="text"
-                      />
-                      <ErrorMessage
-                        component="div"
-                        className="errorMessage"
-                        name="fieldOfStudy"
-                      />
-                    </div>
-                  </div>
-
-                  {/* companyName */}
-                  <div className=" smb-2">
-                    <label className="ir-r d-block text-right smb-1">
-                      نام دانشگاه را وارد کنید
-                    </label>
-                    <div className="form-group mb-0">
-                      <Field
-                        name="universityName"
-                        className="form-control ir-r shadow-none"
-                        placeholder="نام دانشگاه"
-                        type="text"
-                      />
-                      <ErrorMessage
-                        component="div"
-                        className="errorMessage"
-                        name="universityName"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="Field-Container col-12">
-                  {/* degree  */}
-                  <div className=" smb-2 ml-2">
                     <MySelect
-                      name="degreeOfEducation"
-                      placeholder="مدرک تحصیلی"
-                      options={degreeOfEducationsList}
-                      label="مدرک تحصیلی خود را وارد کنید"
+                      name="languageId"
+                      placeholder="زبان"
+                      label="زبان خود را وارد کنید"
+                      options={allLanguages && allLanguages}
                     />
                   </div>
 
-                  {/* startDate */}
+                  {/* languageLevel */}
                   <div className=" smb-2">
-                    <label className="ir-r d-block text-right smb-1">
-                      تاریخ شروع کار را وارد کنید
-                    </label>
-                    <div className="form-group mb-0 ">
-                      <DatePickerModern
-                        handleChange={setStartDate}
-                        name="startDate"
-                        dateVal={startDate && startDate}
-                      />
-                    </div>
+                    <MySelect
+                      name="languageLevel"
+                      placeholder="سطح"
+                      options={LanguageLevelOption}
+                      label="سطح زبان خود را وارد کنید"
+                    />
                   </div>
-
-                  {/* endDate */}
-                  <div className=" smb-2">
-                    <label className="ir-r d-block text-right smb-1">
-                      تاریخ پایان کار را وارد کنید
-                    </label>
-                    <div className="form-group mb-0">
-                      <DatePickerModern
-                        handleChange={setEndDate}
-                        name="endDate"
-                        dateVal={endDate && endDate}
-                      />
-                    </div>
-                  </div>
-                </div>
-                {/* description */}
-                <div className="col-12 smb-2">
-                  <label className="ir-r d-block text-right smb-1">
-                    توضیحات
-                  </label>
-                  <MyTextAreaInput name="description" />
                 </div>
 
                 {/* submit button  */}

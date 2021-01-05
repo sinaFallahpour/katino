@@ -28,10 +28,10 @@ const JobExpreinceEdit = ({ id, setInitialData, initialEditableList }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getWorkExperience(id);
-      setInitalData(data.resul);
-      setStartDate(data.resul.startDate);
-      setEndDate(data.resul.endDate);
+      const data = id && (await getWorkExperience(id));
+      data && setInitalData(data.resul);
+      data && setStartDate(data.resul.startDate);
+      data && setEndDate(data.resul.endDate);
     };
 
     fetchData();

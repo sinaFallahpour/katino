@@ -40,7 +40,7 @@ const EducationalBackgroundDetails = ({ AllEduBackground }) => {
             setInitialData(filterData);
             Swal.fire({
               icon: "success",
-              title: "تجربه کاری با موفقیت حذف شد",
+              title: "با موفقیت حذف شد",
               showConfirmButton: false,
               timer: 1750,
             });
