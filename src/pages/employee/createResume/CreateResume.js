@@ -839,7 +839,7 @@ export class CreateResume extends Component {
                         {this.state.info2?.gender !== 2 && (
                           <li className="list-group-item border-0 pr-0">
                             <span className="ir-b c-grey sml-1">
-                              وضعیت نظام :{" "}
+                              وضعیت نظام وظیفه:{" "}
                               <span className="c-regular">
                                 {this.state.info2
                                   ? this.state.info2?.military
