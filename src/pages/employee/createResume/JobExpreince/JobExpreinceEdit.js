@@ -45,7 +45,7 @@ const JobExpreinceEdit = ({ id, setInitialData, initialEditableList }) => {
       await EditWorkExperience(tempo);
       const listOfData = [...initialEditableList];
       const editedList = listOfData.map((item) => {
-        if (item.id === id) {
+        if (item.id === parseInt(id)) {
           return {
             workTitle: tempo.workTitle,
             companyName: tempo.companyName,

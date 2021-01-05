@@ -13,7 +13,8 @@ import { EducationalBackgroundFormGenerator } from "./EducationBackground/Educat
 import { EducationalBackgroundDetails } from "./EducationBackground/EducationBackgroundDetails";
 import { LanguageGenerator } from "./LanguageSection/LanguageGenerator";
 import { LanguageDetails } from "./LanguageSection/LanguageDetails";
-
+import { JobPreferenceDetails } from "./JobPreference/JobPreferenceDetails";
+import Swal from "sweetalert2";
 import { DatePickerModern } from "../../../core/utils/datepicker.util";
 
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
@@ -48,6 +49,13 @@ export class CreateResume extends Component {
     const getAllEduBackground = await agent.CreateResome.GetAllEduBackground();
     const getAllLanguageForCurrentUser = await agent.CreateResome.GetAllLanguageForCurrentUser();
 
+    const resuJobPreferenceIds =
+      (await resuJobPreference) &&
+      resuJobPreference.data.resul.categoryForJobPrefence &&
+      resuJobPreference?.data.resul.categoryForJobPrefence?.map(
+        ({ categoryId }) => categoryId
+      );
+
     let Category = await AllCategories?.data.resul.map(({ id, name }) => {
       return { value: id, label: name };
     });
@@ -63,7 +71,8 @@ export class CreateResume extends Component {
       getAllWorkExperience: getAllWorkExperience.data.resul,
       getAllEduBackground: getAllEduBackground.data.resul,
       getAllLanguageForCurrentUser: getAllLanguageForCurrentUser.data.resul,
-
+      jobPreferenceStatus: resuJobPreference.data.resul,
+      resuJobPreferenceIds: resuJobPreferenceIds,
       info8: resuJobPreference.data.resul || {
         city: "",
         typeOfCooperation: 0,
@@ -337,15 +346,30 @@ export class CreateResume extends Component {
   SubmitJobPreference = async (event) => {
     event.preventDefault();
 
+    let editProps = {
+      ...this.state.info8,
+      id: this.state.jobPreferenceStatus.id,
+    };
     let tempo = this.state.info8;
     delete tempo["id"];
     delete tempo["categoryForJobPrefence"];
+    delete editProps["categoryForJobPrefence"];
     if (!tempo["categoryIds"]) {
       tempo["categoryIds"] = [];
+      tempo["categoryIds"] = this.state.resuJobPreferenceIds;
+    }
+    if (!editProps["categoryIds"]) {
+      editProps["categoryIds"] = [];
+      editProps["categoryIds"] = this.state.resuJobPreferenceIds;
     }
 
     try {
-      await agent.CreateResome.AddUserJobPreference(tempo);
+      if (!this.state.jobPreferenceStatus) {
+        await agent.CreateResome.AddUserJobPreference(tempo);
+      } else {
+        await agent.CreateResome.EditUserJobPreference(editProps);
+      }
+
       this.setState({
         editMode8: false,
       });
@@ -364,6 +388,44 @@ export class CreateResume extends Component {
         }
       }
     }
+  };
+
+  DeleteJobPreference = async () => {
+    const id = this.state.info8.id;
+
+    Swal.fire({
+      title: "آیا مطمئن هستید میخواهید حذف کنید؟",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#28a745",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "خیر",
+      confirmButtonText: "بله مطمئن هستم",
+    }).then((result) => {
+      if (result.value) {
+        const fetchData = async () => {
+          try {
+            const data = await agent.CreateResome.DeleteUserJobPreference(id);
+
+            this.setState({
+              editMode8: false,
+              info8: [],
+            });
+            Swal.fire({
+              icon: "success",
+              title: "با موفقیت حذف شد",
+              showConfirmButton: false,
+              timer: 1750,
+            });
+          } catch (err) {
+            err?.response?.data?.message &&
+              err.response.data.message.map((er) => toast.error(er));
+          }
+        };
+
+        fetchData();
+      }
+    });
   };
 
   deleJobSkills = async (id) => {
@@ -410,11 +472,17 @@ export class CreateResume extends Component {
     } else if (action === "clear") {
       tempArray = [];
     }
+    const listOfcategory = value.map(({ label }) => {
+      return {
+        categoryName: label,
+      };
+    });
 
     this.setState({
       info8: {
         ...this.state.info8,
         categoryIds: tempArray,
+        categoryForJobPrefence: listOfcategory,
       },
     });
   };
@@ -1376,7 +1444,7 @@ export class CreateResume extends Component {
               </div>
             </div>
 
-            {/* </aside> */}
+            {/* job Preference */}
             <h3 className="d-block text-right ir-b smb-3 c-dark">
               ترجیحات شغلی
             </h3>
@@ -1384,7 +1452,7 @@ export class CreateResume extends Component {
               <div className="row">
                 <div className="col-12">
                   {!this.state.editMode8 ? (
-                    <header className="d-flex justify-content-between align-items-center flex-row-reverse">
+                    <header className="d-flex justify-content-flex-start align-items-center flex-row-reverse">
                       <span
                         onClick={() => {
                           this.setState({ editMode8: true });
@@ -1415,152 +1483,9 @@ export class CreateResume extends Component {
 
                   {!this.state.editMode8 ? (
                     <div className="content d-lg-flex flex-column justify-content-center">
-                      <ul className="list-group list-group-flush p-0">
-                        <li className="list-group-item border-0 pr-0">
-                          <span className="ir-b c-grey sml-1">
-                            شهر :
-                            <span className="c-regular">
-                              {this.state.info8 ? this.state.info8.city : "-"}
-                            </span>
-                          </span>
-                        </li>
-
-                        <li className="list-group-item border-0 pr-0">
-                          <span className="ir-b c-grey sml-1">
-                            میزان حقوق :
-                            <span className="c-regular">
-                              {this.state.info8
-                                ? this.returnSalary(this.state.info8?.salary)
-                                : "-"}
-                            </span>
-                          </span>
-                        </li>
-
-                        <li className="list-group-item border-0 pr-0">
-                          <span className="ir-b c-grey sml-1">
-                            نوع همکاری :
-                            <span className="c-regular">
-                              {this.state.info8
-                                ? this.returnTypeOfCooperation(
-                                    this.state.info8?.typeOfCooperation
-                                  )
-                                : "-"}
-                            </span>
-                          </span>
-                        </li>
-
-                        <li className="list-group-item border-0 pr-0">
-                          <span className="ir-b c-grey sml-1">
-                            دسته شغلی :
-                            <span className="c-regular">
-                              {this.state.info8?.categoryForJobPrefence ? (
-                                <div className="p-1">
-                                  {this.state.info8?.categoryForJobPrefence.map(
-                                    ({ categoryName }, indxItem) => {
-                                      return (
-                                        <button
-                                          key={indxItem}
-                                          className="btn btn-success  m-1 mb-0"
-                                        >
-                                          {categoryName}
-                                        </button>
-                                      );
-                                    }
-                                  )}
-                                </div>
-                              ) : (
-                                "-"
-                              )}
-                            </span>
-                          </span>
-                        </li>
-
-                        <li className="list-group-item border-0 pr-0">
-                          <span className="ir-b c-grey sml-1">
-                            سابقه کار :
-                            <span className="c-regular">
-                              {this.state.info8
-                                ? this.returnSenioritylevel(
-                                    this.state.info8?.senioritylevel
-                                  )
-                                : "-"}
-                            </span>
-                          </span>
-                        </li>
-
-                        <li className="list-group-item border-0 pr-0">
-                          <span className="ir-b c-grey sml-1">
-                            بیمه :{" "}
-                            <span className="c-regular">
-                              {this.state.info8?.insurance ? (
-                                <i class="fas fa-check c-success"></i>
-                              ) : (
-                                <i class="fas fa-times c-danger"></i>
-                              )}
-                            </span>
-                          </span>
-                        </li>
-                        <li className="list-group-item border-0 pr-0">
-                          <span className="ir-b c-grey sml-1">
-                            ارتقا شغلی :{" "}
-                            <span className="c-regular">
-                              {this.state.info8?.promotion ? (
-                                <i class="fas fa-check c-success"></i>
-                              ) : (
-                                <i class="fas fa-times c-danger"></i>
-                              )}
-                            </span>
-                          </span>
-                        </li>
-                        <li className="list-group-item border-0 pr-0">
-                          <span className="ir-b c-grey sml-1">
-                            انعطاف پذیر بودن ساعت کاری :{" "}
-                            <span className="c-regular">
-                              {this.state.info8?.flexibleWorkingTime ? (
-                                <i class="fas fa-check c-success"></i>
-                              ) : (
-                                <i class="fas fa-times c-danger"></i>
-                              )}
-                            </span>
-                          </span>
-                        </li>
-                        <li className="list-group-item border-0 pr-0">
-                          <span className="ir-b c-grey sml-1">
-                            همراه با وعده غذایی :{" "}
-                            <span className="c-regular">
-                              {this.state.info8?.hasMeel ? (
-                                <i class="fas fa-check c-success"></i>
-                              ) : (
-                                <i class="fas fa-times c-danger"></i>
-                              )}
-                            </span>
-                          </span>
-                        </li>
-                        <li className="list-group-item border-0 pr-0">
-                          <span className="ir-b c-grey sml-1">
-                            همراه با سرویس رفت و آمد :{" "}
-                            <span className="c-regular">
-                              {this.state.info8?.transportationService ? (
-                                <i class="fas fa-check c-success"></i>
-                              ) : (
-                                <i class="fas fa-times c-danger"></i>
-                              )}
-                            </span>
-                          </span>
-                        </li>
-                        <li className="list-group-item border-0 pr-0">
-                          <span className="ir-b c-grey sml-1">
-                            مدرک تحصیلی :{" "}
-                            <span className="c-regular">
-                              {this.state.info8?.educationCourses ? (
-                                <i class="fas fa-check c-success"></i>
-                              ) : (
-                                <i class="fas fa-times c-danger"></i>
-                              )}
-                            </span>
-                          </span>
-                        </li>
-                      </ul>
+                      <JobPreferenceDetails
+                        AllWorkExperience={this.state.info8}
+                      />
                     </div>
                   ) : (
                     <div className="content d-lg-flex flex-column justify-content-center">
@@ -1653,7 +1578,7 @@ export class CreateResume extends Component {
                                     this.setState({
                                       info8: {
                                         ...this.state.info8,
-                                        typeOfCooperation: [e.value],
+                                        typeOfCooperation: e.value,
                                       },
                                     });
                                   }}
@@ -1905,7 +1830,7 @@ export class CreateResume extends Component {
               </div>
             </div>
 
-            {/* </aside> */}
+            {/* job Experience */}
             <h3 className="d-block text-right ir-b smb-3 c-dark">تجربه کاری</h3>
             <div className="bg-white srounded-md sp-2 smb-3">
               <div className="row">
@@ -1956,7 +1881,7 @@ export class CreateResume extends Component {
               </div>
             </div>
 
-            {/* </aside> */}
+            {/* education */}
             <h3 className="d-block text-right ir-b smb-3 c-dark">تحصیلات</h3>
             <div className="bg-white srounded-md sp-2 smb-3">
               <div className="row">

@@ -66,16 +66,19 @@ const EducationalBackgroundDetails = ({ AllEduBackground }) => {
       {initialData && initialData.length === 0 ? (
         <ul className="list-group list-group-flush p-0">
           <li className="list-group-item border-0 pr-0">
-            <span className="ir-b c-grey sml-1">عنوان کار : -</span>
+            <span className="ir-b c-grey sml-1">رشته تحصیلی : -</span>
           </li>
           <li className="list-group-item border-0 pr-0">
-            <span className="ir-b c-grey sml-1">نام شرکت : -</span>
+            <span className="ir-b c-grey sml-1">نام دانشگاه : -</span>
           </li>
           <li className="list-group-item border-0 pr-0">
-            <span className="ir-b c-grey sml-1">تاریخ شروع کار : -</span>
+            <span className="ir-b c-grey sml-1">مدرک تحصیلی : -</span>
           </li>
           <li className="list-group-item border-0 pr-0">
-            <span className="ir-b c-grey sml-1">تاریخ پایان کار : -</span>
+            <span className="ir-b c-grey sml-1">تاریخ شروع : -</span>
+          </li>
+          <li className="list-group-item border-0 pr-0">
+            <span className="ir-b c-grey sml-1">تاریخ پایان : -</span>
           </li>
           <li className="list-group-item border-0 pr-0">
             <span className="ir-b c-grey sml-1">توضیحات : -</span>

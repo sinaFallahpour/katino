@@ -157,6 +157,12 @@ const CreateResome = {
   AddUserJobPreference: (body) =>
     requests.post("/UserJobPreference/AddUserJobPreference", body),
 
+  DeleteUserJobPreference: (id) =>
+    requests.del(`/UserJobPreference/DeleteUserJobPreference?id=${id}`),
+
+  EditUserJobPreference: (body) =>
+    requests.post("/UserJobPreference/EditUserJobPreference", body),
+
   GetResomePercent: () => requests.get("/Resome/GetResomePercent"),
 
   GetResomeAsignForEmployee: () =>

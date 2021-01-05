@@ -60,10 +60,11 @@ const EducationalBackgroundEdit = ({
       await editEduBackground(tempo);
       const listOfData = [...initialEditableList];
       const editedList = listOfData.map((item) => {
-        if (item.id === id) {
+        if (item.id === parseInt(id)) {
           return {
-            fieldOfStudy: tempo.workTitle,
-            universityName: tempo.companyName,
+            id: id,
+            fieldOfStudy: tempo.fieldOfStudy,
+            universityName: tempo.universityName,
             startDate: tempo.startDate,
             degreeOfEducation: tempo.degreeOfEducation,
             endDate: tempo.endDate,
