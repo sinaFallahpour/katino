@@ -54,3 +54,20 @@
     top: 0;
   }
 }
+
+.editableContainer {
+  display: flex;
+  align-items: center;
+}
+.editableContainerLink {
+  color: #138496;
+  border: 1px solid #138496;
+  border-radius: 5px;
+  padding: 2px 4px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.editableContainerLink:hover {
+  filter: brightness(80%);
+  text-decoration: none;
+}

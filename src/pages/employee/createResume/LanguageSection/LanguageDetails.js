@@ -111,24 +111,27 @@ const LanguageDetails = ({ getAllLanguageForCurrentUser }) => {
           </ul>
         ))
       ) : (
-        <>
-          <header className="d-flex justify-content-between align-items-center mt-1">
-            <h3 className="ir-b c-primary text-right d-block fs-m smb-2"></h3>
+        editMode &&
+        initialData && (
+          <>
+            <header className="d-flex justify-content-between align-items-center mt-1">
+              <h3 className="ir-b c-primary text-right d-block fs-m smb-2"></h3>
 
-            <span
-              onClick={() => setEditMode(false)}
-              type="button"
-              className="btn btn-info ir-r"
-            >
-              بازگشت
-            </span>
-          </header>
-          <LanguageEdit
-            id={idOfItems}
-            setInitialData={setInitialData}
-            initialEditableList={initialData}
-          />
-        </>
+              <span
+                onClick={() => setEditMode(false)}
+                type="button"
+                className="btn btn-info ir-r"
+              >
+                بازگشت
+              </span>
+            </header>
+            <LanguageEdit
+              id={idOfItems}
+              setInitialData={setInitialData}
+              initialEditableList={initialData}
+            />
+          </>
+        )
       )}
     </>
   );

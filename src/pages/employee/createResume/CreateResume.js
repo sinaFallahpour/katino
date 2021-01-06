@@ -16,7 +16,6 @@ import { LanguageDetails } from "./LanguageSection/LanguageDetails";
 import { JobPreferenceDetails } from "./JobPreference/JobPreferenceDetails";
 import Swal from "sweetalert2";
 import { DatePickerModern } from "../../../core/utils/datepicker.util";
-
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
 
 export class CreateResume extends Component {
@@ -538,11 +537,7 @@ export class CreateResume extends Component {
                 <div className="col-12 col-lg-9">
                   {!this.state.editMode ? (
                     <header className="d-flex justify-content-between align-items-center">
-                      <h3 className="ir-b c-primary text-right d-block fs-m smb-2">
-                        {this.state.info
-                          ? this.state.info.userFullName
-                          : "درحال بارگذاری..."}
-                      </h3>
+                      <h3 className="ir-b c-primary text-right d-block fs-m smb-2"></h3>
 
                       <span
                         onClick={this.editDesc.bind(this)}
@@ -573,7 +568,18 @@ export class CreateResume extends Component {
                       <ul className="list-group list-group-flush p-0">
                         <li className="list-group-item border-0 pr-0">
                           <span className="ir-b c-grey sml-1">
-                            عنوان شغلی:
+                            نام نام خانوادگی:{" "}
+                            <span className="c-regular">
+                              {this.state.info
+                                ? this.state.info.userFullName
+                                : "-"}
+                            </span>
+                          </span>
+                        </li>
+
+                        <li className="list-group-item border-0 pr-0">
+                          <span className="ir-b c-grey sml-1">
+                            عنوان شغلی:{" "}
                             <span className="c-regular">
                               {this.state.info ? this.state.info.jobTitle : "-"}
                             </span>
@@ -589,27 +595,45 @@ export class CreateResume extends Component {
                           </span>
                         </li>
 
-                        <li className="list-group-item border-0 pr-0">
-                          <span className="ir-b c-grey sml-1">
-                            آخرین شرکت:
-                            <span className="c-regular">
-                              {this.state.info
-                                ? this.state.info.lastCompanies
-                                : "-"}
+                        <div className="editableContainer">
+                          <li className="list-group-item border-0 pr-0">
+                            <span className="ir-b c-grey sml-1">
+                              آخرین شرکت:{" "}
+                              <span className="c-regular">
+                                {this.state.info
+                                  ? this.state.info.lastCompanies
+                                  : "-"}
+                              </span>
                             </span>
-                          </span>
-                        </li>
+                          </li>
 
-                        <li className="list-group-item border-0 pr-0">
-                          <span className="ir-b c-grey sml-1">
-                            آخرین مدرک تحصیلی:{" "}
-                            <span className="c-regular">
-                              {this.state.info
-                                ? this.state.info.lastEducationBackground
-                                : "-"}
+                          <a
+                            href="#workExperience"
+                            className="editableContainerLink ir-r"
+                          >
+                            ویرایش
+                          </a>
+                        </div>
+
+                        <div className="editableContainer">
+                          <li className="list-group-item border-0 pr-0">
+                            <span className="ir-b c-grey sml-1">
+                              آخرین مدرک تحصیلی:{" "}
+                              <span className="c-regular">
+                                {this.state.info
+                                  ? this.state.info.lastEducationBackground
+                                  : "-"}
+                              </span>
                             </span>
-                          </span>
-                        </li>
+                          </li>
+
+                          <a
+                            href="#EducationBackground"
+                            className="editableContainerLink ir-r"
+                          >
+                            ویرایش
+                          </a>
+                        </div>
                       </ul>
                     </div>
                   ) : (
@@ -1841,7 +1865,12 @@ export class CreateResume extends Component {
             </div>
 
             {/* job Experience */}
-            <h3 className="d-block text-right ir-b smb-3 c-dark">تجربه کاری</h3>
+            <h3
+              className="d-block text-right ir-b smb-3 c-dark "
+              id="workExperience"
+            >
+              تجربه کاری
+            </h3>
             <div className="bg-white srounded-md sp-2 smb-3">
               <div className="row">
                 <div className="col-12">
@@ -1892,7 +1921,12 @@ export class CreateResume extends Component {
             </div>
 
             {/* education */}
-            <h3 className="d-block text-right ir-b smb-3 c-dark">تحصیلات</h3>
+            <h3
+              className="d-block text-right ir-b smb-3 c-dark"
+              id="EducationBackground"
+            >
+              تحصیلات
+            </h3>
             <div className="bg-white srounded-md sp-2 smb-3">
               <div className="row">
                 <div className="col-12">
