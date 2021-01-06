@@ -71,3 +71,13 @@
   filter: brightness(80%);
   text-decoration: none;
 }
+.TitleOfCreateResume {
+  background-color: #fff;
+  color: #444;
+  border-radius: 8px;
+  padding: 10px 5px;
+  text-align: center;
+  font-family: iransans-bold;
+  font-size: 1.8rem;
+  margin: 15px auto;
+}

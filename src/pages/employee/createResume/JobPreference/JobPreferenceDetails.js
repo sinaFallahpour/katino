@@ -31,7 +31,6 @@ const JobPreferenceDetails = ({ AllWorkExperience }) => {
 
   useEffect(() => {
     setInitialData([AllWorkExperience]);
-    console.log(AllWorkExperience);
   }, [AllWorkExperience]);
 
   return (

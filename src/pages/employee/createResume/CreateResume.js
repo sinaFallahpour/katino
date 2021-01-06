@@ -17,6 +17,7 @@ import { JobPreferenceDetails } from "./JobPreference/JobPreferenceDetails";
 import Swal from "sweetalert2";
 import { DatePickerModern } from "../../../core/utils/datepicker.util";
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import { UploadPdf } from "./UploadPdf/UploadPdf";
 
 export class CreateResume extends Component {
   state = {
@@ -500,7 +501,8 @@ export class CreateResume extends Component {
 
   render() {
     return (
-      <section className="container-fluid create-ad spx-2 spx-lg-10 smy-10 spt-10">
+      <section className="container-fluid create-ad spx-2 spx-lg-10 smy-10 ">
+        <h2 className="TitleOfCreateResume"> رزومه ساز </h2>
         <div className="row">
           <aside className="col-12 col-lg-8 smb-2 mb-lg-0">
             {/* aside and edit profile */}
@@ -779,6 +781,9 @@ export class CreateResume extends Component {
                 </div>
               </div>
             </div>
+
+            {/* pdf */}
+            <UploadPdf />
 
             {/* </aside> */}
             <h3 className="d-block text-right ir-b smb-3 c-dark">
@@ -1865,10 +1870,8 @@ export class CreateResume extends Component {
             </div>
 
             {/* job Experience */}
-            <h3
-              className="d-block text-right ir-b smb-3 c-dark "
-              id="workExperience"
-            >
+            <span id="workExperience"></span>
+            <h3 className="d-block text-right ir-b smb-3 c-dark ">
               تجربه کاری
             </h3>
             <div className="bg-white srounded-md sp-2 smb-3">
@@ -1921,12 +1924,8 @@ export class CreateResume extends Component {
             </div>
 
             {/* education */}
-            <h3
-              className="d-block text-right ir-b smb-3 c-dark"
-              id="EducationBackground"
-            >
-              تحصیلات
-            </h3>
+            <span id="EducationBackground"></span>
+            <h3 className="d-block text-right ir-b smb-3 c-dark">تحصیلات</h3>
             <div className="bg-white srounded-md sp-2 smb-3">
               <div className="row">
                 <div className="col-12">
