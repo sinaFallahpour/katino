@@ -62,7 +62,25 @@ export class EmployeeNavbar extends Component {
     window.location.href = "/";
   };
 
+  goto = (event) => {
+    const list = [
+      "MenuDropDown",
+      "MenuDropDown1",
+      "MenuDropDown2",
+      "MenuDropDown3",
+    ];
+    if (!list.includes(event.target.id)) {
+      this.setState({
+        ...this.state,
+        profileDropdown: false,
+        profileActivity: "",
+      });
+    }
+  };
+
   render() {
+    document.body.addEventListener("click", this.goto);
+
     return (
       <header className="g-header dash-nav employee-nav bg-white fixed-top w-100 d-flex justify-content-between align-items-center spx-2 spx-lg-10 navbar-shadow">
         {/* Links */}
@@ -162,14 +180,21 @@ export class EmployeeNavbar extends Component {
         ) : (
           <div className="buttons d-flex justify-content-start align-items-center">
             <div
+              id="MenuDropDown"
               className="user bg-primary srounded-md sp-1 position-relative"
               onClick={this.profileDropdown}
             >
-              <div className="head">
-                <span className="ir-r fs-s sml-1 text-white d-none d-lg-inline">
+              <div className="head" id="MenuDropDown1">
+                <span
+                  id="MenuDropDown2"
+                  className="ir-r fs-s sml-1 text-white d-none d-lg-inline"
+                >
                   پروفایل
                 </span>
-                <i className="fas fa-chevron-down text-white srounded-md"></i>
+                <i
+                  id="MenuDropDown3"
+                  className="fas fa-chevron-down text-white srounded-md"
+                ></i>
               </div>
 
               <div
@@ -185,6 +210,7 @@ export class EmployeeNavbar extends Component {
                     </Link>
                   </li>
 
+                  {/* important dont remove the plan  */}
                   {/* <li className="smb-1">
                     <Link
                       className="ir-r c-grey text-decoration-none"

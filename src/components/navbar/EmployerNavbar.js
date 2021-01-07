@@ -101,7 +101,25 @@ export class EmployerNavbar extends Component {
     window.location.href = "/";
   };
 
+  goto = (event) => {
+    const list = [
+      "MenuDropDown",
+      "MenuDropDown1",
+      "MenuDropDown2",
+      "MenuDropDown3",
+    ];
+    if (!list.includes(event.target.id)) {
+      this.setState({
+        ...this.state,
+        profileDropdown: false,
+        profileActivity: "",
+      });
+    }
+  };
+
   render() {
+    document.body.addEventListener("click", this.goto);
+
     return (
       <header className="g-header dash-nav bg-logo fixed-top w-100 d-flex justify-content-between align-items-center spx-2 spx-lg-10 navbar-shadow">
         {/* Links */}
@@ -215,21 +233,21 @@ export class EmployerNavbar extends Component {
           </div>
 
           <div
+            id="MenuDropDown"
             className="user bg-white srounded-md sp-1 position-relative"
             onClick={this.profileDropdown}
           >
-            <div className="head">
-              <img
-                height="36"
-                alt=""
-                className="sml-1 srounded-sm"
-                src={`${ADDRESS}img/CompanyLogo/${this.state.userInfo.img}`}
-              />
-
-              <span className="ir-r fs-s sml-1 d-none d-lg-inline">
+            <div className="head" id="MenuDropDown1">
+              <span
+                id="MenuDropDown2"
+                className="ir-r fs-s sml-1 d-none d-lg-inline"
+              >
                 {this.state.userInfo.name}
               </span>
-              <i className="fas fa-chevron-down text-white sp-1 bg-logo srounded-md"></i>
+              <i
+                id="MenuDropDown3"
+                className="fas fa-chevron-down text-white sp-1 bg-logo srounded-md"
+              ></i>
             </div>
 
             <div
