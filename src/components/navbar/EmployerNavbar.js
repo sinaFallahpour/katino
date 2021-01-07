@@ -240,7 +240,7 @@ export class EmployerNavbar extends Component {
             <div className="head" id="MenuDropDown1">
               <span
                 id="MenuDropDown2"
-                className="ir-r fs-s sml-1 d-none d-lg-inline"
+                className="ir-r fs-s sml-1 d-none d-inline"
               >
                 {this.state.userInfo.name}
               </span>
@@ -251,9 +251,17 @@ export class EmployerNavbar extends Component {
             </div>
 
             <div
-              className={`profile-dropdown bg-white position-absolute shadow ${this.state.profileActivity}`}
+              className={`navBarContainer profile-dropdown bg-white position-absolute shadow ${this.state.profileActivity}`}
             >
               <ul className="m-0">
+                <li className="responsive-menu smb-1">
+                  <Link
+                    className="ir-r c-grey text-decoration-none"
+                    to="/Employer/Dashboard"
+                  >
+                    داشبورد
+                  </Link>
+                </li>
                 <li className="smb-1">
                   <Link
                     className="ir-r c-grey text-decoration-none"

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import auth from "../../core/authService";
 import ADDRESS from "../../ADDRESS";
+import "./navbar.style.css";
 
 export class EmployeeNavbar extends Component {
   state = {
@@ -187,7 +188,7 @@ export class EmployeeNavbar extends Component {
               <div className="head" id="MenuDropDown1">
                 <span
                   id="MenuDropDown2"
-                  className="ir-r fs-s sml-1 text-white d-none d-lg-inline"
+                  className="ir-r fs-s sml-1 text-white d-none d-inline"
                 >
                   پروفایل
                 </span>
@@ -198,9 +199,17 @@ export class EmployeeNavbar extends Component {
               </div>
 
               <div
-                className={`profile-dropdown bg-white position-absolute shadow ${this.state.profileActivity}`}
+                className={`navBarContainer profile-dropdown bg-white position-absolute shadow ${this.state.profileActivity}`}
               >
                 <ul className="m-0">
+                  <li className="responsive-menu smb-1">
+                    <Link
+                      className="ir-r c-grey text-decoration-none"
+                      to="/Employee/Home"
+                    >
+                      خانه
+                    </Link>
+                  </li>
                   <li className="smb-1">
                     <Link
                       className="ir-r c-grey text-decoration-none"
@@ -209,7 +218,6 @@ export class EmployeeNavbar extends Component {
                       درخواست های من
                     </Link>
                   </li>
-
                   {/* important dont remove the plan  */}
                   {/* <li className="smb-1">
                     <Link
@@ -227,7 +235,6 @@ export class EmployeeNavbar extends Component {
                       آگهی های نشان شده
                     </Link>
                   </li>
-
                   <li className="smb-1">
                     <Link
                       className="ir-r c-grey text-decoration-none"
@@ -236,7 +243,6 @@ export class EmployeeNavbar extends Component {
                       ایمیل های اطلاع رسانی
                     </Link>
                   </li>
-
                   <li className="smb-1">
                     <Link
                       className="ir-r c-grey text-decoration-none"
@@ -245,7 +251,6 @@ export class EmployeeNavbar extends Component {
                       رزومه ساز
                     </Link>
                   </li>
-
                   <li className="smb-1">
                     <Link
                       className="ir-r c-grey text-decoration-none"
@@ -254,7 +259,22 @@ export class EmployeeNavbar extends Component {
                       مشاهده رزومه
                     </Link>
                   </li>
-
+                  <li className="responsive-menu smb-1">
+                    <Link
+                      className="ir-r c-grey text-decoration-none"
+                      to="/Blog"
+                    >
+                      وبلاگ
+                    </Link>
+                  </li>
+                  <li className="responsive-menu smb-1">
+                    <Link
+                      className="ir-r c-grey text-decoration-none"
+                      to="/Employee/BestCompanies"
+                    >
+                      شرکت های برتر
+                    </Link>
+                  </li>
                   <li className="smb-1">
                     <Link
                       className="ir-r c-grey text-decoration-none"
@@ -263,7 +283,6 @@ export class EmployeeNavbar extends Component {
                       تیکت های پشتیبانی
                     </Link>
                   </li>
-
                   <li className="smb-1">
                     <Link
                       className="ir-r c-grey text-decoration-none"
@@ -272,7 +291,6 @@ export class EmployeeNavbar extends Component {
                       تنظیمات حساب کاربری
                     </Link>
                   </li>
-
                   <li className="mb-0">
                     <button
                       type="button"

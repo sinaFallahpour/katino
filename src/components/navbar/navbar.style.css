@@ -1,0 +1,39 @@
+@media only screen and (max-height: 490px) {
+  .navBarContainer {
+    max-height: 280px !important;
+    overflow: auto;
+  }
+}
+@media only screen and (max-height: 340px) {
+  .navBarContainer {
+    max-height: 180px !important;
+    overflow: auto;
+  }
+}
+
+.navBarContainer::-webkit-scrollbar {
+  width: 5px;
+}
+
+.navBarContainer::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.navBarContainer::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 8px;
+}
+
+.navBarContainer::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.responsive-menu {
+  display: none;
+}
+
+@media only screen and (max-width: 992px) {
+  .responsive-menu {
+    display: block;
+  }
+}
