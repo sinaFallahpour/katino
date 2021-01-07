@@ -141,7 +141,7 @@ export class EmployeeTickets extends Component {
                               <td className="ir-r c-regular fs-s">
                                 <Link
                                   className="ir-r c-regular fs-s btn btn-light shadow-none sml-1"
-                                  to={`/Tickets/${item.id}`}
+                                  to={`/Employee/Tickets/${item.id}`}
                                 >
                                   مشاهده
                                 </Link>
@@ -149,7 +149,7 @@ export class EmployeeTickets extends Component {
                                 {item.hasAnswer === true ? (
                                   <Link
                                     className="ir-r fs-s btn btn-primary-light shadow-none"
-                                    to={`/Tickets/${item.id}`}
+                                    to={`/Employee/Tickets/${item.id}`}
                                   >
                                     پاسخ
                                   </Link>

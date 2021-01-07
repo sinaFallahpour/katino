@@ -128,7 +128,7 @@ export class EmployeeTicketDetail extends Component {
 
                       <Link
                         className="ir-r fs-s btn bg-white shadow-none border"
-                        to="/Tickets"
+                        to="/Employee/Tickets"
                       >
                         بازگشت
                       </Link>
