@@ -235,14 +235,15 @@ export class EmployeeNavbar extends Component {
                       آگهی های نشان شده
                     </Link>
                   </li>
-                  <li className="smb-1">
+                  {/* important dont remove the email notif  */}
+                  {/* <li className="smb-1">
                     <Link
                       className="ir-r c-grey text-decoration-none"
                       to="/Employee/Home"
                     >
                       ایمیل های اطلاع رسانی
                     </Link>
-                  </li>
+                  </li> */}
                   <li className="smb-1">
                     <Link
                       className="ir-r c-grey text-decoration-none"
@@ -281,14 +282,6 @@ export class EmployeeNavbar extends Component {
                       to="/Employee/Tickets"
                     >
                       تیکت های پشتیبانی
-                    </Link>
-                  </li>
-                  <li className="smb-1">
-                    <Link
-                      className="ir-r c-grey text-decoration-none"
-                      to="/Employee/Home"
-                    >
-                      تنظیمات حساب کاربری
                     </Link>
                   </li>
                   <li className="mb-0">
