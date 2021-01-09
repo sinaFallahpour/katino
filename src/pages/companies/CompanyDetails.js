@@ -36,14 +36,20 @@ export class CompanyDetails extends Component {
               <div className="col-11 col-lg-8 mx-auto p-0 company-details smt-10 companies">
                 <div className="smb-10">
                   <Company
-                    filedOfActivity={this.state.company.filedOfActivity}
                     name={this.state.company.companyPersianName}
+                    enName={this.state.company.companyEngName}
+                    city={this.state.company.city}
+                    description={this.state.company.description}
+                    email={this.state.company.email}
+                    filedOfActivity={this.state.company.filedOfActivity}
                     website={this.state.company.url}
                     logo={this.state.company.image}
-                    city={this.state.company.city}
                     rate={this.state.company.rate}
-                    enName={this.state.company.companyEngName}
-                    description={this.state.company.description}
+                    isActive={this.state.company.isActive}
+                    mobile={this.state.company.mobile}
+                    phoneNumber={this.state.company.phoneNumber}
+                    managementFullName={this.state.company.managementFullName}
+                    numberOfStaff={this.state.company.numberOfStaff}
                     hasLink={false}
                   />
                 </div>
