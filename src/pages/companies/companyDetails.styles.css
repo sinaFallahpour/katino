@@ -5,6 +5,7 @@
 
 .sideBarContainer .rightSideBar {
   width: 30%;
+  height: fit-content;
   background: #fff;
   border-radius: 12px;
   margin-left: 10px;
@@ -41,5 +42,7 @@
   .sideBarContainer .rightSideBar {
     margin-left: 0;
     margin-bottom: 20px;
+    position: relative !important;
+    top: 0 !important;
   }
 }

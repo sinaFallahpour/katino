@@ -56,3 +56,8 @@
   display: block;
   padding: 5px 20px;
 }
+.ToggleAdvItems {
+  text-align: center;
+  color: #666;
+  font-family: IranSans-regular;
+}

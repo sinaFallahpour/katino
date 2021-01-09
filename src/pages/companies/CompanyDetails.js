@@ -6,6 +6,7 @@ import {
   CompanyAds,
 } from "../../components/companies";
 import { CompanySideBar } from "./CompanySideBar";
+import ReactSticky from "react-sticky-box";
 import "./companyDetails.styles.css";
 
 export class CompanyDetails extends Component {
@@ -49,7 +50,11 @@ export class CompanyDetails extends Component {
                   />
                 </div>
                 <div className="sideBarContainer">
-                  <div className="rightSideBar">
+                  <ReactSticky
+                    className="rightSideBar"
+                    offsetTop={100}
+                    offsetBottom={50}
+                  >
                     <CompanySideBar
                       email={this.state.company.email}
                       website={this.state.company.url}
@@ -59,7 +64,8 @@ export class CompanyDetails extends Component {
                       managementFullName={this.state.company.managementFullName}
                       numberOfStaff={this.state.company.numberOfStaff}
                     />
-                  </div>
+                  </ReactSticky>
+
                   <div className="LeftSideBar">
                     <CompanyAds
                       activeAds={this.state.activeAds}
