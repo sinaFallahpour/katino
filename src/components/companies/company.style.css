@@ -1,6 +1,14 @@
 .cartContainer {
-  padding: 10px;
+  transition: 0.3s;
+  padding: 10px 20px;
   box-shadow: 0 5px 10px 1px rgba(0, 0, 0, 0.05);
+  display: block;
+  text-decoration: none !important;
+  color: #666 !important;
+  font-family: IranSans-regular;
+}
+.cartContainer:hover {
+  box-shadow: 0 5px 10px 1px rgba(0, 0, 0, 0.1);
 }
 
 .cartHeaderContainer {
@@ -33,19 +41,18 @@
 }
 
 .cartContextContainer {
+  padding: 10px 15px;
+  padding-top: 20px;
   width: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
 .cartContextContainer > * {
-  margin-left: 8px;
+  margin-left: 15px;
 }
 
-.cartContentContainer {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
+.DescriptionContainer {
+  display: block;
+  padding: 5px 20px;
 }

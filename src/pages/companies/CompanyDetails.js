@@ -5,6 +5,8 @@ import {
   getCompanyDetails,
   CompanyAds,
 } from "../../components/companies";
+import { CompanySideBar } from "./CompanySideBar";
+import "./companyDetails.styles.css";
 
 export class CompanyDetails extends Component {
   state = {};
@@ -40,24 +42,31 @@ export class CompanyDetails extends Component {
                     enName={this.state.company.companyEngName}
                     city={this.state.company.city}
                     description={this.state.company.description}
-                    email={this.state.company.email}
                     filedOfActivity={this.state.company.filedOfActivity}
-                    website={this.state.company.url}
                     logo={this.state.company.image}
                     rate={this.state.company.rate}
-                    isActive={this.state.company.isActive}
-                    mobile={this.state.company.mobile}
-                    phoneNumber={this.state.company.phoneNumber}
-                    managementFullName={this.state.company.managementFullName}
-                    numberOfStaff={this.state.company.numberOfStaff}
                     hasLink={false}
                   />
                 </div>
-
-                <CompanyAds
-                  activeAds={this.state.activeAds}
-                  deactiveAds={this.state.deactiveAds}
-                />
+                <div className="sideBarContainer">
+                  <div className="rightSideBar">
+                    <CompanySideBar
+                      email={this.state.company.email}
+                      website={this.state.company.url}
+                      isActive={this.state.company.isActive}
+                      mobile={this.state.company.mobile}
+                      phoneNumber={this.state.company.phoneNumber}
+                      managementFullName={this.state.company.managementFullName}
+                      numberOfStaff={this.state.company.numberOfStaff}
+                    />
+                  </div>
+                  <div className="LeftSideBar">
+                    <CompanyAds
+                      activeAds={this.state.activeAds}
+                      deactiveAds={this.state.deactiveAds}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </section>

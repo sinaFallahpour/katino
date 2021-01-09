@@ -1,0 +1,45 @@
+.sideBarContainer {
+  display: flex;
+  margin-top: -50px;
+}
+
+.sideBarContainer .rightSideBar {
+  width: 30%;
+  background: #fff;
+  border-radius: 12px;
+  margin-left: 10px;
+}
+.sideBarContainer .LeftSideBar {
+  width: 70%;
+}
+
+.sideBarHolder {
+  height: auto;
+  width: 100%;
+  color: #666;
+  font-family: IranSans-regular;
+  padding: 10px 15px;
+  display: flex;
+  flex-direction: column;
+}
+.LinkOfCompany {
+  color: #666;
+  text-decoration: none;
+}
+.sideBarHolder > div {
+  padding: 3px 0;
+}
+
+@media only screen and (max-width: 767px) {
+  .sideBarContainer {
+    flex-direction: column;
+  }
+  .sideBarContainer .LeftSideBar,
+  .sideBarContainer .rightSideBar {
+    width: 100%;
+  }
+  .sideBarContainer .rightSideBar {
+    margin-left: 0;
+    margin-bottom: 20px;
+  }
+}

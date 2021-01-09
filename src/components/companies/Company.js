@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import ADDRESS from "../../ADDRESS";
 import "./company.style.css";
 
@@ -24,8 +25,18 @@ export function Company(props) {
     else fields += `، ${item}`;
   });
 
+  const linkCheck = () => {
+    if (!props.enName) {
+      toast.error("شرکت مورد نظر صفحه ای ندارد");
+    }
+  };
+
   return (
-    <div className="cartContainer bg-white srounded-md">
+    <Link
+      to={props.enName ? `/Company/${props.enName}` : `/BestCompanies`}
+      onClick={linkCheck}
+      className="cartContainer bg-white srounded-md"
+    >
       <header className="cartHeaderContainer">
         <div className="logoContainer ">
           <img
@@ -45,16 +56,14 @@ export function Company(props) {
 
       <div className="cartContextContainer">
         <div>
-          <i className="fas fa-map-marker-alt c-regular fs-s sml-1"></i>
-          {props.name}
+          <i class="fa fa-building"></i> {props.name ? props.name : "---"}
         </div>
         <div>
-          <i className="fas fa-map-marker-alt c-regular fs-s sml-1"></i>
-          {props.enName}
+          <i className="fas fa-tasks"></i> {fields ? fields : "---"}
         </div>
         <div>
-          <i className="fas fa-map-marker-alt c-regular fs-s sml-1"></i>
-          {fields}
+          <i className="fas fa-map-marker-alt c-regular fs-s sml-1"></i>{" "}
+          {props.city ? props.city : "---"}
         </div>
 
         {props.city ? (
@@ -67,25 +76,10 @@ export function Company(props) {
         )}
       </div>
 
-      <div className="cartContentContainer">
-        {props.description && (
-          <p className="description text-justify ir-r c-regular spt-1 d-flex flex-column align mb-0">
-            {props.description}
-          </p>
-        )}
-
-        {props.hasLink ? (
-          <Link
-            className="text-decoration-none c-warning smt-1 ir-r"
-            to={`/Company/${props.enName}`}
-          >
-            اطلاعات بیشتر
-          </Link>
-        ) : (
-          ""
-        )}
-      </div>
-    </div>
+      {props.description && (
+        <div className="DescriptionContainer">{props.description}</div>
+      )}
+    </Link>
   );
 }
 
