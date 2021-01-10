@@ -2,23 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import ADDRESS from "../../ADDRESS";
+import ReactHtmlParser from "react-html-parser";
 import "./company.style.css";
 
 export function Company(props) {
   let fields = "";
-
-  // city={this.state.company.city}
-  // description={this.state.company.description}
-  // email={this.state.company.email}
-  // website={this.state.company.url}
-  // logo={this.state.company.image}
-  // rate={this.state.company.rate}
-  // isActive={this.state.company.isActive}
-  // mobile={this.state.company.mobile}
-  // phoneNumber={this.state.company.phoneNumber}
-  // managementFullName={this.state.company.managementFullName}
-  // numberOfStaff={this.state.company.numberOfStaff}
-  // hasLink={false}
 
   props.filedOfActivity.map((item, index) => {
     if (index === 0) fields += item;
@@ -45,7 +33,7 @@ export function Company(props) {
                 ? `${ADDRESS}img/CompanyLogo/${props.logo}`
                 : "/img/sample-logo.svg"
             }
-            title={props.name}
+            alt={props.name}
           />
         </div>
 
@@ -65,19 +53,12 @@ export function Company(props) {
           <i className="fas fa-map-marker-alt c-regular fs-s sml-1"></i>{" "}
           {props.city ? props.city : "---"}
         </div>
-
-        {props.city ? (
-          <div className="location ir-r c-regular d-flex justify-content-start align-items-center smr-2">
-            <i className="fas fa-map-marker-alt c-regular fs-s sml-1"></i>
-            {props.city}
-          </div>
-        ) : (
-          ""
-        )}
       </div>
 
       {props.description && (
-        <div className="DescriptionContainer">{props.description}</div>
+        <div className="DescriptionContainer">
+          {ReactHtmlParser(props.description)}
+        </div>
       )}
     </Link>
   );

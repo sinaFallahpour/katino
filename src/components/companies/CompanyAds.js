@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Latest } from "../home/ads/Latest";
+import agent from "../../core/agent";
+import { toast } from "react-toastify";
 import "./company.style.css";
 export class CompanyAds extends Component {
   state = {
@@ -15,12 +17,90 @@ export class CompanyAds extends Component {
       activeAds: this.props.activeAds,
       deactiveAds: this.props.deactiveAds,
     });
-    console.log(this.props.activeAds);
-    console.log(this.props.deactiveAds);
   };
 
   tabsHandler = (id) => {
     id && this.setState({ buttons: { ...this.state.buttons, status: id } });
+  };
+
+  handleMarkOtherAdv = async (adverId) => {
+    try {
+      let currentAdver = this.state.deactiveAds.find((c) => c.id == adverId);
+      if (currentAdver.isMarked) {
+        const newList = this.state.deactiveAds.map((el) =>
+          el.id === adverId ? Object.assign({}, el, { isMarked: false }) : el
+        );
+
+        this.setState({
+          deactiveAds: newList,
+        });
+        await agent.Adver.unmarkAdvder(adverId);
+      } else {
+        const newList = this.state.deactiveAds.map((el) =>
+          el.id === adverId ? Object.assign({}, el, { isMarked: true }) : el
+        );
+
+        this.setState({
+          deactiveAds: newList,
+        });
+
+        await agent.Adver.markAdvder(adverId);
+      }
+    } catch (ex) {
+      this.setState({ isMarked: !this.state.isMarked });
+
+      if (ex?.response?.data) {
+        toast.error(ex.response?.data?.message[0]);
+        const newList = this.state.deactiveAds.map((el) =>
+          el.id === adverId
+            ? Object.assign({}, el, { isMarked: !el.isMarked })
+            : el
+        );
+        this.setState({
+          deactiveAds: newList,
+        });
+      }
+    }
+  };
+
+  handleMarkActiveAdv = async (adverId) => {
+    try {
+      let currentAdver = this.state.activeAds.find((c) => c.id == adverId);
+      if (currentAdver.isMarked) {
+        const newList = this.state.activeAds.map((el) =>
+          el.id === adverId ? Object.assign({}, el, { isMarked: false }) : el
+        );
+
+        this.setState({
+          activeAds: newList,
+        });
+        await agent.Adver.unmarkAdvder(adverId);
+      } else {
+        const newList = this.state.activeAds.map((el) =>
+          el.id === adverId ? Object.assign({}, el, { isMarked: true }) : el
+        );
+
+        this.setState({
+          activeAds: newList,
+        });
+
+        await agent.Adver.markAdvder(adverId);
+      }
+    } catch (ex) {
+      this.setState({ isMarked: !this.state.isMarked });
+
+      if (ex?.response?.data) {
+        toast.error(ex.response?.data?.message[0]);
+        const newList = this.state.activeAds.map((el) =>
+          el.id === adverId
+            ? Object.assign({}, el, { isMarked: !el.isMarked })
+            : el
+        );
+        this.setState({
+          activeAds: newList,
+        });
+      }
+    }
   };
 
   render() {
@@ -51,7 +131,11 @@ export class CompanyAds extends Component {
           {status === 1 && (
             <div>
               {this.state.activeAds && this.state.activeAds.length !== 0 ? (
-                <Latest hasMoreButton={false} latest={this.state.activeAds} />
+                <Latest
+                  handleMarkOtherAdv={this.handleMarkActiveAdv}
+                  hasMoreButton={false}
+                  latest={this.state.activeAds}
+                />
               ) : (
                 <div className="ToggleAdvItems">موردی یافت نشد </div>
               )}
@@ -60,7 +144,11 @@ export class CompanyAds extends Component {
           {status === 2 && (
             <div>
               {this.state.deactiveAds && this.state.deactiveAds.length !== 0 ? (
-                <Latest hasMoreButton={false} latest={this.state.deactiveAds} />
+                <Latest
+                  handleMarkOtherAdv={this.handleMarkOtherAdv}
+                  hasMoreButton={false}
+                  latest={this.state.deactiveAds}
+                />
               ) : (
                 <div className="ToggleAdvItems"> موردی یافت نشد </div>
               )}
