@@ -41,8 +41,9 @@ const AdverDetails = ({ adverId }) => {
 
           axios.get(API_ADDRESS + "Account/GetCities").then((res) => {
             res.data.resul.map((item) => {
-              parseInt(cityId) === item.cityDivisionCode &&
-                setFindCity(`${item.provinceName} - ${item.cityName}`);
+              parseInt(cityId) === item.cityDivisionCode
+                ? setFindCity(`${item.provinceName} - ${item.cityName}`)
+                : setFindCity(" - ");
             });
           });
 
@@ -68,39 +69,44 @@ const AdverDetails = ({ adverId }) => {
             <DetailsContext>
               <DetailsTitle>
                 <i className="fas fa-bullseye c-success sml-1"></i>
-                {`وضعیت آگهی:  ${adverStatus(data.adverStatus)} - ${
-                  data.isImmediate
-                }`}
+                وضعیت آگهی:{" "}
+                {data.adverStatus ? adverStatus(data.adverStatus) : " - "}
+                {" - "}
+                {data.isImmediate ? data.isImmediate : " - "}
               </DetailsTitle>
             </DetailsContext>
 
             <DetailsContext>
               <DetailsTitle>
                 <i className="c-success fas fa-building sml-1"></i>
-                {`نام شرکت: ${data.companyName}`}
+                نام شرکت: {data.companyName ? data.companyName : " - "}
               </DetailsTitle>
             </DetailsContext>
 
             <DetailsContext>
               <DetailsTitle>
                 <i className="fas fa-file-alt c-success sml-1"></i>
-                {`توضیح  کوتاه درباره شرکت: `}
-                {ReactHtmlParser(data.companyDescription)}
+                توضیح کوتاه درباره شرکت:{" "}
+                {data.companyDescription
+                  ? ReactHtmlParser(data.companyDescription)
+                  : " - "}
               </DetailsTitle>
             </DetailsContext>
 
             <DetailsContext>
               <DetailsTitle>
                 <i className="fas fa-clipboard c-success sml-1"></i>
-                {`عنوان آگهی: ${data.title}`}
+                عنوان آگهی: {data.title ? data.title : " - "}
               </DetailsTitle>
             </DetailsContext>
 
             <DetailsContext>
               <DetailsTitle>
                 <i className="fas fa-file-alt c-success sml-1"></i>
-                {`توضیحات آگهی: `}
-                {ReactHtmlParser(data.companyDescription)}
+                توضیحات آگهی:{" "}
+                {data.descriptionOfJob
+                  ? ReactHtmlParser(data.descriptionOfJob)
+                  : " - "}
               </DetailsTitle>
             </DetailsContext>
 
@@ -114,60 +120,69 @@ const AdverDetails = ({ adverId }) => {
             <DetailsContext>
               <DetailsTitle>
                 <i className="fa fa-tasks c-success sml-1"></i>
-                {`حوزه فعالیت: ${data.feildOfActivity}`}
+                حوزه فعالیت:{" "}
+                {data.feildOfActivity ? data.feildOfActivity : " - "}
               </DetailsTitle>
             </DetailsContext>
 
             <DetailsContext>
               <DetailsTitle>
                 <i className="c-success fas fa-money-bill-alt sml-1"></i>
-                {`میزان حقوق: ${salary(data.salary)}`}
+                میزان حقوق: {data.salary ? salary(data.salary) : " - "}
               </DetailsTitle>
             </DetailsContext>
 
             <DetailsContext>
               <DetailsTitle>
                 <i className="c-success fas fa-handshake sml-1"></i>
-                {`نوع قرارداد: ${cooperationType(data.typeOfCooperation)}`}
+                نوع قرارداد:{" "}
+                {data.typeOfCooperation
+                  ? cooperationType(data.typeOfCooperation)
+                  : " - "}
               </DetailsTitle>
             </DetailsContext>
 
             <DetailsContext>
               <DetailsTitle>
                 <i className="c-success fas fa-people-arrows sml-1"></i>
-                {`جنسیت: ${gender(data.gender)}`}
+                جنسیت: {data.gender ? gender(data.gender) : " - "}
               </DetailsTitle>
             </DetailsContext>
 
             <DetailsContext>
               <DetailsTitle>
                 <i className="c-success fa fa-graduation-cap sml-1"></i>
-                {`حداقل تحصیلات: ${educationDegree(data.degreeOfEducation)}`}
+                حداقل تحصیلات:{" "}
+                {data.degreeOfEducation
+                  ? educationDegree(data.degreeOfEducation)
+                  : " - "}
               </DetailsTitle>
             </DetailsContext>
 
             <DetailsContext>
               <DetailsTitle>
                 <i className="c-success fas fa-address-card sml-1"></i>
-                {`حداقل سابقه کار: ${workExperience(data.workExperience)}`}
+                حداقل سابقه کار:{" "}
+                {data.workExperience
+                  ? workExperience(data.workExperience)
+                  : " - "}
               </DetailsTitle>
             </DetailsContext>
 
             <DetailsContext>
               <DetailsTitle>
                 <i className="c-success fas fa-user-shield sml-1"></i>
-                {`وضعیت نظام وظیفه: ${data.military}`}
+                وضعیت نظام وظیفه: {data.military ? data.military : " - "}
               </DetailsTitle>
             </DetailsContext>
 
             <DetailsContext>
               <DetailsTitle>
                 <i className="c-success fas fa-id-badge sml-1"></i>
-                {`وضعیت ارسال رزومه: ${
-                  data.isAsignResomeToThisAdver
-                    ? "رزومه ارسال شده"
-                    : "روزمه ارسال نشده"
-                }`}
+                وضعیت ارسال رزومه:{" "}
+                {data.isAsignResomeToThisAdver
+                  ? "رزومه ارسال شده"
+                  : "روزمه ارسال نشده"}
               </DetailsTitle>
             </DetailsContext>
           </DetailsContent>

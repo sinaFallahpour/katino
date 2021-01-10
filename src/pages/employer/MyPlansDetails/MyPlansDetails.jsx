@@ -163,12 +163,16 @@ const MyPlansDetails = () => {
                       </td>
                       <td>
                         <span className="ir-r c-regular fs-s w-100 text-truncate">
-                          {item.planAdverCount}
+                          {item.planAdverCount > 1000
+                            ? "بی نهایت"
+                            : `${item.planAdverCount} عدد`}
                         </span>
                       </td>
                       <td>
                         <span className="ir-r c-regular fs-s w-100 text-truncate">
-                          {item.remainingAdversCount}
+                          {item.remainingAdversCount > 1000
+                            ? "بی نهایت"
+                            : `${item.remainingAdversCount} عدد`}
                         </span>
                       </td>
                       <td>

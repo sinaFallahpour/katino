@@ -110,8 +110,12 @@ export class Plans extends Component {
                       </li>
 
                       <li className="list-group-item ir-r text-center border-top-0 border-left-0 border-right-0">
-                        تعداد آگهی های قابل ثبت:
-                        <strong>{` ${item.adverCount} عدد`}</strong>
+                        تعداد آگهی های قابل ثبت:{" "}
+                        <strong>
+                          {item.adverCount > 1000
+                            ? "بی نهایت"
+                            : `${item.adverCount} عدد`}
+                        </strong>
                       </li>
 
                       {item.logo !== 0 ? (

@@ -18,6 +18,7 @@ import {
   Description,
   FieldOfActivity,
 } from "./EmployerDetails.style";
+import { Link } from "react-router-dom";
 
 const EmployerDetails = ({ companies }) => {
   const [findCity, setFindCity] = useState();
@@ -44,6 +45,13 @@ const EmployerDetails = ({ companies }) => {
           </CompanyName>
         </LeftSideContainer>
         <RightSideContainer>
+          <ContextContainer
+            style={{ width: "100%", direction: "ltr", margin: "0 15px" }}
+          >
+            <Link to="/Employer/EditProfile" className="btn btn-info">
+              ویرایش
+            </Link>
+          </ContextContainer>
           <ContextContainer>
             <Title> مدیر عامل : </Title>
             <Description> {companies.ManagmentFullName} </Description>
