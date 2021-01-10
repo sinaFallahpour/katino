@@ -78,8 +78,23 @@ const ContactPage = () => {
       <section className="container-fluid create-ad spx-2 spx-lg-10 smy-10 spt-10">
         <div className="row">
           <aside className="col-12 col-lg-10 mx-auto">
-            <div className="contact-title"> تماس با کاتینو </div>
-            <div className="bg-white srounded-md sp-2 smb-2">
+            <div className="bg-white sbs-shadow srounded-md sp-2">
+              <header className="header d-lg-flex w-100 justify-content-lg-between align-items-lg-center">
+                <h2 className="ir-b fs-s c-dark text-right smb-2 mb-lg-0">
+                  تیکت های پشتیبانی
+                </h2>
+
+                <div>
+                  <a
+                    className="d-block d-lg-inline-block shadow-none ir-r fs-s c-regular btn border srounded-sm smb-2 mb-lg-0"
+                    href="tel:01133333333"
+                  >
+                    تماس تلفنی
+                  </a>
+                </div>
+              </header>
+              <hr />
+
               <Formik
                 initialValues={initialData}
                 validationSchema={ContactUs}
