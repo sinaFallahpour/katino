@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import API_ADDRESS from "../../API_ADDRESS";
 import validator from "validator";
+import { toast } from "react-toastify";
 
 export class Employee extends Component {
   state = {
@@ -32,6 +33,9 @@ export class Employee extends Component {
           );
         })
         .catch((err) => {
+          err.response.data.message &&
+            err.response.data.message.map((er) => toast.error(er));
+
           this.setState({
             ...this.state,
             errors: {

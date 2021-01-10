@@ -4,6 +4,7 @@ import { Input } from "../Input";
 import axios from "axios";
 import API_ADDRESS from "../../API_ADDRESS";
 import validator from "validator";
+import { toast } from "react-toastify";
 
 export class Employer extends Component {
   state = {
@@ -40,6 +41,10 @@ export class Employer extends Component {
               `/Employer/Register/Verification?phoneNumber=${this.state.register.phoneNumber}`
             );
           }
+        })
+        .catch((err) => {
+          err.response.data.message &&
+            err.response.data.message.map((er) => toast.error(er));
         });
     }
   };

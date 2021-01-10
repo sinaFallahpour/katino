@@ -7,7 +7,6 @@ import validator from "validator";
 export class Employee extends Component {
   state = {
     phoneNumber: "",
-
     error: "",
   };
 
@@ -24,7 +23,7 @@ export class Employee extends Component {
       axios
         .post(API_ADDRESS + "Account/Login", {
           phoneNumber: this.state.phoneNumber,
-          role: 'Employee',
+          role: "Employee",
         })
         .then(() => {
           this.props.prop.history.push(
