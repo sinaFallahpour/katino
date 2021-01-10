@@ -117,9 +117,15 @@ export function AdStatus(props) {
           <header className="col-12 smb-2">
             <div className="d-lg-flex justify-content-lg-between align-items-lg-center">
               <div className="smb-2 mb-lg-0">
-                <Link to={`/Employer/AdInfo/${props.id}`}>
-                  <span className="ir-b c-dark"> {props.title} </span>
-                </Link>
+                {props.adverCreatationStatus === 3 ? (
+                  <Link to={`/Employer/AdInfo/${props.id}`}>
+                    <span className="ir-b c-dark"> {props.title} </span>
+                  </Link>
+                ) : (
+                  <span>
+                    <span className="ir-b c-dark"> {props.title} </span>
+                  </span>
+                )}
                 {props.isImmediate === "فوری" && (
                   <span
                     className="c-danger ir-r smr-1 bg-body srounded-sm sp-05"

@@ -85,15 +85,15 @@ export function Requests(props) {
 function asingResomeStatus(number) {
   switch (number) {
     case 1:
-      return "در حال بررسی";
+      return "در انتظار تعیین وضعیت";
 
     case 2:
-      return "پذیرفته شده";
-
-    case 3:
       return "رد شده";
 
+    case 3:
+      return "تایید برای مصاحبه";
+
     case 4:
-      return "برگشت خورده";
+      return "استخدام شده";
   }
 }

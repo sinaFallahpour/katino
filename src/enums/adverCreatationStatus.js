@@ -4,11 +4,11 @@ export function adverCreatationStatus(type) {
       return "درحال بررسی";
       break;
 
-    case 2:
+    case 3:
       return "پذیرفته شده";
       break;
 
-    case 3:
+    case 2:
       return "رد شده";
       break;
 
