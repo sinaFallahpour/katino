@@ -1,15 +1,20 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import ByteConverter from "byte-converter-react";
 import { useDropzone } from "react-dropzone";
-
-import { UploadContainer, Title } from "./UploadPdf.styles";
-import { UploadFile } from "../../../../core/api/upload-pdf";
+import ADDRESS from "../../../../ADDRESS";
+import { UploadContainer, Title, ButtonContainer } from "./UploadPdf.styles";
+import {
+  UploadFile,
+  GetPdfFile,
+  DeletePdfFile,
+} from "../../../../core/api/upload-pdf";
 
 const UploadPdf = () => {
   const [pdfName, setPdfname] = useState();
   const [pdfSize, setPdfSize] = useState();
+  const [loadedPdf, setLoadedPdf] = useState();
 
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file) => {
@@ -19,15 +24,14 @@ const UploadPdf = () => {
       const reader = new FileReader();
       reader.onload = () => {
         const binaryStr = reader.result;
-        console.log(binaryStr);
       };
 
       if (5243000 > file.size && file.type === "application/pdf") {
-        setPdfname(file.name);
-        setPdfSize(file.size);
         const postForm = async () => {
           try {
             await UploadFile(fd);
+            setPdfname(file.name);
+            setPdfSize(file.size);
 
             Swal.fire({
               icon: "success",
@@ -35,6 +39,7 @@ const UploadPdf = () => {
               showConfirmButton: false,
               timer: 1750,
             });
+            LoadPdfFile();
           } catch (err) {
             err.response?.data?.message?.map((e) => {
               toast.error(e);
@@ -54,6 +59,49 @@ const UploadPdf = () => {
   }, []);
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
+  useEffect(() => {
+    LoadPdfFile();
+  }, []);
+
+  const LoadPdfFile = async () => {
+    const res = await GetPdfFile();
+    setLoadedPdf(res.resul);
+  };
+
+  const handleDeletePdfFile = async () => {
+    Swal.fire({
+      title: "آیا مطمئن هستید میخواهید حذف کنید؟",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#28a745",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "خیر",
+      confirmButtonText: "بله مطمئن هستم",
+    }).then((result) => {
+      if (result.value) {
+        const fetchData = async () => {
+          try {
+            const res = await DeletePdfFile();
+            setLoadedPdf(null);
+            setPdfname(null);
+            setPdfSize(null);
+            Swal.fire({
+              icon: "success",
+              title: "با موفقیت حذف شد",
+              showConfirmButton: false,
+              timer: 1750,
+            });
+          } catch (err) {
+            err.response.data.message &&
+              err.response.data.message.map((er) => toast.error(er));
+          }
+        };
+
+        fetchData();
+      }
+    });
+  };
+
   return (
     <div>
       <h3 className="d-block text-right ir-b smb-3 c-dark">
@@ -64,12 +112,34 @@ const UploadPdf = () => {
           <div className="col-12">
             <div className="content d-lg-flex flex-column justify-content-center">
               <ul className="list-group list-group-flush p-0">
-                <Title>حداکثر سایز مجاز برای آپلود : 5 مگابایت</Title>
+                <ButtonContainer>
+                  <Title>حداکثر سایز مجاز برای آپلود : 5 مگابایت</Title>
+                  <ButtonContainer>
+                    {loadedPdf && (
+                      <a
+                        className="btn btn-info ml-2"
+                        href={`${ADDRESS}pdf/resomepdf/${loadedPdf}`}
+                      >
+                        دانلود
+                      </a>
+                    )}
+                    {loadedPdf && (
+                      <span
+                        onClick={handleDeletePdfFile}
+                        className="btn btn-danger"
+                      >
+                        حذف
+                      </span>
+                    )}
+                  </ButtonContainer>
+                </ButtonContainer>
                 <li className="list-group-item border-0 pr-0">
                   <UploadContainer {...getRootProps()}>
                     <input {...getInputProps()} />
                     <p style={{ textAlign: "center" }}>
-                      فایل خود را بارگذاری کنید
+                      {loadedPdf
+                        ? "آپلود فایل جدید"
+                        : "فایل خود را بارگذاری کنید"}
                     </p>
                   </UploadContainer>
                   {pdfName && (
