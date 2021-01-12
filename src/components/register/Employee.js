@@ -18,6 +18,10 @@ export class Employee extends Component {
     const formData = { [event.target.name]: event.target.value };
     await this.setState({ ...this.state, ...formData });
   }
+  componentDidMount() {
+    const role = this.props.prop.match.params.role;
+    this.setState({ role });
+  }
 
   submitHandler(event) {
     event.preventDefault();
@@ -78,15 +82,22 @@ export class Employee extends Component {
         <div className="row">
           <aside className="col-12 col-lg-5 mx-auto">
             <Container>
-              <Tab to="/Employer/Login">کارفرما</Tab>
-              <Tab to="/Employee/Login">کارجو</Tab>
+              <Tab active={this.state.role === "Employer"} to="/Employer/Login">
+                کارفرما
+              </Tab>
+              <Tab active={this.state.role === "Employee"} to="/Employee/Login">
+                کارجو
+              </Tab>
             </Container>
             <form
               noValidate
               onSubmit={this.submitHandler.bind(this)}
               className="w-100"
             >
-              <div className="bg-white srounded-md sp-2 smb-2">
+              <div
+                className="bg-white sp-2 smb-2"
+                style={{ borderRadius: "0 0 10px 10px" }}
+              >
                 <h1 className="fs-l c-dark d-block text-center smb-5 ir-bl">
                   ثبت نام کارجویان
                 </h1>

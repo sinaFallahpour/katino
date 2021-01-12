@@ -11,6 +11,10 @@ export class Employee extends Component {
     error: "",
   };
 
+  componentDidMount() {
+    const role = this.props.prop.match.params.role;
+    this.setState({ role });
+  }
   async changeHandler(event) {
     const formData = { [event.target.name]: event.target.value };
 
@@ -59,8 +63,12 @@ export class Employee extends Component {
         <div className="row">
           <aside className="col-12 col-lg-5 mx-auto">
             <Container>
-              <Tab to="/Employer/Login">کارفرما</Tab>
-              <Tab to="/Employee/Login">کارجو</Tab>
+              <Tab active={this.state.role === "Employer"} to="/Employer/Login">
+                کارفرما
+              </Tab>
+              <Tab active={this.state.role === "Employee"} to="/Employee/Login">
+                کارجو
+              </Tab>
             </Container>
             <form
               className="w-100"

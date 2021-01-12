@@ -12,6 +12,11 @@ export class Employer extends Component {
     error: "",
   };
 
+  componentDidMount() {
+    const role = this.props.prop.match.params.role;
+    this.setState({ role });
+  }
+
   async changeHandler(event) {
     const formData = { [event.target.name]: event.target.value };
 
@@ -60,15 +65,22 @@ export class Employer extends Component {
         <div className="row">
           <aside className="col-12 col-lg-5 mx-auto">
             <Container>
-              <Tab to="/Employer/Login">کارفرما</Tab>
-              <Tab to="/Employee/Login">کارجو</Tab>
+              <Tab active={this.state.role === "Employer"} to="/Employer/Login">
+                کارفرما
+              </Tab>
+              <Tab active={this.state.role === "Employee"} to="/Employee/Login">
+                کارجو
+              </Tab>
             </Container>
             <form
               className="w-100"
               noValidate
               onSubmit={this.submitHandler.bind(this)}
             >
-              <div className="bg-white srounded-md sp-2 smb-2">
+              <div
+                className="bg-white sp-2 smb-2"
+                style={{ borderRadius: "0 0 10px 10px" }}
+              >
                 <h1 className="fs-l c-dark d-block text-center smb-5 ir-bl">
                   ورود کارفرمایان
                 </h1>
