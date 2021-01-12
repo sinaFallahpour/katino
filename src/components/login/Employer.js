@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import API_ADDRESS from "../../API_ADDRESS";
 import validator from "validator";
+import { Container, Tab } from "./Form.styles.jsx";
 
 export class Employer extends Component {
   state = {
@@ -24,7 +25,7 @@ export class Employer extends Component {
       axios
         .post(API_ADDRESS + "Account/Login", {
           phoneNumber: this.state.phoneNumber,
-          role: 'Employer',
+          role: "Employer",
         })
         .then(() => {
           this.props.prop.history.push(
@@ -58,6 +59,10 @@ export class Employer extends Component {
       <section className="container-fluid spx-2 spx-lg-10 smy-10 spt-10">
         <div className="row">
           <aside className="col-12 col-lg-5 mx-auto">
+            <Container>
+              <Tab to="/Employer/Login">کارفرما</Tab>
+              <Tab to="/Employee/Login">کارجو</Tab>
+            </Container>
             <form
               className="w-100"
               noValidate
@@ -127,25 +132,6 @@ export class Employer extends Component {
                 </footer>
               </div>
             </form>
-
-            <div className="employer-buttons row">
-              <div className="col-12 col-lg-6 smb-2 mb-lg-0">
-                <Link
-                  className="btn btn-lg srounded-md sbs-content btn-primary ir-r w-100"
-                  to="/Employee/Login"
-                >
-                  ورود کارجویان
-                </Link>
-              </div>
-              <div className="col-12 col-lg-6 mb-0">
-                <Link
-                  className="btn btn-lg srounded-md sbs-content btn-primary-light ir-r w-100"
-                  to="/Employee/Register"
-                >
-                  ثبت نام کارجویان
-                </Link>
-              </div>
-            </div>
           </aside>
         </div>
       </section>

@@ -4,6 +4,7 @@ import axios from "axios";
 import API_ADDRESS from "../../API_ADDRESS";
 import validator from "validator";
 import { toast } from "react-toastify";
+import { Container, Tab } from "./Form.styles.jsx";
 
 export class Employee extends Component {
   state = {
@@ -76,6 +77,10 @@ export class Employee extends Component {
       <section className="container-fluid spx-2 spx-lg-10 smy-10 spt-10">
         <div className="row">
           <aside className="col-12 col-lg-5 mx-auto">
+            <Container>
+              <Tab to="/Employer/Login">کارفرما</Tab>
+              <Tab to="/Employee/Login">کارجو</Tab>
+            </Container>
             <form
               noValidate
               onSubmit={this.submitHandler.bind(this)}
@@ -149,25 +154,6 @@ export class Employee extends Component {
                     ارسال کد تایید
                   </button>
                 </footer>
-              </div>
-
-              <div className="employer-buttons row">
-                <div className="col-12 col-lg-6 smb-2 mb-lg-0">
-                  <Link
-                    className="btn btn-lg srounded-md sbs-content btn-warning ir-r w-100"
-                    to="/Empolyer/Login"
-                  >
-                    ورود کارفرمایان
-                  </Link>
-                </div>
-                <div className="col-12 col-lg-6 mb-0">
-                  <Link
-                    className="btn btn-lg srounded-md sbs-content btn-warning-light ir-r w-100"
-                    to="/Employer/Register"
-                  >
-                    ثبت نام کارفرمایان
-                  </Link>
-                </div>
               </div>
             </form>
           </aside>
