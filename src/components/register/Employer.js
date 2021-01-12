@@ -173,14 +173,19 @@ export class Employer extends Component {
         <div className="row">
           <aside className="col-12 col-lg-5 mx-auto">
             <Container>
-              <Tab active={this.state.role === "Employer"} to="/Employer/Login">
+              <Tab
+                active={this.state.role === "Employer" && "#ffc107"}
+                to="/Employer/Login"
+              >
                 کارفرما
               </Tab>
-              <Tab active={this.state.role === "Employee"} to="/Employee/Login">
+              <Tab
+                active={this.state.role === "Employee" && "#007bff"}
+                to="/Employee/Login"
+              >
                 کارجو
               </Tab>
             </Container>
-
             <form className="w-100" noValidate onSubmit={this.submitHandler}>
               <div
                 className="bg-white sp-2 smb-2"

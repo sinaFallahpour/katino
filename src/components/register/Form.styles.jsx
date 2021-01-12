@@ -11,8 +11,9 @@ export const Tab = styled(Link)`
   flex-grow: 1;
   padding: 10px 5px;
   text-align: center;
-  color: ${({ active }) => (active ? "#fff" : "#444")};
-  background-color: ${({ active }) => (active ? "blue" : "#ccc")};
+  color: ${({ active }) =>
+    active === "#ffc107" ? "#212529" : active ? "#fff" : "#444"};
+  background-color: ${({ active }) => (active ? active : "#ccc")};
   font-size: 1.1rem;
   cursor: pointer;
   text-decoration: none !important;
@@ -26,6 +27,7 @@ export const Tab = styled(Link)`
   }
 
   &:hover {
-    color: ${({ active }) => (active ? "#fff" : "#444")};
+    color: ${({ active }) =>
+      active === "#ffc107" ? "#212529" : active ? "#fff" : "#444"};
   }
 `;
