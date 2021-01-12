@@ -69,13 +69,13 @@ export class Employer extends Component {
                 active={this.state.role === "Employer" && "#ffc107"}
                 to="/Employer/Login"
               >
-                کارفرما
+                کارفرمایان
               </Tab>
               <Tab
                 active={this.state.role === "Employee" && "#007bff"}
                 to="/Employee/Login"
               >
-                کارجو
+                کارجویان
               </Tab>
             </Container>
             <form
