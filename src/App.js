@@ -609,7 +609,7 @@ class App extends Component {
               ></Route>
 
               <Route
-                path="/Employer/AdInfo/:id/RequestDetails/:resumeId"
+                path="/Employer/AdInfo/:id/RequestDetails/:resumeId/:asignResomeId"
                 render={(props) => {
                   if (!this.isEmployer())
                     return <Redirect exact to="/Employer/Login" />;

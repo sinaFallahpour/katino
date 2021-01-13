@@ -29,7 +29,7 @@ export function Requests(props) {
               <td className="border-0">
                 <Link
                   className="d-flex align-items-center justify-content-start text-decoration-none"
-                  to={`/Employer/AdInfo/${item.id}/RequestDetails/${item.resomeId}`}
+                  to={`/Employer/AdInfo/${item.id}/RequestDetails/${item.resomeId}/${item.asignResomeId}`}
                 >
                   {item.userAvatar ? (
                     <img
@@ -64,7 +64,7 @@ export function Requests(props) {
               <td className="border-0 ir-r fs-s">{item.date}</td>
               <td className="border-0">
                 <Link
-                  to={`/Employer/AdInfo/${item.id}/RequestDetails/${item.resomeId}`}
+                  to={`/Employer/AdInfo/${item.id}/RequestDetails/${item.resomeId}/${item.asignResomeId}`}
                   className="btn"
                 >
                   <i

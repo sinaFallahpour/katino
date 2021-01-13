@@ -23,6 +23,7 @@ export class RequestDetails extends Component {
   async componentDidMount() {
     const adId = this.props.match.params.id;
     const currentResumeId = this.props.match.params.resumeId;
+    const currentAsignResomeId = this.props.match.params.asignResomeId;
 
     let asignResomeId;
     await service.getAdverResumes(adId).then((res) => {
@@ -51,7 +52,7 @@ export class RequestDetails extends Component {
     await this.setState({ shortInfo: data1.resul });
 
     const { data: data2 } = await agent.Resome.GetAsignResomeStatus(
-      asignResomeId
+      currentAsignResomeId
     );
     await this.setState({ asignResomeStatus: data2.resul });
     if (data2.resul != 1) {
@@ -97,10 +98,11 @@ export class RequestDetails extends Component {
   };
 
   changeAsignResomeStatus = async (description, asingResomeStatus) => {
+    const currentAsignResomeId = this.props.match.params.asignResomeId;
     try {
       let asignResomeId = this.state.currentResume?.asignResomeId;
       let { data } = await agent.Resome.ChangeAsignResomeStatus(
-        asignResomeId,
+        currentAsignResomeId,
         asingResomeStatus,
         description
       );

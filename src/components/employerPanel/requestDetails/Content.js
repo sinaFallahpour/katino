@@ -26,7 +26,9 @@ export class Content extends Component {
 
             <div>
               <span className="d-block ir-b c-dark text-right fs-m smb-1">
-                محمد واحدی - برنامه نویس فرانت اند
+                {this.props.allInfo.userPersonalInfoForResome?.fullName || "-"}
+                {" - "}
+                {this.props.allInfo.userPersonalInfoForResome?.jobTitle || "-"}
               </span>
               <span className="d-block ir-r c-regular text-right fs-m mb-0">
                 تاریخ ارسال رزومه: 1399/07/01 12:56

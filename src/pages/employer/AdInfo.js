@@ -1,10 +1,14 @@
-import React, { Component } from "react"
-import { PageTitle } from "../../components/PageTitle"
-import { Content, Header, SideBar } from "../../components/employerPanel/adInfo"
-import * as service from "../../components/employerPanel"
-import Swal from "sweetalert2"
-import { toast } from "react-toastify"
-import agent from "../../core/agent"
+import React, { Component } from "react";
+import { PageTitle } from "../../components/PageTitle";
+import {
+  Content,
+  Header,
+  SideBar,
+} from "../../components/employerPanel/adInfo";
+import * as service from "../../components/employerPanel";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
+import agent from "../../core/agent";
 
 export class AdInfo extends Component {
   state = {
@@ -12,78 +16,78 @@ export class AdInfo extends Component {
     sideBarInfo: {},
     resumes: [],
     adverId: null,
-  }
+  };
 
   async componentDidMount() {
-    const id = this.props.match.params.id
+    const id = this.props.match.params.id;
 
-    this.setState({ adverId: id })
+    this.setState({ adverId: id });
     await service
       .getUserAds()
       .then((res) =>
         this.setState({ currentItem: res.data.resul.find((item) => item.id) })
-      )
+      );
     await service.sidebar(id).then((res) => {
-      this.setState({ sideBarInfo: res.data.resul })
-    })
+      this.setState({ sideBarInfo: res.data.resul });
+    });
     await service
       .getAdverResumes(id)
-      .then((res) => this.setState({ resumes: res.data.resul }))
+      .then((res) => this.setState({ resumes: res.data.resul }));
   }
   SubmitFilter = async (event, comment) => {
-    event.preventDefault()
+    event.preventDefault();
     try {
       let obj = {
         comment: comment,
         asignId: this.state.currentResume?.asignResomeId,
-      }
-      let { data } = await agent.RequestDetails.AddCommentForAsignResome(obj)
-      this.setState({ YadDashts: comment })
-      toast.success("ثبت موفقیت آمیز")
+      };
+      let { data } = await agent.RequestDetails.AddCommentForAsignResome(obj);
+      this.setState({ YadDashts: comment });
+      toast.success("ثبت موفقیت آمیز");
     } catch (err) {
-      if (err.response.status === 401) toast.error("لطفا وارد شوید.")
-      else if (err.response.status === 404) toast.error("خطای رخ داده  ")
-      else if (err.response.status === 500) toast.error("مشکلی رخ داده ")
+      if (err.response.status === 401) toast.error("لطفا وارد شوید.");
+      else if (err.response.status === 404) toast.error("خطای رخ داده  ");
+      else if (err.response.status === 500) toast.error("مشکلی رخ داده ");
       else {
         for (let index = 0; index < err.response.data.message.length; index++) {
-          toast.error(err.response.data.message[index])
+          toast.error(err.response.data.message[index]);
         }
       }
     }
-  }
+  };
   startSearch = async (obj) => {
-    this.returnLoading("صبر کنید...")
+    this.returnLoading("صبر کنید...");
     try {
       let { data } = await agent.RequestDetails.FilterAllResomesInfoForAdver(
         obj
-      )
-      this.setState({ resumes: data.resul })
+      );
+      this.setState({ resumes: data.resul });
     } catch (err) {
-      if (err.response.status === 401) toast.error("لطفا وارد شوید.")
-      else if (err.response.status === 404) toast.error("خطای رخ داده  ")
-      else if (err.response.status === 500) toast.error("مشکلی رخ داده ")
+      if (err.response.status === 401) toast.error("لطفا وارد شوید.");
+      else if (err.response.status === 404) toast.error("خطای رخ داده  ");
+      else if (err.response.status === 500) toast.error("مشکلی رخ داده ");
       else if (err.response.status === 400) {
-        if (err.response.data.resul == null) this.setState({ resumes: [] })
+        if (err.response.data.resul == null) this.setState({ resumes: [] });
       } else {
         for (let index = 0; index < err.response.data.message.length; index++) {
-          toast.error(err.response.data.message[index])
+          toast.error(err.response.data.message[index]);
         }
       }
     } finally {
       setTimeout(() => {
-        Swal.close()
-      }, 400)
+        Swal.close();
+      }, 400);
     }
-  }
+  };
   returnLoading = (title) => {
     Swal.fire({
       title: title,
       allowEnterKey: false,
       allowEscapeKey: false,
       allowOutsideClick: false,
-    })
-    Swal.showLoading()
-  }
+    });
+    Swal.showLoading();
+  };
 
   render() {
     return (
@@ -119,6 +123,6 @@ export class AdInfo extends Component {
           </div>
         </section>
       </PageTitle>
-    )
+    );
   }
 }
