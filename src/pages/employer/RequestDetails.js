@@ -17,7 +17,7 @@ export class RequestDetails extends Component {
     comment: "",
     editable: true,
     shortInfo: null,
-    asignResomeStatus: 1,
+    asignResomeStatus: null,
   };
 
   async componentDidMount() {

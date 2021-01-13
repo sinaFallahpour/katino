@@ -7,6 +7,7 @@ export function SideBar(props) {
   const [isRejected, setIsRejected] = useState(false);
 
   const [description, setDescription] = useState("");
+  const [asignStatus, setAsignStatus] = useState(null);
 
   const returnStyle = (status) => {
     if (status == props.asignResomeStatus) {
@@ -18,6 +19,10 @@ export function SideBar(props) {
     }
   };
 
+  useEffect(() => {
+    setAsignStatus(props.asignResomeStatus);
+  }, [props]);
+
   const doNothing = () => {};
 
   // SubmitYadDasht
@@ -28,76 +33,70 @@ export function SideBar(props) {
           وضعیت درخواست
         </span>
 
-        <ul className="m-0 p-0">
-          {/* <li className="smb-1">
-            <button
-              onClick={(e) => { props.changeAsignResomeStatus(null, 1) }}
-
-              className="btn btn-light w-100 ir-r fs-s shadow-none sp-1 d-flex align-items-center justify-content-start">
-              <i className="fas fa-thumbs-down sml-1"></i>
-                درانتظار تعیین وضعیت
-            </button>
-          </li> */}
-          <li className="smb-1">
-            <button
-              style={returnStyle(2)}
-              onClick={(e) => {
-                if (props.editable == true) {
+        {asignStatus && (
+          <ul className="m-0 p-0">
+            {/* reject  */}
+            <li className="smb-1">
+              <button
+                style={returnStyle(2)}
+                onClick={() => {
+                  if (props.editable == true) {
+                    setIsRejected(true);
+                    props.changeAsignResomeStatus(null, 2);
+                    return;
+                  }
                   setIsRejected(true);
-                  props.changeAsignResomeStatus(null, 2);
-                  return;
-                }
-                setIsRejected(true);
-                doNothing();
-              }}
-              className="btn btn-light w-100 ir-r fs-s shadow-none sp-1 d-flex align-items-center justify-content-start"
-            >
-              <i className="fas fa-thumbs-down sml-1"></i>
-              رد شده
-            </button>
-          </li>
+                  doNothing();
+                }}
+                className="btn btn-light w-100 ir-r fs-s shadow-none sp-1 d-flex align-items-center justify-content-start"
+              >
+                <i className="fas fa-thumbs-down sml-1"></i>
+                رد شده
+              </button>
+            </li>
 
-          {/* accept  */}
-          <li className="smb-1">
-            <button
-              style={returnStyle(3)}
-              onClick={(e) => {
-                if (props.editable == true) {
-                  setIsRejected(false);
-                  props.changeAsignResomeStatus(null, 3);
-                  return;
-                }
-                setIsRejected(true);
-                doNothing();
-              }}
-              // onClick={(e) => { props.changeAsignResomeStatus(null, 3) }}
-              className="btn btn-light w-100 ir-r fs-s shadow-none sp-1 d-flex align-items-center justify-content-start"
-            >
-              <i className="fas fa-thumbs-up sml-1"></i>
-              تایید برای مصاحبه
-            </button>
-          </li>
+            {/* accept  */}
+            <li className="smb-1">
+              <button
+                style={returnStyle(3)}
+                onClick={(e) => {
+                  if (props.editable == true) {
+                    setIsRejected(false);
+                    props.changeAsignResomeStatus(null, 3);
+                    return;
+                  }
+                  setIsRejected(true);
+                  doNothing();
+                }}
+                // onClick={(e) => { props.changeAsignResomeStatus(null, 3) }}
+                className="btn btn-light w-100 ir-r fs-s shadow-none sp-1 d-flex align-items-center justify-content-start"
+              >
+                <i className="fas fa-thumbs-up sml-1"></i>
+                تایید برای مصاحبه
+              </button>
+            </li>
 
-          {/* has been employed */}
-          <li className="mb-0">
-            <button
-              style={returnStyle(4)}
-              onClick={(e) => {
-                if (props.editable == true) {
-                  setIsRejected(false);
-                  props.changeAsignResomeStatus(null, 4);
-                  return;
-                }
-                setIsRejected(true);
-                doNothing();
-              }}
-              className="btn btn-light w-100 ir-r fs-s shadow-none sp-1 d-flex align-items-center justify-content-start"
-            >
-              <i className="fas fa-handshake sml-1"></i>
-              استخدام شده
-            </button>
-          </li>
-        </ul>
+            {/* has been employed */}
+            <li className="mb-0">
+              <button
+                style={returnStyle(4)}
+                onClick={(e) => {
+                  if (props.editable == true) {
+                    setIsRejected(false);
+                    props.changeAsignResomeStatus(null, 4);
+                    return;
+                  }
+                  setIsRejected(true);
+                  doNothing();
+                }}
+                className="btn btn-light w-100 ir-r fs-s shadow-none sp-1 d-flex align-items-center justify-content-start"
+              >
+                <i className="fas fa-handshake sml-1"></i>
+                استخدام شده
+              </button>
+            </li>
+          </ul>
+        )}
 
         {isRejected == true && props.editable == true ? (
           <>
