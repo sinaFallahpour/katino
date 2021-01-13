@@ -15,6 +15,7 @@ export function Immediately({ immediately, handleMarkOtherAdv, status }) {
             salary={item.salary}
             typeOfCooperation={item.typeOfCooperation}
             descriptionOfJob={item.descriptionOfJob}
+            item={item}
             handleMarkOtherAdv={handleMarkOtherAdv}
             status={status}
           />
