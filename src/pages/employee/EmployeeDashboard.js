@@ -292,7 +292,6 @@ class EmployeeDashboard extends Component {
                 }
               >
                 <MySuggestAdvers
-                  handleMarkOtherAdv={this.handleMarkOtherAdv}
                   selectdIds={this.state.selectdIds}
                   handleChangeSelecetdId={this.handleChangeSelecetdId}
                 />

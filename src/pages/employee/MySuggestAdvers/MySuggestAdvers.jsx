@@ -11,6 +11,7 @@ const MySuggestAdvers = (props) => {
   const pageSize = 10;
   const [pageCount, setPageCount] = useState(0);
   const [adsList, setAdsList] = useState([]);
+  const [isMarked, setIsMarked] = useState();
 
   const pathName = useLocation().pathname;
   const url = useLocation().search;
@@ -73,6 +74,37 @@ const MySuggestAdvers = (props) => {
     history.replace(`${pathName}?${params.toString()}`);
   };
 
+  const handleMarkSuggestion = async (adverId) => {
+    try {
+      let currentAdver = adsList.find((c) => c.id == adverId);
+      if (currentAdver.isMarked) {
+        const MarkedList = adsList.map((el) =>
+          el.id === adverId ? Object.assign({}, el, { isMarked: false }) : el
+        );
+        setAdsList(MarkedList);
+        await agent.Adver.unmarkAdvder(adverId);
+      } else {
+        const MarkedList = adsList.map((el) =>
+          el.id === adverId ? Object.assign({}, el, { isMarked: true }) : el
+        );
+        setAdsList(MarkedList);
+        await agent.Adver.markAdvder(adverId);
+      }
+    } catch (ex) {
+      setIsMarked(!isMarked);
+      if (ex?.response?.data) {
+        toast.error(ex.response?.data?.message[0]);
+
+        const MarkedList = adsList.map((el) =>
+          el.id === adverId
+            ? Object.assign({}, el, { isMarked: !el.isMarked })
+            : el
+        );
+        setAdsList(MarkedList);
+      }
+    }
+  };
+
   return (
     <div className="bg-white srounded-md sbs-content sp-2">
       {adsList &&
@@ -87,7 +119,7 @@ const MySuggestAdvers = (props) => {
               type={item.typeOfCooperation}
               typeOfCooperation={item.typeOfCooperation}
               item={item}
-              handleMarkOtherAdv={props.handleMarkOtherAdv}
+              handleMarkOtherAdv={handleMarkSuggestion}
               selectdIds={props.selectdIds}
               handleChangeSelecetdId={props.handleChangeSelecetdId}
             />
@@ -107,54 +139,3 @@ const MySuggestAdvers = (props) => {
 };
 
 export { MySuggestAdvers };
-
-{
-  /* <div className="card ad srounded-sm sp-2 text-decoration-none">
-<header className="d-flex justify-content-between align-items-center smb-1">
-  <a
-    className="fs-m ir-b c-dark text-truncate"
-    href={`/JobDetails/${item.id}`}
-    dideo-checked="true"
-  >
-    {item.title}
-  </a>
-
-  <i
-    // onClick={this.adMarker}
-    onClick={() => {
-      console.log("amo sam");
-    }}
-    className={`bookmarker-btn c-dark fs-l ${
-      mark === false ? "far" : "fas"
-    } fa-bookmark`}
-  ></i>
-</header>
-<div className="card-body p-0">
-  <input type="checkbox" />
-  <div className="detail smb-1">
-    <Link className="ir-r c-grey fs-m sml-1" to="/">
-      <i className="fas fa-building ml-2"></i>
-      {item.companyName}
-    </Link>
-
-    <span className="ir-r c-grey fs-m sml-1">
-      <i className="fas fa-map-marker-alt ml-2"></i>
-      {findCities(item.city)}
-    </span>
-
-    <span className="ir-r text-success fs-m sml-1">
-      {` میزان حقوق: ${salary(item.salary)} تومان `}
-    </span>
-
-    <span className="ir-r c-grey fs-m ml-0">{` نوع قرار داد: ${cooperationType(
-      item.typeOfCooperation
-    )} `}</span>
-  </div>
-
-  <p
-    className="d-block text-right ir-r fs-m mb-0 c-regular"
-    dangerouslySetInnerHTML={{ __html: `...` }}
-  ></p>
-</div>
-</div> */
-}
