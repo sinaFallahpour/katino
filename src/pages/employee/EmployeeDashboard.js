@@ -6,6 +6,7 @@ import { PageTitle } from "../../components/PageTitle";
 import * as service from "../../components/employeePanel";
 import { toast } from "react-toastify";
 import agent from "../../core/agent";
+import style from "./Checkbox.module.css";
 import "./EmployeeDashboard.css";
 
 class EmployeeDashboard extends Component {
@@ -23,6 +24,7 @@ class EmployeeDashboard extends Component {
     pageTitle: "",
 
     markedAds: [],
+    markedAdsStatus: false,
   };
 
   componentDidMount = async () => {
@@ -131,6 +133,18 @@ class EmployeeDashboard extends Component {
           ),
         });
       }
+    }
+  };
+
+  handleMarkAllOtherAdv = () => {
+    if (this.state.markedAdsStatus) {
+      this.setState({ markedAdsStatus: false });
+      this.setState({ selectdIds: [] });
+    } else {
+      this.setState({ markedAdsStatus: true });
+      let selectdIds = [...this.state.markedAds.map(({ id }) => id)];
+      console.log(selectdIds);
+      this.setState({ selectdIds });
     }
   };
 
@@ -272,10 +286,22 @@ class EmployeeDashboard extends Component {
               <div
                 className={
                   this.state.visibility.bookmarks === true
-                    ? "d-block"
+                    ? "d-block BookMarkContainer"
                     : "d-none"
                 }
               >
+                <span className={style.Ads2Checkbox}>
+                  <input
+                    id="bookMarkSelection"
+                    type="radio"
+                    onClick={() => {
+                      this.handleMarkAllOtherAdv();
+                    }}
+                    className={`${style.optionInput} ${style.radio}`}
+                    checked={this.state.markedAdsStatus}
+                  />
+                  <label htmlFor="bookMarkSelection">انتخاب همه</label>
+                </span>
                 <NotRequested
                   items={this.state.markedAds}
                   handleMarkOtherAdv={this.handleMarkOtherAdv}
