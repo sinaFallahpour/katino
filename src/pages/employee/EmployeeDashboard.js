@@ -291,7 +291,11 @@ class EmployeeDashboard extends Component {
                     : "d-none"
                 }
               >
-                <MySuggestAdvers />
+                <MySuggestAdvers
+                  handleMarkOtherAdv={this.handleMarkOtherAdv}
+                  selectdIds={this.state.selectdIds}
+                  handleChangeSelecetdId={this.handleChangeSelecetdId}
+                />
               </div>
             </aside>
 

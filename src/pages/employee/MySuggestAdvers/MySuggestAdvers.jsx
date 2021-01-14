@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { cooperationType, salary, findCities } from "../../../enums";
 import agent from "../../../core/agent";
 import "react-toastify/dist/ReactToastify.css";
 import Pagination from "react-responsive-pagination";
 import { toast } from "react-toastify";
 import { useLocation, useHistory } from "react-router-dom";
+import { Ad2 } from "../../../components/home/ads/Ad2";
 
-const MySuggestAdvers = ({}) => {
-  const [mark, setMark] = useState(false);
-  const [loading, setLoading] = useState(false);
+const MySuggestAdvers = (props) => {
   const [currentPage, setCurentPage] = useState(1);
   const pageSize = 10;
   const [pageCount, setPageCount] = useState(0);
@@ -31,7 +28,6 @@ const MySuggestAdvers = ({}) => {
   }, []);
 
   useEffect(() => {
-    setLoading(true);
     let cp = params.get("currentPage");
     let pz = params.get("pageSize");
     let curentPage = "";
@@ -53,7 +49,6 @@ const MySuggestAdvers = ({}) => {
     setCurentPage(parseInt(curentPage));
 
     const fetchData = async () => {
-      setLoading(true);
       try {
         const { data } = await agent.CreateResome.SuggestionAdverForUser({
           page: parseInt(curentPage),
@@ -63,10 +58,8 @@ const MySuggestAdvers = ({}) => {
         setAdsList([]);
         setAdsList(data.resul.listOfData);
         setPageCount(data.resul.pageCount);
-        setLoading(false);
       } catch (ex) {
         toast.error(ex.message);
-        setLoading(false);
       }
     };
 
@@ -83,54 +76,21 @@ const MySuggestAdvers = ({}) => {
   return (
     <div className="bg-white srounded-md sbs-content sp-2">
       {adsList &&
-        adsList.map((item) => (
-          <div className="card ad srounded-sm sp-2 text-decoration-none">
-            <header className="d-flex justify-content-between align-items-center smb-1">
-              <a
-                className="fs-m ir-b c-dark text-truncate"
-                href={`/JobDetails/${item.id}`}
-                dideo-checked="true"
-              >
-                {item.title}
-              </a>
-
-              <i
-                // onClick={this.adMarker}
-                onClick={() => {
-                  console.log("amo sam");
-                }}
-                className={`bookmarker-btn c-dark fs-l ${
-                  mark === false ? "far" : "fas"
-                } fa-bookmark`}
-              ></i>
-            </header>
-            <div className="card-body p-0">
-              <input type="checkbox" />
-              <div className="detail smb-1">
-                <Link className="ir-r c-grey fs-m sml-1" to="/">
-                  <i className="fas fa-building ml-2"></i>
-                  {item.companyName}
-                </Link>
-
-                <span className="ir-r c-grey fs-m sml-1">
-                  <i className="fas fa-map-marker-alt ml-2"></i>
-                  {findCities(item.city)}
-                </span>
-
-                <span className="ir-r text-success fs-m sml-1">
-                  {` میزان حقوق: ${salary(item.salary)} تومان `}
-                </span>
-
-                <span className="ir-r c-grey fs-m ml-0">{` نوع قرار داد: ${cooperationType(
-                  item.typeOfCooperation
-                )} `}</span>
-              </div>
-
-              <p
-                className="d-block text-right ir-r fs-m mb-0 c-regular"
-                dangerouslySetInnerHTML={{ __html: `...` }}
-              ></p>
-            </div>
+        adsList.map((item, index) => (
+          <div key={index} className={index !== 0 ? "smt-2" : "mt-0"}>
+            <Ad2
+              id={item.id}
+              title={item.title}
+              companyName={item.companyName}
+              city={item.city}
+              salary={item.salary}
+              type={item.typeOfCooperation}
+              typeOfCooperation={item.typeOfCooperation}
+              item={item}
+              handleMarkOtherAdv={props.handleMarkOtherAdv}
+              selectdIds={props.selectdIds}
+              handleChangeSelecetdId={props.handleChangeSelecetdId}
+            />
           </div>
         ))}
       {adsList && (
@@ -147,3 +107,54 @@ const MySuggestAdvers = ({}) => {
 };
 
 export { MySuggestAdvers };
+
+{
+  /* <div className="card ad srounded-sm sp-2 text-decoration-none">
+<header className="d-flex justify-content-between align-items-center smb-1">
+  <a
+    className="fs-m ir-b c-dark text-truncate"
+    href={`/JobDetails/${item.id}`}
+    dideo-checked="true"
+  >
+    {item.title}
+  </a>
+
+  <i
+    // onClick={this.adMarker}
+    onClick={() => {
+      console.log("amo sam");
+    }}
+    className={`bookmarker-btn c-dark fs-l ${
+      mark === false ? "far" : "fas"
+    } fa-bookmark`}
+  ></i>
+</header>
+<div className="card-body p-0">
+  <input type="checkbox" />
+  <div className="detail smb-1">
+    <Link className="ir-r c-grey fs-m sml-1" to="/">
+      <i className="fas fa-building ml-2"></i>
+      {item.companyName}
+    </Link>
+
+    <span className="ir-r c-grey fs-m sml-1">
+      <i className="fas fa-map-marker-alt ml-2"></i>
+      {findCities(item.city)}
+    </span>
+
+    <span className="ir-r text-success fs-m sml-1">
+      {` میزان حقوق: ${salary(item.salary)} تومان `}
+    </span>
+
+    <span className="ir-r c-grey fs-m ml-0">{` نوع قرار داد: ${cooperationType(
+      item.typeOfCooperation
+    )} `}</span>
+  </div>
+
+  <p
+    className="d-block text-right ir-r fs-m mb-0 c-regular"
+    dangerouslySetInnerHTML={{ __html: `...` }}
+  ></p>
+</div>
+</div> */
+}
