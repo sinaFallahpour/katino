@@ -290,18 +290,20 @@ class EmployeeDashboard extends Component {
                     : "d-none"
                 }
               >
-                <span className={style.Ads2Checkbox}>
-                  <input
-                    id="bookMarkSelection"
-                    type="radio"
-                    onClick={() => {
-                      this.handleMarkAllOtherAdv();
-                    }}
-                    className={`${style.optionInput} ${style.radio}`}
-                    checked={this.state.markedAdsStatus}
-                  />
-                  <label htmlFor="bookMarkSelection">انتخاب همه</label>
-                </span>
+                {this.state.markedAds.length !== 0 && (
+                  <span className={style.Ads2Checkbox}>
+                    <input
+                      id="bookMarkSelection"
+                      type="radio"
+                      onClick={() => {
+                        this.handleMarkAllOtherAdv();
+                      }}
+                      className={`${style.optionInput} ${style.radio}`}
+                      checked={this.state.markedAdsStatus}
+                    />
+                    <label htmlFor="bookMarkSelection">انتخاب همه</label>
+                  </span>
+                )}
                 <NotRequested
                   items={this.state.markedAds}
                   handleMarkOtherAdv={this.handleMarkOtherAdv}
@@ -313,7 +315,7 @@ class EmployeeDashboard extends Component {
               <div
                 className={
                   this.state.visibility.recommanded === true
-                    ? "d-block"
+                    ? "d-block BookMarkContainer"
                     : "d-none"
                 }
               >
