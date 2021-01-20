@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import auth from "../../core/authService";
 import ADDRESS from "../../ADDRESS";
-
+// import { NotificationPermision } from "../notificationPermision/notificationPermision";
 export class LandingNavbar extends React.Component {
   state = {
     profileDropdown: false,
@@ -80,7 +80,7 @@ export class LandingNavbar extends React.Component {
               loading="lazy"
             />
           </Link>
-
+          {/* {"Notification" in window && <NotificationPermision />} */}
           <div
             className="collapse navbar-collapse d-none d-lg-block"
             id="navbarSupportedContent"

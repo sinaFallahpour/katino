@@ -45,12 +45,12 @@ const MyRequestDetails = () => {
                   </Link>
                 </div>
                 {data && (
-                  <div class="container">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="main-timeline">
-                          <div class="timeline">
-                            <a href="#" class="timeline-content">
+                  <div className="container">
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div className="main-timeline">
+                          <div className="timeline">
+                            <a href="#" className="timeline-content">
                               <Container>
                                 <Title>عنوان آگهی : {data.adverTitle}</Title>
                                 <Decription>
@@ -108,8 +108,8 @@ const MyRequestDetails = () => {
                               </Container>
                             </a>
                           </div>
-                          <div class="timeline">
-                            <a href="#" class="timeline-content">
+                          <div className="timeline">
+                            <a href="#" className="timeline-content">
                               <Container>
                                 <Title>مشاهده فایل ها</Title>
                                 <ButtonContainer>

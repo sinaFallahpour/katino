@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 
 import {
   PaymentresContainer,
@@ -9,15 +9,15 @@ import {
   CodeTitle,
   CodeNumber,
   DirectorSuccess,
-} from "./Payment.styles"
+} from "./Payment.styles";
 
 const EmployeeSuccessPage = () => {
-  const [trackingnumber, setTrackingNumber] = useState()
-  const params = new URLSearchParams(window.location.search)
+  const [trackingnumber, setTrackingNumber] = useState();
+  const params = new URLSearchParams(window.location.search);
 
   useEffect(() => {
-    setTrackingNumber(params.get("trackingnumber"))
-  }, [params])
+    setTrackingNumber(params.get("trackingnumber"));
+  }, [params]);
 
   return (
     <PaymentresContainer>
@@ -29,12 +29,12 @@ const EmployeeSuccessPage = () => {
         <CodeTitle> : کد رهگیری </CodeTitle>
         <CodeNumber> {trackingnumber} </CodeNumber>
         <DirectorSuccess to="/">
-          <i class="fa fa-caret-left"></i>
+          <i className="fa fa-caret-left"></i>
           <span> بازگشت به خانه </span>
         </DirectorSuccess>
       </ContextContainers>
     </PaymentresContainer>
-  )
-}
+  );
+};
 
-export { EmployeeSuccessPage }
+export { EmployeeSuccessPage };

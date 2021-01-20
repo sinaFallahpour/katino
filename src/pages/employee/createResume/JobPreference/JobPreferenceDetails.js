@@ -140,9 +140,9 @@ const JobPreferenceDetails = ({ AllWorkExperience }) => {
                 بیمه :{" "}
                 <span className="c-regular">
                   {item?.insurance ? (
-                    <i class="fas fa-check c-success"></i>
+                    <i className="fas fa-check c-success"></i>
                   ) : (
-                    <i class="fas fa-times c-danger"></i>
+                    <i className="fas fa-times c-danger"></i>
                   )}
                 </span>
               </span>
@@ -152,9 +152,9 @@ const JobPreferenceDetails = ({ AllWorkExperience }) => {
                 ارتقا شغلی :{" "}
                 <span className="c-regular">
                   {item?.promotion ? (
-                    <i class="fas fa-check c-success"></i>
+                    <i className="fas fa-check c-success"></i>
                   ) : (
-                    <i class="fas fa-times c-danger"></i>
+                    <i className="fas fa-times c-danger"></i>
                   )}
                 </span>
               </span>
@@ -164,9 +164,9 @@ const JobPreferenceDetails = ({ AllWorkExperience }) => {
                 انعطاف پذیر بودن ساعت کاری :{" "}
                 <span className="c-regular">
                   {item?.flexibleWorkingTime ? (
-                    <i class="fas fa-check c-success"></i>
+                    <i className="fas fa-check c-success"></i>
                   ) : (
-                    <i class="fas fa-times c-danger"></i>
+                    <i className="fas fa-times c-danger"></i>
                   )}
                 </span>
               </span>
@@ -176,9 +176,9 @@ const JobPreferenceDetails = ({ AllWorkExperience }) => {
                 همراه با وعده غذایی :{" "}
                 <span className="c-regular">
                   {item?.hasMeel ? (
-                    <i class="fas fa-check c-success"></i>
+                    <i className="fas fa-check c-success"></i>
                   ) : (
-                    <i class="fas fa-times c-danger"></i>
+                    <i className="fas fa-times c-danger"></i>
                   )}
                 </span>
               </span>
@@ -188,9 +188,9 @@ const JobPreferenceDetails = ({ AllWorkExperience }) => {
                 همراه با سرویس رفت و آمد :{" "}
                 <span className="c-regular">
                   {item?.transportationService ? (
-                    <i class="fas fa-check c-success"></i>
+                    <i className="fas fa-check c-success"></i>
                   ) : (
-                    <i class="fas fa-times c-danger"></i>
+                    <i className="fas fa-times c-danger"></i>
                   )}
                 </span>
               </span>
@@ -200,9 +200,9 @@ const JobPreferenceDetails = ({ AllWorkExperience }) => {
                 مدرک تحصیلی :{" "}
                 <span className="c-regular">
                   {item?.educationCourses ? (
-                    <i class="fas fa-check c-success"></i>
+                    <i className="fas fa-check c-success"></i>
                   ) : (
-                    <i class="fas fa-times c-danger"></i>
+                    <i className="fas fa-times c-danger"></i>
                   )}
                 </span>
               </span>

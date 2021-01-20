@@ -113,7 +113,7 @@ export function LandingFooter() {
               target="_blank"
               to={{ pathname: whatsApp }}
             >
-              <i class="fab fa-whatsapp"></i>
+              <i className="fab fa-whatsapp"></i>
             </Link>
 
             <Link

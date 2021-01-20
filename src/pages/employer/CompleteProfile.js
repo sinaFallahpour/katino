@@ -278,7 +278,7 @@ const CompleteProfile = () => {
                     </label>
                     <div className="form-group mb-0">
                       <label className="uploadPic" htmlFor="Image ">
-                        <i class=" fas fa-camera "></i> بارگزاری عکس
+                        <i className=" fas fa-camera "></i> بارگزاری عکس
                       </label>
                       <input
                         id="Image "

@@ -67,7 +67,7 @@ const EmployerNotification = () => {
                     <NotifContainre key={item.id}>
                       <NotifIcon>
                         <i
-                          class="fa fa-bell fa-1.5x c-primary"
+                          className="fa fa-bell fa-1.5x c-primary"
                           aria-hidden="true"
                         ></i>
                       </NotifIcon>

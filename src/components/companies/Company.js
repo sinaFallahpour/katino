@@ -44,7 +44,7 @@ export function Company(props) {
 
       <div className="cartContextContainer">
         <div>
-          <i class="fa fa-building"></i> {props.name ? props.name : "---"}
+          <i className="fa fa-building"></i> {props.name ? props.name : "---"}
         </div>
         <div>
           <i className="fas fa-tasks"></i> {fields ? fields : "---"}

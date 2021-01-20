@@ -50,7 +50,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start-sw": "workbox injectManifest workbox-config.js && workbox copylibraries build/ && http-server build/ -c 0"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -66,5 +67,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "http-server": "^0.12.3",
+    "workbox-cli": "^6.0.2"
   }
 }

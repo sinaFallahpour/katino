@@ -10,34 +10,34 @@ const CompanySideBar = (props) => {
   return (
     <div className="sideBarHolder">
       <div>
-        <i class="fa fa-user"></i>{" "}
+        <i className="fa fa-user"></i>{" "}
         {props.managementFullName ? props.managementFullName : "---"}
       </div>
       <div>
-        <i class="fa fa-envelope"></i> {props.email ? props.email : "---"}
+        <i className="fa fa-envelope"></i> {props.email ? props.email : "---"}
       </div>
       <div className="LinkOfCompany">
-        <i class="fa fa-globe"></i> {props.website ? props.website : "---"}
+        <i className="fa fa-globe"></i> {props.website ? props.website : "---"}
       </div>
       <div>
-        <i class="fa fa-mobile"></i> {props.mobile ? props.mobile : "---"}
+        <i className="fa fa-mobile"></i> {props.mobile ? props.mobile : "---"}
       </div>
       <div>
-        <i class="fa fa-phone"></i>{" "}
+        <i className="fa fa-phone"></i>{" "}
         {props.phoneNumber ? props.phoneNumber : "---"}
       </div>
       <div>
-        <i class="fa fa-users"></i>{" "}
+        <i className="fa fa-users"></i>{" "}
         {props.numberOfStaff ? props.numberOfStaff : "---"}
       </div>
       <div>
         {props.isActive ? (
           <span className="c-success">
-            <i class="far fa-thumbs-up"></i> فعال
+            <i className="far fa-thumbs-up"></i> فعال
           </span>
         ) : (
           <span className="c-danger">
-            <i class="far fa-thumbs-down"></i> غیرفعال
+            <i className="far fa-thumbs-down"></i> غیرفعال
           </span>
         )}
       </div>

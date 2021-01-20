@@ -1,11 +1,11 @@
-import React from "react"
+import React from "react";
 
 import {
   NotFoundContainer,
   ImageContainer,
   Director,
   DirectorContainer,
-} from "./notFoundPage.styles"
+} from "./notFoundPage.styles";
 
 const NotFoundPage = () => {
   return (
@@ -14,12 +14,12 @@ const NotFoundPage = () => {
 
       <DirectorContainer>
         <Director to="/">
-          <i class="fa fa-caret-left"></i>
+          <i className="fa fa-caret-left"></i>
           <span> بازگشت به خانه </span>
         </Director>
       </DirectorContainer>
     </NotFoundContainer>
-  )
-}
+  );
+};
 
-export { NotFoundPage }
+export { NotFoundPage };
