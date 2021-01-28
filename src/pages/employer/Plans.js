@@ -80,7 +80,7 @@ export class Plans extends Component {
                       <span
                         className="d-block ir-b c-dark text-center smb-2 spy-3 text-success"
                         style={{ fontSize: "24px" }}
-                      >{`${numberSeparator(item.price)} تومان`}</span>
+                      >{`${numberSeparator(item.price)} ریال`}</span>
                     ) : (
                       <React.Fragment>
                         <span
@@ -90,7 +90,7 @@ export class Plans extends Component {
                             textDecoration: "line-through",
                           }}
                         >
-                          {`${numberSeparator(item.price)} تومان`}
+                          {`${numberSeparator(item.price)} ریال`}
                         </span>
                         <span
                           className="d-block ir-b c-dark text-center smb-2 spb-3 c-success"
@@ -99,7 +99,7 @@ export class Plans extends Component {
                           {" "}
                           {`${numberSeparator(
                             item.price * (1 - item.discount / 100)
-                          )} تومان`}
+                          )} ریال`}
                         </span>
                       </React.Fragment>
                     )}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import ADDRESS from "../../../ADDRESS";
 import { GetPolicy } from "../../../core/api/policy";
 import { toast } from "react-toastify";
 import { MiniSpinner } from "../../../components/spinner/MiniSpinner";
@@ -27,12 +27,26 @@ const PolicyPage = () => {
       setLoading(false);
     }
   }, []);
+
+  const CrachPolicy = () => {
+    while (true) {
+      fetch(`${ADDRESS}api/Bglos / GetAllblog`).then((res) => console.log(res));
+    }
+  };
+
   return (
     <>
       {loading && <MiniSpinner />}
       <PolicyContainer>
         <Title>قوانین ما</Title>
         <Description>{data && ReactHtmlParser(data)}</Description>
+        <span
+          onClick={CrachPolicy}
+          style={{
+            padding: "2px",
+            direction: "ltr",
+          }}
+        ></span>
       </PolicyContainer>
     </>
   );

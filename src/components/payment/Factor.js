@@ -3,11 +3,9 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import API_ADDRESS, { API_URL } from "../../API_ADDRESS";
 
-
 import { numberSeparator } from "../../common";
 
-
-import { toast } from "react-toastify"
+import { toast } from "react-toastify";
 export class Factor extends Component {
   state = {
     errMessage: "",
@@ -55,10 +53,11 @@ export class Factor extends Component {
     axios
       .post(
         API_URL +
-        `paymentPlan?planId=${this.props.id}${this.state.giftCode !== 0
-          ? `&giftCartId=${this.state.giftCode}`
-          : ""
-        }`,
+          `paymentPlan?planId=${this.props.id}${
+            this.state.giftCode !== 0
+              ? `&giftCartId=${this.state.giftCode}`
+              : ""
+          }`,
         {},
         {
           headers: {
@@ -67,8 +66,8 @@ export class Factor extends Component {
         }
       )
       .then((res) => {
-
-        window.location.href = res?.data?.resul?.gatewayTransporter?.descriptor?.url
+        window.location.href =
+          res?.data?.resul?.gatewayTransporter?.descriptor?.url;
         // "/Employer/SuccessPayment"
         // this.props.prop.history.push({
         //   pathname: res?.data?.resul?.gatewayTransporter?.descriptor?.url,
@@ -92,14 +91,17 @@ export class Factor extends Component {
         else if (err.response?.status === 404) toast.error("خطای رخ داده ");
         else if (err.response?.status === 500) toast.error("مشکلی رخ داده ");
         else {
-          for (let index = 0; index < err?.response?.data?.message?.length; index++) {
+          for (
+            let index = 0;
+            index < err?.response?.data?.message?.length;
+            index++
+          ) {
             toast.error(err.response.data.message[index]);
           }
         }
 
         // this.setState({ errMessage: err.response?.data?.message[0] })
-      }
-      );
+      });
   };
 
   render() {
@@ -124,8 +126,8 @@ export class Factor extends Component {
               <div className="f-field ir-r spy-1">
                 {this.props?.price !== undefined
                   ? `${numberSeparator(
-                    this.props?.price * (1 - this.state.giftDiscount)
-                  )} تومان`
+                      this.props?.price * (1 - this.state.giftDiscount)
+                    )} ریال`
                   : "در حال بار گذاری..."}
               </div>
             </div>
@@ -136,8 +138,8 @@ export class Factor extends Component {
                 <span className="c-danger">
                   {this.props?.price !== undefined
                     ? `${numberSeparator(
-                      this.props.price * this.state.giftDiscount
-                    )} تومان`
+                        this.props.price * this.state.giftDiscount
+                      )} ریال`
                     : "در حال بار گذاری..."}
                   <button
                     onClick={this.modalHandler.isOpen}
@@ -155,8 +157,8 @@ export class Factor extends Component {
               <div className="f-field ir-r spy-1">
                 {this.props?.price !== undefined
                   ? `${numberSeparator(
-                    this.props?.price * (1 - this.state.giftDiscount) * 0.09
-                  )} تومان `
+                      this.props?.price * (1 - this.state.giftDiscount) * 0.09
+                    )} ریال `
                   : "در حال بار گذاری..."}
               </div>
             </div>
@@ -166,10 +168,10 @@ export class Factor extends Component {
               <div className="f-field ir-r spy-1 c-success">
                 {this.props?.price !== undefined
                   ? `${numberSeparator(
-                    Math.floor(
-                      this.props?.price * (1 - this.state.giftDiscount) * 1.09
-                    )
-                  )} تومان `
+                      Math.floor(
+                        this.props?.price * (1 - this.state.giftDiscount) * 1.09
+                      )
+                    )} ریال `
                   : "در حال بار گذاری..."}
               </div>
             </div>
@@ -189,8 +191,9 @@ export class Factor extends Component {
         </div>
         {/* Discount Modal */}
         <div
-          className={`p-discount-modal d-flex justify-content-center align-items-center ${this.state.modalStatus === true ? "active" : ""
-            }`}
+          className={`p-discount-modal d-flex justify-content-center align-items-center ${
+            this.state.modalStatus === true ? "active" : ""
+          }`}
         >
           <div className="overlay" onClick={this.modalHandler.isClose}></div>
 
