@@ -89,7 +89,7 @@
       })();
     </script>
     <script>
-      if ("serviceWorker" in navigator) {
+      "serviceWorker" in navigator &&
         window.addEventListener("load", () => {
           navigator.serviceWorker
             .register("./serviceWorker.js")
@@ -100,7 +100,6 @@
               console.warn("Error whilst registering service worker");
             });
         });
-      }
     </script>
   </body>
 </html>

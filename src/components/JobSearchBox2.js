@@ -25,9 +25,12 @@ export class JobSearchBox2 extends Component {
     });
 
     return (
-      <div className="row w-100 sp-2 spy-2 bg-white rounded-content srounded-md">
+      <div
+        className="row w-100 sp-2  bg-white rounded-content srounded-md"
+        style={{ margin: 0 }}
+      >
         {/* What? */}
-        <div className="col-12 col-lg-5 smb-2 pr-lg-0 mb-lg-0">
+        <div className="col-12  smb-2 pr-lg-0 mb-lg-0" style={{ padding: 0 }}>
           <div className="form-group mb-0 ir-r srounded-md">
             <label className="fs-regular ir-b c-dark">
               به دنبال چه چیزی هستید؟
@@ -43,7 +46,10 @@ export class JobSearchBox2 extends Component {
         </div>
 
         {/* Where? */}
-        <div className="col-12 col-lg-5 smb-2 mb-lg-0">
+        <div
+          className="col-12  smb-2 pr-lg-0 mb-lg-0 mt-3"
+          style={{ padding: 0 }}
+        >
           <div className="form-group mb-0 ir-r srounded-md">
             <label className="fs-regular ir-b c-dark">در کدام شهر؟</label>
             <Select
@@ -56,19 +62,10 @@ export class JobSearchBox2 extends Component {
         </div>
 
         {/* Search Button */}
-        <div className="col-12 col-lg-2 mb-0 pl-lg-0 d-flex align-items-end">
-          {/* <button
-            // onClick={() => {
-            //   this.props.handleSearch(this.state);
-            // }}
-            type="button"
-            className="btn btn-primary d-block w-100 ir-r fs-m srounded-sm"
-            href="/Jobs?key=ghghgfgchhgfg&amp;city=آستارا"
-            dideo-checked="true"
-          >
-            جستجو
-          </button> */}
-
+        <div
+          className="col-12  smb-2 pr-lg-0 mb-lg-0 mt-3"
+          style={{ padding: 0 }}
+        >
           <Link
             type="button"
             className="btn btn-primary d-block w-100 ir-r fs-m srounded-sm"
