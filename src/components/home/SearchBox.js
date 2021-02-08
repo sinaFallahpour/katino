@@ -32,7 +32,7 @@ export function SearchBox({ cities, LandingImg }) {
           <Link
             className="btn btn-warning ir-r d-none d-block sml-1"
             to={
-              auth.getCurrentUser().role === "Employer"
+              auth?.getCurrentUser()?.role === "Employer"
                 ? "/Employer/CreateAd"
                 : "/Employer/Login"
             }

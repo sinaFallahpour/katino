@@ -147,16 +147,17 @@ export function LandingFooter() {
 
             <a
               className="il-item rounded-item bg-body srounded-md sp-1"
-              href="https://trustseal.enamad.ir/?id=183035&amp;Code=6AEoXkgszwZw2Xo6HMXE"
-              referrerPolicy="origin"
+              referrerpolicy="origin"
               target="_blank"
+              href="https://trustseal.enamad.ir/?id=204188&amp;Code=1Yco3ryD2nqCP3qfn3sa"
             >
               <img
-                className="d-block w-100"
-                referrerPolicy="origin"
-                src="https://trustseal.enamad.ir/Content/Images/Star/star1.png?v=5.0.0.47"
+                referrerpolicy="origin"
+                src="https://Trustseal.eNamad.ir/logo.aspx?id=204188&amp;Code=1Yco3ryD2nqCP3qfn3sa"
                 alt=""
-                id="6AEoXkgszwZw2Xo6HMXE"
+                style={{ cursor: "pointer" }}
+                id="1Yco3ryD2nqCP3qfn3sa"
+                className="d-block w-100"
               />
             </a>
 

@@ -44,6 +44,9 @@ export const LeftSide = styled.section`
   display: flex;
   flex-direction: column;
   color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 5px 8px;
 `;
 export const Title = styled.section`
   font-size: 1.6rem;
