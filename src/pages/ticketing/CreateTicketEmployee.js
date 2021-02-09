@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-
 import agent from "../../core/agent";
+import { citiesService } from "../../components/citiesService";
 
 export class CreateTicketEmployee extends Component {
   state = {
@@ -13,13 +13,30 @@ export class CreateTicketEmployee extends Component {
     ticketPriorityStatus: 1,
     file: null,
     subject: null,
+    cities: [],
+    City: "",
   };
 
-  async componentDidMount() {}
+  componentDidMount() {
+    citiesService.getCities().then((res) => {
+      let cities = [];
+      cities.push({
+        value: "",
+        label: `پشتیبانی فنی`,
+      });
+      res.data.resul.map((item) => {
+        cities.push({
+          value: item.cityName,
+          label: ` ${item.provinceName}، ${item.cityName} `,
+        });
+      });
+
+      this.setState({ cities });
+    });
+  }
 
   submitTicketAnswer = async (event) => {
     event.preventDefault();
-
     try {
       // return params;
       let datas = new FormData();
@@ -28,18 +45,11 @@ export class CreateTicketEmployee extends Component {
       datas.append("TicketPriorityStatus", this.state.ticketPriorityStatus);
       datas.append("Content", this.state.content);
       datas.append("File", this.state.file);
+      datas.append("City", this.state.City);
 
       let { data } = await agent.Ticket.createTicket(datas);
-      // console.log(data)
-      // let data1 = { ...this.state.info2 };
-      // if (data1.isMarreid == "false") data1.isMarreid = false;
-      // else data1.isMarreid = true;
-      // let { data } = await agent.CreateResome.editEmployeePersonalInformation(
-      //   data1
-      // );
       this.props.history.push("/Employee/Tickets");
       toast.success("ثبت موفقیت آمیز");
-      // this.setState({ editMode1: false });
     } catch (err) {
       if (err.response.status === 401) toast.error("لطفا وارد شوید.");
       else if (err.response.status === 404) toast.error("خطای رخ داده  ");
@@ -104,6 +114,20 @@ export class CreateTicketEmployee extends Component {
                   <option value="1">فوری</option>
                   <option value="2">جهت اطلاع</option>
                   <option value="3">عادی</option>
+                </select>
+
+                <select
+                  className="form-control ir-r fs-s mt-0 smb-2 srounded-sm shadow-none"
+                  style={{ resize: "none" }}
+                  id="subject"
+                  placeholder="اولویت"
+                  rows="4"
+                  onChange={(e) => this.setState({ City: e.target.value })}
+                >
+                  {!this.state?.cities?.length !== 0 &&
+                    this.state?.cities?.map(({ value, label }) => (
+                      <option value={value}>{label}</option>
+                    ))}
                 </select>
 
                 <textarea

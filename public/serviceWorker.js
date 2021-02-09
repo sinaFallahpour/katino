@@ -64,12 +64,9 @@ self.addEventListener("fetch", function (event) {
   var url = "/";
 
   if (event.request.url.indexOf(url) > -1) {
-    console.log("cache");
     event.respondWith(
       caches.open(CACHE_DYNAMIC_NAME).then(function (cache) {
-        console.log(cache);
         return fetch(event.request).then(function (res) {
-          console.log(res);
           // trimCache(CACHE_DYNAMIC_NAME, 100);
           cache.put(event.request, res.clone());
           return res;
@@ -77,10 +74,8 @@ self.addEventListener("fetch", function (event) {
       })
     );
   } else if (isInArray(event.request.url, STATIC_FILES)) {
-    console.log("2 block");
     event.respondWith(caches.match(event.request));
   } else {
-    console.log("3 block");
     event.respondWith(
       caches.match(event.request).then(function (response) {
         if (response) {

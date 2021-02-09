@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import * as service from "../../components/tickets";
 import { Link } from "react-router-dom";
-import validator from "validator";
 import { toast } from "react-toastify";
-
+import { citiesService } from "../../components/citiesService";
 import agent from "../../core/agent";
 
 export class CreateTicket extends Component {
@@ -15,33 +13,42 @@ export class CreateTicket extends Component {
     ticketPriorityStatus: 1,
     file: null,
     subject: null,
+    cities: [],
+    City: "",
   };
 
-  async componentDidMount() {}
+  componentDidMount() {
+    citiesService.getCities().then((res) => {
+      let cities = [];
+      cities.push({
+        value: "",
+        label: `پشتیبانی فنی`,
+      });
+      res.data.resul.map((item) => {
+        cities.push({
+          value: item.cityName,
+          label: ` ${item.provinceName}، ${item.cityName} `,
+        });
+      });
+      this.setState({ cities });
+    });
+  }
 
   submitTicketAnswer = async (event) => {
     event.preventDefault();
 
     try {
-      // return params;
       let datas = new FormData();
 
       datas.append("Subject", this.state.subject);
       datas.append("TicketPriorityStatus", this.state.ticketPriorityStatus);
       datas.append("Content", this.state.content);
       datas.append("File", this.state.file);
+      datas.append("City", this.state.City);
 
       let { data } = await agent.Ticket.createTicket(datas);
-      // console.log(data)
-      // let data1 = { ...this.state.info2 };
-      // if (data1.isMarreid == "false") data1.isMarreid = false;
-      // else data1.isMarreid = true;
-      // let { data } = await agent.CreateResome.editEmployeePersonalInformation(
-      //   data1
-      // );
       this.props.history.push("/Tickets");
       toast.success("ثبت موفقیت آمیز");
-      // this.setState({ editMode1: false });
     } catch (err) {
       if (err.response.status === 401) toast.error("لطفا وارد شوید.");
       else if (err.response.status === 404) toast.error("خطای رخ داده  ");
@@ -77,39 +84,6 @@ export class CreateTicket extends Component {
                 </Link>
               </header>
 
-              {/* 
-              <div className="first-content">
-                <span className="d-block text-right ir-b fs-s smb-1 c-regular">
-                  {this.state.details.senderFullName}
-                </span>
-                <span className="d-block text-right ir-r fs-s smb-1 c-regular">
-                  {this.state.details.content}
-                </span>
-                <span className="d-block text-right ir-r fs-s mb-0 c-light">
-                  {this.state.details.createDate}
-                </span>
-              </div> */}
-
-              {/* {this.state.details.answer !== null ? (
-                <React.Fragment>
-                  <hr className="smy-2" />
-
-                  <div className="first-content">
-                    <span className="d-block text-right ir-b fs-s smb-1 c-regular">
-                      {this.state.details.receiverFullName}
-                    </span>
-                    <span className="d-block text-right ir-r fs-s smb-1 c-regular">
-                      {this.state.details.answer}
-                    </span>
-                    <span className="d-block text-right ir-r fs-s mb-0 c-light">
-                      {this.state.details.answerDate}
-                    </span>
-                  </div>
-                </React.Fragment>
-              ) : (
-                  ""
-                )} */}
-
               <hr className="smy-2" />
 
               <span className="d-block text-right ir-b fs-s smb-1 c-regular">
@@ -139,6 +113,20 @@ export class CreateTicket extends Component {
                   <option value="1">فوری</option>
                   <option value="2">جهت اطلاع</option>
                   <option value="3">عادی</option>
+                </select>
+
+                <select
+                  className="form-control ir-r fs-s mt-0 smb-2 srounded-sm shadow-none"
+                  style={{ resize: "none" }}
+                  id="subject"
+                  placeholder="اولویت"
+                  rows="4"
+                  onChange={(e) => this.setState({ City: e.target.value })}
+                >
+                  {!this.state?.cities?.length !== 0 &&
+                    this.state?.cities?.map(({ value, label }) => (
+                      <option value={value}>{label}</option>
+                    ))}
                 </select>
 
                 <textarea
